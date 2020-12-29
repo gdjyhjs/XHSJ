@@ -1,0 +1,16 @@
+[Idle]
+NoHealth>Dead
+SawPlayer>Pursuit
+
+[Dead]
+CanRevive>Idle
+
+[Pursuit]
+NoHealth>Dead
+LosePlayer>Default
+ReachPlayer>Attacking
+
+[Attacking]
+NoHealth>Dead
+WithoutAttackRange>Pursuit
+KilledPlayer>Attacking
