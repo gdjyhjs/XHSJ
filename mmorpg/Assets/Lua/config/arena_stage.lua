@@ -1,0 +1,81 @@
+local ret = {
+	[1] = {
+		stage_code = 1, --[[段位code]]
+		name = "新丁", --[[段位名]]
+		s_icon = "arena_grade_01", --[[段位小图标标志]]
+		icon = "arena_grade_bg_01", --[[段位图标标志]]
+		score_min = 0, --[[积分下限]]
+		score_max = 299, --[[积分上限]]
+		win_score_percent = 500, --[[输赢积分比例]]
+		daily_reward = {{1,50000},{9,35}}, --[[每日段位奖励]]
+		win_arena_coin = 10, --[[单次斗币奖励]]
+		win_coin_param = 20, --[[单次铜钱奖励参数]]
+		win_feats = 30, --[[单次战功奖励]]
+	} ,
+	[2] = {
+		stage_code = 2, --[[段位code]]
+		name = "勇士", --[[段位名]]
+		s_icon = "arena_grade_02", --[[段位小图标标志]]
+		icon = "arena_grade_bg_02", --[[段位图标标志]]
+		score_min = 300, --[[积分下限]]
+		score_max = 499, --[[积分上限]]
+		win_score_percent = 420, --[[输赢积分比例]]
+		daily_reward = {{1,80000},{9,50}}, --[[每日段位奖励]]
+		win_arena_coin = 15, --[[单次斗币奖励]]
+		win_coin_param = 20, --[[单次铜钱奖励参数]]
+		win_feats = 30, --[[单次战功奖励]]
+	} ,
+	[3] = {
+		stage_code = 3, --[[段位code]]
+		name = "大师", --[[段位名]]
+		s_icon = "arena_grade_03", --[[段位小图标标志]]
+		icon = "arena_grade_bg_03", --[[段位图标标志]]
+		score_min = 500, --[[积分下限]]
+		score_max = 799, --[[积分上限]]
+		win_score_percent = 310, --[[输赢积分比例]]
+		daily_reward = {{1,110000},{9,70}}, --[[每日段位奖励]]
+		win_arena_coin = 20, --[[单次斗币奖励]]
+		win_coin_param = 20, --[[单次铜钱奖励参数]]
+		win_feats = 30, --[[单次战功奖励]]
+	} ,
+	[4] = {
+		stage_code = 4, --[[段位code]]
+		name = "宗师", --[[段位名]]
+		s_icon = "arena_grade_04", --[[段位小图标标志]]
+		icon = "arena_grade_bg_04", --[[段位图标标志]]
+		score_min = 800, --[[积分下限]]
+		score_max = 1199, --[[积分上限]]
+		win_score_percent = 240, --[[输赢积分比例]]
+		daily_reward = {{1,140000},{9,88}}, --[[每日段位奖励]]
+		win_arena_coin = 25, --[[单次斗币奖励]]
+		win_coin_param = 20, --[[单次铜钱奖励参数]]
+		win_feats = 30, --[[单次战功奖励]]
+	} ,
+	[5] = {
+		stage_code = 5, --[[段位code]]
+		name = "王者", --[[段位名]]
+		s_icon = "arena_grade_05", --[[段位小图标标志]]
+		icon = "arena_grade_bg_05", --[[段位图标标志]]
+		score_min = 1200, --[[积分下限]]
+		score_max = 1699, --[[积分上限]]
+		win_score_percent = 190, --[[输赢积分比例]]
+		daily_reward = {{1,170000},{9,105}}, --[[每日段位奖励]]
+		win_arena_coin = 30, --[[单次斗币奖励]]
+		win_coin_param = 20, --[[单次铜钱奖励参数]]
+		win_feats = 30, --[[单次战功奖励]]
+	} ,
+	[6] = {
+		stage_code = 6, --[[段位code]]
+		name = "至尊", --[[段位名]]
+		s_icon = "arena_grade_06", --[[段位小图标标志]]
+		icon = "arena_grade_bg_06", --[[段位图标标志]]
+		score_min = 1700, --[[积分下限]]
+		score_max = 9999, --[[积分上限]]
+		win_score_percent = 170, --[[输赢积分比例]]
+		daily_reward = {{1,200000},{9,125}}, --[[每日段位奖励]]
+		win_arena_coin = 35, --[[单次斗币奖励]]
+		win_coin_param = 20, --[[单次铜钱奖励参数]]
+		win_feats = 30, --[[单次战功奖励]]
+	} ,
+}
+return ret
