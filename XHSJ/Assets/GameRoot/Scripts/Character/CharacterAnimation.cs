@@ -24,6 +24,7 @@ namespace ARPGDemo.Character
         private string animPreName = "idle";
         public void PlayAnimation(string animNowName)//run
         {
+            Debug.Log("播放动作 "+ animNowName);
             anim.SetBool(animPreName, false);
             anim.SetBool(animNowName, true);
             animPreName = animNowName;
