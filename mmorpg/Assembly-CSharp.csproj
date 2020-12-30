@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{1AB38BC3-EEDE-77EA-F2C8-66CD0FE2AE56}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -427,9 +426,7 @@
     <Compile Include="Assets\Slua\LuaObject\Unity\Lua_UnityEngine_GameObject.cs" />
     <Compile Include="Assets\Slua\LuaObject\Unity\Lua_UnityEngine_CameraClearFlags.cs" />
     <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
-    <Compile Include="Assets\Hugula\Core\Update\WebDownload.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Assets\Hugula\Core\Update\WebDownload.cs" />
     <Compile Include="Assets\Slua\LuaObject\Unity\LuaUnityEngine_EventSystems_ExecuteEvents_EventFunction_1_UnityEngine_EventSystems_IDragHandler.cs" />
     <Compile Include="Assets\Slua\LuaObject\Unity\Lua_UnityEngine_SpriteAlignment.cs" />
     <Compile Include="Assets\Seven\UI\Core\SImage.cs" />
@@ -765,68 +762,68 @@
     <Compile Include="Assets\Slua\LuaObject\Unity\Lua_UnityEngine_Input.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\ztest\ztest.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Particle Add.shader" />
-    <None Include="Assets\Hugula\Config\Ver_android_dev.txt" />
-    <None Include="Assets\GameEffect\Script\niuqudongtai.shader" />
-    <None Include="Assets\Hugula\Config\Ver_ios_dev.txt" />
-    <None Include="Assets\Allegorithmic\Plugins\Substance.Engine.dll" />
-    <None Include="Assets\Seven\Shaders\Resources\Unlit-Normal.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Dissolve.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
-    <None Include="Assets\link.xml" />
-    <None Include="Assets\GameEffect\Script\UI-Default-No-Alpha.shader" />
-    <None Include="Assets\Hugula\Config\Ver_win_dev.txt" />
-    <None Include="Assets\Allegorithmic\Plugins\EULA.txt" />
-    <None Include="Assets\Hugula\Config\playerprefs.txt" />
-    <None Include="Assets\Hugula\Config\Ver_ios.txt" />
-    <None Include="Assets\readme.txt" />
-    <None Include="Assets\Seven\Shaders\Resources\UI-Default-No-Alpha.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\HitEffect.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Gray.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 1.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Textured Text Shader.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\FlowInsideOut.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\AlphaTest-Diffuse.shader" />
-    <None Include="Assets\NGUI\ReadMe - 3.6.8.txt" />
-    <None Include="Assets\Seven\Shaders\Resources\T4M 4 Textures.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 2.shader" />
-    <None Include="Assets\GameEffect\Script\EasyWater14_C2TBDOR.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\RimLightSimpleVF.shader" />
-    <None Include="Assets\Scene\Shader\Mobile-Diffuse-Vertex-Color.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
-    <None Include="Assets\Allegorithmic\Plugins\Substance.Game.dll" />
-    <None Include="Assets\Seven\Shaders\Resources\Circle.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\PlayerDiffuse.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 3.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
-    <None Include="Assets\Hugula\Config\ExtensionFolder.txt" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
-    <None Include="Assets\Seven\TextInlineSprite\Examples\说明.txt" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 1.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\AttackedColor.shader" />
-    <None Include="Assets\Allegorithmic\Plugins\substance_sse2_blend.dll" />
-    <None Include="Assets\Seven\Shaders\Resources\Monster.shader" />
-    <None Include="Assets\Hugula\Config\EditorSetting.txt" />
-    <None Include="Assets\Allegorithmic\Plugins\engine_build_info.txt" />
-    <None Include="Assets\Seven\Shaders\Resources\AlphaSplitedColored.shader" />
-    <None Include="Assets\Hugula\Config\Ver_win.txt" />
-    <None Include="Assets\Seven\Shaders\Resources\Flow.shader" />
-    <None Include="Assets\Hugula\Config\Version.txt" />
-    <None Include="Assets\Seven\Shaders\Resources\Player.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\EasyWater14_C2TBDOR.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 3.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Particle Alpha Blend.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\UI-DefaultETC1.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
-    <None Include="Assets\Seven\DeemoScripts\DeemoRadialBlur.shader" />
-    <None Include="Assets\Hugula\Config\Ver_android.txt" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
-    <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
+     <None Include="Assets\ztest\ztest.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Particle Add.shader" />
+     <None Include="Assets\Hugula\Config\Ver_android_dev.txt" />
+     <None Include="Assets\GameEffect\Script\niuqudongtai.shader" />
+     <None Include="Assets\Hugula\Config\Ver_ios_dev.txt" />
+     <None Include="Assets\Allegorithmic\Plugins\Substance.Engine.dll" />
+     <None Include="Assets\Seven\Shaders\Resources\Unlit-Normal.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Dissolve.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
+     <None Include="Assets\link.xml" />
+     <None Include="Assets\GameEffect\Script\UI-Default-No-Alpha.shader" />
+     <None Include="Assets\Hugula\Config\Ver_win_dev.txt" />
+     <None Include="Assets\Allegorithmic\Plugins\EULA.txt" />
+     <None Include="Assets\Hugula\Config\playerprefs.txt" />
+     <None Include="Assets\Hugula\Config\Ver_ios.txt" />
+     <None Include="Assets\readme.txt" />
+     <None Include="Assets\Seven\Shaders\Resources\UI-Default-No-Alpha.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\HitEffect.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Gray.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 1.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Textured Text Shader.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\FlowInsideOut.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\AlphaTest-Diffuse.shader" />
+     <None Include="Assets\NGUI\ReadMe - 3.6.8.txt" />
+     <None Include="Assets\Seven\Shaders\Resources\T4M 4 Textures.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 2.shader" />
+     <None Include="Assets\GameEffect\Script\EasyWater14_C2TBDOR.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\RimLightSimpleVF.shader" />
+     <None Include="Assets\Scene\Shader\Mobile-Diffuse-Vertex-Color.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
+     <None Include="Assets\Allegorithmic\Plugins\Substance.Game.dll" />
+     <None Include="Assets\Seven\Shaders\Resources\Circle.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\PlayerDiffuse.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 3.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
+     <None Include="Assets\Hugula\Config\ExtensionFolder.txt" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
+     <None Include="Assets\Seven\TextInlineSprite\Examples\说明.txt" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 1.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\AttackedColor.shader" />
+     <None Include="Assets\Allegorithmic\Plugins\substance_sse2_blend.dll" />
+     <None Include="Assets\Seven\Shaders\Resources\Monster.shader" />
+     <None Include="Assets\Hugula\Config\EditorSetting.txt" />
+     <None Include="Assets\Allegorithmic\Plugins\engine_build_info.txt" />
+     <None Include="Assets\Seven\Shaders\Resources\AlphaSplitedColored.shader" />
+     <None Include="Assets\Hugula\Config\Ver_win.txt" />
+     <None Include="Assets\Seven\Shaders\Resources\Flow.shader" />
+     <None Include="Assets\Hugula\Config\Version.txt" />
+     <None Include="Assets\Seven\Shaders\Resources\Player.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\EasyWater14_C2TBDOR.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 3.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Particle Alpha Blend.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\UI-DefaultETC1.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
+     <None Include="Assets\Seven\DeemoScripts\DeemoRadialBlur.shader" />
+     <None Include="Assets\Hugula\Config\Ver_android.txt" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
+     <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
