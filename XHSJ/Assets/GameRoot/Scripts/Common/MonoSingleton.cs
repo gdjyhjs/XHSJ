@@ -16,6 +16,7 @@ public class MonoSingleton<T>:MonoBehaviour where T:MonoBehaviour {
                 _instance = FindObjectOfType<T>();
                 if (null == _instance) {
                     _instance = new GameObject().AddComponent<T>();
+                    _instance.name = typeof(T).ToString();
                 }
             }
             return _instance;

@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7527653380116523768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527653380116523770}
+  - component: {fileID: -1147242781939155846}
+  m_Layer: 0
+  m_Name: staticDataRoleBase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527653380116523770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44188404, y: -2.2321358, z: 2.444292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1147242781939155846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce41dedd5de2b4944a9093c08e77ec34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tablePathList: []
+  dataPath: Assets/GameRoot/Config/excel/roleBase.xlsx
+  tableName: Sheet1
+  generateTxt: 0
+  datalist:
+  - Id: 0
+    des: "\u7384\u5E7B\u5927\u9646\u7684\u5E05\u54E5\u4EEC\u5929\u751F\u62E5\u6709\u5F3A\u5927\u7684\u4F53\u9B44\uFF0C\u5927\u529B\u65E0\u7A77\uFF0C\u53EF\u7A7A\u624B\u788E\u5C71\u77F3\uFF01"
+  - Id: 1
+    des: "\u7384\u5E7B\u5927\u9646\u7684\u7F8E\u5973\u4EEC\u5929\u751F\u5177\u6709\u8D85\u5F3A\u7684\u9B54\u6CD5\u4EB2\u548C\u529B\uFF0C\u80FD\u66F4\u8F7B\u6613\u5730\u6C9F\u901A\u5929\u5730\u5143\u7D20\uFF0C\u65BD\u653E\u51FA\u5F3A\u5927\u7684\u9B54\u6CD5\uFF01"
+  AfterSearchDatalist: []
+  searchid: 

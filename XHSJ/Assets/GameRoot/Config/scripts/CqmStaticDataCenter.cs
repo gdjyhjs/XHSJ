@@ -5,8 +5,12 @@ using System.Collections.Generic;
 /// <summary>
 /// 所有静态配置表的容器
 /// </summary>
-public class CqmStaticDataCenter : MonoBehaviour //CqmSingleton<CqmStaticDataCenter>
+public class CqmStaticDataCenter : MonoSingleton<CqmStaticDataCenter>
 {
+    private void Awake() {
+        DontDestroyOnLoad(this);
+    }
+
     public static string prefabPath = "Assets/Config/prefab/StaticDataCenter.prefab";
 
     public int loginSceneIdx = -1;
@@ -16,6 +20,7 @@ public class CqmStaticDataCenter : MonoBehaviour //CqmSingleton<CqmStaticDataCen
 
     //本地化表策划配置
     public CqmStaticDataLocazation locazationTable;
+    public CqmStaticDataRoleBase roleBaseTable;
 
     public IEnumerator InitPriorTables()
     {
