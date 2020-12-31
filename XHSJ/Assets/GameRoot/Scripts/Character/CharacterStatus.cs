@@ -42,6 +42,8 @@ namespace ARPGDemo.Character
         /// </summary>
         public int MaxSP;
 
+
+
         /// <summary>
         /// 魔法
         /// </summary>

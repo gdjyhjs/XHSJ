@@ -8,7 +8,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <ProjectGuid>{B7653752-BE5D-6E9A-F703-2907CB04012D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -147,51 +148,51 @@
     <Compile Include="Assets\GameRoot\Config\scripts\CqmStaticDataRoleBase.cs" />
   </ItemGroup>
   <ItemGroup>
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Water.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Fog_PP.shader" />
-     <None Include="Assets\Seven\Shaders\Resources\Unlit-Normal.shader" />
-     <None Include="Assets\Seven\Shaders\Resources\Dissolve.shader" />
-     <None Include="Assets\GameRoot\PostProcessing\MotionBlur.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
-     <None Include="Assets\GameRoot\Doc\捏人.txt" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaOutline.cginc" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_CardSimple.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Pine.shader" />
-     <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\AlphaBlend.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Terrain.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Branch.shader" />
-     <None Include="Assets\GameRoot\PostProcessing\GaussianBlur.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Sky.shader" />
-     <None Include="Assets\Suriyun\README.txt" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Decals.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Leaf.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Cloud.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\readme.txt" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_CardComplex.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaSkin.cginc" />
-     <None Include="Assets\StreamingAssets\prefabName.txt" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Grass.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_OpaqueSurface.shader" />
-     <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\ADD_Top.shader" />
-     <None Include="Assets\GameRoot\PostProcessing\EdgeDetection.shader" />
-     <None Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.shader" />
-     <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\Builtin\Particle Add.shader" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_SoftParticle.shader" />
-     <None Include="Assets\StreamingAssets\AI_01.txt" />
-     <None Include="Assets\Mega Fantasy Props Pack\README.txt" />
-     <None Include="Assets\IL3DN\Shaders\IL3DN_Fog.shader" />
-     <None Include="Assets\GameRoot\Scripts\Skill\ClassDiagram1.cd" />
-     <None Include="Assets\StreamingAssets\myprefab.txt" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
-     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Water.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Fog_PP.shader" />
+    <None Include="Assets\Seven\Shaders\Resources\Unlit-Normal.shader" />
+    <None Include="Assets\Seven\Shaders\Resources\Dissolve.shader" />
+    <None Include="Assets\GameRoot\PostProcessing\MotionBlur.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
+    <None Include="Assets\GameRoot\Doc\捏人.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaOutline.cginc" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_CardSimple.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Pine.shader" />
+    <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\AlphaBlend.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Terrain.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Branch.shader" />
+    <None Include="Assets\GameRoot\PostProcessing\GaussianBlur.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Sky.shader" />
+    <None Include="Assets\Suriyun\README.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Decals.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Leaf.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Cloud.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\readme.txt" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_CardComplex.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaSkin.cginc" />
+    <None Include="Assets\StreamingAssets\prefabName.txt" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Grass.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_OpaqueSurface.shader" />
+    <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\ADD_Top.shader" />
+    <None Include="Assets\GameRoot\PostProcessing\EdgeDetection.shader" />
+    <None Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.shader" />
+    <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\Builtin\Particle Add.shader" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_SoftParticle.shader" />
+    <None Include="Assets\StreamingAssets\AI_01.txt" />
+    <None Include="Assets\Mega Fantasy Props Pack\README.txt" />
+    <None Include="Assets\IL3DN\Shaders\IL3DN_Fog.shader" />
+    <None Include="Assets\GameRoot\Scripts\Skill\ClassDiagram1.cd" />
+    <None Include="Assets\StreamingAssets\myprefab.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
