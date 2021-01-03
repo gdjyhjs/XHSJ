@@ -1,6 +1,0 @@
-#!/bin/bash
-# Copyright 2005-2007, The Android Open Source Project
-#
-CURRENT_ROOT=$(cd `dirname $0`; pwd)
-echo "CURRENT_ROOT="$CURRENT_ROOT
-sudo $CURRENT_ROOT/export_effect.sh
