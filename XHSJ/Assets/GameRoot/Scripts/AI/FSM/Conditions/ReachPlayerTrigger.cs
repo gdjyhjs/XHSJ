@@ -15,7 +15,7 @@ namespace AI.FSM {
             if (fsm.targetObject != null)
                 return Vector3.Distance(
                     fsm.transform.position,
-                    fsm.targetObject.transform.position) < fsm.chStatus.attackDistance;
+                    fsm.targetObject.transform.position) < fsm.chStatus.chBase.attackDistance;
             return false;
         }
     }

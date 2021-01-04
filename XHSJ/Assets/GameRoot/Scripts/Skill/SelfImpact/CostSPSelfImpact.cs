@@ -13,7 +13,7 @@ namespace ARPGDemo.Skill {
             if (skillData.Owner == null)
                 return;
             var status = skillData.Owner.GetComponent<CharacterStatus>();
-            status.SP -= skillData.costSP;
+            status.chBase.SP -= skillData.costSP;
         }
     }
 }

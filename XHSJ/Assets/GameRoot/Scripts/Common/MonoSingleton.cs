@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MonoSingleton<T>:MonoBehaviour where T:MonoBehaviour {
+public abstract class MonoSingleton<T>:MonoBehaviour where T:MonoBehaviour {
 
     private static T _instance;
     public static T instance

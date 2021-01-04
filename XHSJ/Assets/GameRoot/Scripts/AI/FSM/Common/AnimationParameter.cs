@@ -10,6 +10,6 @@ namespace AI.FSM
     {
         public string Idle = "idle";
         public string Dead = "dead";
-        public string Run = "run";
+        public string Run = "move";
     }
 }

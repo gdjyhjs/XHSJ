@@ -53,7 +53,7 @@ namespace ARPGDemo.Character
 
 
         void OnHit(GameObject obj) {
-            if (HP > 0) {
+            if (chBase.HP > 0) {
                 obj.GetComponentInChildren<Renderer>().material.color = Color.red;
                 StartCoroutine(OnHidEnd(obj));
             }
@@ -61,7 +61,7 @@ namespace ARPGDemo.Character
 
         IEnumerator OnHidEnd(GameObject obj) {
             yield return new WaitForSeconds(0.2f);
-            if (HP > 0) {
+            if (chBase.HP > 0) {
                 obj.GetComponentInChildren<Renderer>().material.color = Color.white;
             }
         }

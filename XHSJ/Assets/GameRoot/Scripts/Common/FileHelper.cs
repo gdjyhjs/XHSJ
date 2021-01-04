@@ -8,8 +8,6 @@ public class FileHelper {
 
     public static string StreamingAssetsPath(string path) {
         string streamingAssetsPath = Path.Combine(Application.streamingAssetsPath, path);
-        if (Application.platform == RuntimePlatform.Android)
-            streamingAssetsPath = "file://" + streamingAssetsPath;
         return streamingAssetsPath;
     }
 
@@ -19,5 +17,10 @@ public class FileHelper {
 
     public static string ReadAllText(string path) {
         return File.ReadAllText(path);
+    }
+
+    public static string DataPath(string path) {
+        string dataPath = Path.Combine(Application.dataPath, path);
+        return dataPath;
     }
 }

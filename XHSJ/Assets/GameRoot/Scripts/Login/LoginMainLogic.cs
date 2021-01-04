@@ -5,10 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class LoginMainLogic : MonoBehaviour
 {
+    public float speed = 1;
     public CanvasGroup canvasGroup;
+    public GameObject staticDataCenter;
     void Awake()
     {
-        
+        var anim = FindObjectsOfType<Animation>();
+        foreach (var item in anim) {
+            item.SetSpeed(speed);
+        }
         if (GameStateManager.curState == GameStateManager.GameState.None) {
             GameStateManager.curState = GameStateManager.GameState.Main;
         } else {
@@ -27,7 +32,7 @@ public class LoginMainLogic : MonoBehaviour
 
     private IEnumerator ShowMenu() {
         canvasGroup.alpha = 0;
-        yield return new WaitForSeconds(8);
+        yield return new WaitForSeconds(8/speed);
         float show = 0;
         float add = 0.01f;
         while (show < 1) {

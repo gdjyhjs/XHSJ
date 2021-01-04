@@ -12,7 +12,7 @@ namespace AI.FSM {
         }
 
         public override bool HandleTrigger(BaseFSM fsm) {
-            return fsm.chStatus.HP <= 0;
+            return fsm.chStatus.chBase.HP <= 0;
         }
     }
 }

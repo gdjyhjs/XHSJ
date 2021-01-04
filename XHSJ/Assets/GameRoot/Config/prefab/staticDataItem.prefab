@@ -1,0 +1,190 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7527653380116523768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527653380116523770}
+  - component: {fileID: -7667223434143645647}
+  m_Layer: 0
+  m_Name: staticDataItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527653380116523770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44188404, y: -2.2321358, z: 2.444292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7667223434143645647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4162a70788075a4ba61cb37c4a6c2e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tablePathList: []
+  dataPath: Assets/GameRoot/Config/excel/item.xlsx
+  tableName: Sheet1
+  generateTxt: 0
+  datalist:
+  - Id: 0
+    name: "\u62F3\u5934"
+    des: "\u6CA1\u6709\u88C5\u5907\u6B66\u5668\u3002"
+    type: 1
+    min_hp: 0
+    max_hp: 0
+    min_sp: 0
+    max_sp: 0
+    min_strength: 0
+    max_strength: 0
+    min_magic: 0
+    max_magic: 0
+    min_speed: 0
+    max_speed: 0
+    min_defence: 0
+    max_defence: 0
+    min_fireResistance: 0
+    max_fireResistance: 0
+    min_iceResistance: 0
+    max_iceResistance: 0
+    min_electricityResistance: 0
+    max_electricityResistance: 0
+    min_poisonResistance: 0
+    max_poisonResistance: 0
+    min_attackDistance: 1.5
+    max_attackDistance: 1.5
+    min_energy: 1
+    max_energy: 1
+    min_weight: 1
+    max_weight: 1
+    min_fireDamage: 0
+    max_fireDamage: 0
+    min_iceDamage: 0
+    max_iceDamage: 0
+    min_electricityDamage: 0
+    max_electricityDamage: 0
+    min_poisonDamage: 0
+    max_poisonDamage: 0
+    min_fireAppend: 0
+    max_fireAppend: 0
+    min_iceAppend: 0
+    max_iceAppend: 0
+    min_electricityAppend: 0
+    max_electricityAppend: 0
+    min_poisonAppend: 0
+    max_poisonAppend: 0
+  - Id: 1
+    name: "\u780D\u5200"
+    des: "\u94C1\u5320\u6253\u9020\u7684\u780D\u5200\uFF0C\u5288\u780D\u53EF\u4EE5\u9020\u6210\u7269\u7406\u4F24\u5BB3\u3002"
+    type: 1
+    min_hp: 0
+    max_hp: 0
+    min_sp: 0
+    max_sp: 0
+    min_strength: 0
+    max_strength: 0
+    min_magic: 0
+    max_magic: 0
+    min_speed: 0
+    max_speed: 0
+    min_defence: 0
+    max_defence: 0
+    min_fireResistance: 0
+    max_fireResistance: 0
+    min_iceResistance: 0
+    max_iceResistance: 0
+    min_electricityResistance: 0
+    max_electricityResistance: 0
+    min_poisonResistance: 0
+    max_poisonResistance: 0
+    min_attackDistance: 2.5
+    max_attackDistance: 2.5
+    min_energy: 1
+    max_energy: 5
+    min_weight: 10
+    max_weight: 15
+    min_fireDamage: 0
+    max_fireDamage: 0
+    min_iceDamage: 0
+    max_iceDamage: 0
+    min_electricityDamage: 0
+    max_electricityDamage: 0
+    min_poisonDamage: 0
+    max_poisonDamage: 0
+    min_fireAppend: 0
+    max_fireAppend: 5
+    min_iceAppend: 0
+    max_iceAppend: 5
+    min_electricityAppend: 0
+    max_electricityAppend: 5
+    min_poisonAppend: 0
+    max_poisonAppend: 5
+  - Id: 2
+    name: "\u6CD5\u6756"
+    des: "\u523B\u6709\u9B54\u7EB9\u7684\u6CD5\u6756\uFF0C\u53EF\u4EE5\u589E\u5F3A\u65BD\u5C55\u6CD5\u672F\u7684\u5A01\u529B\u3002"
+    type: 1
+    min_hp: 0
+    max_hp: 0
+    min_sp: 0
+    max_sp: 0
+    min_strength: 0
+    max_strength: 0
+    min_magic: 0
+    max_magic: 0
+    min_speed: 0
+    max_speed: 0
+    min_defence: 0
+    max_defence: 0
+    min_fireResistance: 0
+    max_fireResistance: 0
+    min_iceResistance: 0
+    max_iceResistance: 0
+    min_electricityResistance: 0
+    max_electricityResistance: 0
+    min_poisonResistance: 0
+    max_poisonResistance: 0
+    min_attackDistance: 2.5
+    max_attackDistance: 2.5
+    min_energy: 10
+    max_energy: 15
+    min_weight: 1
+    max_weight: 5
+    min_fireDamage: 0
+    max_fireDamage: 1
+    min_iceDamage: 0
+    max_iceDamage: 1
+    min_electricityDamage: 0
+    max_electricityDamage: 1
+    min_poisonDamage: 0
+    max_poisonDamage: 1
+    min_fireAppend: 0
+    max_fireAppend: 0
+    min_iceAppend: 0
+    max_iceAppend: 0
+    min_electricityAppend: 0
+    max_electricityAppend: 0
+    min_poisonAppend: 0
+    max_poisonAppend: 0
+  AfterSearchDatalist: []
+  searchid: 

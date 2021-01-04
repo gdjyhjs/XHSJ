@@ -12,10 +12,7 @@ namespace AI.FSM {
         }
 
         public override bool HandleTrigger(BaseFSM fsm) {
-            if (fsm.chStatus.NextReviveTime <= 0) {
-                return false;
-            }
-            return fsm.chStatus.NextReviveTime < Time.time;
+            return false;
         }
     }
 }

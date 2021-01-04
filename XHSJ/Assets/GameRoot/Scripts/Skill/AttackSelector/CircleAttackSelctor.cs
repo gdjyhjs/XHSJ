@@ -22,7 +22,7 @@ namespace ARPGDemo.Skill {
             }
             Transform depTf = skillDeployer.transform;
             // 2 从所有攻击目标中 找出攻击范围中活着的敌人
-            list = list.FindAll(go => Vector3.Distance(go.transform.position, depTf.position) < skillData.attackDistance && go.GetComponent<CharacterStatus>().HP > 0);
+            list = list.FindAll(go => Vector3.Distance(go.transform.position, depTf.position) < skillData.attackDistance && go.GetComponent<CharacterStatus>().chBase.HP > 0);
             if (null == list || list.Count <= 0) {
                 return null;
             }

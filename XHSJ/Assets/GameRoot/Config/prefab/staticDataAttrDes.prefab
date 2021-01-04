@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7527653380116523768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527653380116523770}
+  - component: {fileID: -3450309718328312149}
+  m_Layer: 0
+  m_Name: staticDataAttrDes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527653380116523770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44188404, y: -2.2321358, z: 2.444292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3450309718328312149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f74bfdf381006e54e9f6d87aab64db8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tablePathList: []
+  dataPath: Assets/GameRoot/Config/excel/attrDes.xlsx
+  tableName: Sheet1
+  generateTxt: 0
+  datalist:
+  - Id: 0
+    attr: hp
+    name: "\u751F\u547D"
+    des: "\u4F53\u5185\u50A8\u5B58\u7684\u6C14\u8840\u4E4B\u529B\uFF0C\u7528\u4E8E\u62B5\u5FA1\u53D7\u5230\u7684\u4F24\u5BB3\uFF0C\u751F\u547D\u529B\u8017\u5C3D\u5C06\u9677\u5165\u660F\u8FF7\u3002"
+  - Id: 1
+    attr: sp
+    name: "\u6CD5\u529B"
+    des: "\u4F53\u529B\u50A8\u5B58\u7684\u9B54\u6CD5\u80FD\u91CF\uFF0C\u7528\u4E8E\u6C9F\u901A\u5929\u5730\u5143\u7D20\u65BD\u5C55\u9B54\u6CD5\u3002"
+  - Id: 2
+    attr: strength
+    name: "\u529B\u91CF"
+    des: "\u81EA\u8EAB\u8089\u4F53\u529B\u91CF\uFF0C\u5F71\u54CD\u7269\u7406\u4F24\u5BB3\u548C\u53D1\u6325\u88C5\u5907\u7684\u5B9E\u529B\u3002"
+  - Id: 3
+    attr: magic
+    name: "\u9B54\u529B"
+    des: "\u81EA\u8EAB\u5BF9\u5143\u7D20\u7684\u64CD\u63A7\u529B\uFF0C\u5F71\u54CD\u9B54\u6CD5\u4F24\u5BB3\u548C\u53D1\u6325\u88C5\u5907\u7684\u5B9E\u529B\u3002"
+  - Id: 4
+    attr: speed
+    name: "\u901F\u5EA6"
+    des: "\u5F71\u54CD\u79FB\u52A8\uFF0C\u98DE\u884C\uFF0C\u653B\u51FB\u901F\u5EA6\u3002"
+  - Id: 5
+    attr: defence
+    name: "\u9632\u5FA1"
+    des: "\u81EA\u8EAB\u7684\u8089\u4F53\u5F3A\u5EA6\uFF0C\u53EF\u4EE5\u964D\u4F4E\u53D7\u5230\u7684\u7269\u7406\u4F24\u5BB3\u3002"
+  - Id: 6
+    attr: fireResistance
+    name: "\u706B\u6297"
+    des: "\u964D\u4F4E\u53D7\u5230\u7684\u706B\u7130\u4F24\u5BB3\u3002"
+  - Id: 7
+    attr: iceResistance
+    name: "\u51B0\u6297"
+    des: "\u964D\u4F4E\u53D7\u5230\u7684\u51B0\u51BB\u4F24\u5BB3\u3002"
+  - Id: 8
+    attr: electricityResistance
+    name: "\u7535\u6297"
+    des: "\u964D\u4F4E\u53D7\u5230\u7684\u95EA\u7535\u4F24\u5BB3\u3002"
+  - Id: 9
+    attr: poisonResistance
+    name: "\u6BD2\u6297"
+    des: "\u964D\u4F4E\u53D7\u5230\u7684\u6BD2\u7D20\u4F24\u5BB3\u3002"
+  - Id: 10
+    attr: attackDistance
+    name: "\u653B\u51FB\u901F\u5EA6"
+    des: "\u5F71\u54CD\u6BCF\u6B21\u653B\u51FB\u6216\u4F7F\u7528\u6280\u80FD\u9700\u8981\u7B49\u5F85\u7684\u65F6\u95F4\u3002"
+  - Id: 11
+    attr: energy
+    name: "\u80FD\u91CF"
+    des: "\u80FD\u91CF\u8D8A\u9AD8\uFF0C\u9700\u8981\u8D8A\u9AD8\u7684\u9B54\u529B\u624D\u80FD\u53D1\u6325\u66F4\u591A\u7269\u54C1\u5A01\u529B\u3002"
+  - Id: 12
+    attr: weight
+    name: "\u91CD\u91CF"
+    des: "\u91CD\u91CF\u8D8A\u9AD8\uFF0C\u9700\u8981\u8D8A\u9AD8\u7684\u529B\u91CF\u624D\u80FD\u53D1\u6325\u66F4\u591A\u7269\u54C1\u5A01\u529B\u3002"
+  - Id: 13
+    attr: fireDamage
+    name: "\u706B\u7130\u4F24\u5BB3"
+    des: "\u4F7F\u7528\u706B\u7CFB\u9B54\u6CD5\u65F6\u6709\u4F24\u5BB3\u52A0\u6210\u3002"
+  - Id: 14
+    attr: iceDamage
+    name: "\u51B0\u51BB\u4F24\u5BB3"
+    des: "\u4F7F\u7528\u51B0\u7CFB\u9B54\u6CD5\u65F6\u6709\u4F24\u5BB3\u52A0\u6210\u3002"
+  - Id: 15
+    attr: electricityDamage
+    name: "\u95EA\u7535\u4F24\u5BB3"
+    des: "\u4F7F\u7528\u7535\u7CFB\u9B54\u6CD5\u65F6\u6709\u4F24\u5BB3\u52A0\u6210\u3002"
+  - Id: 16
+    attr: poisonDamage
+    name: "\u6BD2\u7D20\u4F24\u5BB3"
+    des: "\u4F7F\u7528\u6BD2\u7CFB\u9B54\u6CD5\u65F6\u6709\u4F24\u5BB3\u52A0\u6210\u3002"
+  - Id: 17
+    attr: fireAppend
+    name: "\u706B\u7130\u9644\u52A0"
+    des: "\u666E\u901A\u653B\u51FB\u9644\u52A0\u989D\u5916\u7684\u706B\u7130\u4F24\u5BB3\u3002"
+  - Id: 18
+    attr: iceAppend
+    name: "\u51B0\u51BB\u9644\u52A0"
+    des: "\u666E\u901A\u653B\u51FB\u9644\u52A0\u989D\u5916\u7684\u51B0\u51BB\u4F24\u5BB3\u3002"
+  - Id: 19
+    attr: electricityAppend
+    name: "\u95EA\u7535\u9644\u52A0"
+    des: "\u666E\u901A\u653B\u51FB\u9644\u52A0\u989D\u5916\u7684\u95EA\u7535\u4F24\u5BB3\u3002"
+  - Id: 20
+    attr: poisonAppend
+    name: "\u6BD2\u7D20\u9644\u52A0"
+    des: "\u666E\u901A\u653B\u51FB\u9644\u52A0\u989D\u5916\u7684\u6BD2\u7D20\u4F24\u5BB3\u3002"
+  - Id: 21
+    attr: Combustion
+    name: "\u71C3\u70E7"
+    des: "5\u79D2\u5185\u6BCF\u5C42\u71C3\u70E7\u6BCF\u79D2\u9020\u62102%\u706B\u7130\u4F24\u5BB3\uFF0C\u6700\u5927\u53E0\u52A020\u5C42\u3002"
+  - Id: 22
+    attr: Poisoning
+    name: "\u4E2D\u6BD2"
+    des: "9\u79D2\u5185\u6BCF\u5C42\u4E2D\u6BD2\u6BCF3\u79D2\u9020\u62105%\u6BD2\u7D20\u4F24\u5BB3\uFF0C\u6700\u5927\u53E0\u52A020\u5C42\u3002"
+  - Id: 23
+    attr: Slow
+    name: "\u8FDF\u7F13"
+    des: "5\u79D2\u5185\u964D\u4F4E12%+\u5C42\u6570*3%\u7684\u901F\u5EA6\uFF0C\u6700\u5927\u53E0\u52A05\u5C42\u3002"
+  - Id: 24
+    attr: bleeding
+    name: "\u6D41\u8840"
+    des: "30\u79D2\u5185\u6BCF\u5C42\u6D41\u8840\u6CA12\u79D2\u9020\u62103%\u7269\u7406\u4F24\u5BB3\uFF0C\u6700\u5927\u53E0\u52A020\u5C42"
+  - Id: 25
+    attr: SunderArmor
+    name: "\u7834\u7532"
+    des: "5\u79D2\u5185\u53D7\u5230\u7684\u4F24\u5BB3\u63D0\u9AD812%+\u5C42\u6570*3%\uFF0C\u6700\u5927\u53E0\u52A05\u5C42\u3002"
+  - Id: 26
+    attr: Stealth
+    name: "\u9690\u8EAB"
+    des: "\u53EF\u4EE5\u5C4F\u853D\u9B54\u529B\u5C0F\u4E8E\u81EA\u5DF1150%\u9B54\u529B\u7684\u5355\u4F4D\u5BF9\u81EA\u5DF1\u7684\u611F\u77E5\u3002"
+  - Id: 27
+    attr: weightPlay
+    name: "\u91CD\u91CF\u53D1\u6325"
+    des: "\u4F7F\u7528\u6B66\u5668\u65F6\u6839\u636E\u91CD\u91CF\u51B3\u5B9A\u7684\u53D1\u6325\u7A0B\u5EA6\uFF0C\u5F71\u54CD\u6B66\u6280\u52A0\u6210\u3002"
+  - Id: 28
+    attr: energyPlay
+    name: "\u80FD\u91CF\u53D1\u6325"
+    des: "\u4F7F\u7528\u6B66\u5668\u65F6\u6839\u636E\u80FD\u91CF\u51B3\u5B9A\u7684\u6325\u53D1\u6210\u90FD\uFF0C\u5F71\u54CD\u6CD5\u672F\u52A0\u6210\u3002"
+  AfterSearchDatalist: []
+  searchid: 

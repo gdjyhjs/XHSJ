@@ -51,7 +51,7 @@ namespace ARPGDemo.Skill {
             if (null != skillData.Owner) {
                 var status = skillData.Owner.GetComponent<CharacterStatus>();
                 if (null != status) {
-                    baseDamage = skillData.Owner.GetComponent<CharacterStatus>().Damage;
+                    baseDamage = skillData.Owner.GetComponent<CharacterStatus>().chBase.Strength;
                 }
             }
             return baseDamage;

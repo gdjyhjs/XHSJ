@@ -53,7 +53,7 @@ namespace ARPGDemo.Skill
             // 2 如果找到 同事 技能冷却结束 而且SP足够 。返回
             if (skillData != null) {
                 if (skillData.coolRemain <= 0) {
-                    if (skillData.costSP <= skillData.Owner.GetComponent<CharacterStatus>().SP) {
+                    if (skillData.costSP <= skillData.Owner.GetComponent<CharacterStatus>().chBase.SP) {
                         return skillData;
                     }
                     YellowEvents.SendEvent(YellowEventName.warningTip, YellowConstText.notSp);

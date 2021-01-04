@@ -48,7 +48,7 @@ namespace ARPGDemo.Character
                 //3调用角色控制器的Move的方法
                 chController.Move(dir*Time.deltaTime*moveSpeed);
                 //4播放运动动画
-                chAnim.PlayAnimation("run");
+                chAnim.PlayAnimation("move");
             }
             else
             {   //播放闲置动画

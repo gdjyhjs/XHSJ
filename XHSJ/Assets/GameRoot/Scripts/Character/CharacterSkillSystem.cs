@@ -68,7 +68,7 @@ namespace ARPGDemo.Character {
                 var status = go.GetComponent<CharacterStatus>();
                 if (null == status)
                     return false;
-                return status.HP > 0;
+                return status.chBase.HP > 0;
                 });
             if (null == list || list.Count <= 0) {
                 return null;
@@ -109,7 +109,7 @@ namespace ARPGDemo.Character {
             // 1 找出所有可用的技能 
             // · 冷却时间=0
             // · sp足够
-            List<SkillData> usableSkill = skillMgr.skills.FindAll(skill => skill.coolRemain <= 0 && skill.costSP <= skill.Owner.GetComponent<CharacterStatus>().SP);
+            List<SkillData> usableSkill = skillMgr.skills.FindAll(skill => skill.coolRemain <= 0 && skill.costSP <= skill.Owner.GetComponent<CharacterStatus>().chBase.SP);
             if (null == usableSkill || usableSkill.Count <= 0)
                 return;
             // 2 从库克用技能中随机找出一个技能

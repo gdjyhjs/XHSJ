@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ARPGDemo.Character;
 
-public class NpcCreate : MonoBehaviour {
+public class NpcCreate : MonoSingleton<NpcCreate> {
+    public List<CharacterStatus> allChar = new List<CharacterStatus>();
     public GameObject player;
     public GameObject enemy;
     // Start is called before the first frame update
-    void Start()
+    void Init()
     {
         CreateMainPlayer();
         CreateNpc();
@@ -16,7 +18,9 @@ public class NpcCreate : MonoBehaviour {
         var obj = Instantiate<GameObject>(player, GetPos(new Vector3(0, 0, -6)), default);
         obj.SetActive(true);
         obj.transform.SetParent(transform);
-        obj.GetComponent<ARPGDemo.Character.CharacterStatus>().charName = "玩家";
+        var mainChar = obj.GetComponent<CharacterStatus>();
+        mainChar.chBase.charName = "玩家";
+        allChar.Add(mainChar);
     }
 
     void CreateNpc() {
@@ -24,7 +28,9 @@ public class NpcCreate : MonoBehaviour {
             var obj = Instantiate<GameObject>(enemy, GetPos(new Vector3(i * 6, 0, 6)), default);
             obj.SetActive(true);
             obj.transform.SetParent(transform);
-            obj.GetComponent<ARPGDemo.Character.CharacterStatus>().charName = "陪练" + (i + 2);
+            var npcChar = obj.GetComponent<ARPGDemo.Character.CharacterStatus>();
+            npcChar.chBase.charName = "陪练" + (i + 2);
+            allChar.Add(npcChar);
         }
     }
 

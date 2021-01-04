@@ -1,0 +1,222 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7527653380116523768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527653380116523770}
+  - component: {fileID: -6217797259177182044}
+  m_Layer: 0
+  m_Name: staticDataBuff
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527653380116523770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44188404, y: -2.2321358, z: 2.444292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-6217797259177182044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a00770d439b99e4786394570246148c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tablePathList: []
+  dataPath: Assets/GameRoot/Config/excel/buff.xlsx
+  tableName: Sheet1
+  generateTxt: 0
+  datalist:
+  - Id: 1
+    name: "\u71C3\u70E7"
+    des: "5\u79D2\u5185\u6BCF\u5C42\u71C3\u70E7\u6BCF\u79D2\u9020\u62102%\u706B\u7130\u4F24\u5BB3\uFF0C\u6700\u5927\u53E0\u52A020\u5C42\u3002"
+    maxLayer: 20
+    damage: 0
+    fireDamage: 2
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 5.1
+    damageInterval: 1
+    updamage: 0
+    upspeed: 0
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 2
+    name: "\u4E2D\u6BD2"
+    des: "9\u79D2\u5185\u6BCF\u5C42\u4E2D\u6BD2\u6BCF3\u79D2\u9020\u62105%\u6BD2\u7D20\u4F24\u5BB3\uFF0C\u6700\u5927\u53E0\u52A020\u5C42\u3002"
+    maxLayer: 20
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 5
+    durationTime: 9.1
+    damageInterval: 3
+    updamage: 0
+    upspeed: 0
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 3
+    name: "\u8FDF\u7F13"
+    des: "5\u79D2\u5185\u6BCF\u5C42\u964D\u4F4E3%\u7684\u901F\u5EA6\uFF0C\u6700\u5927\u53E0\u52A05\u5C42\u3002"
+    maxLayer: 5
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 5.1
+    damageInterval: 10
+    updamage: 0
+    upspeed: -3
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 4
+    name: "\u6D41\u8840"
+    des: "30\u79D2\u5185\u6BCF\u5C42\u6D41\u8840\u6BCF2\u79D2\u9020\u62103%\u7269\u7406\u4F24\u5BB3\uFF0C\u6700\u5927\u53E0\u52A020\u5C42"
+    maxLayer: 20
+    damage: 3
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 30.1
+    damageInterval: 2
+    updamage: 0
+    upspeed: 0
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 5
+    name: "\u7834\u7532"
+    des: "5\u79D2\u5185\u53D7\u5230\u7684\u4F24\u5BB3\u6BCF\u5C42\u63D0\u9AD83%\uFF0C\u6700\u5927\u53E0\u52A05\u5C42\u3002"
+    maxLayer: 5
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 5.1
+    damageInterval: 10
+    updamage: 3
+    upspeed: 0
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 6
+    name: "\u9690\u8EAB"
+    des: "\u53EF\u4EE5\u5C4F\u853D\u9B54\u529B\u5C0F\u4E8E\u81EA\u5DF1150%\u9B54\u529B\u7684\u5355\u4F4D\u5BF9\u81EA\u5DF1\u7684\u611F\u77E5\u3002"
+    maxLayer: 1
+    damage: 150
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 120.1
+    damageInterval: 240
+    updamage: 0
+    upspeed: 0
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: HideBuff
+  - Id: 7
+    name: "\u51FB\u9000"
+    des: "\u4F7F\u654C\u65B9\u540E\u90000.5\u7C73\u3002"
+    maxLayer: 1
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    updamage: 0
+    upspeed: 0
+    backMove: 0.5
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 8
+    name: "\u7729\u6655"
+    des: "\u65E0\u6CD5\u653B\u51FB\u548C\u79FB\u52A8\u3002"
+    maxLayer: 1
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.5
+    damageInterval: 1
+    updamage: 0
+    upspeed: 0
+    backMove: 0
+    lockAnim: idle
+    hp: 0
+    type: Debuff
+  - Id: 9
+    name: "\u5B9A\u8EAB"
+    des: "\u65E0\u6CD5\u653B\u51FB\u548C\u79FB\u52A8\u3002"
+    maxLayer: 1
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 1
+    damageInterval: 1
+    updamage: 0
+    upspeed: -100
+    backMove: 0
+    lockAnim: 
+    hp: 0
+    type: Debuff
+  - Id: 10
+    name: "\u6C34\u76FE"
+    des: "\u5438\u6536\u4F24\u5BB3\u3002"
+    maxLayer: 1
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 60.1
+    damageInterval: 120
+    updamage: 0
+    upspeed: 0
+    backMove: 0
+    lockAnim: 
+    hp: 150
+    type: Shieldsbuff
+  AfterSearchDatalist: []
+  searchid: 

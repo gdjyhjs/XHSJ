@@ -16,7 +16,7 @@ namespace AI.FSM {
                 var distance = Vector3.Distance(
                         fsm.transform.position,
                         fsm.targetObject.transform.position);
-                return distance > fsm.chStatus.attackDistance && distance < fsm.sightDistance;
+                return distance > fsm.chStatus.chBase.attackDistance && distance < fsm.sightDistance;
             }
             return false;
         }

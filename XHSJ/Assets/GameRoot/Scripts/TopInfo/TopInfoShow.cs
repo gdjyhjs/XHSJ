@@ -42,9 +42,9 @@ public class TopInfoShow : MonoBehaviour
 
         Vector3 pos = top.charTf.position + new Vector3(0, 1.55f, 0);
         tf.anchoredPosition = WorldPointToUILocalPoint(pos);
-        tfHP.sizeDelta = new Vector2(150f * top.status.HP / top.status.MaxHP, tfHP.sizeDelta.y);
-        if (top.status.HP <= 0) {
-            txtState.text = ((int)(top.status.NextReviveTime - Time.time)).ToString();
+        tfHP.sizeDelta = new Vector2(150f * top.status.chBase.HP / top.status.chBase.MaxHP, tfHP.sizeDelta.y);
+        if (top.status.chBase.HP <= 0) {
+            txtState.text = "死亡";
         } else {
             //string stateName = "";
             //switch (fsm.currentStateID) {
@@ -65,13 +65,13 @@ public class TopInfoShow : MonoBehaviour
             //        break;
             //}
             //txtState.text = stateName + "...";
-            txtState.text = top.status.charName;
+            txtState.text = top.status.chBase.charName;
         }
-        bool show = top.status.HP != top.status.MaxHP;
+        bool show = top.status.chBase.HP != top.status.chBase.MaxHP;
         if (show != hpRoot.activeSelf)
             hpRoot.SetActive(show);
         if (show) {
-            txtHp.text = string.Format("{0}/{1}", top.status.HP, top.status.MaxHP);
+            txtHp.text = string.Format("{0}/{1}", top.status.chBase.HP, top.status.chBase.MaxHP);
         }
     }
 

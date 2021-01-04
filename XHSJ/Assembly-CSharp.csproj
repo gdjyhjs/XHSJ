@@ -1,15 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{B7653752-BE5D-6E9A-F703-2907CB04012D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -54,14 +53,13 @@
     <UnityVersion>2020.1.17f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\GameRoot\Scripts\Common\MonoSingleton.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataItem.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_PlayRandomSound.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\LosePlayerTrigger.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_ChangeWalkingSound.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_SimpleFPSController.cs" />
+    <Compile Include="Assets\GameRoot\PostProcessing\MotionBlur.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\SkillDeployer.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\TargetImpact\TargetImpact.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\DeployerConfigFactory.cs" />
@@ -82,6 +80,7 @@
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\States\AttackingState.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\TargetImpact\ITargetImpact.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_ColorManagerEffects.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataAttrDes.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Common\TransformHelper.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Character\CharacterSkillSystem.cs" />
     <Compile Include="Assets\GameRoot\PostProcessing\PostEffectBase.cs" />
@@ -105,7 +104,7 @@
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_ColorController.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\Enum\DamageMode.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Wind.cs" />
-    <Compile Include="Assets\GameRoot\Config\scripts\CqmStaticDataLocazation.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataLocazation.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\AnimationParameter.cs" />
     <Compile Include="Assets\GameRoot\PostProcessing\GaussianBlur.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\FSMStateID.cs" />
@@ -115,16 +114,19 @@
     <Compile Include="Assets\Suriyun\Scripts\AnimatorController.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\BaseFSM.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Character\PlayerStatus.cs" />
+    <Compile Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\MeleeSkillDeployer.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Snow.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\AIConfiguration.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\SawPlayerTrigger.cs" />
     <Compile Include="Assets\GameRoot\Scripts\InteractiveObject\BaseInteractiveBehaviour.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataBuff.cs" />
     <Compile Include="Assets\GameRoot\Scripts\TopInfo\UICamera.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Character\CharacterInputController.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Fog_PP.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\FSMTrigger.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Common\ResourceManager.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataRoleBase.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Common\GameObjectPool.cs" />
     <Compile Include="Assets\GameRoot\Scripts\TopInfo\DamageShow.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Character\AnimationEventBehaviour.cs" />
@@ -138,61 +140,65 @@
     <Compile Include="Assets\GameRoot\Scripts\Character\EnterTriggerRecord.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\SelfImpact\CostSPSelfImpact.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Fog.cs" />
-    <Compile Include="Assets\GameRoot\Config\scripts\CqmStaticDataCenter.cs" />
-    <Compile Include="Assets\GameRoot\Config\scripts\CqmStaticDataTable.cs" />
-    <Compile Include="Assets\GameRoot\Config\scripts\CqmStaticDataSkill.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\MainStaticDataCenter.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataTable.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\StaticDataSkillData.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\AttackSelector\IAttackSelector.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\AttackSelector\CircleAttackSelctor.cs" />
-    <Compile Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.cs" />
-    <Compile Include="Assets\GameRoot\PostProcessing\MotionBlur.cs" />
-    <Compile Include="Assets\GameRoot\Config\scripts\CqmStaticDataRoleBase.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\DataManager\SaveLoadData.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Common\Delay.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Item\ItemBase.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Character\CharacterBase.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Item\ItemType.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Character\CharacterEnum\AttrEnum.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Common\UniqueIdObject.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Water.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Fog_PP.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Unlit-Normal.shader" />
-    <None Include="Assets\Seven\Shaders\Resources\Dissolve.shader" />
-    <None Include="Assets\GameRoot\PostProcessing\MotionBlur.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
-    <None Include="Assets\GameRoot\Doc\捏人.txt" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaOutline.cginc" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_CardSimple.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Pine.shader" />
-    <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\AlphaBlend.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Terrain.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Branch.shader" />
-    <None Include="Assets\GameRoot\PostProcessing\GaussianBlur.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Sky.shader" />
-    <None Include="Assets\Suriyun\README.txt" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Decals.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Leaf.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Cloud.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\readme.txt" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_CardComplex.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaSkin.cginc" />
-    <None Include="Assets\StreamingAssets\prefabName.txt" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Grass.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_OpaqueSurface.shader" />
-    <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\ADD_Top.shader" />
-    <None Include="Assets\GameRoot\PostProcessing\EdgeDetection.shader" />
-    <None Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.shader" />
-    <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\Builtin\Particle Add.shader" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_SoftParticle.shader" />
-    <None Include="Assets\StreamingAssets\AI_01.txt" />
-    <None Include="Assets\Mega Fantasy Props Pack\README.txt" />
-    <None Include="Assets\IL3DN\Shaders\IL3DN_Fog.shader" />
-    <None Include="Assets\GameRoot\Scripts\Skill\ClassDiagram1.cd" />
-    <None Include="Assets\StreamingAssets\myprefab.txt" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
-    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Water.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Fog_PP.shader" />
+     <None Include="Assets\GameRoot\Shaders\Resources\Unlit-Normal.shader" />
+     <None Include="Assets\GameRoot\Shaders\Resources\Dissolve.shader" />
+     <None Include="Assets\GameRoot\PostProcessing\MotionBlur.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
+     <None Include="Assets\GameRoot\Doc\捏人.txt" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaOutline.cginc" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_CardSimple.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Pine.shader" />
+     <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\AlphaBlend.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Terrain.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Branch.shader" />
+     <None Include="Assets\GameRoot\PostProcessing\GaussianBlur.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Sky.shader" />
+     <None Include="Assets\Suriyun\README.txt" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Decals.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Leaf.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Cloud.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\readme.txt" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_CardComplex.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaSkin.cginc" />
+     <None Include="Assets\StreamingAssets\prefabName.txt" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Grass.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_OpaqueSurface.shader" />
+     <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\E\E\ADD_Top.shader" />
+     <None Include="Assets\GameRoot\PostProcessing\EdgeDetection.shader" />
+     <None Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.shader" />
+     <None Include="Assets\EffectPackage\ArtData\Effects\Shaders\Builtin\Particle Add.shader" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_SoftParticle.shader" />
+     <None Include="Assets\StreamingAssets\AI_01.txt" />
+     <None Include="Assets\Mega Fantasy Props Pack\README.txt" />
+     <None Include="Assets\IL3DN\Shaders\IL3DN_Fog.shader" />
+     <None Include="Assets\GameRoot\Scripts\Skill\ClassDiagram1.cd" />
+     <None Include="Assets\StreamingAssets\myprefab.txt" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
+     <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.17f1c1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>
@@ -762,6 +768,9 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

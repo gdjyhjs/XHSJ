@@ -1,0 +1,452 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7527653380116523768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527653380116523770}
+  - component: {fileID: -3174818751741800835}
+  m_Layer: 0
+  m_Name: staticDataSkillData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527653380116523770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.44188404, y: -2.2321358, z: 2.444292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3174818751741800835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527653380116523768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f7f369fd241ee648a21ed80f41bbd5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tablePathList: []
+  dataPath: Assets/GameRoot/Config/excel/skillData.xlsx
+  tableName: Sheet1
+  generateTxt: 0
+  datalist:
+  - Id: 1
+    name: "\u65A9\u51FB"
+    des: "\u6325\u821E\u6B66\u5668\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u621080%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E00\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 2
+    attackAngle: 30
+    type: 0
+    Recovery: 0
+    damage: 80
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1000011201375628, guid: 745f53f2ca848cc41bf0a7032c833484, type: 3}
+    icon: {fileID: 0}
+    animationName: atk
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 2
+    name: "\u65A9\u51FB2"
+    des: "\u6325\u821E\u6B66\u5668\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u6210100%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E8C\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 2
+    attackAngle: 30
+    type: 0
+    Recovery: 0
+    damage: 100
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1493602010007660, guid: 02cfdc1e9b267224da8fe7c52cba999b, type: 3}
+    icon: {fileID: 0}
+    animationName: atk2
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 3
+    name: "\u65A9\u51FB3"
+    des: "\u6325\u821E\u6B66\u5668\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u6210150%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E09\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 2
+    attackAngle: 30
+    type: 0
+    Recovery: 0
+    damage: 150
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1000010325790288, guid: 6114fd018db2aa14cae3f55fc821f204, type: 3}
+    icon: {fileID: 0}
+    animationName: atk3
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 4
+    name: "\u6756\u51FB"
+    des: "\u6325\u821E\u6B66\u5668\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u621080%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E00\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 2
+    attackAngle: 30
+    type: 1
+    Recovery: 0
+    damage: 80
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1000011619903754, guid: 9446475f6a080ae45b99998320f7fc4e, type: 3}
+    icon: {fileID: 0}
+    animationName: atk
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 5
+    name: "\u6756\u51FB2"
+    des: "\u6325\u821E\u6B66\u5668\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u6210100%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E8C\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 2
+    attackAngle: 30
+    type: 1
+    Recovery: 0
+    damage: 100
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1000010814258086, guid: f8f6f2a9c0606e54a93c6b7d7c0943fa, type: 3}
+    icon: {fileID: 0}
+    animationName: atk2
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 6
+    name: "\u6756\u51FB3"
+    des: "\u6325\u821E\u6B66\u5668\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u6210150%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E09\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 2
+    attackAngle: 30
+    type: 1
+    Recovery: 0
+    damage: 150
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1000011084475476, guid: 6e04396e35c97204085c255914d2ff05, type: 3}
+    icon: {fileID: 0}
+    animationName: atk3
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 7
+    name: "\u640F\u51FB"
+    des: "\u6325\u62F3\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u621050%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E00\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 1.5
+    attackAngle: 30
+    type: 0
+    Recovery: 0
+    damage: 50
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1750078294940532, guid: 0458729ab08b1c641a0ca9d517309f9e, type: 3}
+    icon: {fileID: 0}
+    animationName: atk
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 8
+    name: "\u640F\u51FB2"
+    des: "\u6325\u62F3\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u621065%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E8C\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 1.5
+    attackAngle: 30
+    type: 0
+    Recovery: 0
+    damage: 65
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1106481215640394, guid: 23847487f5c410f4ebc0aba24d78fe83, type: 3}
+    icon: {fileID: 0}
+    animationName: atk2
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 9
+    name: "\u640F\u51FB3"
+    des: "\u6325\u62F3\u5BF9\u654C\u4EBA\u8FDB\u884C\u6253\u51FB\uFF0C\u53EF\u5BF9\u5355\u4E00\u76EE\u6807\u9020\u6210100%\u7269\u7406\u4F24\u5BB3\uFF0C\u4E09\u6BB5\u3002"
+    cool: 1
+    cost: 0
+    distance: 1.5
+    attackAngle: 30
+    type: 0
+    Recovery: 0
+    damage: 100
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1774702190611504, guid: 9e94d5592db27cc46a33f573fc88c7c6, type: 3}
+    icon: {fileID: 0}
+    animationName: atk3
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Sector
+    SummonId: 0
+    buffID: 0
+  - Id: 10
+    name: "\u5E7D\u51A5\u9B42\u9501"
+    des: "\u5BF9\u524D\u65B9\u654C\u4EBA\u9020\u621080%\u7269\u7406\u4F24\u5BB3\u548C30%\u51B0\u51BB\u4F24\u5BB3\uFF0C\u5E76\u9644\u52A0\u5B9A\u8EAB\u3002"
+    cool: 5
+    cost: 5
+    distance: 8
+    attackAngle: 1
+    type: 1
+    Recovery: 0
+    damage: 80
+    fireDamage: 0
+    iceDamage: 30
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1248731228764062, guid: 34a7c882d4e49704d9a99a069fc42e4e, type: 3}
+    icon: {fileID: 21300000, guid: c0d8c119051e24ee5a8a892f6b3a94c7, type: 3}
+    animationName: skill1
+    hitFxName: {fileID: 1248731228764062, guid: 34a7c882d4e49704d9a99a069fc42e4e, type: 3}
+    attackType: Group
+    damageMode: Rect
+    SummonId: 0
+    buffID: 9
+  - Id: 11
+    name: "\u5730\u72F1\u4E1A\u706B"
+    des: "\u5BF9\u76EE\u6807\u53CA\u5468\u56F43\u7C73\u8303\u56F4\u5185\u654C\u4EBA\u9020\u6210200%\u706B\u7130\u4F24\u5BB3\uFF0C\u5E76\u9020\u6210\u9644\u52A0\u70B9\u71C3\u3002"
+    cool: 12
+    cost: 15
+    distance: 6
+    attackAngle: 180
+    type: 1
+    Recovery: 0
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 1001
+    originalPrefab: {fileID: 1767609571086933793, guid: 9c6928dbe8132a340997de634fa42f13, type: 3}
+    icon: {fileID: 21300000, guid: bfc196073eb9f4b9b8d639d8ebd858df, type: 3}
+    animationName: skill2
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Single
+    damageMode: Target
+    SummonId: 0
+    buffID: 0
+  - Id: 12
+    name: "\u51B0\u5C01\u70BC\u72F1"
+    des: "\u5BF9\u81EA\u8EAB\u524D\u65B9\u6247\u5F626\u7C73\u8303\u56F4\u5185\u654C\u4EBA\u9020\u6210110%\u7684\u51B0\u51BB\u4F24\u5BB3\uFF0C\u5E76\u9644\u52A0\u8FDF\u7F13\u3002"
+    cool: 12
+    cost: 15
+    distance: 6
+    attackAngle: 45
+    type: 1
+    Recovery: 0
+    damage: 0
+    fireDamage: 0
+    iceDamage: 110
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1530228950989158, guid: 0a389fbb1af520d42aac25da1b46c38f, type: 3}
+    icon: {fileID: 21300000, guid: 5bf30f7ae137040fdbed8debd6fad432, type: 3}
+    animationName: skill3
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Group
+    damageMode: Sector
+    SummonId: 0
+    buffID: 3
+  - Id: 13
+    name: "\u795E\u5723\u6D17\u793C"
+    des: "\u5BF9\u76F4\u7EBF10\u7C73\u8303\u56F4\u5185\u654C\u4EBA\u9020\u6210210%\u95EA\u7535\u4F24\u5BB3\uFF0C\u51B0\u51FB\u9000\u654C\u4EBA\u3002"
+    cool: 12
+    cost: 15
+    distance: 10
+    attackAngle: 1
+    type: 1
+    Recovery: 0
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 21
+    poisonDamage: 0
+    durationTime: 1.51
+    damageInterval: 0.15
+    nextSkillId: 0
+    originalPrefab: {fileID: 1136135008956778, guid: bd8efadb3302e024e9abbff0b9408261, type: 3}
+    icon: {fileID: 21300000, guid: 32c0f7fd64def40f9bbc47d769095a21, type: 3}
+    animationName: skill4
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Group
+    damageMode: Rect
+    SummonId: 0
+    buffID: 7
+  - Id: 14
+    name: "\u78A7\u843D\u8F70\u96F7"
+    des: "\u5BF9\u5468\u56F410\u7C73\u654C\u4EBA\u9020\u6210440%\u95EA\u7535\u4F24\u5BB3\u3002"
+    cool: 60
+    cost: 90
+    distance: 10
+    attackAngle: 0
+    type: 1
+    Recovery: 0
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 1002
+    originalPrefab: {fileID: 1343113320934766, guid: 5e6327a577022144cbd90aec1cb90fe3, type: 3}
+    icon: {fileID: 21300000, guid: 9b59653f7ef8c49478e9fdcde3bf65a6, type: 3}
+    animationName: xp
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Group
+    damageMode: Circle
+    SummonId: 0
+    buffID: 0
+  - Id: 1001
+    name: "\u5730\u72F1\u4E1A\u706B2"
+    des: 
+    cool: 0
+    cost: 0
+    distance: 3
+    attackAngle: 180
+    type: 1
+    Recovery: 0
+    damage: 0
+    fireDamage: 200
+    iceDamage: 0
+    electricityDamage: 0
+    poisonDamage: 0
+    durationTime: 0.1
+    damageInterval: 0.06
+    nextSkillId: 0
+    originalPrefab: {fileID: 1980985589163678, guid: 6355e01c6639b3f47b9f63d8ac0c6caf, type: 3}
+    icon: {fileID: 0}
+    animationName: 
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Group
+    damageMode: Circle
+    SummonId: 0
+    buffID: 1
+  - Id: 1002
+    name: "\u78A7\u843D\u8F70\u96F72"
+    des: 
+    cool: 0
+    cost: 0
+    distance: 10
+    attackAngle: 0
+    type: 1
+    Recovery: 0
+    damage: 0
+    fireDamage: 0
+    iceDamage: 0
+    electricityDamage: 44
+    poisonDamage: 0
+    durationTime: 1.01
+    damageInterval: 0.1
+    nextSkillId: 0
+    originalPrefab: {fileID: 1844285807780232, guid: c6edfa6fbbb698e4bbd46f7b173b1297, type: 3}
+    icon: {fileID: 0}
+    animationName: 
+    hitFxName: {fileID: 5040675770890718973, guid: 9413cf63cc255f545b16b3d45a495f75, type: 3}
+    attackType: Group
+    damageMode: Circle
+    SummonId: 0
+    buffID: 0
+  AfterSearchDatalist: []
+  searchid: 

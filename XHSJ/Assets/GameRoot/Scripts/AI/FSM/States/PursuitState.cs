@@ -23,7 +23,7 @@ namespace AI.FSM {
                 fsm.MoveToTarget(
                     fsm.targetObject.transform.position,
                     fsm.moveSpeed,
-                    fsm.chStatus.attackDistance);
+                    fsm.chStatus.chBase.attackDistance);
                 // 播放响应的动画
                 fsm.PlayAnimation(fsm.animParams.Run);
             }

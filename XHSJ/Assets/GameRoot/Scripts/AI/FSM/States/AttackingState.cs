@@ -25,7 +25,7 @@ namespace AI.FSM {
                 fsm.transform.LookAt(fsm.targetObject.transform);
 
             if (nextAttackTime <= Time.time) {
-                fsm.UseSkill(); nextAttackTime = Time.time + fsm.chStatus.attackSpeed;
+                fsm.UseSkill(); nextAttackTime = Time.time + fsm.chStatus.chBase.attackSpeed;
             }
         }
     }

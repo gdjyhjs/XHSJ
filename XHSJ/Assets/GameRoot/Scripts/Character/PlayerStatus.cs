@@ -40,7 +40,7 @@ namespace ARPGDemo.Character //格式缩进
         /// </summary>
         public override void Dead()
         {
-            HP = MaxHP;
+            chBase.HP = chBase.MaxHP;
             //throw new System.NotImplementedException();
         }
 

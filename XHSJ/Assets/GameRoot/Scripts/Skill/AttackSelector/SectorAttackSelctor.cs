@@ -24,7 +24,7 @@ namespace ARPGDemo.Skill {
             // 2 从所有攻击目标中 找出攻击范围中活着的敌人
             list = list.FindAll(go => 
                 Vector3.Distance(go.transform.position, depTf.position) < skillData.attackDistance 
-                && go.GetComponent<CharacterStatus>().HP > 0
+                && go.GetComponent<CharacterStatus>().chBase.HP > 0
                 && Vector3.Angle(depTf.forward, go.transform.position - depTf.position) <= skillData.attackAngle);
             if (null == list || list.Count <= 0) {
                 return null;

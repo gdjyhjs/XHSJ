@@ -8,29 +8,6 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public abstract class PostEffectBase : MonoBehaviour
 {
-    protected void CheckResources()
-    {
-        bool isSupported = CheckSupport();
-        if (isSupported == false) {
-            NotStpported();
-        }
-    }
-
-    private bool CheckSupport() {
-        if (SystemInfo.supportsImageEffects == false || SystemInfo.supportsRenderTextures == false) {
-            return false;
-        }
-        return true;
-    }
-
-    private void NotStpported() {
-        enabled = false;
-    }
-
-    protected void Start() {
-        CheckResources();
-    }
-
     protected Material CheckShaderAndCreateMaterial(Shader shader, Material material) {
         if (shader == null) {
             return null;

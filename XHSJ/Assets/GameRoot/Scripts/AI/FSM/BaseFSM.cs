@@ -66,7 +66,7 @@ namespace AI.FSM
                 return;
             }
             //2 选出视距内，且活着的物体
-            list = list.FindAll(go => Vector3.Distance(go.transform.position, transform.position) < sightDistance && go.GetComponent<CharacterStatus>().HP > 0);
+            list = list.FindAll(go => Vector3.Distance(go.transform.position, transform.position) < sightDistance && go.GetComponent<CharacterStatus>().chBase.HP > 0);
             if (null == list || list.Count <= 0) {
                 return;
             }
