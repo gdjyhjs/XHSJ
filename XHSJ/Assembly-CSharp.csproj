@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2020.1.17f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\GameRoot\Scripts\Common\MonoSingleton.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\StaticDataItem.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_PlayRandomSound.cs" />
@@ -60,7 +63,9 @@
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_ChangeWalkingSound.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_SimpleFPSController.cs" />
     <Compile Include="Assets\GameRoot\PostProcessing\MotionBlur.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Item\ItemBase.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\SkillDeployer.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Common\UniqueIdObject.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\TargetImpact\TargetImpact.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\DeployerConfigFactory.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\ReachPlayerTrigger.cs" />
@@ -86,9 +91,11 @@
     <Compile Include="Assets\GameRoot\PostProcessing\PostEffectBase.cs" />
     <Compile Include="Assets\Suriyun\Scripts\Swapper.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Login\LoginMainLogic.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Common\Delay.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\WithOutAttackTrigger.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Character\CharacterAnimation.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Login\GameStateManager.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Character\CharacterBase.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\Npc\NpcCreate.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Common\FileHelper.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\States\FSMState.cs" />
@@ -106,6 +113,7 @@
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Wind.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\StaticDataLocazation.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\AnimationParameter.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\DataManager\SaveLoadData.cs" />
     <Compile Include="Assets\GameRoot\PostProcessing\GaussianBlur.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\FSMStateID.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\NoHealthTrigger.cs" />
@@ -116,6 +124,7 @@
     <Compile Include="Assets\GameRoot\Scripts\Character\PlayerStatus.cs" />
     <Compile Include="Assets\GameRoot\PostProcessing\MotionBlurWithDepthTexture.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\MeleeSkillDeployer.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Character\CharacterEnum\AttrEnum.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Snow.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\AIConfiguration.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\SawPlayerTrigger.cs" />
@@ -124,6 +133,7 @@
     <Compile Include="Assets\GameRoot\Scripts\TopInfo\UICamera.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Character\CharacterInputController.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_Fog_PP.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\Item\ItemType.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\FSMTrigger.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Common\ResourceManager.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\StaticDataRoleBase.cs" />
@@ -145,13 +155,6 @@
     <Compile Include="Assets\GameRoot\Config\scripts\StaticDataSkillData.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\AttackSelector\IAttackSelector.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\AttackSelector\CircleAttackSelctor.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\DataManager\SaveLoadData.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\Common\Delay.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\Item\ItemBase.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\Character\CharacterBase.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\Item\ItemType.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\Character\CharacterEnum\AttrEnum.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\Common\UniqueIdObject.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
@@ -171,9 +174,11 @@
      <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
      <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
      <None Include="Assets\IL3DN\Shaders\IL3DN_Terrain.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Unlit-Normal.shader" />
      <None Include="Assets\IL3DN\Shaders\IL3DN_Branch.shader" />
      <None Include="Assets\GameRoot\PostProcessing\GaussianBlur.shader" />
      <None Include="Assets\IL3DN\Shaders\IL3DN_Sky.shader" />
+     <None Include="Assets\Seven\Shaders\Resources\Dissolve.shader" />
      <None Include="Assets\Suriyun\README.txt" />
      <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
      <None Include="Assets\IL3DN\Shaders\IL3DN_Decals.shader" />
@@ -757,6 +762,9 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
@@ -768,9 +776,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

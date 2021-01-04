@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2020.1.17f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\GameRoot\Config\scripts\Editor\EditStaticDataBuff.cs" />
     <Compile Include="Assets\IL3DN\Scripts\Editor\IL3DN_Snow_Editor.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\Editor\EditStaticDataItem.cs" />
@@ -61,11 +64,11 @@
     <Compile Include="Assets\GameRoot\Config\scripts\Editor\EditStaticData.cs" />
     <Compile Include="Assets\IL3DN\Scripts\Editor\IL3DN_ColorManagerTextures_Editor.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\Editor\EditStaticDataLocation.cs" />
+    <Compile Include="Assets\GameRoot\Config\scripts\Editor\tools\CustomDraw.cs" />
     <Compile Include="Assets\IL3DN\Scripts\Editor\IL3DN_Wind_Editor.cs" />
     <Compile Include="Assets\IL3DN\Scripts\Editor\IL3DN_ColorManagerEffects_Editor.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\Editor\EditStaticDataAttrDes.cs" />
     <Compile Include="Assets\IL3DN\Scripts\Editor\IL3DN_ColorController_Editor.cs" />
-    <Compile Include="Assets\GameRoot\Config\scripts\Editor\tools\CustomDraw.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\GameRoot\Config\scripts\Editor\dll\Excel.dll" />
@@ -263,11 +266,14 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.17f1c1\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.17f1c1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.1.17f1c1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\15.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
     <Reference Include="EPPlus">
       <HintPath>Assets\GameRoot\Config\scripts\Editor\dll\EPPlus.dll</HintPath>
@@ -653,6 +659,9 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Postprocessing.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
@@ -664,9 +673,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
