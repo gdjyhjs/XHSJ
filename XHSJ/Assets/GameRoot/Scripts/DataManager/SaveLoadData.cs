@@ -38,51 +38,50 @@ public static class SaveLoadData
             CharacterBase cb = ch.chBase;
             try {
                 var tmpFilePath = tmpSavePath + "/" + idx;
-                StreamWriter stream = new StreamWriter(tmpFilePath);
+                WriteByteFile file = new WriteByteFile(tmpFilePath);
                 // 写入基本属性数据
-                stream.Write(cb.staticData.Id);// 角色配置
-                stream.Write(cb.position.x);
-                stream.Write(cb.position.y);
-                stream.Write(cb.position.z);
-                stream.Write(cb.charName);
-                stream.Write(cb.Level);
-                stream.Write(cb.Exp);
+                file.Write(cb.staticData.Id);// 角色配置
+                file.Write(cb.position.x);
+                file.Write(cb.position.y);
+                file.Write(cb.position.z);
+                file.Write(cb.charName);
+                file.Write(cb.Level);
+                file.Write(cb.Exp);
                 // 写入物品数量
-                stream.Write(cb.items.Count);
+                file.Write(cb.items.Count);
                 // 写入装备数量
-                stream.Write(cb.equips.Count);
+                file.Write(cb.equips.Count);
                 // 写入物品
                 foreach (ItemAttribute item in cb.items) {
-                    stream.Write(item.staticData.Id);
-                    stream.Write(item.id);
-                    stream.Write(item.staticData);
-                    stream.Write(item.hp);
-                    stream.Write(item.sp);
-                    stream.Write(item.strength);
-                    stream.Write(item.magic);
-                    stream.Write(item.speed);
-                    stream.Write(item.defence);
-                    stream.Write(item.fireResistance);
-                    stream.Write(item.iceResistance);
-                    stream.Write(item.electricityResistance);
-                    stream.Write(item.poisonResistance);
-                    stream.Write(item.attackDistance);
-                    stream.Write(item.energy);
-                    stream.Write(item.weight);
-                    stream.Write(item.fireDamage);
-                    stream.Write(item.iceDamage);
-                    stream.Write(item.electricityDamage);
-                    stream.Write(item.poisonDamage);
-                    stream.Write(item.fireAppend);
-                    stream.Write(item.iceAppend);
-                    stream.Write(item.electricityAppend);
-                    stream.Write(item.poisonAppend);
+                    file.Write(item.staticData.Id);
+                    file.Write(item.id);
+                    file.Write(item.hp);
+                    file.Write(item.sp);
+                    file.Write(item.strength);
+                    file.Write(item.magic);
+                    file.Write(item.speed);
+                    file.Write(item.defence);
+                    file.Write(item.fireResistance);
+                    file.Write(item.iceResistance);
+                    file.Write(item.electricityResistance);
+                    file.Write(item.poisonResistance);
+                    file.Write(item.attackDistance);
+                    file.Write(item.energy);
+                    file.Write(item.weight);
+                    file.Write(item.fireDamage);
+                    file.Write(item.iceDamage);
+                    file.Write(item.electricityDamage);
+                    file.Write(item.poisonDamage);
+                    file.Write(item.fireAppend);
+                    file.Write(item.iceAppend);
+                    file.Write(item.electricityAppend);
+                    file.Write(item.poisonAppend);
                 }
                 // 写入装备
                 foreach (var item in cb.equips) {
-                    stream.Write(item.id);
+                    file.Write(item.id);
                 }
-                stream.Close();
+                file.Close();
             } catch (System.Exception e) {
                 Debug.LogError(e.Message + "\n" + e.StackTrace);
                 throw;
@@ -92,8 +91,8 @@ public static class SaveLoadData
         // 写入其他数据
         try {
             var tmpFilePath = tmpSavePath + "/Global";
-            StreamWriter stream = new StreamWriter(tmpFilePath);
-            stream.Write(idx);// 角色数量
+            WriteByteFile stream = new WriteByteFile(tmpFilePath);
+            stream.Write(NpcCreate.instance.allChar.Count);// 角色总数量
             // 以后还会写入时间等数据
             stream.Close();
         } catch (System.Exception e) {
@@ -122,15 +121,68 @@ public static class SaveLoadData
 #else
         UnityEngine.SceneManagement.SceneManager.LoadScene("myDemo");
 #endif
-        uint count;
+        int allRoleCount = 0;
         try {
-            StreamReader stream = new StreamReader(globalFile);
-            //count = stream.Read();
+            ReadByteFile stream = new ReadByteFile(globalFile);
+            stream.Read(out allRoleCount);
             stream.Close();
         } catch (System.Exception e) {
             Debug.LogError(e.Message + "\n" + e.StackTrace);
             throw;
         }
+        if (allRoleCount <= 0) {
+            return false;
+        }
+        for (int i = 0; i < allRoleCount; i++) {
+            try {
+                ReadByteFile file = new ReadByteFile(globalFile);
+                file.Read(out allRoleCount);
+                // 读取基本属性数据
+                file.Read(out string staticDataId);// 角色配置
+                file.Read(out float position_x);
+                file.Read(out float position_y);
+                file.Read(out float position_z);
+                file.Read(out string charName);
+                file.Read(out int Level);
+                file.Read(out ulong Exp);
+                // 读取物品数量
+                file.Read(out int items_Count);
+                // 读取装备数量
+                file.Read(out int equips_Count);
+                for (int j = 0; j < items_Count; j++) {
+                    file.Read(out string item_staticData_Id);
+                    file.Read(out uint item_id);
+                    file.Read(out double item_hp);
+                    file.Read(out double item_sp);
+                    file.Read(out double item_strength);
+                    file.Read(out double item_magic);
+                    file.Read(out double item_speed);
+                    file.Read(out double item_defence);
+                    file.Read(out double item_fireResistance);
+                    file.Read(out double item_iceResistance);
+                    file.Read(out double item_electricityResistance);
+                    file.Read(out double item_poisonResistance);
+                    file.Read(out double item_attackDistance);
+                    file.Read(out double item_energy);
+                    file.Read(out double item_weight);
+                    file.Read(out double item_fireDamage);
+                    file.Read(out double item_iceDamage);
+                    file.Read(out double item_electricityDamage);
+                    file.Read(out double item_poisonDamage);
+                    file.Read(out double item_fireAppend);
+                    file.Read(out double item_iceAppend);
+                    file.Read(out double item_electricityAppend);
+                    file.Read(out double item_poisonAppend);
+                    ItemAttribute item = null;
+                }
+                file.Close();
+            } catch (System.Exception e) {
+                Debug.LogError(e.Message + "\n" + e.StackTrace);
+                throw;
+            }
+        }
+
+
         return true;
     }
 }
