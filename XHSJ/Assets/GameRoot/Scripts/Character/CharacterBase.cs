@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ARPGDemo.Skill;
 
-public class CharacterBase: UniqueIdObject {
+public class CharacterBase: UniqueIdObject<CharacterBase> {
     public StaticDataRoleBaseEle staticData;
 
     public List<ItemAttribute> items = new List<ItemAttribute>();
@@ -139,13 +139,23 @@ public class CharacterBase: UniqueIdObject {
     /// </summary>
     public ulong NeedExp;
 
-    private CharacterBase() {
+    protected CharacterBase() {
     }
 
-    public static T Create<T>(GameObject obj, int id, string name, int level = 1) where T : CharacterBase, new() {
-        var staticData = MainStaticDataCenter.instance.roleBaseTable.datalist[id];
-        var itemBase = new T();
-        if (CreateUniqueId(itemBase)) {
+    public T Create<T>(int staticId) where T : CharacterBase, new() {
+        int level = Random.Range(1, 100);
+        return Create<T>(staticId, null, level);
+    }
+
+    public static T Create<T>( int staticId, string name = null, int level = 1) where T : CharacterBase, new() {
+        var staticData = MainStaticDataCenter.instance.roleBaseTable.datalist[staticId];
+        uint uid = GetUniqueId();
+        if (uid > 0) {
+            if (name == null) {
+                name = CreateName.GetRandomSurnnameName((int)uid);
+            }
+
+            var itemBase = new T();
             itemBase.staticData = staticData;
 
             // 默认添加空手为武器
@@ -279,15 +289,6 @@ public class CharacterBase: UniqueIdObject {
         return result;
     }
 
-    static private void Test() {
-        for (float i = 1; i <= 100; i+=0.5f) {
-            double streng = i;
-            double magic = 100 - i;
-            var v = CalculationPlay(streng, magic, true);
-            System.Console.WriteLine(streng +"/" + magic + "=" + v);
-        }
-    }
-
     /// <summary>
     /// 获取装备的武器
     /// </summary>
@@ -301,4 +302,5 @@ public class CharacterBase: UniqueIdObject {
         }
         return weapon;
     }
+
 }
