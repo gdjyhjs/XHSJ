@@ -51,6 +51,7 @@ public class  StaticDataItemEle :  StaticIDData<string>
     public double max_electricityAppend;
     public double min_poisonAppend;
     public double max_poisonAppend;
+    public bool universal;
 }
 
 public class  StaticDataItem :  StaticIDDataTable< StaticDataItemEle, string>

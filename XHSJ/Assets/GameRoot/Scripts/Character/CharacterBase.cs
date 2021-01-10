@@ -6,8 +6,8 @@ using ARPGDemo.Skill;
 public class CharacterBase: UniqueIdObject<CharacterBase> {
     public StaticDataRoleBaseEle staticData;
 
-    public List<ItemAttribute> items = new List<ItemAttribute>();
-    public List<ItemAttribute> equips = new List<ItemAttribute>();
+    public List<int> items = new List<int>();
+    public List<int> equips = new List<int>();
     public List<SkillData> skills = new List<SkillData>();
 
     public Vector3 position;
@@ -159,7 +159,7 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
             itemBase.staticData = staticData;
 
             // 默认添加空手为武器
-            ItemAttribute weapon = ItemAttribute.Create<ItemAttribute>(0);
+            ItemBase weapon = ItemBase.Create<ItemBase>(0);
             itemBase.items.Add(weapon);
             itemBase.equips.Add(weapon);
 
@@ -194,7 +194,7 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
         } else {
             spRate = SP / MaxSP;
         }
-        ItemAttribute weapon = GetEquipWeapon();
+        ItemBase weapon = GetEquipWeapon();
         attackDistance = 1.5f;
         attackSpeed = (float)staticData.speed;
         moveSpeed = (float)staticData.speed;
@@ -238,7 +238,7 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
         double equipWeight = 0;
         double speed = 1;
 
-        foreach (ItemAttribute item in equips) {
+        foreach (ItemBase item in equips) {
             equipWeight += item.weight;
 
             // 计算重量发挥和能量发挥
@@ -292,8 +292,8 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
     /// <summary>
     /// 获取装备的武器
     /// </summary>
-    public ItemAttribute GetEquipWeapon() {
-        ItemAttribute weapon = null;
+    public ItemBase GetEquipWeapon() {
+        ItemBase weapon = null;
         foreach (var item in equips) {
             if (item.staticData.type == ItemType.Weapon) {
                 weapon = item;

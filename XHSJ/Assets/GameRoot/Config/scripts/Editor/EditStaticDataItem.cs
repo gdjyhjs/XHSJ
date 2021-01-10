@@ -283,6 +283,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
                 }
                 return true;
             });
+            RegisterReadingMethod("通用的", (_data, _value) => {
+
+                _data.universal = _value == "1" ? true : false;
+                return true;
+            });
         }
     }
 

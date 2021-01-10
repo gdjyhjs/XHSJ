@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemAttribute: UniqueIdObject<ItemAttribute> {
+public class ItemBase: UniqueIdObject<ItemBase> {
     /// <summary>
     /// 通用物品 {配置表的id，实例化的唯一uid}
     /// </summary>
@@ -30,7 +30,7 @@ public class ItemAttribute: UniqueIdObject<ItemAttribute> {
     public double electricityAppend;
     public double poisonAppend;
 
-    public static T Create<T>(int staticId) where T: ItemAttribute,new() {
+    public static T Create<T>(int staticId) where T: ItemBase,new() {
         var staticData = MainStaticDataCenter.instance.itemTable.datalist[staticId];
         var itemBase = new T();
         uint uid = GetUniqueId();
@@ -62,9 +62,9 @@ public class ItemAttribute: UniqueIdObject<ItemAttribute> {
         }
     }
 
-    public static T CreateCommon<T>(int id) where T : ItemAttribute, new() {
+    public static T CreateCommon<T>(int id) where T : ItemBase, new() {
         if (comItems.ContainsKey(id)) {
-            return comItems[id];
+            return ItemBase.Instance.depot[comItems[id]] as T;
         }
 
         var staticData = MainStaticDataCenter.instance.itemTable.datalist[id];

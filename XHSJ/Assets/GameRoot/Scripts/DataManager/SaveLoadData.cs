@@ -52,7 +52,7 @@ public static class SaveLoadData
                 // 写入装备数量
                 file.Write(cb.equips.Count);
                 // 写入物品
-                foreach (ItemAttribute item in cb.items) {
+                foreach (ItemBase item in cb.items) {
                     file.Write(item.staticData.Id);
                     file.Write(item.id);
                     file.Write(item.hp);
@@ -173,7 +173,7 @@ public static class SaveLoadData
                     file.Read(out double item_iceAppend);
                     file.Read(out double item_electricityAppend);
                     file.Read(out double item_poisonAppend);
-                    ItemAttribute item = null;
+                    ItemBase item = null;
                 }
                 file.Close();
             } catch (System.Exception e) {
