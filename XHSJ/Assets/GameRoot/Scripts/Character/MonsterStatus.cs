@@ -13,8 +13,6 @@ namespace ARPGDemo.Character
     /// </summary>
     public class MonsterStatus : CharacterStatus
     {
-
-
         public byte maxEnemy = 99;
         public List<CharacterStatus> enemys;
         public int GiveExp;

@@ -7,7 +7,8 @@ public class LoginMainLogic : MonoBehaviour
 {
     public float speed = 1;
     public CanvasGroup canvasGroup;
-    public GameObject staticDataCenter;
+    public GameObject continueGameBtn;
+
     void Awake()
     {
         var anim = FindObjectsOfType<Animation>();
@@ -24,6 +25,7 @@ public class LoginMainLogic : MonoBehaviour
                 StartCoroutine(ShowMenu());
             }, .25f, 20);
         }
+        continueGameBtn.SetActive(SaveLoadData.HasArchives());
     }
 
     private void Start() {
@@ -44,7 +46,7 @@ public class LoginMainLogic : MonoBehaviour
     }
 
     public void ContinueGame() {
-
+        SaveLoadData.LoadGame();
     }
 
     public void NewGame() {

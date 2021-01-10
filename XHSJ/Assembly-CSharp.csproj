@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2020.1.17f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\GameRoot\Scripts\Common\MonoSingleton.cs" />
     <Compile Include="Assets\GameRoot\Config\scripts\StaticDataItem.cs" />
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_PlayRandomSound.cs" />
@@ -78,6 +75,7 @@
     <Compile Include="Assets\IL3DN\Scripts\IL3DN_ColorManagerTextures.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\SelfImpact\ISelfImpact.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Common\FSMTriggerID.cs" />
+    <Compile Include="Assets\GameRoot\Scripts\DataManager\GameData.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\States\PursuitState.cs" />
     <Compile Include="Assets\GameRoot\Scripts\AI\FSM\Conditions\CanReviveTrigger.cs" />
     <Compile Include="Assets\GameRoot\Scripts\TopInfo\TopInfoManager.cs" />
@@ -157,7 +155,6 @@
     <Compile Include="Assets\GameRoot\Config\scripts\StaticDataSkillData.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\AttackSelector\IAttackSelector.cs" />
     <Compile Include="Assets\GameRoot\Scripts\Skill\AttackSelector\CircleAttackSelctor.cs" />
-    <Compile Include="Assets\GameRoot\Scripts\DataManager\GameData.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />

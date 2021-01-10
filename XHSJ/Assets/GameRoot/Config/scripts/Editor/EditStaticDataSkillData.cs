@@ -26,85 +26,85 @@ class  EditStaticDataSkillData :  EditStringIDTemplateStaticData< StaticDataSkil
 
 
             RegisterReadingMethod("冷却", (_data, _value) => {
-                _data.cool = double.Parse(_value);
+                _data.cool = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("消耗", (_data, _value) => {
-                _data.cost = double.Parse(_value);
+                _data.cost = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("距离", (_data, _value) => {
-                _data.distance = double.Parse(_value);
+                _data.distance = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("角度范围", (_data, _value) => {
-                _data.attackAngle = double.Parse(_value);
+                _data.attackAngle = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("类型", (_data, _value) => {
-                _data.type = double.Parse(_value);
+                _data.type = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("恢复", (_data, _value) => {
-                _data.Recovery = double.Parse(_value);
+                _data.Recovery = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("伤害", (_data, _value) => {
-                _data.damage = double.Parse(_value);
+                _data.damage = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("火伤", (_data, _value) => {
-                _data.fireDamage = double.Parse(_value);
+                _data.fireDamage = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("冰伤", (_data, _value) => {
-                _data.iceDamage = double.Parse(_value);
+                _data.iceDamage = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("电伤", (_data, _value) => {
-                _data.electricityDamage = double.Parse(_value);
+                _data.electricityDamage = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("毒伤", (_data, _value) => {
-                _data.poisonDamage = double.Parse(_value);
+                _data.poisonDamage = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("持续时间", (_data, _value) => {
-                _data.durationTime = double.Parse(_value);
+                _data.durationTime = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("伤害间隔", (_data, _value) => {
-                _data.damageInterval = double.Parse(_value);
+                _data.damageInterval = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("下一个技能", (_data, _value) => {
-                _data.nextSkillId = double.Parse(_value);
+                _data.nextSkillId = float.Parse(_value);
                 return true;
             });
 
@@ -153,13 +153,13 @@ class  EditStaticDataSkillData :  EditStringIDTemplateStaticData< StaticDataSkil
 
 
             RegisterReadingMethod("召唤物ID", (_data, _value) => {
-                _data.SummonId = double.Parse(_value);
+                _data.SummonId = float.Parse(_value);
                 return true;
             });
 
 
             RegisterReadingMethod("buffID", (_data, _value) => {
-                _data.buffID = double.Parse(_value);
+                _data.buffID = float.Parse(_value);
                 return true;
             });
         }

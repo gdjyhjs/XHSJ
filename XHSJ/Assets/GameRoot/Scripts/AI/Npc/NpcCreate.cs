@@ -7,29 +7,39 @@ public class NpcCreate : MonoSingleton<NpcCreate> {
     public List<CharacterStatus> allChar = new List<CharacterStatus>();
     public GameObject player;
     public GameObject enemy;
+    public uint mainRoleId = 1;
     // Start is called before the first frame update
-    void Init()
+    void Awake()
     {
+        Debug.LogError("开始创建角色");
         CreateMainPlayer();
         CreateNpc();
     }
 
     void CreateMainPlayer() {
-        var obj = Instantiate<GameObject>(player, GetPos(new Vector3(0, 0, -6)), default);
-        obj.SetActive(true);
-        obj.transform.SetParent(transform);
-        var mainChar = obj.GetComponent<CharacterStatus>();
-        mainChar.chBase.charName = "玩家";
-        allChar.Add(mainChar);
+        if (CharacterBase.depot.ContainsKey(mainRoleId)) {
+            CharacterBase mainRole = CharacterBase.depot[mainRoleId];
+            var obj = Instantiate<GameObject>(player, GetPos(mainRole.position), default);
+            obj.SetActive(true);
+            obj.transform.SetParent(transform);
+            var mainChar = obj.GetComponent<CharacterStatus>();
+            mainChar.chBase = mainRole;
+            allChar.Add(mainChar);
+        } else {
+            Debug.LogError("不存在主角数据");
+        }
     }
 
     void CreateNpc() {
-        for (int i = -1; i < 2; i++) {
-            var obj = Instantiate<GameObject>(enemy, GetPos(new Vector3(i * 6, 0, 6)), default);
+        foreach (KeyValuePair<uint, CharacterBase> item in CharacterBase.depot) {
+            CharacterBase ch = item.Value;
+            if (ch.uid == mainRoleId)
+                continue;
+            var obj = Instantiate<GameObject>(enemy, GetPos(ch.position), default);
             obj.SetActive(true);
             obj.transform.SetParent(transform);
             var npcChar = obj.GetComponent<ARPGDemo.Character.CharacterStatus>();
-            npcChar.chBase.charName = "陪练" + (i + 2);
+            npcChar.chBase = ch;
             allChar.Add(npcChar);
         }
     }
@@ -40,5 +50,14 @@ public class NpcCreate : MonoSingleton<NpcCreate> {
             return hit.point;
         }
         return pos;
+    }
+
+    private void OnGUI() {
+        if (GUI.Button(new Rect(50, 50, 100, 40), "存档")){
+            SaveLoadData.SaveGame();
+        }
+        if (GUI.Button(new Rect(50, 150, 100, 40), "读档")) {
+            SaveLoadData.LoadGame();
+        }
     }
 }

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using ARPGDemo.Skill;
 
+[SerializeField]
 public class CharacterBase: UniqueIdObject<CharacterBase> {
     public StaticDataRoleBaseEle staticData;
 
-    public List<int> items = new List<int>();
-    public List<int> equips = new List<int>();
-    public List<SkillData> skills = new List<SkillData>();
+    public HashSet<uint> items;
+    public HashSet<uint> equips;
+    public List<SkillData> skills;
 
     public Vector3 position;
 
@@ -142,42 +143,78 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
     protected CharacterBase() {
     }
 
-    public T Create<T>(int staticId) where T : CharacterBase, new() {
+    public CharacterBase Create(int staticId) {
         int level = Random.Range(1, 100);
-        return Create<T>(staticId, null, level);
+        return Create(staticId, null, level);
     }
 
-    public static T Create<T>( int staticId, string name = null, int level = 1) where T : CharacterBase, new() {
-        var staticData = MainStaticDataCenter.instance.roleBaseTable.datalist[staticId];
+    public static CharacterBase Create( int staticId, string name = null, int level = 1, Vector3 pos = default){
+        var staticData = MainStaticDataCenter.instance.roleBaseTable.findItemWithId(staticId.ToString());
         uint uid = GetUniqueId();
         if (uid > 0) {
             if (name == null) {
                 name = CreateName.GetRandomSurnnameName((int)uid);
             }
 
-            var itemBase = new T();
-            itemBase.staticData = staticData;
+            CharacterBase chBase = new CharacterBase();
+            chBase.uid = uid;
+            chBase.staticData = staticData;
 
+            chBase.items = new HashSet<uint>();
+            chBase.equips = new HashSet<uint>();
+            chBase.skills = new List<SkillData>();
             // 默认添加空手为武器
-            ItemBase weapon = ItemBase.Create<ItemBase>(0);
-            itemBase.items.Add(weapon);
-            itemBase.equips.Add(weapon);
+            chBase.equips.Add(1);
 
             // 设置名字和等级
-            itemBase.charName = name;
-            itemBase.Level = level;
+            chBase.charName = name;
+            chBase.Level = level;
+            chBase.position = pos;
 
             // 初始化满血
-            itemBase.HP = 1;
-            itemBase.SP = 1;
-            itemBase.MaxHP = 1;
-            itemBase.MaxSP = 1;
+            chBase.HP = 1;
+            chBase.SP = 1;
+            chBase.MaxHP = 1;
+            chBase.MaxSP = 1;
 
-            itemBase.UpdateAttribute();
+            chBase.UpdateAttribute();
 
-            return itemBase;
+            Debug.LogError(name + " "+ chBase.HP+"/"+ chBase.MaxHP);
+            return chBase;
         } else {
             return null;
+        }
+    }
+
+    public static void LoadCharacter(string statid_id, uint uid, Vector3 pos, string charName, int charLevel, ulong charExp, HashSet<uint> items, HashSet<uint> equips, int HP, int SP) {
+        var staticData = MainStaticDataCenter.instance.roleBaseTable.findItemWithId(statid_id);
+        uid = GetUniqueId(uid);
+        Debug.LogError("加载角色 "+uid);
+        if (uid > 0) {
+
+            CharacterBase chBase = new CharacterBase();
+            chBase.uid = uid;
+            chBase.staticData = staticData;
+
+            chBase.items = items;
+            chBase.equips = equips;
+            chBase.skills = new List<SkillData>();
+
+            // 设置名字和等级
+            chBase.charName = charName;
+            chBase.Level = charLevel;
+            chBase.position = pos;
+
+            // 初始化满血
+            chBase.HP = HP;
+            chBase.SP = SP;
+            chBase.MaxHP = 1;
+            chBase.MaxSP = 1;
+
+            chBase.UpdateAttribute();
+
+            chBase.HP = HP;
+            chBase.SP = SP;
         }
     }
 
@@ -187,12 +224,12 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
         if (MaxHP <= 0 || HP <= 0) {
             hpRate = 0;
         } else {
-            hpRate = HP / MaxHP;
+            hpRate = HP / (double)MaxHP;
         }
         if (MaxSP <= 0 || SP <= 0) {
             spRate = 0;
         } else {
-            spRate = SP / MaxSP;
+            spRate = SP / (double)MaxSP;
         }
         ItemBase weapon = GetEquipWeapon();
         attackDistance = 1.5f;
@@ -217,13 +254,13 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
         electricityResistance = (int)staticData.electricityResistance;
         poisonResistance = (int)staticData.poisonResistance;
 
-        skills = new List<SkillData>();
+        skills.Clear();
 
         AddBuffAttribute();
         AddEquipAttribute();
 
-        SP = 0;
-        HP = 0;
+        SP = (int)(MaxSP * spRate);
+        HP = (int)(MaxHP * hpRate);
     }
 
     private void AddBuffAttribute() {
@@ -238,7 +275,8 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
         double equipWeight = 0;
         double speed = 1;
 
-        foreach (ItemBase item in equips) {
+        foreach (uint uid in equips) {
+            ItemBase item = ItemBase.FindItem(uid);
             equipWeight += item.weight;
 
             // 计算重量发挥和能量发挥
@@ -275,7 +313,7 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
     // 计算发挥
     static private double CalculationPlay(double StrengthOrMagic, double WeightOrEnergy, bool calculationWeight) {
         int id = (int)(calculationWeight ? AttrEnum.weightPlay : AttrEnum.energyPlay);
-        StaticDataAttrDesEle attrData = MainStaticDataCenter.instance.attrDesTable.datalist[id];
+        StaticDataAttrDesEle attrData = MainStaticDataCenter.instance.attrDesTable.findItemWithId(id.ToString());
         double min = attrData.minValue;
         double max = attrData.maxValue;
         double value = System.Math.Tanh(StrengthOrMagic / WeightOrEnergy);
@@ -294,7 +332,8 @@ public class CharacterBase: UniqueIdObject<CharacterBase> {
     /// </summary>
     public ItemBase GetEquipWeapon() {
         ItemBase weapon = null;
-        foreach (var item in equips) {
+        foreach (uint uid in equips) {
+            ItemBase item = ItemBase.FindItem(uid);
             if (item.staticData.type == ItemType.Weapon) {
                 weapon = item;
                 break;

@@ -4,17 +4,15 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class  StaticDataAttrDesEle :  StaticIDData<string>
-{
+public class StaticDataAttrDesEle : StaticIDData<string> {
     public string attr;
     public string name;
     public string des;
-    public double minValue;
-    public double maxValue;
+    public float minValue;
+    public float maxValue;
 }
 
-public class  StaticDataAttrDes :  StaticIDDataTable< StaticDataAttrDesEle, string>
-{
+public class StaticDataAttrDes : StaticIDDataTable<StaticDataAttrDesEle, string> {
 
 }
 

@@ -8,28 +8,28 @@ public class  StaticDataSkillDataEle :  StaticIDData<string>
 {
     public string name;
     public string des;
-    public double cool;
-    public double cost;
-    public double distance;
-    public double attackAngle;
-    public double type;
-    public double Recovery;
-    public double damage;
-    public double fireDamage;
-    public double iceDamage;
-    public double electricityDamage;
-    public double poisonDamage;
-    public double durationTime;
-    public double damageInterval;
-    public double nextSkillId;
+    public float cool;
+    public float cost;
+    public float distance;
+    public float attackAngle;
+    public float type;
+    public float Recovery;
+    public float damage;
+    public float fireDamage;
+    public float iceDamage;
+    public float electricityDamage;
+    public float poisonDamage;
+    public float durationTime;
+    public float damageInterval;
+    public float nextSkillId;
     public GameObject originalPrefab;
     public Sprite icon;
     public string animationName;
     public GameObject hitFxName;
     public string attackType;
     public string damageMode;
-    public double SummonId;
-    public double buffID;
+    public float SummonId;
+    public float buffID;
 }
 
 public class  StaticDataSkillData :  StaticIDDataTable< StaticDataSkillDataEle, string>

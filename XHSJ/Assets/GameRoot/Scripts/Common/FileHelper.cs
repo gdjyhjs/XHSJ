@@ -146,9 +146,9 @@ public class WriteByteFile
     public void Write(string value) {
         byte[] array = Encoding.UTF8.GetBytes(value);
         int len = array.Length;
-        byte[] lendata = BitConverter.GetBytes(len);
-        Write(lendata);
+        Write(len);
         Write(array);
+        Debug.LogError(len+" 保存字符串 " + value);
     }
 }
 
@@ -241,5 +241,6 @@ public class ReadByteFile
         byte[] data = new byte[len];
         file.Read(data, 0, data.Length);
         value = Encoding.UTF8.GetString(data);
+        Debug.LogError(len + " 读取字符串 " + value);
     }
 }

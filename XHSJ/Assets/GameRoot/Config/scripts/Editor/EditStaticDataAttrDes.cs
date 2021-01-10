@@ -30,12 +30,12 @@ class  EditStaticDataAttrDes :  EditStringIDTemplateStaticData< StaticDataAttrDe
             });
 
             RegisterReadingMethod("最小值", (_data, _value) => {
-                _data.minValue = double.Parse( _value);
+                _data.minValue = float.Parse( _value);
                 return true;
             });
 
             RegisterReadingMethod("最大值", (_data, _value) => {
-                _data.maxValue = double.Parse(_value);
+                _data.maxValue = float.Parse(_value);
                 return true;
             });
         }

@@ -3,13 +3,10 @@ using System.Collections;
 using UnityEditor;
 
 
-[CustomEditor(typeof( StaticDataItem))]
-class  EditStaticDataItem :  EditStringIDTemplateStaticData< StaticDataItemEle>
-{
-    public class LocaltionParser :  EditStaticDataTemplateParser< StaticDataItemEle, string>
-    {
-        public override void Init()
-        {
+[CustomEditor(typeof(StaticDataItem))]
+class EditStaticDataItem : EditStringIDTemplateStaticData<StaticDataItemEle> {
+    public class LocaltionParser : EditStaticDataTemplateParser<StaticDataItemEle, string> {
+        public override void Init() {
             base.Init();
 
             /*
@@ -18,8 +15,7 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
              * */
 
-            RegisterReadingMethod("物品名称", (_data, _value) =>
-            {
+            RegisterReadingMethod("物品名称", (_data, _value) => {
                 _data.name = _value;
                 return true;
             });
@@ -35,11 +31,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_hp = double.Parse(value[0]);
-                    _data.max_hp = double.Parse(value[1]);
+                    _data.min_hp = float.Parse(value[0]);
+                    _data.max_hp = float.Parse(value[1]);
                 } else {
-                    _data.min_hp = double.Parse(value[0]);
-                    _data.max_hp = double.Parse(value[0]);
+                    _data.min_hp = float.Parse(value[0]);
+                    _data.max_hp = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -47,11 +43,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_sp = double.Parse(value[0]);
-                    _data.max_sp = double.Parse(value[1]);
+                    _data.min_sp = float.Parse(value[0]);
+                    _data.max_sp = float.Parse(value[1]);
                 } else {
-                    _data.min_sp = double.Parse(value[0]);
-                    _data.max_sp = double.Parse(value[0]);
+                    _data.min_sp = float.Parse(value[0]);
+                    _data.max_sp = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -59,11 +55,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_strength = double.Parse(value[0]);
-                    _data.max_strength = double.Parse(value[1]);
+                    _data.min_strength = float.Parse(value[0]);
+                    _data.max_strength = float.Parse(value[1]);
                 } else {
-                    _data.min_strength = double.Parse(value[0]);
-                    _data.max_strength = double.Parse(value[0]);
+                    _data.min_strength = float.Parse(value[0]);
+                    _data.max_strength = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -71,11 +67,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_magic = double.Parse(value[0]);
-                    _data.max_magic = double.Parse(value[1]);
+                    _data.min_magic = float.Parse(value[0]);
+                    _data.max_magic = float.Parse(value[1]);
                 } else {
-                    _data.min_magic = double.Parse(value[0]);
-                    _data.max_magic = double.Parse(value[0]);
+                    _data.min_magic = float.Parse(value[0]);
+                    _data.max_magic = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -83,11 +79,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_speed = double.Parse(value[0]);
-                    _data.max_speed = double.Parse(value[1]);
+                    _data.min_speed = float.Parse(value[0]);
+                    _data.max_speed = float.Parse(value[1]);
                 } else {
-                    _data.min_speed = double.Parse(value[0]);
-                    _data.max_speed = double.Parse(value[0]);
+                    _data.min_speed = float.Parse(value[0]);
+                    _data.max_speed = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -95,11 +91,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_defence = double.Parse(value[0]);
-                    _data.max_defence = double.Parse(value[1]);
+                    _data.min_defence = float.Parse(value[0]);
+                    _data.max_defence = float.Parse(value[1]);
                 } else {
-                    _data.min_defence = double.Parse(value[0]);
-                    _data.max_defence = double.Parse(value[0]);
+                    _data.min_defence = float.Parse(value[0]);
+                    _data.max_defence = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -107,11 +103,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_fireResistance = double.Parse(value[0]);
-                    _data.max_fireResistance = double.Parse(value[1]);
+                    _data.min_fireResistance = float.Parse(value[0]);
+                    _data.max_fireResistance = float.Parse(value[1]);
                 } else {
-                    _data.min_fireResistance = double.Parse(value[0]);
-                    _data.max_fireResistance = double.Parse(value[0]);
+                    _data.min_fireResistance = float.Parse(value[0]);
+                    _data.max_fireResistance = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -119,11 +115,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_iceResistance = double.Parse(value[0]);
-                    _data.max_iceResistance = double.Parse(value[1]);
+                    _data.min_iceResistance = float.Parse(value[0]);
+                    _data.max_iceResistance = float.Parse(value[1]);
                 } else {
-                    _data.min_iceResistance = double.Parse(value[0]);
-                    _data.max_iceResistance = double.Parse(value[0]);
+                    _data.min_iceResistance = float.Parse(value[0]);
+                    _data.max_iceResistance = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -131,11 +127,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_electricityResistance = double.Parse(value[0]);
-                    _data.max_electricityResistance = double.Parse(value[1]);
+                    _data.min_electricityResistance = float.Parse(value[0]);
+                    _data.max_electricityResistance = float.Parse(value[1]);
                 } else {
-                    _data.min_electricityResistance = double.Parse(value[0]);
-                    _data.max_electricityResistance = double.Parse(value[0]);
+                    _data.min_electricityResistance = float.Parse(value[0]);
+                    _data.max_electricityResistance = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -143,11 +139,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_poisonResistance = double.Parse(value[0]);
-                    _data.max_poisonResistance = double.Parse(value[1]);
+                    _data.min_poisonResistance = float.Parse(value[0]);
+                    _data.max_poisonResistance = float.Parse(value[1]);
                 } else {
-                    _data.min_poisonResistance = double.Parse(value[0]);
-                    _data.max_poisonResistance = double.Parse(value[0]);
+                    _data.min_poisonResistance = float.Parse(value[0]);
+                    _data.max_poisonResistance = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -155,11 +151,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_attackDistance = double.Parse(value[0]);
-                    _data.max_attackDistance = double.Parse(value[1]);
+                    _data.min_attackDistance = float.Parse(value[0]);
+                    _data.max_attackDistance = float.Parse(value[1]);
                 } else {
-                    _data.min_attackDistance = double.Parse(value[0]);
-                    _data.max_attackDistance = double.Parse(value[0]);
+                    _data.min_attackDistance = float.Parse(value[0]);
+                    _data.max_attackDistance = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -167,11 +163,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_energy = double.Parse(value[0]);
-                    _data.max_energy = double.Parse(value[1]);
+                    _data.min_energy = float.Parse(value[0]);
+                    _data.max_energy = float.Parse(value[1]);
                 } else {
-                    _data.min_energy = double.Parse(value[0]);
-                    _data.max_energy = double.Parse(value[0]);
+                    _data.min_energy = float.Parse(value[0]);
+                    _data.max_energy = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -179,11 +175,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_weight = double.Parse(value[0]);
-                    _data.max_weight = double.Parse(value[1]);
+                    _data.min_weight = float.Parse(value[0]);
+                    _data.max_weight = float.Parse(value[1]);
                 } else {
-                    _data.min_weight = double.Parse(value[0]);
-                    _data.max_weight = double.Parse(value[0]);
+                    _data.min_weight = float.Parse(value[0]);
+                    _data.max_weight = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -191,11 +187,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_fireDamage = double.Parse(value[0]);
-                    _data.max_fireDamage = double.Parse(value[1]);
+                    _data.min_fireDamage = float.Parse(value[0]);
+                    _data.max_fireDamage = float.Parse(value[1]);
                 } else {
-                    _data.min_fireDamage = double.Parse(value[0]);
-                    _data.max_fireDamage = double.Parse(value[0]);
+                    _data.min_fireDamage = float.Parse(value[0]);
+                    _data.max_fireDamage = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -203,11 +199,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_iceDamage = double.Parse(value[0]);
-                    _data.max_iceDamage = double.Parse(value[1]);
+                    _data.min_iceDamage = float.Parse(value[0]);
+                    _data.max_iceDamage = float.Parse(value[1]);
                 } else {
-                    _data.min_iceDamage = double.Parse(value[0]);
-                    _data.max_iceDamage = double.Parse(value[0]);
+                    _data.min_iceDamage = float.Parse(value[0]);
+                    _data.max_iceDamage = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -215,11 +211,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_electricityDamage = double.Parse(value[0]);
-                    _data.max_electricityDamage = double.Parse(value[1]);
+                    _data.min_electricityDamage = float.Parse(value[0]);
+                    _data.max_electricityDamage = float.Parse(value[1]);
                 } else {
-                    _data.min_electricityDamage = double.Parse(value[0]);
-                    _data.max_electricityDamage = double.Parse(value[0]);
+                    _data.min_electricityDamage = float.Parse(value[0]);
+                    _data.max_electricityDamage = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -227,11 +223,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_poisonDamage = double.Parse(value[0]);
-                    _data.max_poisonDamage = double.Parse(value[1]);
+                    _data.min_poisonDamage = float.Parse(value[0]);
+                    _data.max_poisonDamage = float.Parse(value[1]);
                 } else {
-                    _data.min_poisonDamage = double.Parse(value[0]);
-                    _data.max_poisonDamage = double.Parse(value[0]);
+                    _data.min_poisonDamage = float.Parse(value[0]);
+                    _data.max_poisonDamage = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -239,11 +235,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_fireAppend = double.Parse(value[0]);
-                    _data.max_fireAppend = double.Parse(value[1]);
+                    _data.min_fireAppend = float.Parse(value[0]);
+                    _data.max_fireAppend = float.Parse(value[1]);
                 } else {
-                    _data.min_fireAppend = double.Parse(value[0]);
-                    _data.max_fireAppend = double.Parse(value[0]);
+                    _data.min_fireAppend = float.Parse(value[0]);
+                    _data.max_fireAppend = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -251,11 +247,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_iceAppend = double.Parse(value[0]);
-                    _data.max_iceAppend = double.Parse(value[1]);
+                    _data.min_iceAppend = float.Parse(value[0]);
+                    _data.max_iceAppend = float.Parse(value[1]);
                 } else {
-                    _data.min_iceAppend = double.Parse(value[0]);
-                    _data.max_iceAppend = double.Parse(value[0]);
+                    _data.min_iceAppend = float.Parse(value[0]);
+                    _data.max_iceAppend = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -263,11 +259,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_electricityAppend = double.Parse(value[0]);
-                    _data.max_electricityAppend = double.Parse(value[1]);
+                    _data.min_electricityAppend = float.Parse(value[0]);
+                    _data.max_electricityAppend = float.Parse(value[1]);
                 } else {
-                    _data.min_electricityAppend = double.Parse(value[0]);
-                    _data.max_electricityAppend = double.Parse(value[0]);
+                    _data.min_electricityAppend = float.Parse(value[0]);
+                    _data.max_electricityAppend = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -275,11 +271,11 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
 
                 string[] value = _value.Split('-');
                 if (value.Length == 2) {
-                    _data.min_poisonAppend = double.Parse(value[0]);
-                    _data.max_poisonAppend = double.Parse(value[1]);
+                    _data.min_poisonAppend = float.Parse(value[0]);
+                    _data.max_poisonAppend = float.Parse(value[1]);
                 } else {
-                    _data.min_poisonAppend = double.Parse(value[0]);
-                    _data.max_poisonAppend = double.Parse(value[0]);
+                    _data.min_poisonAppend = float.Parse(value[0]);
+                    _data.max_poisonAppend = float.Parse(value[0]);
                 }
                 return true;
             });
@@ -291,8 +287,7 @@ name	des	type	hp	sp	strength	magic	speed	defence	fireResistance	iceResistance	el
         }
     }
 
-    protected override void OnInit()
-    {
+    protected override void OnInit() {
         //ID解析已在此注册
         base.OnInit();
 

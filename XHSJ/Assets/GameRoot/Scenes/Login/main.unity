@@ -2805,6 +2805,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &845715317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 845715319}
+  - component: {fileID: 845715318}
+  m_Layer: 0
+  m_Name: MainStaticDataCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &845715318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845715317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2596bf7fd2f046f4a8d1538e68a3a562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loginSceneIdx: -1
+  locazationTable: {fileID: 7527653380116523769, guid: f78dfc35959bdd147ba32b37cdeed4b3, type: 3}
+  roleBaseTable: {fileID: -1147242781939155846, guid: a1976998b4605aa4bb033137fd6b7708, type: 3}
+  attrDesTable: {fileID: -3450309718328312149, guid: 87507d847a48a434c9bbee0f50b241ec, type: 3}
+  buffTable: {fileID: -6217797259177182044, guid: 2aa8abcc9aa593c4284533680746ac9e, type: 3}
+  itemTable: {fileID: -7667223434143645647, guid: 71b4b3bbf62e6d74a8a7a2bbafb5a6d5, type: 3}
+  skillDataTable: {fileID: -3174818751741800835, guid: 35464ae5cf17aaf498c3fca80e91eea7, type: 3}
+--- !u!4 &845715319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 845715317}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 19.254375, y: 0.50582755, z: 88.414734}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &853220151
 GameObject:
   m_ObjectHideFlags: 0
@@ -4305,7 +4355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 4
   canvasGroup: {fileID: 1326459975}
-  staticDataCenter: {fileID: 0}
+  continueGameBtn: {fileID: 2132662587}
 --- !u!225 &1326459975
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6584,7 +6634,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2132662590}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1326459974}
+        m_TargetAssemblyTypeName: LoginMainLogic, Assembly-CSharp
+        m_MethodName: ContinueGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2132662590
 MonoBehaviour:
   m_ObjectHideFlags: 0

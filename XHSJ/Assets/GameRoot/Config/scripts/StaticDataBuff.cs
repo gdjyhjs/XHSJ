@@ -4,29 +4,27 @@ using UnityEngine;
 
 
 [System.Serializable]
-public class  StaticDataBuffEle :  StaticIDData<string>
-{
+public class StaticDataBuffEle : StaticIDData<string> {
     public string name;
     public string des;
-    public double maxLayer;
-    public double damage;
-    public double fireDamage;
-    public double iceDamage;
-    public double electricityDamage;
-    public double poisonDamage;
-    public double durationTime;
-    public double damageInterval;
-    public double updamage;
-    public double upspeed;
-    public double backMove;
+    public float maxLayer;
+    public float damage;
+    public float fireDamage;
+    public float iceDamage;
+    public float electricityDamage;
+    public float poisonDamage;
+    public float durationTime;
+    public float damageInterval;
+    public float updamage;
+    public float upspeed;
+    public float backMove;
     public string lockAnim;
-    public double hp;
+    public float hp;
     public string type;
 
 }
 
-public class  StaticDataBuff :  StaticIDDataTable< StaticDataBuffEle, string>
-{
+public class StaticDataBuff : StaticIDDataTable<StaticDataBuffEle, string> {
 
 }
 

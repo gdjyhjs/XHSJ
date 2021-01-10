@@ -2,75 +2,116 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[SerializeField]
 public class ItemBase: UniqueIdObject<ItemBase> {
     /// <summary>
     /// 通用物品 {配置表的id，实例化的唯一uid}
     /// </summary>
     public static Dictionary<int, uint> comItems = new Dictionary<int, uint>();
     public StaticDataItemEle staticData;
-    public double hp;
-    public double sp;
-    public double strength;
-    public double magic;
-    public double speed;
-    public double defence;
-    public double fireResistance;
-    public double iceResistance;
-    public double electricityResistance;
-    public double poisonResistance;
-    public double attackDistance;
-    public double energy;
-    public double weight;
-    public double fireDamage;
-    public double iceDamage;
-    public double electricityDamage;
-    public double poisonDamage;
-    public double fireAppend;
-    public double iceAppend;
-    public double electricityAppend;
-    public double poisonAppend;
+    public float hp;
+    public float sp;
+    public float strength;
+    public float magic;
+    public float speed;
+    public float defence;
+    public float fireResistance;
+    public float iceResistance;
+    public float electricityResistance;
+    public float poisonResistance;
+    public float attackDistance;
+    public float energy;
+    public float weight;
+    public float fireDamage;
+    public float iceDamage;
+    public float electricityDamage;
+    public float poisonDamage;
+    public float fireAppend;
+    public float iceAppend;
+    public float electricityAppend;
+    public float poisonAppend;
 
-    public static T Create<T>(int staticId) where T: ItemBase,new() {
-        var staticData = MainStaticDataCenter.instance.itemTable.datalist[staticId];
-        var itemBase = new T();
+    public static ItemBase Create(int staticId) {
+        var staticData = MainStaticDataCenter.instance.itemTable.findItemWithId(staticId.ToString());
+        if (staticData.universal) {
+            return CreateCommon(staticId);
+        }
+
+        var itemBase = new ItemBase();
         uint uid = GetUniqueId();
         if (uid > 0) {
-            itemBase.hp = Random.Range((float)staticData.min_hp, (float)staticData.max_hp + 1);
-            itemBase.sp = Random.Range((float)staticData.min_sp, (float)staticData.max_sp + 1);
-            itemBase.strength = Random.Range((float)staticData.min_strength, (float)staticData.max_strength + 1);
-            itemBase.magic = Random.Range((float)staticData.min_magic, (float)staticData.max_magic + 1);
-            itemBase.speed = Random.Range((float)staticData.min_speed, (float)staticData.max_speed + 1);
-            itemBase.defence = Random.Range((float)staticData.min_defence, (float)staticData.max_defence + 1);
-            itemBase.fireResistance = Random.Range((float)staticData.min_fireResistance, (float)staticData.max_fireResistance + 1);
-            itemBase.iceResistance = Random.Range((float)staticData.min_iceResistance, (float)staticData.max_iceResistance + 1);
-            itemBase.electricityResistance = Random.Range((float)staticData.min_electricityResistance, (float)staticData.max_electricityResistance + 1);
-            itemBase.poisonResistance = Random.Range((float)staticData.min_poisonResistance, (float)staticData.max_poisonResistance + 1);
-            itemBase.attackDistance = Random.Range((float)staticData.min_attackDistance, (float)staticData.max_attackDistance + 1);
-            itemBase.energy = Random.Range((float)staticData.min_energy, (float)staticData.max_energy + 1);
-            itemBase.weight = Random.Range((float)staticData.min_weight, (float)staticData.max_weight + 1);
-            itemBase.fireDamage = Random.Range((float)staticData.min_fireDamage, (float)staticData.max_fireDamage + 1);
-            itemBase.iceDamage = Random.Range((float)staticData.min_iceDamage, (float)staticData.max_iceDamage + 1);
-            itemBase.electricityDamage = Random.Range((float)staticData.min_electricityDamage, (float)staticData.max_electricityDamage + 1);
-            itemBase.poisonDamage = Random.Range((float)staticData.min_poisonDamage, (float)staticData.max_poisonDamage + 1);
-            itemBase.fireAppend = Random.Range((float)staticData.min_fireAppend, (float)staticData.max_fireAppend + 1);
-            itemBase.iceAppend = Random.Range((float)staticData.min_iceAppend, (float)staticData.max_iceAppend + 1);
-            itemBase.electricityAppend = Random.Range((float)staticData.min_electricityAppend, (float)staticData.max_electricityAppend + 1);
-            itemBase.poisonAppend = Random.Range((float)staticData.min_poisonAppend, (float)staticData.max_poisonAppend + 1);
+            itemBase.staticData = staticData;
+            itemBase.uid = uid;
+            itemBase.hp = Random.Range(staticData.min_hp, staticData.max_hp + 1);
+            itemBase.sp = Random.Range(staticData.min_sp, staticData.max_sp + 1);
+            itemBase.strength = Random.Range(staticData.min_strength, staticData.max_strength + 1);
+            itemBase.magic = Random.Range(staticData.min_magic, staticData.max_magic + 1);
+            itemBase.speed = Random.Range(staticData.min_speed, staticData.max_speed + 1);
+            itemBase.defence = Random.Range(staticData.min_defence, staticData.max_defence + 1);
+            itemBase.fireResistance = Random.Range(staticData.min_fireResistance, staticData.max_fireResistance + 1);
+            itemBase.iceResistance = Random.Range(staticData.min_iceResistance, staticData.max_iceResistance + 1);
+            itemBase.electricityResistance = Random.Range(staticData.min_electricityResistance, staticData.max_electricityResistance + 1);
+            itemBase.poisonResistance = Random.Range(staticData.min_poisonResistance, staticData.max_poisonResistance + 1);
+            itemBase.attackDistance = Random.Range(staticData.min_attackDistance, staticData.max_attackDistance + 1);
+            itemBase.energy = Random.Range(staticData.min_energy, staticData.max_energy + 1);
+            itemBase.weight = Random.Range(staticData.min_weight, staticData.max_weight + 1);
+            itemBase.fireDamage = Random.Range(staticData.min_fireDamage, staticData.max_fireDamage + 1);
+            itemBase.iceDamage = Random.Range(staticData.min_iceDamage, staticData.max_iceDamage + 1);
+            itemBase.electricityDamage = Random.Range(staticData.min_electricityDamage, staticData.max_electricityDamage + 1);
+            itemBase.poisonDamage = Random.Range(staticData.min_poisonDamage, staticData.max_poisonDamage + 1);
+            itemBase.fireAppend = Random.Range(staticData.min_fireAppend, staticData.max_fireAppend + 1);
+            itemBase.iceAppend = Random.Range(staticData.min_iceAppend, staticData.max_iceAppend + 1);
+            itemBase.electricityAppend = Random.Range(staticData.min_electricityAppend, staticData.max_electricityAppend + 1);
+            itemBase.poisonAppend = Random.Range(staticData.min_poisonAppend, staticData.max_poisonAppend + 1);
             return itemBase;
         } else {
             return null;
         }
     }
 
-    public static T CreateCommon<T>(int id) where T : ItemBase, new() {
+    public static void LoadItem(string statitId, uint uid, params float[] data){
+        var staticData = MainStaticDataCenter.instance.itemTable.findItemWithId(statitId);
+        var itemBase = new ItemBase();
+        uid = GetUniqueId(uid);
+        if (uid > 0) {
+            itemBase.staticData = staticData;
+            itemBase.uid = uid;
+            itemBase.hp = data[0];
+            itemBase.sp = data[1];
+            itemBase.strength = data[2];
+            itemBase.magic = data[3];
+            itemBase.speed = data[4];
+            itemBase.defence = data[5];
+            itemBase.fireResistance = data[6];
+            itemBase.iceResistance = data[7];
+            itemBase.electricityResistance = data[8];
+            itemBase.poisonResistance = data[9];
+            itemBase.attackDistance = data[10];
+            itemBase.energy = data[11];
+            itemBase.weight = data[12];
+            itemBase.fireDamage = data[13];
+            itemBase.iceDamage = data[14];
+            itemBase.electricityDamage = data[15];
+            itemBase.poisonDamage = data[16];
+            itemBase.fireAppend = data[17];
+            itemBase.iceAppend = data[18];
+            itemBase.electricityAppend = data[19];
+            itemBase.poisonAppend = data[20];
+        }
+    }
+
+    private static ItemBase CreateCommon(int id){
         if (comItems.ContainsKey(id)) {
-            return ItemBase.Instance.depot[comItems[id]] as T;
+            uint item_uid = comItems[id];
+            return ItemBase.depot[item_uid];
         }
 
-        var staticData = MainStaticDataCenter.instance.itemTable.datalist[id];
-        var itemBase = new T();
+        var staticData = MainStaticDataCenter.instance.itemTable.findItemWithId(id.ToString());
+        var itemBase = new ItemBase();
         uint uid = GetUniqueId();
         if (uid > 0) {
+            itemBase.staticData = staticData;
+            itemBase.uid = uid;
             itemBase.hp =staticData.min_hp;
             itemBase.sp = staticData.min_sp;
             itemBase.strength = staticData.min_strength;
@@ -98,4 +139,12 @@ public class ItemBase: UniqueIdObject<ItemBase> {
         }
     }
 
+    public static void CreateAllCommonItem() {
+        List<StaticDataItemEle> data = MainStaticDataCenter.instance.itemTable.datalist;
+        foreach (var item in data) {
+            if (item.universal) {
+                CreateCommon(int.Parse(item.Id));
+            }
+        }
+    }
 }

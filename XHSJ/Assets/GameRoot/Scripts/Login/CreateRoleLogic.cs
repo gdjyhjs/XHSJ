@@ -24,6 +24,7 @@ public class CreateRoleLogic : MonoBehaviour
             DestroyImmediate(post2);
             ShowCharacter();
         }, 0.25f, 20);
+        RandomName();
     }
 
     void ShowCharacter() {
@@ -58,6 +59,10 @@ public class CreateRoleLogic : MonoBehaviour
         } else {
             SaveLoadData.CreateMain(showCharacterIdx, inputName.text);
         }
+    }
+
+    public void RandomName() {
+        inputName.text = CreateName.GetRandomSurnnameName((int)(Time.time * 1000));
     }
 
     public IEnumerator ShowPlaceholder() {

@@ -7,24 +7,24 @@ using UnityEngine;
 public class  StaticDataRoleBaseEle :  StaticIDData<string>
 {
     public string des;
-    public double hp;
-    public double sp;
-    public double strength;
-    public double magic;
-    public double speed;
-    public double defence;
-    public double fireResistance;
-    public double iceResistance;
-    public double electricityResistance;
-    public double poisonResistance;
-    public double fireDamage;
-    public double iceDamage;
-    public double electricityDamage;
-    public double poisonDamage;
-    public double fireAppend;
-    public double iceAppend;
-    public double electricityAppend;
-    public double poisonAppend;
+    public float hp;
+    public float sp;
+    public float strength;
+    public float magic;
+    public float speed;
+    public float defence;
+    public float fireResistance;
+    public float iceResistance;
+    public float electricityResistance;
+    public float poisonResistance;
+    public float fireDamage;
+    public float iceDamage;
+    public float electricityDamage;
+    public float poisonDamage;
+    public float fireAppend;
+    public float iceAppend;
+    public float electricityAppend;
+    public float poisonAppend;
 }
 
 public class  StaticDataRoleBase :  StaticIDDataTable< StaticDataRoleBaseEle, string>

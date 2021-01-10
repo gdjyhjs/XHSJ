@@ -28,57 +28,57 @@ name	des	maxLayer	damage	fireDamage	iceDamage	electricityDamage	poisonDamage	dur
             });
 
             RegisterReadingMethod("最大叠加层数", (_data, _value) => {
-                _data.maxLayer = double.Parse(_value);
+                _data.maxLayer = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("伤害", (_data, _value) => {
-                _data.damage = double.Parse(_value);
+                _data.damage = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("冰伤", (_data, _value) => {
-                _data.fireDamage = double.Parse(_value);
+                _data.fireDamage = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("火伤", (_data, _value) => {
-                _data.iceDamage = double.Parse(_value);
+                _data.iceDamage = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("电伤", (_data, _value) => {
-                _data.electricityDamage = double.Parse(_value);
+                _data.electricityDamage = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("毒伤", (_data, _value) => {
-                _data.poisonDamage = double.Parse(_value);
+                _data.poisonDamage = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("持续时间", (_data, _value) => {
-                _data.durationTime = double.Parse(_value);
+                _data.durationTime = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("伤害间隔", (_data, _value) => {
-                _data.damageInterval = double.Parse(_value);
+                _data.damageInterval = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("提升伤害", (_data, _value) => {
-                _data.updamage = double.Parse(_value);
+                _data.updamage = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("提升速度", (_data, _value) => {
-                _data.upspeed = double.Parse(_value);
+                _data.upspeed = float.Parse(_value);
                 return true;
             });
 
             RegisterReadingMethod("位移", (_data, _value) => {
-                _data.backMove = double.Parse(_value);
+                _data.backMove = float.Parse(_value);
                 return true;
             });
 
@@ -88,7 +88,7 @@ name	des	maxLayer	damage	fireDamage	iceDamage	electricityDamage	poisonDamage	dur
             });
 
             RegisterReadingMethod("生命", (_data, _value) => {
-                _data.hp = double.Parse(_value);
+                _data.hp = float.Parse(_value);
                 return true;
             });
 
