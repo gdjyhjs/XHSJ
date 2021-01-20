@@ -14,14 +14,13 @@ public class _3DCamera : MonoSingleton<_3DCamera>
     public float minAngle = -10;
     public float maxAngle = 45;
     public float distance;
-    public int hitLayer;
+    public LayerMask hitLayer;
     RaycastHit hit;
 
     private void Awake() {
         mainCamera = GetComponent<Camera>();
         distance = offset.magnitude;
         offset = transform.position - eye.position;
-        hitLayer = 1 << 8;
         transform.SetParent(null);
     }
 
