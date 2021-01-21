@@ -38,9 +38,37 @@
     }
 
     public enum Direction {
+        /// <summary>
+        /// 东
+        /// </summary>
         East,
+        /// <summary>
+        /// 西
+        /// </summary>
         West,
+        /// <summary>
+        /// 南
+        /// </summary>
         South,
+        /// <summary>
+        /// 北
+        /// </summary>
         North,
+    }
+
+    public enum BuildHouseState {
+        /// <summary>
+        /// 主要建筑
+        /// </summary>
+        Main,
+        /// <summary>
+        /// 商店
+        /// </summary>
+        Shop,
+        /// <summary>
+        /// 住宅
+        /// </summary>
+        Residence,
+
     }
 }

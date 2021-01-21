@@ -135,7 +135,10 @@ namespace GenerateWorld {
         /// </summary>
         public int seed = 100;
 
-        public List<SpaceData> all_pos;
+        public List<SpaceData> grounds;
+        List<SpaceData> walls = new List<SpaceData>();
+        List<SpaceData> ways = new List<SpaceData>();
+        List<SpaceData> houses = new List<SpaceData>();
 
         private List<GameObject> all_obj;
 
@@ -144,6 +147,16 @@ namespace GenerateWorld {
             groundObj.Init();
             city_groundObj.Init();
             forestObj.Init();
+            wallObj.Init();
+            wallNodeObj.Init();
+            wayObj.Init();
+            foreach (var item in shopObjs) {
+                item.Init();
+            }
+            foreach (var item in houseObjs) {
+                item.Init();
+            }
+
         }
 
         public void GenerateWorld() {
@@ -152,9 +165,9 @@ namespace GenerateWorld {
                 seed = (int)start_time.Second;
             }
             Random.InitState(seed);
-            all_pos = new List<SpaceData>();
-            all_pos.AddRange(CreateSpacePos(city_count, city_size, city_random, city_dis, SpaceType.City));
-            all_pos.AddRange(CreateSpacePos(field_count, field_size, field_random, field_dis, SpaceType.Forest));
+            grounds = new List<SpaceData>();
+            grounds.AddRange(CreateSpacePos(city_count, city_size, city_random, city_dis, SpaceType.City));
+            grounds.AddRange(CreateSpacePos(field_count, field_size, field_random, field_dis, SpaceType.Forest));
 
             BuildCity();
             CreateWorldGameObject();
@@ -166,82 +179,185 @@ namespace GenerateWorld {
         }
 
 
-
-        List<SpaceData> wall = new List<SpaceData>();
-        List<SpaceData> ways = new List<SpaceData>();
-        List<SpaceData> house = new List<SpaceData>();
-        List<SpaceData> shops = new List<SpaceData>();
+        int house_width = 10;
+        int house_length = 8;
         private void BuildCity() {
             // 每个区域大概50*50  边界留10米  道路3米宽 围墙宽3米 城门宽5米
             int space_size = 50;
             int space_edge = 10;
-            int way_width = 4;
-            int wall_width = 4;
+            int way_width = 2;
+            int wall_width = 2;
+            int wallnode_size = 3;
             int door_width = 4;
+            int half_wall_width = (int)(wall_width * 0.5f);
 
             DateTime start_time = DateTime.Now;
 
-            foreach (SpaceData item in all_pos) {
+            foreach (SpaceData item in grounds) {
                 
                 if (item.type == SpaceType.City) {
+                    SpaceData city = item;
 
                     Vector2 pos = item.pos;
                     int width = item.width;
                     int length = item.length;
-                    Rect rect = item.rect;
+                    float min_x = item.min_x;
+                    float max_x = item.max_x;
+                    float min_y = item.min_y;
+                    float max_y = item.max_y;
+
                     // 城门统一坐北朝南
                     // 随机道路  
                     // 先随机一个点，然后随机一个方向建立道路，再向两边建立道路
-                    float way_node_min_x = rect.x + space_size + space_edge;
-                    float way_node_min_y = rect.width + space_size + space_edge;
-                    float way_node_max_x = rect.y - space_size - space_edge;
-                    float way_node_max_y = rect.height - space_size - space_edge;
+                    int way_node_min_x = (int)(min_x + space_size + space_edge);
+                    int way_node_min_y = (int)(min_y + space_size + space_edge);
+                    int way_node_max_x = (int)(max_x - space_size - space_edge);
+                    int way_node_max_y = (int)(max_y - space_size - space_edge);
                     // 创建城市中心点
                     Vector2 city_center;
                     if (width > ((space_size + space_edge) * 0.5f) && length > ((space_size + space_edge) * 0.5f)) {
                         city_center = new Vector2(Random.Range(way_node_min_x, way_node_max_x), Random.Range(way_node_min_y, way_node_max_y));
+                        Debug.Log(city_center);
                     } else {
-                        city_center = new Vector2(rect.x + (rect.y - rect.x) * 0.5f, rect.width + (rect.height - rect.width) * 0.5f);
+                        city_center = new Vector2(min_x + (min_y - min_x) * 0.5f, max_x + (max_y - max_x) * 0.5f);
                     }
+
                     // 东墙
-                    Vector2 east_wall_pos = new Vector2(rect.y - 1.5f, pos.y);
+                    Vector2 east_wall_pos = new Vector2(max_x - half_wall_width, pos.y);
                     int east_wall_width = wall_width;
                     int east_wall_length = length;
                     SpaceData east_wall = new SpaceData(east_wall_pos, east_wall_width, east_wall_length, SpaceType.Wall);
                     // 西墙
-                    Vector2 west_wall_pos = new Vector2(rect.x + 1.5f, pos.y);
+                    Vector2 west_wall_pos = new Vector2(min_x + half_wall_width, pos.y);
                     int west_wall_width = wall_width;
                     int west_wall_length = length;
                     SpaceData west_wall = new SpaceData(west_wall_pos, west_wall_width, west_wall_length, SpaceType.Wall);
                     //北墙
-                    Vector2 north_wall_pos = new Vector2(pos.x, rect.height - 1.5f);
+                    Vector2 north_wall_pos = new Vector2(pos.x, max_y - half_wall_width);
                     int north_wall_width = width;
                     int north_wall_length = wall_width;
                     SpaceData north_wall = new SpaceData(north_wall_pos, north_wall_width, north_wall_length, SpaceType.Wall);
                     // 南墙1
-                    int south1_wall_width = (int)(pos.y - city_center.x - door_width * 0.5f);
+                    int south1_wall_width = (int)(max_x - city_center.x - door_width);
                     int south1_wall_length = wall_width;
-                    Vector2 south1_wall_pos = new Vector2(pos.y - south1_wall_width * 0.5f, rect.height - 1.5f);
+                    Vector2 south1_wall_pos = new Vector2(max_x - south1_wall_width * 0.5f, min_y + half_wall_width);
                     SpaceData south1_wall = new SpaceData(south1_wall_pos, south1_wall_width, south1_wall_length, SpaceType.Wall);
                     // 南墙2
-                    int south2_wall_width = (int)(city_center.x - pos.x - door_width * 0.5f);
+                    int south2_wall_width = (int)(city_center.x - min_x - door_width);
                     int south2_wall_length = wall_width;
-                    Vector2 south2_wall_pos = new Vector2(rect.x + south2_wall_width * 0.5f, rect.height - 1.5f);
+                    Vector2 south2_wall_pos = new Vector2(min_x + south2_wall_width * 0.5f, min_y + half_wall_width);
                     SpaceData south2_wall = new SpaceData(south2_wall_pos, south2_wall_width, south2_wall_length, SpaceType.Wall);
 
-                    wall.Add(east_wall);
-                    wall.Add(west_wall);
-                    wall.Add(north_wall);
-                    wall.Add(south1_wall);
-                    wall.Add(south2_wall);
+                    walls.Add(east_wall);
+                    walls.Add(west_wall);
+                    walls.Add(north_wall);
+                    walls.Add(south1_wall);
+                    walls.Add(south2_wall);
 
                     // 从道路最里头往外创建交叉道路
+                    walls.Add(new SpaceData(new Vector2(min_x + half_wall_width, min_y + half_wall_width), wallnode_size, wallnode_size, SpaceType.WallNode));
+                    walls.Add(new SpaceData(new Vector2(min_x + half_wall_width, max_y - half_wall_width), wallnode_size, wallnode_size, SpaceType.WallNode));
+                    walls.Add(new SpaceData(new Vector2(max_x - half_wall_width, min_y + half_wall_width), wallnode_size, wallnode_size, SpaceType.WallNode));
+                    walls.Add(new SpaceData(new Vector2(max_x - half_wall_width, max_y - half_wall_width), wallnode_size, wallnode_size, SpaceType.WallNode));
+                    walls.Add(new SpaceData(new Vector2(min_x + south2_wall_width - half_wall_width, min_y + half_wall_width), wallnode_size * 2, wallnode_size * 2, SpaceType.WallNode));
+                    walls.Add(new SpaceData(new Vector2(max_x - south1_wall_width + half_wall_width, min_y + half_wall_width), wallnode_size * 2, wallnode_size * 2, SpaceType.WallNode));
+
+                    //主干道
+                    List<SpaceData> ways = new List<SpaceData>();
+                    int main_way_vertical_width = door_width;
+                    int main_way_vertical_length = (int)(max_y - min_y - space_edge);
+
+                    int main_way_horizontal_width = (int)(max_x - min_x - space_edge * 2);
+                    int main_way_horizontal_length = door_width;
+
+                    Vector2 main_vertical_way_pos = new Vector2(city_center.x, min_y + main_way_vertical_length * 0.5f);
+                    Vector2 main_horizontal_way_pos = new Vector2(min_x + main_way_horizontal_width * 0.5f + space_edge, city_center.y);
+
+                    SpaceData main_vertical_way = new SpaceData(main_vertical_way_pos, main_way_vertical_width, main_way_vertical_length, SpaceType.Way, Direction.South);
+                    SpaceData main_horizontal_way = new SpaceData(main_horizontal_way_pos, main_way_horizontal_width, main_way_horizontal_length, SpaceType.Way, Direction.East);
+                    ways.Add(main_vertical_way);
+                    ways.Add(main_horizontal_way);
+                    // 添加本城市道路
+                    this.ways.AddRange(ways);
+
+
+                    // 中心点向主干道两边创建商店
+                    int shop_idx = house_width / 2 + 1;
+                    float house_offset =  house_width * 0.5f+way_width;
+                    float main_way_right_x = city_center.x + house_offset;
+                    float main_way_left_x = city_center.x - house_offset;
+                    float main_way_up_y = city_center.y + house_offset;
+                    float main_way_down_y = city_center.y - house_offset;
+                    while (true){
+                        int up_y = (int)(city_center.y + shop_idx);
+                        int down_y = (int)(city_center.y - shop_idx);
+                        int right_x = (int)(city_center.x + shop_idx);
+                        int left_x = (int)(city_center.x - shop_idx);
+
+                        if (up_y > (main_vertical_way.max_y - space_edge) && down_y < (main_vertical_way.min_y + space_edge) && right_x > (main_horizontal_way.max_x - space_edge) && left_x < (main_horizontal_way.min_x + space_edge)) {
+                            break;
+                        }
+                        //上面的
+                        if (up_y < (main_vertical_way.max_y - space_edge)) {
+                           houses.Add( BuildHouse( new Vector2(main_way_right_x, up_y), Direction.West, SpaceType.Shop));
+                            houses.Add(BuildHouse(new Vector2(main_way_left_x, up_y), Direction.East, SpaceType.Shop));
+                        }
+                        //下面的
+                        if (down_y > (main_vertical_way.min_y + space_edge)) {
+                            houses.Add(BuildHouse(new Vector2(main_way_right_x, down_y), Direction.West, SpaceType.Shop));
+                            houses.Add(BuildHouse(new Vector2(main_way_left_x, down_y), Direction.East, SpaceType.Shop));
+                        }
+                        // 右边的
+                        if (right_x < (main_horizontal_way.max_x - space_edge)) {
+                            houses.Add(BuildHouse(new Vector2(right_x, main_way_up_y), Direction.South, SpaceType.Shop));
+                            houses.Add(BuildHouse(new Vector2(right_x, main_way_down_y), Direction.North, SpaceType.Shop));
+
+                        }
+                        // 左边的
+                        if (left_x > (main_horizontal_way.min_x + space_edge)) {
+                            houses.Add(BuildHouse(new Vector2(left_x, main_way_up_y), Direction.South, SpaceType.Shop));
+                            houses.Add(BuildHouse(new Vector2(left_x, main_way_down_y), Direction.North, SpaceType.Shop));
+                        }
+
+                        shop_idx += house_width;
+                    }
+
+                    // 创建民房
+                    int try_count = city.width * city.length / 10;
+                    for (int i = 0; i < try_count; i++) {
+                        int x = (int)Random.Range(city.min_x + ground_size, city.max_x - ground_size);
+                        int y = (int)Random.Range(city.min_y + ground_size, city.max_y - ground_size);
+                        bool can_build = true;
+                        SpaceData h = BuildHouse(new Vector2(x, y), (Direction)Random.Range(0, 5), SpaceType.House);
+                        foreach (SpaceData house in houses) {
+                            if (house.IsOverlap(h, 0)){
+                                can_build = false;
+                            }
+                        }
+
+                        if (can_build) {
+                            houses.Add(h);
+                        }
+                    }
+
+
+
+
                 }
             }
 
 
             DateTime end_time = DateTime.Now;
             Debug.Log("生成城市花费时间：" + (end_time - start_time).TotalMilliseconds);
+        }
+
+        /// <summary>
+        /// 生成房子
+        /// </summary>
+        /// <param name="pos">位置</param>
+        /// <param name="dir">方向</param>
+        private SpaceData BuildHouse( Vector2 pos, Direction dir, SpaceType typ) {
+            return (new SpaceData(pos, house_width, house_length, typ, dir));
         }
 
         private void CreateWorldGameObject() {
@@ -260,7 +376,7 @@ namespace GenerateWorld {
             sea_tf.position = new Vector3(map_pos, sea_altitude, map_pos);
             all_obj.Add(sea);
 
-            foreach (SpaceData item in all_pos) {
+            foreach (SpaceData item in grounds) {
                 GameObject obj;
                 int width = item.width;
                 int height = item.length;
@@ -279,14 +395,6 @@ namespace GenerateWorld {
                 all_obj.Add(ground);
             }
 
-            foreach (SpaceData item in wall) {
-                GameObject obj = Instantiate(wallObj.obj.prefab);
-                Transform obj_tf = obj.transform;
-                obj_tf.localScale = new Vector3(item.width * wallObj.obj.scale.x, wallObj.obj.scale.y, item.length * wallObj.obj.scale.z);
-                obj_tf.position = new Vector3(item.pos.x, 2, item.pos.y);
-                all_obj.Add(obj);
-            }
-
             int min_map_pos = map_edge - ground_size;
             int max_map_pos = map_size + map_edge + ground_size;
             for (int x1 = min_map_pos; x1 < max_map_pos; x1++) {
@@ -294,8 +402,8 @@ namespace GenerateWorld {
                     float x = x1 + Random.Range(-0.38f, 0.38f);
                     float y = y1 + Random.Range(-0.38f, 0.38f);
                     CreateType create = CreateType.Node;
-                    foreach (SpaceData item in all_pos) {
-                        if (item.IsTherein(new Vector2(x, y))) {
+                    foreach (SpaceData item in grounds) {
+                        if (item.IsTherein(new Vector2(x, y), 2)) {
                             if (item.type == SpaceType.City) {
                                 create = CreateType.City;
                                 break;
@@ -308,7 +416,7 @@ namespace GenerateWorld {
 
                     if (create == CreateType.Node) {
                         int ground_dege = ground_size / 2 - 2;
-                        foreach (SpaceData item in all_pos) {
+                        foreach (SpaceData item in grounds) {
                             if (item.IsTherein(new Vector2(x, y), ground_dege)) {
                                 create = CreateType.Decorate;
                                 break;
@@ -348,6 +456,70 @@ namespace GenerateWorld {
                     }
                 }
             }
+
+            foreach (SpaceData item in walls) {
+                GameObject obj;
+                int height;
+                if (item.type == SpaceType.Wall) {
+                    obj = Instantiate(wallObj.obj.prefab);
+                    height = 3;
+                } else {
+                    obj = Instantiate(wallNodeObj.obj.prefab);
+                    height = 5;
+                }
+                Transform obj_tf = obj.transform;
+                obj_tf.localScale = new Vector3(item.width * wallObj.obj.scale.x, height * wallObj.obj.scale.y, item.length * wallObj.obj.scale.z);
+                obj_tf.position = new Vector3(item.pos.x, 1, item.pos.y);
+                all_obj.Add(obj);
+            }
+
+            foreach (SpaceData item in ways) {
+                GameObject obj;
+                float height;
+                obj = Instantiate(wayObj.obj.prefab);
+                height = 0.08f;
+                Transform obj_tf = obj.transform;
+                obj_tf.localScale = new Vector3(item.width * wallObj.obj.scale.x, height * wallObj.obj.scale.y, item.length * wallObj.obj.scale.z);
+                obj_tf.position = new Vector3(item.pos.x, 1, item.pos.y);
+                all_obj.Add(obj);
+            }
+
+            foreach (SpaceData item in houses) {
+                GameObject obj;
+                if (item.type == SpaceType.Shop) {
+                    StaticObjsData data = shopObjs[Random.Range(0, shopObjs.Length)];
+                    StaticObj[] objs = data.objs;
+                    StaticObj o = objs[Random.Range(0, objs.Length)];
+                    obj = Instantiate(o.prefab);
+                } else {
+                    StaticObjsData data = houseObjs[0];
+                    StaticObj[] objs = data.objs;
+                    StaticObj o = objs[Random.Range(0, objs.Length)];
+                    obj = Instantiate(o.prefab);
+                }
+                Transform obj_tf = obj.transform;
+                obj_tf.localScale = new Vector3(1, 1, 1);
+                float rand_angle = Random.Range(-1f, 1f);
+                obj_tf.position = new Vector3(item.pos.x + rand_angle, 1, item.pos.y + rand_angle);
+                rand_angle *= 10;
+                switch (item.dir) {
+                    case Direction.East:
+                        obj_tf.eulerAngles = new Vector3(0, 90 + rand_angle, 0);
+                        break;
+                    case Direction.West:
+                        obj_tf.eulerAngles = new Vector3(0, 270 + rand_angle, 0);
+                        break;
+                    case Direction.South:
+                        obj_tf.eulerAngles = new Vector3(0, 180 + rand_angle, 0);
+                        break;
+                    case Direction.North:
+                        obj_tf.eulerAngles = new Vector3(0, rand_angle, 0);
+                        break;
+                }
+                all_obj.Add(obj);
+            }
+
+
             DateTime end_time = DateTime.Now;
             Debug.Log("创造地表花费时间：" + (end_time - start_time).TotalMilliseconds);
         }
@@ -421,7 +593,7 @@ namespace GenerateWorld {
                     GenerateWorld();
                 }
             }
-            GUI.Label(new Rect(10, 40, 100, 30), "count:"+ all_pos.Count);
+            GUI.Label(new Rect(10, 40, 100, 30), "count:"+ grounds.Count);
         }
 #endif
     }

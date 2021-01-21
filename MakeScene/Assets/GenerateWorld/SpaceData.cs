@@ -9,18 +9,22 @@ namespace GenerateWorld {
         public int width;
         public int length;
         public SpaceType type;
-        public Rect rect;
+        public float min_x ;
+        public float max_x ;
+        public float min_y ;
+        public float max_y ;
+        public Direction dir;
 
-        public SpaceData(Vector2 pos, int width, int length, SpaceType type) {
+        public SpaceData(Vector2 pos, int width, int length, SpaceType type, Direction dir = Direction.South) {
             this.pos = pos;
             this.width = width;
             this.length = length;
             this.type = type;
-            float min_x = pos.x - width / 2f - 1;
-            float max_x = pos.x + width / 2f + 1;
-            float min_y = pos.y - length / 2f - 1;
-            float max_y = pos.y + length / 2f + 1;
-            rect = new Rect(min_x, min_y, max_x, max_y);
+             min_x = pos.x - width / 2f - 1;
+             max_x = pos.x + width / 2f + 1;
+             min_y = pos.y - length / 2f - 1;
+             max_y = pos.y + length / 2f + 1;
+            this.dir = dir;
         }
 
         /// <summary>
@@ -51,7 +55,7 @@ namespace GenerateWorld {
         /// <param name="pos">需要判断的坐标</param>
         /// <returns>是否在这块区域内</returns>
         public bool IsTherein(Vector2 pos, int edge = 0) {
-            if (pos.x > (rect.x - edge) && pos.x < (rect.width+ edge) && pos.y > (rect.y- edge) && pos.y < (rect.height + edge)) {
+            if (pos.x > (min_x - edge) && pos.x < (max_x + edge) && pos.y > (min_y - edge) && pos.y < (max_y + edge)) {
                 return true;
             }
             return false;

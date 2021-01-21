@@ -43,7 +43,6 @@ namespace GenerateWorld {
     [System.Serializable]
     public class StaticObj {
         public GameObject prefab;
-        [HideInInspector]
         public Vector3 scale;
         public Vector3 size;
     }
