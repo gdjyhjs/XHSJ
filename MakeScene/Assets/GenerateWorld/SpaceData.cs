@@ -3,33 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace GenerateWorld {
-    public enum SpaceType {
-        /// <summary>
-        /// …≠¡÷
-        /// </summary>
-        Forest,
-        /// <summary>
-        /// ≥« –
-        /// </summary>
-        City,
-    }
 
     public struct SpaceData {
         public Vector2 pos;
         public int width;
-        public int height;
+        public int length;
         public SpaceType type;
-        Rect rect;
+        public Rect rect;
 
-        public SpaceData(Vector2 pos, int width, int height, SpaceType type) {
+        public SpaceData(Vector2 pos, int width, int length, SpaceType type) {
             this.pos = pos;
             this.width = width;
-            this.height = height;
+            this.length = length;
             this.type = type;
             float min_x = pos.x - width / 2f - 1;
             float max_x = pos.x + width / 2f + 1;
-            float min_y = pos.y - height / 2f - 1;
-            float max_y = pos.y + height / 2f + 1;
+            float min_y = pos.y - length / 2f - 1;
+            float max_y = pos.y + length / 2f + 1;
             rect = new Rect(min_x, min_y, max_x, max_y);
         }
 
@@ -39,7 +29,7 @@ namespace GenerateWorld {
         /// <param name="data"></param>
         /// <returns></returns>
         public bool IsOverlap(SpaceData data, int dis) {
-            int min_dix = GetHypotenuse(data.height, data.width)/2 + GetHypotenuse(height, width)/2 + dis;
+            int min_dix = GetHypotenuse(data.length, data.width)/2 + GetHypotenuse(length, width)/2 + dis;
             return Vector2.Distance(data.pos, pos) < min_dix;
         }
 

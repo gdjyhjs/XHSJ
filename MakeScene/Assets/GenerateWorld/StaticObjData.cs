@@ -9,7 +9,7 @@ namespace GenerateWorld {
         public StaticObj[] objs;
         public void Init() {
             for (int i = 0; i < objs.Length; i++) {
-                objs[i].size = CalculateSize(objs[i].prefab);
+                CalculateSize(objs[i].prefab, out objs[i].size, out objs[i].scale);
             }
         }
     }
@@ -19,7 +19,7 @@ namespace GenerateWorld {
     public class StaticObjData : StaticData {
         public StaticObj obj;
         public void Init() {
-            obj.size = CalculateSize(obj.prefab);
+             CalculateSize(obj.prefab, out obj.size,out obj.scale);
         }
     }
 
@@ -28,13 +28,15 @@ namespace GenerateWorld {
     public class StaticData {
         public float count;
         public string name;
-        protected Vector3 CalculateSize(GameObject obj) {
+        protected void CalculateSize(GameObject obj, out Vector3 size, out Vector3 scale) {
             MeshFilter mesh = obj.GetComponent<MeshFilter>();
             if (mesh == null) {
-                return Vector3.one;
+                size = Vector3.one;
+                scale = Vector3.one;
+            } else {
+                size = mesh.mesh.bounds.size;
+                scale = new Vector3(1 / size.x, 1 / size.y, 1 / size.z);
             }
-            var size = mesh.mesh.bounds.size;
-            return new Vector3(1 / size.x, 1 / size.y, 1 / size.z);
         }
     }
 
@@ -42,6 +44,7 @@ namespace GenerateWorld {
     public class StaticObj {
         public GameObject prefab;
         [HideInInspector]
+        public Vector3 scale;
         public Vector3 size;
     }
 }
