@@ -12,6 +12,10 @@
         /// </summary>
         Forest,
         /// <summary>
+        /// 地面
+        /// </summary>
+        Ground,
+        /// <summary>
         /// 城市
         /// </summary>
         City,
@@ -35,6 +39,14 @@
         /// 墙的节点
         /// </summary>
         WallNode,
+        /// <summary>
+        /// 树木
+        /// </summary>
+        Tree,
+        /// <summary>
+        /// 地面装饰物
+        /// </summary>
+        Decorate,
     }
 
     public enum Direction {

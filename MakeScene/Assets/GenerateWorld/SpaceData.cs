@@ -6,16 +6,17 @@ namespace GenerateWorld {
 
     public struct SpaceData {
         public Vector2 pos;
-        public int width;
-        public int length;
+        public float width;
+        public float length;
         public SpaceType type;
         public float min_x ;
         public float max_x ;
         public float min_y ;
         public float max_y ;
         public Direction dir;
+        public float angle;
 
-        public SpaceData(Vector2 pos, int width, int length, SpaceType type, Direction dir = Direction.South) {
+        public SpaceData(Vector2 pos, float width, float length, SpaceType type, Direction dir = Direction.South, float angle = 0) {
             this.pos = pos;
             this.width = width;
             this.length = length;
@@ -25,6 +26,7 @@ namespace GenerateWorld {
              min_y = pos.y - length / 2f - 1;
              max_y = pos.y + length / 2f + 1;
             this.dir = dir;
+            this.angle = angle;
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace GenerateWorld {
         /// <param name="data"></param>
         /// <returns></returns>
         public bool IsOverlap(SpaceData data, int dis) {
-            int min_dix = GetHypotenuse(data.length, data.width)/2 + GetHypotenuse(length, width)/2 + dis;
+            int min_dix = GetHypotenuse((int)data.length, (int)data.width)/2 + GetHypotenuse((int)length, (int)width)/2 + dis;
             return Vector2.Distance(data.pos, pos) < min_dix;
         }
 

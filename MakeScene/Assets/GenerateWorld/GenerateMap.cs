@@ -135,10 +135,12 @@ namespace GenerateWorld {
         /// </summary>
         public int seed = 100;
 
-        public List<SpaceData> grounds;
-        List<SpaceData> walls = new List<SpaceData>();
-        List<SpaceData> ways = new List<SpaceData>();
-        List<SpaceData> houses = new List<SpaceData>();
+        List<SpaceData> grounds;
+        List<SpaceData> walls;
+        List<SpaceData> ways;
+        List<SpaceData> houses;
+        List<SpaceData> decorates;
+        List<SpaceData> allData;
 
         private List<GameObject> all_obj;
 
@@ -156,7 +158,6 @@ namespace GenerateWorld {
             foreach (var item in houseObjs) {
                 item.Init();
             }
-
         }
 
         public void GenerateWorld() {
@@ -166,16 +167,76 @@ namespace GenerateWorld {
             }
             Random.InitState(seed);
             grounds = new List<SpaceData>();
+            walls = new List<SpaceData>();
+            ways = new List<SpaceData>();
+            houses = new List<SpaceData>();
+            decorates = new List<SpaceData>();
+
             grounds.AddRange(CreateSpacePos(city_count, city_size, city_random, city_dis, SpaceType.City));
             grounds.AddRange(CreateSpacePos(field_count, field_size, field_random, field_dis, SpaceType.Forest));
-
+            grounds.AddRange(CreateGround(grounds.ToArray()));
             BuildCity();
+            BuildDecorate();
             CreateWorldGameObject();
 
-
+            allData = new List<SpaceData>(grounds.Count + walls.Count + ways.Count + houses.Count + decorates.Count);
+            allData.AddRange(grounds);
+            allData.AddRange(walls);
+            allData.AddRange(ways);
+            allData.AddRange(houses);
+            allData.AddRange(decorates);
 
             DateTime end_time = DateTime.Now;
             Debug.Log("创造世界总花费时间：" + (end_time - start_time).TotalMilliseconds);
+        }
+
+        private void BuildDecorate() {
+
+            int min_map_pos = map_edge - ground_size;
+            int max_map_pos = map_size + map_edge + ground_size;
+            for (int x1 = min_map_pos; x1 < max_map_pos; x1++) {
+                for (int y1 = min_map_pos; y1 < max_map_pos; y1++) {
+                    float x = x1 + Random.Range(-0.38f, 0.38f);
+                    float y = y1 + Random.Range(-0.38f, 0.38f);
+                    CreateType create = CreateType.Node;
+                    foreach (SpaceData item in grounds) {
+                        if (item.IsTherein(new Vector2(x, y), 2)) {
+                            if (item.type == SpaceType.City) {
+                                create = CreateType.City;
+                                break;
+                            } else {
+                                create = CreateType.Tree;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (create == CreateType.Node) {
+                        int ground_dege = ground_size / 2 - 2;
+                        foreach (SpaceData item in grounds) {
+                            if (item.IsTherein(new Vector2(x, y), ground_dege)) {
+                                create = CreateType.Decorate;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (create != CreateType.City && create != CreateType.Node) {
+                        int ran_create_id = Random.Range(0, 100);
+                        if (ran_create_id < 5) {
+                            if (create == CreateType.Tree) {
+                                float tree_size = Random.Range(0.5f, 1.5f);
+                                SpaceData tree = new SpaceData(new Vector3(x, 1, y), tree_size, tree_size, SpaceType.Tree, angle: Random.Range(0f, 360f));
+                                decorates.Add(tree);
+                            }
+                        } else if (ran_create_id < 15) {
+                            float decorate_size = Random.Range(0.05f, 0.2f);
+                            SpaceData tree = new SpaceData(new Vector3(x, 1, y), decorate_size, decorate_size, SpaceType.Decorate, angle: Random.Range(0f, 360f));
+                            decorates.Add(tree);
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -199,8 +260,8 @@ namespace GenerateWorld {
                     SpaceData city = item;
 
                     Vector2 pos = item.pos;
-                    int width = item.width;
-                    int length = item.length;
+                    float width = item.width;
+                    float length = item.length;
                     float min_x = item.min_x;
                     float max_x = item.max_x;
                     float min_y = item.min_y;
@@ -224,27 +285,27 @@ namespace GenerateWorld {
 
                     // 东墙
                     Vector2 east_wall_pos = new Vector2(max_x - half_wall_width, pos.y);
-                    int east_wall_width = wall_width;
-                    int east_wall_length = length;
+                    float east_wall_width = wall_width;
+                    float east_wall_length = length;
                     SpaceData east_wall = new SpaceData(east_wall_pos, east_wall_width, east_wall_length, SpaceType.Wall);
                     // 西墙
                     Vector2 west_wall_pos = new Vector2(min_x + half_wall_width, pos.y);
-                    int west_wall_width = wall_width;
-                    int west_wall_length = length;
+                    float west_wall_width = wall_width;
+                    float west_wall_length = length;
                     SpaceData west_wall = new SpaceData(west_wall_pos, west_wall_width, west_wall_length, SpaceType.Wall);
                     //北墙
                     Vector2 north_wall_pos = new Vector2(pos.x, max_y - half_wall_width);
-                    int north_wall_width = width;
-                    int north_wall_length = wall_width;
+                    float north_wall_width = width;
+                    float north_wall_length = wall_width;
                     SpaceData north_wall = new SpaceData(north_wall_pos, north_wall_width, north_wall_length, SpaceType.Wall);
                     // 南墙1
-                    int south1_wall_width = (int)(max_x - city_center.x - door_width);
-                    int south1_wall_length = wall_width;
+                    float south1_wall_width = (int)(max_x - city_center.x - door_width);
+                    float south1_wall_length = wall_width;
                     Vector2 south1_wall_pos = new Vector2(max_x - south1_wall_width * 0.5f, min_y + half_wall_width);
                     SpaceData south1_wall = new SpaceData(south1_wall_pos, south1_wall_width, south1_wall_length, SpaceType.Wall);
                     // 南墙2
-                    int south2_wall_width = (int)(city_center.x - min_x - door_width);
-                    int south2_wall_length = wall_width;
+                    float south2_wall_width = (int)(city_center.x - min_x - door_width);
+                    float south2_wall_length = wall_width;
                     Vector2 south2_wall_pos = new Vector2(min_x + south2_wall_width * 0.5f, min_y + half_wall_width);
                     SpaceData south2_wall = new SpaceData(south2_wall_pos, south2_wall_width, south2_wall_length, SpaceType.Wall);
 
@@ -299,7 +360,7 @@ namespace GenerateWorld {
                         }
                         //上面的
                         if (up_y < (main_vertical_way.max_y - space_edge)) {
-                           houses.Add( BuildHouse( new Vector2(main_way_right_x, up_y), Direction.West, SpaceType.Shop));
+                            houses.Add(BuildHouse( new Vector2(main_way_right_x, up_y), Direction.West, SpaceType.Shop));
                             houses.Add(BuildHouse(new Vector2(main_way_left_x, up_y), Direction.East, SpaceType.Shop));
                         }
                         //下面的
@@ -311,7 +372,6 @@ namespace GenerateWorld {
                         if (right_x < (main_horizontal_way.max_x - space_edge)) {
                             houses.Add(BuildHouse(new Vector2(right_x, main_way_up_y), Direction.South, SpaceType.Shop));
                             houses.Add(BuildHouse(new Vector2(right_x, main_way_down_y), Direction.North, SpaceType.Shop));
-
                         }
                         // 左边的
                         if (left_x > (main_horizontal_way.min_x + space_edge)) {
@@ -323,10 +383,10 @@ namespace GenerateWorld {
                     }
 
                     // 创建民房
-                    int try_count = city.width * city.length / 10;
+                    float try_count = city.width * city.length / 50;
                     for (int i = 0; i < try_count; i++) {
-                        int x = (int)Random.Range(city.min_x + ground_size, city.max_x - ground_size);
-                        int y = (int)Random.Range(city.min_y + ground_size, city.max_y - ground_size);
+                        int x = (int)Random.Range(city.min_x + space_edge, city.max_x - space_edge);
+                        int y = (int)Random.Range(city.min_y + space_edge, city.max_y - space_edge);
                         bool can_build = true;
                         SpaceData h = BuildHouse(new Vector2(x, y), (Direction)Random.Range(0, 5), SpaceType.House);
                         foreach (SpaceData house in houses) {
@@ -339,6 +399,7 @@ namespace GenerateWorld {
                             houses.Add(h);
                         }
                     }
+                    Debug.Log("创建民房 " + houses.Count + "/" + try_count);
 
 
 
@@ -378,8 +439,8 @@ namespace GenerateWorld {
 
             foreach (SpaceData item in grounds) {
                 GameObject obj;
-                int width = item.width;
-                int height = item.length;
+                float width = item.width;
+                float height = item.length;
                 if (item.type == SpaceType.City) {
                     obj = Instantiate(city_groundObj.obj.prefab);
                     Transform obj_tf = obj.transform;
@@ -387,7 +448,6 @@ namespace GenerateWorld {
                     obj_tf.position = new Vector3(item.pos.x, city_altitude, item.pos.y);
                     all_obj.Add(obj);
                 }
-
                 GameObject ground = Instantiate(groundObj.obj.prefab);
                 Transform ground_tf = ground.transform;
                 ground_tf.localScale = new Vector3((item.width + ground_size) * groundObj.obj.scale.x, groundObj.obj.scale.y, (item.length + ground_size) * groundObj.obj.scale.z);
@@ -395,67 +455,6 @@ namespace GenerateWorld {
                 all_obj.Add(ground);
             }
 
-            int min_map_pos = map_edge - ground_size;
-            int max_map_pos = map_size + map_edge + ground_size;
-            for (int x1 = min_map_pos; x1 < max_map_pos; x1++) {
-                for (int y1 = min_map_pos; y1 < max_map_pos; y1++) {
-                    float x = x1 + Random.Range(-0.38f, 0.38f);
-                    float y = y1 + Random.Range(-0.38f, 0.38f);
-                    CreateType create = CreateType.Node;
-                    foreach (SpaceData item in grounds) {
-                        if (item.IsTherein(new Vector2(x, y), 2)) {
-                            if (item.type == SpaceType.City) {
-                                create = CreateType.City;
-                                break;
-                            } else {
-                                create = CreateType.Tree;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (create == CreateType.Node) {
-                        int ground_dege = ground_size / 2 - 2;
-                        foreach (SpaceData item in grounds) {
-                            if (item.IsTherein(new Vector2(x, y), ground_dege)) {
-                                create = CreateType.Decorate;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (create != CreateType.City && create != CreateType.Node) {
-                        int ran_create_id = Random.Range(0, 100);
-                        if (ran_create_id < 5) {
-                            if (create == CreateType.Tree) {
-                                int ran = Random.Range(0, treeObjs[0].objs.Length);
-                                GameObject prefab = treeObjs[0].objs[ran].prefab;
-                                Vector3 size = treeObjs[0].objs[ran].scale;
-                                GameObject obj = Instantiate(prefab);
-                                Transform obj_tf = obj.transform;
-                                float tree_size = Random.Range(0.5f, 1.5f);
-                                obj_tf.localScale = new Vector3(tree_size, tree_size + Random.Range(-0.2f, 0.2f), tree_size);
-                                obj_tf.position = new Vector3(x, 1, y);
-                                obj_tf.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
-                                all_obj.Add(obj);
-                            }
-                        } else if (ran_create_id < 15) {
-                            int ran = Random.Range(0, decorateObjs[0].objs.Length);
-                            GameObject prefab = decorateObjs[0].objs[ran].prefab;
-                            Vector3 size = decorateObjs[0].objs[ran].scale;
-                            GameObject obj = Instantiate(prefab);
-                            Transform obj_tf = obj.transform;
-                            float tree_size = Random.Range(0.05f, 0.2f);
-                            obj_tf.localScale = new Vector3(tree_size, tree_size + Random.Range(-0.02f, 0.02f), tree_size);
-                            obj_tf.position = new Vector3(x, 1, y);
-                            obj_tf.eulerAngles = new Vector3(0, Random.Range(0, 360), 0);
-                            all_obj.Add(obj);
-                        } else {
-
-                        }
-                    }
-                }
-            }
 
             foreach (SpaceData item in walls) {
                 GameObject obj;
@@ -522,6 +521,15 @@ namespace GenerateWorld {
 
             DateTime end_time = DateTime.Now;
             Debug.Log("创造地表花费时间：" + (end_time - start_time).TotalMilliseconds);
+        }
+
+        private SpaceData[] CreateGround(SpaceData[] grounds) {
+            List<SpaceData> result = new List<SpaceData>();
+            foreach (var item in grounds) {
+                SpaceData data = new SpaceData(item.pos, item.width + ground_size, item.width, SpaceType.Ground);
+                result.Add(data);
+            }
+            return result.ToArray();
         }
 
         private SpaceData[] CreateSpacePos(int count, int size, int rand, int dis, SpaceType typ) {
