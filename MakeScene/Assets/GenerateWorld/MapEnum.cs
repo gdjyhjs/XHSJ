@@ -6,6 +6,7 @@
         City,
     }
 
+    [System.Serializable]
     public enum SpaceType {
         /// <summary>
         /// 森林
@@ -47,6 +48,18 @@
         /// 地面装饰物
         /// </summary>
         Decorate,
+        /// <summary>
+        /// 门
+        /// </summary>
+        Door,
+        /// <summary>
+        /// 海
+        /// </summary>
+        Sea,
+        /// <summary>
+        /// 水
+        /// </summary>
+        Water,
     }
 
     public enum Direction {
