@@ -829,9 +829,9 @@ MonoBehaviour:
   ground_altitude: 0
   city_altitude: 0.05
   map_edge: 100
-  map_size: 500
+  map_size: 750
   city_size: 200
-  city_dis: 10
+  city_dis: 50
   city_random: 100
   city_count: 100
   field_size: 45
@@ -2241,6 +2241,11 @@ MonoBehaviour:
   seed: 5
   tree_density: 5
   decorate_density: 20
+  map_data:
+    allData: []
+  onGenerateMap: 0
+  generate_state: 0
+  step_progress: 0
 --- !u!1 &864392625477968344
 GameObject:
   m_ObjectHideFlags: 0

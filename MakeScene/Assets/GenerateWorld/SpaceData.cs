@@ -6,17 +6,18 @@ namespace GenerateWorld {
 
     [System.Serializable]
     public struct SpaceData {
-        public Vector3 pos;
-        public Vector3 scale;
+        public Vector pos;
+        public Vector scale;
         public SpaceType type;
-        public float min_x ;
-        public float max_x ;
-        public float min_z ;
-        public float max_z ;
+        public float min_x;
+        public float max_x;
+        public float min_z;
+        public float max_z;
         public float angle;
         public bool useMeshScale;
         public int id;
         public int idx;
+
 
         public SpaceData(Vector3 pos, Vector3 scale, SpaceType type, float angle = 0, bool useMeshScale = false, int id = 0, int idx = 0) {
             this.pos = pos;
@@ -33,6 +34,17 @@ namespace GenerateWorld {
         }
 
         /// <summary>
+        /// 是否可以看到空地
+        /// </summary>
+        /// <param name="pos">从哪里看过来</param>
+        /// <param name="see_dis">视野距离</param>
+        /// <returns></returns>
+        public bool IsCanSee(Vector3 pos, int see_dis = 1000) {
+            pos = pos + (this.pos - pos).normalized * see_dis;
+            return IsTherein(pos, 1);
+        }
+
+        /// <summary>
         /// 位置是否交叉
         /// </summary>
         /// <param name="data"></param>
@@ -43,7 +55,7 @@ namespace GenerateWorld {
         }
 
         int GetHypotenuse(int x, int y) {
-            return MathTools.IntegerSqrt(x * x + y * y);
+            return MapTools.IntegerSqrt(x * x + y * y);
         }
 
         /// <summary>

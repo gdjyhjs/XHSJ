@@ -1,4 +1,6 @@
-﻿namespace GenerateWorld {
+﻿using System.ComponentModel;
+
+namespace GenerateWorld {
     public enum CreateType {
         Node,
         Tree,
@@ -95,5 +97,24 @@
         /// </summary>
         Residence,
 
+    }
+
+    public enum GenerateState {
+        [Description("开始创建")]
+        Begin,
+        [Description("生成大陆")]
+        Space,
+        [Description("生成城市")]
+        City,
+        [Description("生成植被")]
+        Decorate,
+        [Description("保存世界")]
+        SaveFile,
+        [Description("读取世界")]
+        LoadFile,
+        [Description("生成世界")]
+        BuildWorld,
+        [Description("创建结束")]
+        End,
     }
 }
