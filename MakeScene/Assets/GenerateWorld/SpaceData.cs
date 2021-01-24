@@ -9,24 +9,45 @@ namespace GenerateWorld {
         public Vector pos;
         public Vector scale;
         public SpaceType type;
-        public float min_x;
-        public float max_x;
-        public float min_z;
-        public float max_z;
         public float angle;
         public bool useMeshScale;
-        public int id;
-        public int idx;
+        public short id;
+        public short idx;
+
+        public float min_x
+        {
+            get
+            {
+                return pos.x - scale.x * 0.5f - 1;
+            }
+        }
+        public float max_x
+        {
+            get
+            {
+                return pos.x + scale.x * 0.5f + 1;
+            }
+        }
+        public float min_z
+        {
+            get
+            {
+                return pos.z - scale.z * 0.5f - 1;
+            }
+        }
+        public float max_z
+        {
+            get
+            {
+                return pos.z + scale.z * 0.5f + 1;
+            }
+        }
 
 
-        public SpaceData(Vector3 pos, Vector3 scale, SpaceType type, float angle = 0, bool useMeshScale = false, int id = 0, int idx = 0) {
+        public SpaceData(Vector3 pos, Vector3 scale, SpaceType type, float angle = 0, bool useMeshScale = false, short id = 0, short idx = 0) {
             this.pos = pos;
             this.scale = scale;
             this.type = type;
-            min_x = pos.x - scale.x / 2f - 1;
-            max_x = pos.x + scale.x / 2f + 1;
-            min_z = pos.z - scale.z / 2f - 1;
-            max_z = pos.z + scale.z / 2f + 1;
             this.angle = angle;
             this.useMeshScale = useMeshScale;
             this.id = id;

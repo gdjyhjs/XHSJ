@@ -11,13 +11,9 @@ using Random = System.Random;
 namespace GenerateWorld {
 
     public class GenerateMap : MonoBehaviour {
+        public GenerateMap Instance;
 
-
-
-        public float sea_altitude = -0.5f;
-        public float ground_altitude = 0f;
-        public float city_altitude = 0.05f;
-
+        public bool readfile;
 
         /// <summary>
         /// 地图边缘大小
@@ -30,9 +26,14 @@ namespace GenerateWorld {
         public int map_size = 10000;
 
         /// <summary>
-        /// 城市的大小
+        /// 城市的最小尺寸
         /// </summary>
-        public int city_size = 200;
+        public int city_min = 100;
+
+        /// <summary>
+        /// 城市的最大尺寸
+        /// </summary>
+        public int city_max = 300;
 
         /// <summary>
         /// 城市的距离
@@ -40,39 +41,39 @@ namespace GenerateWorld {
         public int city_dis = 200;
 
         /// <summary>
-        /// 城市的大小随机幅度
-        /// </summary>
-        public int city_random = 100;
-
-        /// <summary>
         /// 城市的数量
         /// </summary>
         public int city_count = 3;
 
         /// <summary>
-        /// 场地的大小
+        /// 森林的最小尺寸
         /// </summary>
-        public int field_size = 15;
+        public int forest_min = 1;
 
         /// <summary>
-        /// 场地的距离
+        /// 森林的最大尺寸
         /// </summary>
-        public int field_dis = 5;
+        public int forest_max = 100;
 
         /// <summary>
-        /// 场地的大小随机幅度
+        /// 森林的距离
         /// </summary>
-        public int field_random = 10;
+        public int forest_dis = 5;
 
         /// <summary>
-        /// 场地的数量
+        /// 森林的数量
         /// </summary>
-        public int field_count = 100;
+        public int forest_count = 100;
 
         /// <summary>
-        /// 空地的大小
+        /// 空地的最大大小
         /// </summary>
-        public int ground_size = 100;
+        public int ground_max = 100;
+
+        /// <summary>
+        /// 空地的最小大小
+        /// </summary>
+        public int ground_min = 75;
 
         /// <summary>
         /// 用来做水的obj
@@ -150,10 +151,18 @@ namespace GenerateWorld {
         public int tree_density = 5;
         /// <summary>
         /// 地面装饰物密度
-        /// </summary>
+        /// </summary> 
         public int decorate_density = 20;
 
-        List<SpaceData> grounds;
+        public float city_height = 4;
+        public float forest_height = 3;
+        public float ground_height = 2;
+        public float water_height = 1;
+        public float sea_height = 0;
+
+        SpaceData[] citys;
+        SpaceData[] forests;
+        SpaceData[] grounds;
         List<SpaceData> walls;
         List<SpaceData> ways;
         List<SpaceData> houses;
@@ -166,7 +175,59 @@ namespace GenerateWorld {
         
 
         private void Awake() {
+            Instance = this;
             Init();
+        }
+
+
+        private void Update() {
+            if (onGenerateMap) {
+                if (generate_state != build_state) {
+                    switch (build_state) {
+                        case GenerateState.Begin:
+                            break;
+                        case GenerateState.CitySpace:
+                            StartCoroutine(BuildWorld(citys));
+                            break;
+                        case GenerateState.ForestSpace:
+                            StartCoroutine(BuildWorld(forests));
+                            break;
+                        case GenerateState.GroundSpace:
+                            StartCoroutine(BuildWorld(grounds));
+                            break;
+                        case GenerateState.City:
+                            break;
+                        case GenerateState.Decorate:
+                            break;
+                        case GenerateState.SaveFile:
+                            break;
+                        case GenerateState.LoadFile:
+                            break;
+                        case GenerateState.BuildWorld:
+                            break;
+                        case GenerateState.End:
+                            break;
+                        default:
+                            break;
+                    }
+                    build_state++;
+                }  
+            }
+        }
+
+        private IEnumerator BuildWorld(SpaceData[] data) {
+            yield return 0;
+            if (data.Length < 1)
+                yield break;
+            int max = data.Length;
+            int progress = 0;
+            for (int i = 0; i < max; i++) {
+                int p = i * 100 / max;
+                if (progress != p) {
+                    yield return 0;
+                }
+                CreateWorldGameObject(data[i]);
+            }
         }
 
         private void Init() {
@@ -186,136 +247,159 @@ namespace GenerateWorld {
             }
         }
 
-        public void NewWorld() {
-            StopAllCoroutines();
-            if (thread != null) {
-                thread.Abort();
-            }
-            StartCoroutine(LoadWorld());
-        }
-
         public bool onGenerateMap = false;
-        public GenerateState generate_state;
-        public float step_progress;
+        public GenerateState generate_state; // 生成数据的状态
+        public GenerateState build_state; // 生成GameObject的状态
+        public float generate_progress;
+        public float build_progress;
+        public List<BuildData> build_list;
         Thread thread;
-        // public float all_progress;
-        public IEnumerator LoadWorld() {
-            onGenerateMap = false;
-            generate_state = GenerateState.Begin;
-            step_progress = 0;
-            string path = MapPath();
-            if (File.Exists(path)) {
-                generate_state = GenerateState.LoadFile;
-                onGenerateMap = true;
-                thread = new Thread(() => {
-                    byte[] bytes = File.ReadAllBytes(path);
-                    using (MemoryStream ms = new MemoryStream(bytes)) {
-                        // //以二进制格式将对象或整个连接对象图形序列化和反序列化。
-                        IFormatter formatter = new BinaryFormatter();
-                        //把字符串以二进制放进memStream中
-                        map_data = (MapData)formatter.Deserialize(ms);
-                    }
-                    onGenerateMap = false;
-                });
-                thread.Start();
-                while (onGenerateMap) {
-                    yield return 0;
-                }
-            } else {
-                onGenerateMap = true;
-                thread = new Thread(GenerateWorld);
-                thread.Start();
-                while (onGenerateMap) {
-                    yield return 0;
+        public void LoadWorld() {
+            StopGenerate();
+
+            if (all_obj != null) {
+                // 清空原本的世界
+                foreach (GameObject item in all_obj) {
+                    Destroy(item);
                 }
             }
-
-            generate_state = GenerateState.BuildWorld;
-            yield return CreateWorldGameObject(map_data.allData);
-            generate_state = GenerateState.End;
+            all_obj = new List<GameObject>();
+            thread = new Thread(() => {
+                SetGenerateSize();
+                GenerateWorld();
+            });
+            thread.Start();
         }
-
-        public string MapPath() {
-            return string.Format("{0}_{1}.map", seed, generate_size);
-        }
+        
 
         public void GenerateWorld() {
             MapTools.SetRandomSeed(seed);
             DateTime start_time = DateTime.Now;
+
+            generate_state = GenerateState.Begin;
+            build_state = GenerateState.Begin;
+            generate_progress = 0;
+            onGenerateMap = true;
             if (seed < 0) {
                 seed = (int)start_time.Second;
             }
-            grounds = new List<SpaceData>();
-            walls = new List<SpaceData>();
-            ways = new List<SpaceData>();
-            houses = new List<SpaceData>();
-            decorates = new List<SpaceData>();
-            doors = new List<SpaceData>();
+            map_data = new MapData(this, seed, generate_size);
+            generate_state = GenerateState.CitySpace;
+            // 城市区域
+            if (!readfile || !map_data.HasCityData(out citys)) {
+                citys = CreateSpacePos(city_count, city_min, city_max, city_dis, SpaceType.City);
+                map_data.SetCityData(citys);
+            }
+            generate_state = GenerateState.ForestSpace;
+            // 森林区域
+            if (!readfile || !map_data.HasForestData(out forests)) {
+                forests = CreateSpacePos(forest_count, forest_min, forest_max, forest_dis, SpaceType.Forest);
+                map_data.SetForestData(forests);
+            }
+            generate_state = GenerateState.GroundSpace;
+            // 地块区域
+            if (!readfile || !map_data.HasGroundData(out grounds)) {
+                grounds = new SpaceData[(citys.Length + forests.Length) * 2 + 1];
+                int create_area_idx = 1;
+                for (int i = 0; i < citys.Length; i++) {
+                    CreateGround(citys[i], grounds, create_area_idx);
+                    create_area_idx += 2;
+                }
+                for (int i = 0; i < forests.Length; i++) {
+                    CreateGround(forests[i], grounds, create_area_idx);
+                    create_area_idx += 2;
+                }
+                map_data.SetGroundData(grounds);
 
-            generate_state = GenerateState.Space;
-            step_progress = 0;
-
-            grounds.AddRange(CreateSpacePos(city_count, city_size, city_random, city_dis, SpaceType.City));
-            grounds.AddRange(CreateSpacePos(field_count, field_size, field_random, field_dis, SpaceType.Forest));
-            grounds.AddRange(CreateGround(grounds.ToArray()));
-            generate_state = GenerateState.City;
-            step_progress = 0;
-
-            BuildCity();
-            generate_state = GenerateState.Decorate;
-            step_progress = 0;
-            BuildDecorate();
-
-            generate_state = GenerateState.SaveFile;
-            step_progress = 0;
-
-            allData = new List<SpaceData>(grounds.Count + walls.Count + ways.Count + houses.Count + decorates.Count);
-            allData.AddRange(grounds);
-            allData.AddRange(walls);
-            allData.AddRange(ways);
-            allData.AddRange(houses);
-            allData.AddRange(decorates);
-            allData.AddRange(doors);
-
-            int map_size = this.map_size / 2 + map_edge;
-            Vector3 map_pos = new Vector3(map_size, sea_altitude, map_size);
-            Vector3 sea_scale = new Vector3(this.map_size * 8 + 1000, 1, this.map_size * 8 + 1000);
-            allData.Add(new SpaceData(map_pos, sea_scale, SpaceType.Sea, useMeshScale: true));
-            Vector3 water_scale = new Vector3(this.map_size + map_edge * 2, 1, this.map_size + map_edge * 2);
-            allData.Add(new SpaceData(map_pos + new Vector3(0, 0.05f, 0), water_scale, SpaceType.Water, useMeshScale: true));
-
-            SpaceData[] all_data = allData.ToArray();
-            map_data = new MapData() { allData = all_data };
-
-            using (MemoryStream ms = new MemoryStream()) {
-                IFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(ms, map_data);
-                byte[] mepData = ms.GetBuffer();
-                File.WriteAllBytes(MapPath(), mepData);
+                int map_size = this.map_size / 2 + map_edge;
+                Vector3 map_pos = new Vector3(map_size, sea_height, map_size);
+                Vector3 sea_scale = new Vector3(this.map_size * 8 + 1000, 1, this.map_size * 8 + 1000);
+                grounds[0] = new SpaceData(map_pos, sea_scale, SpaceType.Sea, useMeshScale: true);
             }
 
-            grounds = null;
-            walls = null;
-            ways = null;
-            houses = null;
-            decorates = null;
-            doors = null;
-            allData = null;
+            generate_state = GenerateState.City;
+
+
+
+
+
+
+
+
+            //walls = new List<SpaceData>();
+            //ways = new List<SpaceData>();
+            //houses = new List<SpaceData>();
+            //decorates = new List<SpaceData>();
+            //doors = new List<SpaceData>();
+
+            //generate_state = GenerateState.Space;
+            //step_progress = 0;
+
+            //generate_state = GenerateState.City;
+            //step_progress = 0;
+
+            //BuildCity();
+            //generate_state = GenerateState.Decorate;
+            //step_progress = 0;
+            //BuildDecorate();
+
+            //generate_state = GenerateState.SaveFile;
+            //step_progress = 0;
+
+            ////allData = new List<SpaceData>(grounds.Count + walls.Count + ways.Count + houses.Count + decorates.Count);
+            ////allData.AddRange(grounds);
+
+            ////allData.AddRange(walls);
+            ////allData.AddRange(ways);
+            ////allData.AddRange(houses);
+            ////allData.AddRange(decorates);
+            ////allData.AddRange(doors);
+
+            //int map_size = this.map_size / 2 + map_edge;
+            //Vector3 map_pos = new Vector3(map_size, sea_altitude, map_size);
+            //Vector3 sea_scale = new Vector3(this.map_size * 8 + 1000, 1, this.map_size * 8 + 1000);
+            //allData.Add(new SpaceData(map_pos, sea_scale, SpaceType.Sea, useMeshScale: true));
+            //Vector3 water_scale = new Vector3(this.map_size + map_edge * 2, 1, this.map_size + map_edge * 2);
+            //allData.Add(new SpaceData(map_pos + new Vector3(0, 0.05f, 0), water_scale, SpaceType.Water, useMeshScale: true));
+
+            //SpaceData[] all_data = allData.ToArray();
+            //map_data = new MapData() { allData = all_data };
+
+            //byte[] mapData;
+            //using (MemoryStream ms = new MemoryStream()) {
+            //    IFormatter formatter = new BinaryFormatter();
+            //    formatter.Serialize(ms, map_data);
+            //    mapData = ms.GetBuffer();
+            //}
+            //string path = MapPath();
+            //filetools = new FileWriteTools(path, mapData);
+            //while (!filetools.isdone) {
+            //    step_progress = filetools.progress * 100;
+            //}
+            //filetools.Close();
+            //filetools = null;
+
+            //grounds = null;
+            //walls = null;
+            //ways = null;
+            //houses = null;
+            //decorates = null;
+            //doors = null;
+            //allData = null;
 
             DateTime end_time = DateTime.Now;
             Debug.Log("创造世界总花费时间：" + (end_time - start_time).TotalMilliseconds);
-            onGenerateMap = false;
         }
 
         private void BuildDecorate() {
             DateTime start_time = DateTime.Now;
 
             List<SpaceData> tmp_trees = new List<SpaceData>();
-            int min_map_pos = map_edge - ground_size;
-            float max_map_pos = map_size + map_edge + ground_size;
+            int min_map_pos = map_edge - ground_max;
+            float max_map_pos = map_size + map_edge + ground_max;
 
             for (int x1 = min_map_pos; x1 < max_map_pos; x1++) {
-                step_progress = x1 / max_map_pos;
+                generate_progress = x1 * 100 / max_map_pos;
                 for (int y1 = min_map_pos; y1 < max_map_pos; y1++) {
                     float x = x1 + MapTools.RandomRange(-0.38f, 0.38f);
                     float z = y1 + MapTools.RandomRange(-0.38f, 0.38f);
@@ -367,7 +451,7 @@ namespace GenerateWorld {
                                         tree_size *= MapTools.RandomRange(1.5f, 2f);
                                     }
                                     int ran = MapTools.RandomRange(0, treeObjs[0].objs.Length);
-                                    SpaceData tree = new SpaceData(pos, new Vector3(tree_size, tree_size, tree_size), SpaceType.Tree, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: ran);
+                                    SpaceData tree = new SpaceData(pos, new Vector3(tree_size, tree_size, tree_size), SpaceType.Tree, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: (short)ran);
                                     foreach (var item in tmp_trees) {
                                         if (item.IsOverlap(tree, 1)) {
                                             can_create = false;
@@ -387,7 +471,7 @@ namespace GenerateWorld {
                             if (can_create) {
                                 int ran = MapTools.RandomRange(0, decorateObjs[0].objs.Length);
                                 float decorate_size = MapTools.RandomRange(0.2f, 0.5f);
-                                SpaceData decorate = new SpaceData(pos, new Vector3(decorate_size, decorate_size, decorate_size), SpaceType.Decorate, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: ran);
+                                SpaceData decorate = new SpaceData(pos, new Vector3(decorate_size, decorate_size, decorate_size), SpaceType.Decorate, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: (short)ran);
                                 decorates.Add(decorate);
                             }
                         }
@@ -417,7 +501,7 @@ namespace GenerateWorld {
             int half_wall_width = (int)(wall_width * 0.5f);
 
             // generate_progress = 2 / 3f + i / max / 3f;
-            float all_count = grounds.Count;
+            float all_count = grounds.Length;
             float local_progress = 1 / all_count;
             for (int j = 0; j < all_count; j++) {
                 float progress = j / all_count;
@@ -445,7 +529,6 @@ namespace GenerateWorld {
                     Vector3 city_center;
                     if (width > ((space_size + space_edge) * 0.5f) && length > ((space_size + space_edge) * 0.5f)) {
                         city_center = new Vector3(MapTools.RandomRange(way_node_min_x, way_node_max_x), 0, MapTools.RandomRange(way_node_min_y, way_node_max_y));
-                        Debug.Log(city_center);
                     } else {
                         city_center = new Vector3(min_x + (min_y - min_x) * 0.5f, 0, max_x + (max_y - max_x) * 0.5f);
                     }
@@ -511,7 +594,7 @@ namespace GenerateWorld {
                     ways.Add(main_horizontal_way);
                     // 添加本城市道路
                     this.ways.AddRange(ways);
-                    step_progress = progress + 0.1f * local_progress;
+                    generate_progress = (progress + 0.1f * local_progress) * 100;
 
                     // 中心点向主干道两边创建商店
                     int shop_idx = house_width;
@@ -528,7 +611,7 @@ namespace GenerateWorld {
                         int right_x = (int)(city_center.x + shop_idx);
                         int left_x = (int)(city_center.x - shop_idx);
 
-                        step_progress = progress + (0.1f + 0.2f * Mathf.Min(shop_idx / max_count, 1)) * local_progress;
+                        generate_progress = (progress + (0.1f + 0.2f * Mathf.Min(shop_idx / max_count, 1)) * local_progress) * 100;
 
                         if (up_y > (main_vertical_way.max_z) && down_y < (main_vertical_way.min_z) && right_x > (main_horizontal_way.max_x) && left_x < (main_horizontal_way.min_x)) {
                             break;
@@ -564,7 +647,7 @@ namespace GenerateWorld {
                     float try_count = city.scale.x * city.scale.z / 50;
                     for (int i = 0; i < try_count; i++) {
 
-                        step_progress = progress + (0.3f + 0.7f * i / try_count) * local_progress;
+                        generate_progress = (progress + (0.3f + 0.7f * i / try_count) * local_progress) * 100;
 
                         int x = (int)MapTools.RandomRange(city.min_x + space_edge, city.max_x - space_edge);
                         int y = (int)MapTools.RandomRange(city.min_z + space_edge, city.max_z - space_edge);
@@ -586,8 +669,6 @@ namespace GenerateWorld {
                             houses.Add(h);
                         }
                     };
-
-                    Debug.Log("创建民房 " + houses.Count + "/" + try_count);
                 }
             }
             houses.AddRange(tmp_shops);
@@ -630,119 +711,98 @@ namespace GenerateWorld {
                     angle += 180;
                     break;
             }
-            return (new SpaceData(pos, new Vector3(size, size, size), typ, angle: angle, id: id, idx: idx));
+            return (new SpaceData(pos, new Vector3(size, size, size), typ, angle: angle, id: (short)id, idx: (short)idx));
         }
 
-        private IEnumerator CreateWorldGameObject(SpaceData[] all_data) {
-            DateTime start_time = DateTime.Now;
-            if (all_obj != null) {
-                foreach (GameObject item in all_obj) {
-                    Destroy(item);
-                }
-            }
-            all_obj = new List<GameObject>();
-
-            int max = all_data.Length;
-            int progress = 0;
-            for (int i = 0; i < max; i++) {
-                progress = i / max;
-                if (progress != step_progress) {
-                    step_progress = progress;
-                    yield return 0;
-                }
-                SpaceData space_data = all_data[i];
-
-                StaticObj static_obj = null;
-                switch (space_data.type) {
-                    case SpaceType.Forest:
-                        break;
-                    case SpaceType.Ground:
-                        static_obj = groundObj.obj;
-                        break;
-                    case SpaceType.City:
-                        static_obj = city_groundObj.obj;
-                        break;
-                    case SpaceType.House:
-                        static_obj = houseObjs[space_data.id].objs[space_data.idx];
-                        break;
-                    case SpaceType.Shop:
-                        static_obj = shopObjs[space_data.id].objs[space_data.idx];
-                        break;
-                    case SpaceType.Way:
-                        static_obj = wayObj.obj;
-                        break;
-                    case SpaceType.Wall:
-                        static_obj = wallObj.obj;
-                        break;
-                    case SpaceType.WallNode:
-                        static_obj = wallNodeObj.obj;
-                        break;
-                    case SpaceType.Tree:
-                        static_obj = treeObjs[space_data.id].objs[space_data.idx];
-                        break;
-                    case SpaceType.Decorate:
-                        static_obj = decorateObjs[space_data.id].objs[space_data.idx];
-                        break;
-                    case SpaceType.Sea:
-                        static_obj = seaObj.obj;
-                        break;
-                    case SpaceType.Water:
-                        static_obj = waterObj.obj;
-                        break;
-                    default:
-                        break;
-                }
-                if (static_obj != null) {
-                    GameObject obj = Instantiate(static_obj.prefab, new Vector3(space_data.pos.x, space_data.pos.y, space_data.pos.z), Quaternion.Euler(0, space_data.angle, 0));
-                    if (space_data.useMeshScale) {
-#if UNITY_EDITOR
-                        if (static_obj.scale == default) {
-                            Debug.LogError("检查是obj否已经调用Init函数初始化:" + space_data.type);
-                        }
-#endif
-                        obj.transform.localScale = new Vector3(space_data.scale.x * static_obj.scale.x, space_data.scale.y * static_obj.scale.y, space_data.scale.z * static_obj.scale.z);
-                    } else {
-                        obj.transform.localScale = space_data.scale;
-                    }
-                    all_obj.Add(obj);
-                }
-            }
-
-            DateTime end_time = DateTime.Now;
-            Debug.Log("创造地表花费时间：" + (end_time - start_time).TotalMilliseconds);
-
-            yield return 0;
-        }
-
-        private SpaceData[] CreateGround(SpaceData[] grounds) {
-            List<SpaceData> result = new List<SpaceData>();
-            float max = grounds.Length;
-            for (int i = 0; i < max; i++) {
-                SpaceData item = grounds[i];
-                SpaceData data = new SpaceData(item.pos - new Vector3(0, 0.05f, 0), new Vector3(item.scale.x + ground_size, 1, item.scale.z + ground_size), SpaceType.Ground, useMeshScale: true);
-                result.Add(data);
-                step_progress = 2 / 3f + i / max / 3f;
-            }
-            return result.ToArray();
-        }
-
-        private SpaceData[] CreateSpacePos(int count, int size, int rand, int dis, SpaceType typ) {
-            List<SpaceData> rand_pos = new List<SpaceData>();
-            int idx = 0;
-            // 最多随机多100次，避免地图太小无法创建足够多的坐标
-            float max = count + 100f;
-            // 最小随机位置
-            int min_pos = size / 2 + map_edge;
-            // 最大随机位置
-            int max_pos = map_size - size / 2 + map_edge;
-            // 最小距离
-            int min_dis = size + dis;
-            switch (typ) {
+        private void CreateWorldGameObject(SpaceData space_data) {
+            StaticObj static_obj = null;
+            switch (space_data.type) {
                 case SpaceType.Forest:
-                    step_progress = idx / max / 3;
+                    //static_obj = wayObj.obj;
+                    break;
+                case SpaceType.Ground:
+                    static_obj = groundObj.obj;
                     break;
                 case SpaceType.City:
-                    step_progress = 1 / 3f + idx / max / 3;
+                    static_obj = city_groundObj.obj;
+                    break;
+                case SpaceType.House:
+                    static_obj = houseObjs[space_data.id].objs[space_data.idx];
+                    break;
+                case SpaceType.Shop:
+                    static_obj = shopObjs[space_data.id].objs[space_data.idx];
+                    break;
+                case SpaceType.Way:
+                    static_obj = wayObj.obj;
+                    break;
+                case SpaceType.Wall:
+                    static_obj = wallObj.obj;
+                    break;
+                case SpaceType.WallNode:
+                    static_obj = wallNodeObj.obj;
+                    break;
+                case SpaceType.Tree:
+                    static_obj = treeObjs[space_data.id].objs[space_data.idx];
+                    break;
+                case SpaceType.Decorate:
+                    static_obj = decorateObjs[space_data.id].objs[space_data.idx];
+                    break;
+                case SpaceType.Sea:
+                    static_obj = seaObj.obj;
+                    break;
+                case SpaceType.Water:
+                    static_obj = waterObj.obj;
+                    break;
+                default:
+                    break;
+            }
+            if (static_obj != null) {
+                GameObject obj = Instantiate(static_obj.prefab, new Vector3(space_data.pos.x, space_data.pos.y, space_data.pos.z), Quaternion.Euler(0, space_data.angle, 0));
+                if (space_data.useMeshScale) {
+#if UNITY_EDITOR
+                    if (static_obj.scale == default) {
+                        Debug.LogError("检查是obj否已经调用Init函数初始化:" + space_data.type);
+                    }
+#endif
+                    obj.transform.localScale = new Vector3(space_data.scale.x * static_obj.scale.x, space_data.scale.y * static_obj.scale.y, space_data.scale.z * static_obj.scale.z);
+                } else {
+                    obj.transform.localScale = space_data.scale;
+                }
+                all_obj.Add(obj);
+            }
+        }
+
+        private void CreateGround(SpaceData space, SpaceData[] areas, int idx) {
+            float width = space.scale.x + MapTools.RandomRange(ground_min, ground_max);
+            float length = space.scale.z + MapTools.RandomRange(ground_min, ground_max);
+            SpaceData data = new SpaceData(new Vector3(space.pos.x, ground_height, space.pos.z), new Vector3(width, 1, length), SpaceType.Ground, useMeshScale: true);
+            areas[idx] = data;
+            SpaceData water = new SpaceData(new Vector3(space.pos.x, water_height, space.pos.z), new Vector3(width + space_edge, 1, length + space_edge), SpaceType.Water, useMeshScale: true);
+            areas[idx + 1] = water;
+        }
+
+        /// <summary>
+        /// 创建城市/森林
+        /// </summary>
+        private SpaceData[] CreateSpacePos(int count, int min_size, int max_size, int dis, SpaceType typ) {
+            List<SpaceData> rand_pos = new List<SpaceData>();
+            int idx = 0;
+            float max = count;
+            // 最小随机位置
+            int min_pos = min_size / 2 + map_edge;
+            // 最大随机位置
+            int max_pos = map_size - min_size / 2 + map_edge;
+            // 最小距离
+            int min_dis = min_size + dis;
+            float height = 0;
+            switch (typ) {
+                case SpaceType.Forest:
+                    generate_progress = idx / max / 3 * 100;
+                    height = forest_height;
+                    break;
+                case SpaceType.City:
+                    generate_progress = (1 / 3f + idx / max / 3) * 100;
+                    height = city_height;
                     break;
             }
             while (idx < max) {
@@ -751,18 +811,15 @@ namespace GenerateWorld {
                 int pos_y = MapTools.RandomRange(min_pos, max_pos);
                 Vector2 pos = new Vector2(pos_x, pos_y);
                 int width;
-                int height;
-                if (idx > max / 10) {
-                    width = size - rand;
-                    height = size - rand;
-                } else if (idx > max / 2) {
-                    width = MapTools.RandomRange(size - rand, size);
-                    height = MapTools.RandomRange(size - rand, size);
+                int length;
+                if (typ == SpaceType.City) {
+                    width = MapTools.RandomRange(min_size, max_size);
+                    length = Math.Max(1, (int)(width * MapTools.RandomRange(0.8f, 1.2f)));
                 } else {
-                    width = MapTools.RandomRange(size, size + rand);
-                    height = MapTools.RandomRange(size, size + rand);
+                    width = Math.Max(1, (int)(min_size + (max_size - min_size) * ((max - idx * 1f) / max) * MapTools.RandomRange(0.8f, 1.2f)));
+                    length = Math.Max(1, (int)(min_size + (max_size - min_size) * ((max - idx * 1f) / max) * MapTools.RandomRange(0.8f, 1.2f)));
                 }
-                SpaceData data = new SpaceData(new Vector3(pos_x, 0.05f, pos_y), new Vector3(MapTools.RandomRange(size - rand, size + rand), 1, MapTools.RandomRange(size - rand, size + rand)), typ, useMeshScale: true);
+                SpaceData data = new SpaceData(new Vector3(pos_x, height, pos_y), new Vector3(width, 1, length), typ, useMeshScale: true);
                 bool can_pos = true;
                 foreach (SpaceData p in rand_pos) {
                     if (p.IsOverlap(data, dis)) {
@@ -790,15 +847,30 @@ namespace GenerateWorld {
             switch (generate_size) {
                 case 1:
                     map_size = 2000;
-                    field_count = 300;
+                    forest_count = 800;
+                    forest_min = 5;
+                    forest_max = 330;
+                    city_count = 7;
+                    ground_max = 166;
+                    ground_min = 125;
                     break;
                 case 2:
                     map_size = 7500;
-                    field_count = 1000;
+                    forest_count = 5000;
+                    forest_min = 5;
+                    forest_max = 1200;
+                    city_count = 29;
+                    ground_max = 250;
+                    ground_min = 200;
                     break;
                 default:
                     map_size = 750;
-                    field_count = 100;
+                    forest_count = 200;
+                    forest_min = 5;
+                    forest_max = 90;
+                    city_count = 100;
+                    ground_max = 75;
+                    ground_min = 50;
                     break;
             }
         }
@@ -808,43 +880,50 @@ namespace GenerateWorld {
             if (seed > 0) {
                 if (GUI.Button(new Rect(10, 10, 30, 30), "<")) {
                     seed--;
-                    NewWorld();
+                    LoadWorld();
                 }
             }
             if (seed < int.MaxValue) {
                 if (GUI.Button(new Rect(40, 10, 30, 30), ">")) {
                     seed++;
-                    NewWorld();
+                    LoadWorld();
                 }
             }
             if (GUI.Button(new Rect(70, 10, 30, 30), "小")) {
                 generate_size = 0;
-                SetGenerateSize();
-                NewWorld();
+                LoadWorld();
             }
             if (GUI.Button(new Rect(100, 10, 30, 30), "中")) {
                 generate_size = 1;
-                SetGenerateSize();
-                NewWorld();
+                LoadWorld();
             }
             if (GUI.Button(new Rect(130, 10, 30, 30), "大")) {
                 generate_size = 2;
-                SetGenerateSize();
-                NewWorld();
+                LoadWorld();
             }
             if (GUI.Button(new Rect(160, 10, 30, 30), "☢")) {
-                NewWorld();
+                LoadWorld();
             }
 
-            if (allData != null) {
-                GUI.Label(new Rect(10, 40, 200, 30), "count:" + allData.Count);
-            }
             if (onGenerateMap) {
-
+                if (allData != null) {
+                    GUI.Label(new Rect(10, 40, 200, 30), "count:" + allData.Count);
+                }
                 string state_name = MapTools.GetEnumName(generate_state);
-                GUI.Label(new Rect(10, 70, 100, 30), string.Format("{0}:{1:F}", state_name, +step_progress * 100));
+                GUI.Label(new Rect(10, 70, 100, 30), string.Format("{0}:{1:F}%", state_name, +generate_progress));
             }
         }
 #endif
+        private void StopGenerate() {
+            StopAllCoroutines();
+            map_data = null;
+            if (thread != null) {
+                thread.Abort();
+            }
+        }
+
+        private void OnDestroy() {
+            StopGenerate();
+        }
     }
 }

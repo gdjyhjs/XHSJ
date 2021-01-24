@@ -99,11 +99,18 @@ namespace GenerateWorld {
 
     }
 
+    /// <summary>
+    /// 生成世界数据状态
+    /// </summary>
     public enum GenerateState {
         [Description("开始创建")]
         Begin,
-        [Description("生成大陆")]
-        Space,
+        [Description("生成城市地块")]
+        CitySpace,
+        [Description("生成森林地块")]
+        ForestSpace,
+        [Description("生成大陆地块")]
+        GroundSpace,
         [Description("生成城市")]
         City,
         [Description("生成植被")]
