@@ -62,6 +62,10 @@ namespace GenerateWorld {
         /// 水
         /// </summary>
         Water,
+        /// <summary>
+        /// 区域触发器
+        /// </summary>
+        AreaTrriger,
     }
 
     public enum Direction {
@@ -103,25 +107,13 @@ namespace GenerateWorld {
     /// 生成世界数据状态
     /// </summary>
     public enum GenerateState {
-        [Description("开始创建")]
-        Begin,
-        [Description("生成城市地块")]
-        CitySpace,
-        [Description("生成森林地块")]
-        ForestSpace,
-        [Description("生成大陆地块")]
-        GroundSpace,
-        [Description("生成城市")]
-        City,
-        [Description("生成植被")]
-        Decorate,
-        [Description("保存世界")]
-        SaveFile,
-        [Description("读取世界")]
-        LoadFile,
-        [Description("生成世界")]
-        BuildWorld,
-        [Description("创建结束")]
-        End,
+        AreaTriiger,
+        Grounds,
+    }
+
+    public enum BuildMode
+    {
+        Create,
+        Release,
     }
 }

@@ -16,7 +16,10 @@ namespace GenerateWorld {
         SpaceData[] city_data; // 所有城市占地
         SpaceData[] forest_data; // 所有森林占地
         SpaceData[] ground_data; // 所有区域占地
-        AreaData[] all_areadata; // 所有地块详细数据
+        SpaceData[] trigger_data; // 所有区域占地
+        SpaceData[][] city_datas; // 所有城市详细数据
+
+
 
         List<Thread> threads = new List<Thread>();
         List<FileTools> fileTools = new List<FileTools>();
@@ -47,14 +50,20 @@ namespace GenerateWorld {
             SetData(data, "forest_data");
         }
 
-        public bool HasGroundData(out SpaceData[] result) {
-            return HasData(ref ground_data, "ground_data", out result);
+        public bool HasGroundData(out SpaceData[] result, out SpaceData[] triggers) {
+            bool a = HasData(ref ground_data, "ground_data", out result);
+            bool b = HasData(ref trigger_data, "trigger_data", out triggers);
+            return a && b;
         }
-        public void SetGroundData(SpaceData[] data) {
+        public void SetGroundData(SpaceData[] data, SpaceData[] triggers) {
             ground_data = data;
             SetData(data, "ground_data");
+            SetData(triggers, "trigger_data");
         }
-
+        public void SetTriggerData(SpaceData[] data) {
+            trigger_data = data;
+            SetData(data, "trigger_data");
+        }
 
 
 
@@ -74,11 +83,11 @@ namespace GenerateWorld {
                         try {
                             while (true) {
                                 Thread.Sleep(10);
+                                if (file_tool == null) {
+                                    result = null;
+                                    return false;
+                                }
                                 lock (file_tool) {
-                                    if (file_tool == null) {
-                                        result = null;
-                                        return false;
-                                    }
                                     progress = file_tool.progress;
                                     if (file_tool.isdone) {
                                         bytes = file_tool.result;
@@ -129,10 +138,10 @@ namespace GenerateWorld {
                 fileTools.Add(file_tool);
                 while (true) {
                     Thread.Sleep(10);
+                    if (file_tool == null) {
+                        return;
+                    }
                     lock (file_tool) {
-                        if (file_tool == null) {
-                            return;
-                        }
                         if (file_tool.isdone) {
                             lock (fileTools) {
                                 if (fileTools.Contains(file_tool)) {

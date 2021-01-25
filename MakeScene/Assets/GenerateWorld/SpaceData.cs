@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace GenerateWorld {
 
-    [System.Serializable]
+    /// <summary>
+    /// µØ¿éÊý¾Ý
+    /// </summary>
+    [System.Serializable]    
     public struct SpaceData {
         public Vector pos;
         public Vector scale;

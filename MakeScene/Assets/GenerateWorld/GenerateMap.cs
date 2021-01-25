@@ -10,8 +10,12 @@ using Random = System.Random;
 
 namespace GenerateWorld {
 
-    public class GenerateMap : MonoBehaviour {
-        public GenerateMap Instance;
+    public class GenerateMap : MonoBehaviour
+    {
+        public static GenerateMap instance;
+
+        public List<GameObject> players;
+        public float see_dir = 500;
 
         public bool readfile;
 
@@ -140,6 +144,8 @@ namespace GenerateWorld {
         /// </summary>
         public StaticObjsData[] decorateObjs;
 
+        public StaticObjData triggerObj;
+
         /// <summary>
         /// 随机种子
         /// </summary>
@@ -160,9 +166,27 @@ namespace GenerateWorld {
         public float water_height = 1;
         public float sea_height = 0;
 
-        SpaceData[] citys;
-        SpaceData[] forests;
-        SpaceData[] grounds;
+        public SpaceData[] citys;
+        public SpaceData[] forests;
+        public SpaceData[] grounds;
+        public SpaceData[] triggers;
+
+
+        /// <summary>
+        /// 进去的区域 等待激活
+        /// </summary>
+        public List<int> enterAreas;
+        /// <summary>
+        /// 激活的区域
+        /// </summary>
+        public List<int> activeAreas;
+        /// <summary>
+        /// 离开的区域 等待释放
+        /// </summary>
+        public List<int> exitAreas;
+
+
+
         List<SpaceData> walls;
         List<SpaceData> ways;
         List<SpaceData> houses;
@@ -172,46 +196,30 @@ namespace GenerateWorld {
 
         private List<GameObject> all_obj;
         public MapData map_data;
-        
 
+        Queue<BuildOperate> build_operates = new Queue<BuildOperate>();
         private void Awake() {
-            Instance = this;
+            instance = this;
             Init();
         }
 
 
+        BuildOperate cur_operate;
         private void Update() {
-            if (onGenerateMap) {
-                if (generate_state != build_state) {
-                    switch (build_state) {
-                        case GenerateState.Begin:
-                            break;
-                        case GenerateState.CitySpace:
-                            StartCoroutine(BuildWorld(citys));
-                            break;
-                        case GenerateState.ForestSpace:
-                            StartCoroutine(BuildWorld(forests));
-                            break;
-                        case GenerateState.GroundSpace:
-                            StartCoroutine(BuildWorld(grounds));
-                            break;
-                        case GenerateState.City:
-                            break;
-                        case GenerateState.Decorate:
-                            break;
-                        case GenerateState.SaveFile:
-                            break;
-                        case GenerateState.LoadFile:
-                            break;
-                        case GenerateState.BuildWorld:
-                            break;
-                        case GenerateState.End:
-                            break;
-                        default:
-                            break;
-                    }
-                    build_state++;
-                }  
+            cur_operate = DequeueOperate();
+            if (cur_operate != null) {
+                Debug.Log(cur_operate.state);
+                switch (cur_operate.state) {
+                    case GenerateState.AreaTriiger:
+                        StartCoroutine(BuildWorld(triggers));
+                        break;
+                    case GenerateState.Grounds:
+                        StartCoroutine(BuildWorld(citys));
+                        break;
+                    default:
+                        break;
+                }
+                cur_operate = null;
             }
         }
 
@@ -249,7 +257,6 @@ namespace GenerateWorld {
 
         public bool onGenerateMap = false;
         public GenerateState generate_state; // 生成数据的状态
-        public GenerateState build_state; // 生成GameObject的状态
         public float generate_progress;
         public float build_progress;
         public List<BuildData> build_list;
@@ -270,54 +277,51 @@ namespace GenerateWorld {
             });
             thread.Start();
         }
-        
+
 
         public void GenerateWorld() {
             MapTools.SetRandomSeed(seed);
-            DateTime start_time = DateTime.Now;
-
-            generate_state = GenerateState.Begin;
-            build_state = GenerateState.Begin;
             generate_progress = 0;
             onGenerateMap = true;
             if (seed < 0) {
+                DateTime start_time = DateTime.Now;
                 seed = (int)start_time.Second;
             }
             map_data = new MapData(this, seed, generate_size);
-            generate_state = GenerateState.CitySpace;
             // 城市区域
             if (!readfile || !map_data.HasCityData(out citys)) {
                 citys = CreateSpacePos(city_count, city_min, city_max, city_dis, SpaceType.City);
                 map_data.SetCityData(citys);
             }
-            generate_state = GenerateState.ForestSpace;
             // 森林区域
             if (!readfile || !map_data.HasForestData(out forests)) {
                 forests = CreateSpacePos(forest_count, forest_min, forest_max, forest_dis, SpaceType.Forest);
                 map_data.SetForestData(forests);
             }
-            generate_state = GenerateState.GroundSpace;
             // 地块区域
-            if (!readfile || !map_data.HasGroundData(out grounds)) {
+            if (!readfile || !map_data.HasGroundData(out grounds, out triggers)) {
                 grounds = new SpaceData[(citys.Length + forests.Length) * 2 + 1];
-                int create_area_idx = 1;
+                triggers = new SpaceData[(citys.Length + forests.Length) * 2];
+                int create_area_idx = 0;
                 for (int i = 0; i < citys.Length; i++) {
-                    CreateGround(citys[i], grounds, create_area_idx);
-                    create_area_idx += 2;
+                    CreateGround(citys[i], grounds, create_area_idx, triggers);
+                    create_area_idx += 1;
                 }
                 for (int i = 0; i < forests.Length; i++) {
-                    CreateGround(forests[i], grounds, create_area_idx);
-                    create_area_idx += 2;
+                    CreateGround(forests[i], grounds, create_area_idx, triggers);
+                    create_area_idx += 1;
                 }
-                map_data.SetGroundData(grounds);
-
+                map_data.SetGroundData(grounds, triggers);
                 int map_size = this.map_size / 2 + map_edge;
                 Vector3 map_pos = new Vector3(map_size, sea_height, map_size);
                 Vector3 sea_scale = new Vector3(this.map_size * 8 + 1000, 1, this.map_size * 8 + 1000);
                 grounds[0] = new SpaceData(map_pos, sea_scale, SpaceType.Sea, useMeshScale: true);
             }
+            BuildOperate triiger_operate = new BuildOperate() { id = -1, state = GenerateState.AreaTriiger, mode = BuildMode.Create };
+            Debug.Log("增加一个操作："+ triiger_operate.state);
+            EnqueueOperate(triiger_operate);
 
-            generate_state = GenerateState.City;
+
 
 
 
@@ -387,8 +391,6 @@ namespace GenerateWorld {
             //doors = null;
             //allData = null;
 
-            DateTime end_time = DateTime.Now;
-            Debug.Log("创造世界总花费时间：" + (end_time - start_time).TotalMilliseconds);
         }
 
         private void BuildDecorate() {
@@ -717,6 +719,9 @@ namespace GenerateWorld {
         private void CreateWorldGameObject(SpaceData space_data) {
             StaticObj static_obj = null;
             switch (space_data.type) {
+                case SpaceType.AreaTrriger:
+                    static_obj = triggerObj.obj;
+                    break;
                 case SpaceType.Forest:
                     //static_obj = wayObj.obj;
                     break;
@@ -772,13 +777,20 @@ namespace GenerateWorld {
             }
         }
 
-        private void CreateGround(SpaceData space, SpaceData[] areas, int idx) {
+        private void CreateGround(SpaceData space, SpaceData[] areas, int idx, SpaceData[] triggers) {
             float width = space.scale.x + MapTools.RandomRange(ground_min, ground_max);
             float length = space.scale.z + MapTools.RandomRange(ground_min, ground_max);
+
+            SpaceData trigger = new SpaceData(new Vector3(space.pos.x, see_dir, space.pos.z), new Vector3(width + see_dir, see_dir * 2, length + see_dir), SpaceType.AreaTrriger);
+            triggers[idx] = trigger;
+
+            idx = idx * 2 + 1;
             SpaceData data = new SpaceData(new Vector3(space.pos.x, ground_height, space.pos.z), new Vector3(width, 1, length), SpaceType.Ground, useMeshScale: true);
             areas[idx] = data;
+
+            idx++;
             SpaceData water = new SpaceData(new Vector3(space.pos.x, water_height, space.pos.z), new Vector3(width + space_edge, 1, length + space_edge), SpaceType.Water, useMeshScale: true);
-            areas[idx + 1] = water;
+            areas[idx] = water;
         }
 
         /// <summary>
@@ -924,6 +936,22 @@ namespace GenerateWorld {
 
         private void OnDestroy() {
             StopGenerate();
+        }
+
+        BuildOperate DequeueOperate() {
+            lock (build_operates) {
+                if (build_operates.Count < 1) {
+                    return null;
+                } else {
+                    return build_operates.Dequeue();
+                }
+            }
+        }
+
+        void EnqueueOperate(BuildOperate operate) {
+            lock (build_operates) {
+                build_operates.Enqueue(operate);
+            }
         }
     }
 }
