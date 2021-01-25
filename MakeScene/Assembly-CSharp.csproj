@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,9 +53,6 @@
     <UnityVersion>2020.1.17f1c1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Assets\GenerateWorld\SpaceData.cs" />
     <Compile Include="Assets\GenerateWorld\BuildData.cs" />
     <Compile Include="Assets\GenerateWorld\GenerateMap.cs" />
@@ -64,8 +61,9 @@
     <Compile Include="Assets\GenerateWorld\MapTools.cs" />
     <Compile Include="Assets\GenerateWorld\AreaData.cs" />
     <Compile Include="Assets\GenerateWorld\StaticObjData.cs" />
-    <Compile Include="Assets\GenerateWorld\AreaTrriger.cs" />
     <Compile Include="Assets\GenerateWorld\Buildoperate.cs" />
+    <Compile Include="Assets\GenerateWorld\AreaTrriger.cs" />
+    <Compile Include="Assets\GenerateWorld\GenerateArea.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -108,12 +108,10 @@ namespace GenerateWorld {
     /// </summary>
     public enum GenerateState {
         AreaTriiger,
-        Grounds,
-    }
-
-    public enum BuildMode
-    {
-        Create,
-        Release,
+        Ground,
+        Wall,
+        House,
+        Tree,
+        Decorate,
     }
 }

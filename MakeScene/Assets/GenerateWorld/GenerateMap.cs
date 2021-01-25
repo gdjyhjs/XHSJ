@@ -194,7 +194,8 @@ namespace GenerateWorld {
         List<SpaceData> doors;
         List<SpaceData> allData;
 
-        private List<GameObject> all_obj;
+        public Dictionary<int, GenerateArea> area_generates;
+        private List<GameObject> trigger_objs;
         public MapData map_data;
 
         Queue<BuildOperate> build_operates = new Queue<BuildOperate>();
@@ -204,22 +205,22 @@ namespace GenerateWorld {
         }
 
 
-        BuildOperate cur_operate;
         private void Update() {
-            cur_operate = DequeueOperate();
+            BuildOperate cur_operate = DequeueOperate();
             if (cur_operate != null) {
-                Debug.Log(cur_operate.state);
+                Debug.Log(cur_operate.state + " " + cur_operate.area_id);
                 switch (cur_operate.state) {
                     case GenerateState.AreaTriiger:
                         StartCoroutine(BuildWorld(triggers));
-                        break;
-                    case GenerateState.Grounds:
-                        StartCoroutine(BuildWorld(citys));
+                        CreateWorldGameObject(grounds[0], -1);
                         break;
                     default:
+                        if(area_generates.ContainsKey(cur_operate.area_id)) {
+                            GenerateArea area = area_generates[cur_operate.area_id];
+                            area.BuildGameObject(cur_operate);
+                        }
                         break;
                 }
-                cur_operate = null;
             }
         }
 
@@ -234,7 +235,7 @@ namespace GenerateWorld {
                 if (progress != p) {
                     yield return 0;
                 }
-                CreateWorldGameObject(data[i]);
+                CreateWorldGameObject(data[i], i);
             }
         }
 
@@ -264,13 +265,8 @@ namespace GenerateWorld {
         public void LoadWorld() {
             StopGenerate();
 
-            if (all_obj != null) {
-                // 清空原本的世界
-                foreach (GameObject item in all_obj) {
-                    Destroy(item);
-                }
-            }
-            all_obj = new List<GameObject>();
+            trigger_objs = new List<GameObject>();
+            area_generates = new Dictionary<int, GenerateArea>();
             thread = new Thread(() => {
                 SetGenerateSize();
                 GenerateWorld();
@@ -317,9 +313,8 @@ namespace GenerateWorld {
                 Vector3 sea_scale = new Vector3(this.map_size * 8 + 1000, 1, this.map_size * 8 + 1000);
                 grounds[0] = new SpaceData(map_pos, sea_scale, SpaceType.Sea, useMeshScale: true);
             }
-            BuildOperate triiger_operate = new BuildOperate() { id = -1, state = GenerateState.AreaTriiger, mode = BuildMode.Create };
-            Debug.Log("增加一个操作："+ triiger_operate.state);
-            EnqueueOperate(triiger_operate);
+            BuildOperate triiger_operate = new BuildOperate() { area_id = -1, state = GenerateState.AreaTriiger};
+            EnqueueOperate(triiger_operate); // 增加创建触发器的操作
 
 
 
@@ -391,6 +386,29 @@ namespace GenerateWorld {
             //doors = null;
             //allData = null;
 
+        }
+
+        public void EnterArea(int area_id) {
+            if (area_generates.ContainsKey(area_id))
+                return;
+            SpaceData groundData = grounds[1 + area_id * 2];
+            SpaceData waterData = grounds[2 + area_id * 2];
+            SpaceData spaceData;
+            if (area_id < citys.Length) {
+                spaceData = citys[area_id];
+            } else {
+                spaceData = forests[area_id - citys.Length];
+            }
+            GenerateArea area = new GenerateArea(area_id, this, groundData, spaceData, waterData);
+            area_generates.Add(area_id, area);
+        }
+
+        public void ExitArea(int area_id) {
+            if (!area_generates.ContainsKey(area_id))
+                return;
+            var area = area_generates[area_id];
+            area_generates.Remove(area_id);
+            area.Close();
         }
 
         private void BuildDecorate() {
@@ -716,7 +734,7 @@ namespace GenerateWorld {
             return (new SpaceData(pos, new Vector3(size, size, size), typ, angle: angle, id: (short)id, idx: (short)idx));
         }
 
-        private void CreateWorldGameObject(SpaceData space_data) {
+        private void CreateWorldGameObject(SpaceData space_data, int id = 0) {
             StaticObj static_obj = null;
             switch (space_data.type) {
                 case SpaceType.AreaTrriger:
@@ -773,7 +791,10 @@ namespace GenerateWorld {
                 } else {
                     obj.transform.localScale = space_data.scale;
                 }
-                all_obj.Add(obj);
+                if (space_data.type == SpaceType.AreaTrriger) {
+                    obj.GetComponent<AreaTrriger>().area_id = id;
+                }
+                trigger_objs.Add(obj);
             }
         }
 
@@ -927,10 +948,21 @@ namespace GenerateWorld {
         }
 #endif
         private void StopGenerate() {
-            StopAllCoroutines();
-            map_data = null;
             if (thread != null) {
                 thread.Abort();
+            }
+            if (area_generates != null) {
+                foreach (KeyValuePair<int, GenerateArea> item in area_generates) {
+                    item.Value.Close();
+                }
+            }
+            StopAllCoroutines();
+            map_data = null;
+            if (trigger_objs != null) {
+                // 清空原本的世界
+                foreach (GameObject item in trigger_objs) {
+                    Destroy(item);
+                }
             }
         }
 
@@ -948,7 +980,7 @@ namespace GenerateWorld {
             }
         }
 
-        void EnqueueOperate(BuildOperate operate) {
+        public void EnqueueOperate(BuildOperate operate) {
             lock (build_operates) {
                 build_operates.Enqueue(operate);
             }

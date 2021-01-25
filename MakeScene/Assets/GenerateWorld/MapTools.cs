@@ -42,7 +42,9 @@ namespace GenerateWorld {
                 min = max;
                 max = tmp;
             }
-            return rand.Next(min, max);
+            lock (rand) {
+                return rand.Next(min, max);
+            }
         }
         public static float RandomRange(float min, float max) {
             return RandomRange((int)(min * 100), (int)(max * 100)) * 0.01f;

@@ -6,8 +6,7 @@ namespace GenerateWorld
 {
     public class BuildOperate
     {
-        public int id;
+        public int area_id;
         public GenerateState state;
-        public BuildMode mode;
     }
 }
