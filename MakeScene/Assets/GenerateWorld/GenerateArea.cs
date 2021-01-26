@@ -25,12 +25,12 @@ namespace GenerateWorld {
         public SpaceData[] wall_datas; // 围墙和道路
         public SpaceData[] house_datas; // 住宅和商店
 
-        SpaceData[] citys; // 树木
-
         List<GameObject> all_objs = new List<GameObject>();
 
         Thread thread;
         Dictionary<GenerateState, Coroutine> coroutines = new Dictionary<GenerateState, Coroutine>();
+
+        System.Random rand;
 
         int house_size = 10;
         // 每个区域大概50*50  边界留10米  道路3米宽 围墙宽3米 城门宽5米
@@ -43,13 +43,21 @@ namespace GenerateWorld {
         float city_height;
         float ground_height;
 
+        float[][] city_rects;
+
+        public int player_count; // 这个区域拥有的玩家数量
+
         public GenerateArea(int area_id, GenerateMap generate, SpaceData groundData, SpaceData spaceData, SpaceData waterData) {
+            this.player_count = 1;
             this.area_id = area_id;
             this.generate = generate;
             this.groundData = groundData;
             this.spaceData = spaceData;
-            citys = new SpaceData[generate.citys.Length];
-            System.Array.Copy(generate.citys, citys, citys.Length);
+            city_rects = new float[generate.citys.Length][];
+            for (int i = 0; i < generate.citys.Length; i++) {
+                var item = generate.citys[i];
+                city_rects[i] = new float[] { item.min_x, item.min_z, item.max_x , item.max_z };
+            }
             city_height = generate.city_height + 1;
             ground_height = generate.ground_height + 1;
             thread = new Thread(Generate);
@@ -58,16 +66,15 @@ namespace GenerateWorld {
             CreateAreaGameObject(groundData);
             CreateAreaGameObject(spaceData);
             CreateAreaGameObject(waterData);
-
-            //BuildOperate decorate_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Ground };
         }
 
         void Generate() {
+            int seed = int.Parse(generate.seed.ToString() + (groundData.pos.x).ToString() + (groundData.pos.z).ToString());
+            MapTools.SetRandomSeed(seed, out rand);
+
             if (spaceData.type == SpaceType.City) {
                 // 创建城市
                 GenerateCity(spaceData);
-                Debug.Log("围墙 房子 生成完毕 " + wall_datas + " - " + house_datas + "\tid=" + area_id);
-                Debug.Log("围墙 房子 数量 " + wall_datas.Length + " - " + house_datas.Length + "\tid=" + area_id);
                 BuildOperate wall_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Wall};
                 generate.EnqueueOperate(wall_operate); // 增加创建围墙的操作
                 BuildOperate decorate_operate = new BuildOperate() { area_id = area_id, state = GenerateState.House};
@@ -75,9 +82,7 @@ namespace GenerateWorld {
             }
 
             GenerateOther();
-            citys = null;
-            Debug.Log("树 草 生成完毕 " + tree_datas + " - " + decorate_datas + "\tid=" + area_id);
-            Debug.Log("树 草 数量 " + tree_datas.Length + " - " + decorate_datas.Length + "\tid=" + area_id);
+            city_rects = null;
             if (tree_datas.Length > 0) {
                 BuildOperate tree_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Tree };
                 generate.EnqueueOperate(tree_operate); // 增加创建树的操作
@@ -92,8 +97,6 @@ namespace GenerateWorld {
             float min_z = groundData.min_z + 2;
             float max_z = groundData.max_z - 2;
 
-            Debug.Log("min_x = " + min_x + "\tmax_x = " + max_x + "\tmin_z = " + min_z + "\tmax_z = " + max_z);
-
             List<SpaceData> tmp_trees = new List<SpaceData>();
             List<SpaceData> tmp_decorates = new List<SpaceData>();
             int min_map_pos = generate.map_edge - generate.ground_max;
@@ -101,75 +104,72 @@ namespace GenerateWorld {
 
             for (float i = min_x; i <= max_x; i++) {
                 for (float j = min_z; j <= max_z; j++) {
-                    float x = i + MapTools.RandomRange(-0.38f, 0.38f);
-                    float z = j + MapTools.RandomRange(-0.38f, 0.38f);
+                    float x = i + MapTools.RandomRange(-0.38f, 0.38f, rand);
+                    float z = j + MapTools.RandomRange(-0.38f, 0.38f, rand);
                     CreateType create = CreateType.Decorate;
                     Vector3 pos = new Vector3(x, ground_height, z);
-                    if (spaceData.IsTherein(pos)) {
-                        if (spaceData.type == SpaceType.City) {
-                            continue;
-                        } else if (spaceData.type == SpaceType.Forest) {
-                            create = CreateType.Tree;
+
+                    // 检查不在任何一座城市内
+                    bool onCity = false;
+                    bool onDoor = false;
+
+                    lock (city_rects) {
+                        for (int k = 0; k < city_rects.Length; k++) {
+                            float[] r = city_rects[k];
+                            if (pos.x > r[0] && pos.x < r[2] && pos.z < r[3]) {
+                                if (pos.z > r[1]) {
+                                    onCity = true;
+                                    break;
+                                } else if (!onDoor && pos.z > (r[1] - 50)) {
+                                    // 城门方向50米不创建树
+                                    onDoor = true;
+                                }
+                            }
                         }
                     }
 
-                    // todo需要处理异步判断问题
-                    //bool onCity = false;
-                    //for (int k = 0; k < citys.Length;) {
-                    //    if (citys[k].IsTherein(pos)) {
-                    //        onCity = true;
-                    //        break;
-                    //    }
-                    //}
-                    //if (onCity)
-                    //    continue;
-
-                    int ran_create_id = MapTools.RandomRange(0, 100);
-                    if (create != CreateType.City) {
-                        if (ran_create_id < generate.tree_density && create == CreateType.Tree) {
-                            float max_dis = Mathf.Max(spaceData.scale.x, spaceData.scale.z) / 2.5f;
-                            Vector3 center = spaceData.pos;
-                            float center_dis = Vector3.Distance(pos, center);
-                            bool can_create = center_dis < max_dis;
-                            //// 城门周围50米不创建树
-                            //if (can_create) {
-                            //    foreach (var item in doors) {
-                            //        if (Vector3.Distance(item.pos, pos) < space_size) {
-                            //            can_create = false;
-                            //            break;
-                            //        }
-                            //    }
-                            //}
-                            if (can_create) {
-                                float tree_size = MapTools.RandomRange(0.75f, 1.25f);
-                                if (center_dis < max_dis * 0.5f) {
-                                    tree_size *= MapTools.RandomRange(1f, 1.25f);
-                                } else if (center_dis < max_dis * 0.25f) {
-                                    tree_size *= MapTools.RandomRange(1.25f, 1.5f);
-                                } else if (center_dis < max_dis * 0.1f) {
-                                    tree_size *= MapTools.RandomRange(1.5f, 2f);
-                                }
-                                int ran = MapTools.RandomRange(0, generate.treeObjs[0].objs.Length);
-                                SpaceData tree = new SpaceData(pos, new Vector3(tree_size, tree_size, tree_size), SpaceType.Tree, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: (short)ran);
-                                foreach (var item in tmp_trees) {
-                                    if (item.IsOverlap(tree, 1)) {
-                                        can_create = false;
+                    if (!onCity) {
+                        if (spaceData.IsTherein(pos)) {
+                            create = CreateType.Tree;
+                        }
+                        int ran_create_id = MapTools.RandomRange(0, 100, rand);
+                        if (create != CreateType.City) {
+                            if (!onDoor && ran_create_id < generate.tree_density && create == CreateType.Tree) {
+                                float max_dis = Mathf.Max(spaceData.scale.x, spaceData.scale.z) / 2.5f;
+                                Vector3 center = spaceData.pos;
+                                float center_dis = Vector3.Distance(pos, center);
+                                bool can_create = center_dis < max_dis;
+                                if (can_create) {
+                                    float tree_size = MapTools.RandomRange(0.75f, 1.25f, rand);
+                                    if (center_dis < max_dis * 0.5f) {
+                                        tree_size *= MapTools.RandomRange(1f, 1.25f, rand);
+                                    } else if (center_dis < max_dis * 0.25f) {
+                                        tree_size *= MapTools.RandomRange(1.25f, 1.5f, rand);
+                                    } else if (center_dis < max_dis * 0.1f) {
+                                        tree_size *= MapTools.RandomRange(1.5f, 2f, rand);
+                                    }
+                                    int ran = MapTools.RandomRange(0, generate.treeObjs[0].objs.Length, rand);
+                                    SpaceData tree = new SpaceData(pos, new Vector3(tree_size, tree_size, tree_size), SpaceType.Tree, angle: MapTools.RandomRange(0f, 360f, rand), id: 0, idx: (short)ran);
+                                    foreach (var item in tmp_trees) {
+                                        if (item.IsOverlap(tree, 1)) {
+                                            can_create = false;
+                                        }
+                                    }
+                                    if (can_create) {
+                                        tmp_trees.Add(tree);
                                     }
                                 }
-                                if (can_create) {
-                                    tmp_trees.Add(tree);
+                            } else if (ran_create_id < generate.decorate_density) {
+                                bool can_create = true;
+                                if (create == CreateType.City) {
+                                    can_create = false;
                                 }
-                            }
-                        } else if (ran_create_id < generate.decorate_density) {
-                            bool can_create = true;
-                            if (create == CreateType.City) {
-                                can_create = false;
-                            }
-                            if (can_create) {
-                                int ran = MapTools.RandomRange(0, generate.decorateObjs[0].objs.Length);
-                                float decorate_size = MapTools.RandomRange(0.2f, 0.5f);
-                                SpaceData decorate = new SpaceData(pos, new Vector3(decorate_size, decorate_size, decorate_size), SpaceType.Decorate, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: (short)ran);
-                                tmp_decorates.Add(decorate);
+                                if (can_create) {
+                                    int ran = MapTools.RandomRange(0, generate.decorateObjs[0].objs.Length, rand);
+                                    float decorate_size = MapTools.RandomRange(0.2f, 0.5f, rand);
+                                    SpaceData decorate = new SpaceData(pos, new Vector3(decorate_size, decorate_size, decorate_size), SpaceType.Decorate, angle: MapTools.RandomRange(0f, 360f, rand), id: 0, idx: (short)ran);
+                                    tmp_decorates.Add(decorate);
+                                }
                             }
                         }
                     }
@@ -206,7 +206,7 @@ namespace GenerateWorld {
             // 创建城市中心点
             Vector3 city_center;
             if (width > ((space_size + space_edge) * 0.5f) && length > ((space_size + space_edge) * 0.5f)) {
-                city_center = new Vector3(MapTools.RandomRange(way_node_min_x, way_node_max_x), 0, MapTools.RandomRange(way_node_min_y, way_node_max_y));
+                city_center = new Vector3(MapTools.RandomRange(way_node_min_x, way_node_max_x, rand), 0, MapTools.RandomRange(way_node_min_y, way_node_max_y, rand));
             } else {
                 city_center = new Vector3(min_x + (min_y - min_x) * 0.5f, 0, max_x + (max_y - max_x) * 0.5f);
             }
@@ -319,8 +319,8 @@ namespace GenerateWorld {
             float try_count = city.scale.x * city.scale.z / 50;
             for (int i = 0; i < try_count; i++) {
 
-                int x = (int)MapTools.RandomRange(city.min_x + space_edge, city.max_x - space_edge);
-                int y = (int)MapTools.RandomRange(city.min_z + space_edge, city.max_z - space_edge);
+                int x = (int)MapTools.RandomRange(city.min_x + space_edge, city.max_x - space_edge, rand);
+                int y = (int)MapTools.RandomRange(city.min_z + space_edge, city.max_z - space_edge, rand);
                 bool can_build = true;
                 SpaceData h = GenerateHouse(new Vector3(x, city_height, y), x < city_center.x ? Direction.East : Direction.West, SpaceType.House);
                 foreach (SpaceData shop in shops) {
@@ -369,11 +369,11 @@ namespace GenerateWorld {
                     objs = null;
                     break;
             }
-            int id = objs == null ? 0 : MapTools.RandomRange(0, objs.Length);
-            int idx = objs == null ? 0 : MapTools.RandomRange(0, objs[id].objs.Length);
+            int id = objs == null ? 0 : MapTools.RandomRange(0, objs.Length, rand);
+            int idx = objs == null ? 0 : MapTools.RandomRange(0, objs[id].objs.Length, rand);
 
-            var size = MapTools.RandomRange(0.9f, 1.1f);
-            float angle = MapTools.RandomRange(-5f, 5f);
+            var size = MapTools.RandomRange(0.9f, 1.1f, rand);
+            float angle = MapTools.RandomRange(-5f, 5f, rand);
             switch (dir) {
                 case Direction.East:
                     angle += 90;
@@ -389,10 +389,6 @@ namespace GenerateWorld {
         }
         public void BuildGameObject(BuildOperate operate) {
             switch (operate.state) {
-                //case GenerateState.Ground:
-                //    CreateAreaGameObject(groundData);
-                //    CreateAreaGameObject(spaceData);
-                //    break;
                 case GenerateState.Wall:
                     coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, wall_datas)));
                     break;
@@ -409,11 +405,9 @@ namespace GenerateWorld {
         }
 
         private IEnumerator BuildWorld(GenerateState state, SpaceData[] data) {
-            Debug.Log(state + "创建 " + data + "\tid=" + area_id);
             if (data == null) {
                 yield break;
             }
-            Debug.Log(state + "数量 " + data.Length + "\tid=" + area_id);
             if (data.Length < 1) {
                 yield break;
             }
@@ -422,6 +416,7 @@ namespace GenerateWorld {
             for (int i = 0; i < max; i++) {
                 int p = i * 100 / max;
                 if (progress != p) {
+                    progress = p;
                     yield return 0;
                 }
                 CreateAreaGameObject(data[i], i);
@@ -429,7 +424,9 @@ namespace GenerateWorld {
             if (coroutines.ContainsKey(state)) {
                 var coroutine = coroutines[state];
                 coroutines.Remove(state);
-                generate.StopCoroutine(coroutine);
+                if (coroutine != null) {
+                    generate.StopCoroutine(coroutine);
+                }
             }
         }
 

@@ -32,11 +32,11 @@ namespace GenerateWorld {
             return "";
         }
 
-        static System.Random rand = new System.Random();
-        public static void SetRandomSeed(int seed) {
+        //static System.Random rand = new System.Random();
+        public static void SetRandomSeed(int seed, out System.Random rand) {
             rand = new System.Random(seed);
         }
-        public static int RandomRange(int min, int max) {
+        public static int RandomRange(int min, int max, System.Random rand) {
             if (max < min) {
                 int tmp = min;
                 min = max;
@@ -46,8 +46,8 @@ namespace GenerateWorld {
                 return rand.Next(min, max);
             }
         }
-        public static float RandomRange(float min, float max) {
-            return RandomRange((int)(min * 100), (int)(max * 100)) * 0.01f;
+        public static float RandomRange(float min, float max, System.Random rand) {
+            return RandomRange((int)(min * 100), (int)(max * 100), rand) * 0.01f;
         }
 
     }

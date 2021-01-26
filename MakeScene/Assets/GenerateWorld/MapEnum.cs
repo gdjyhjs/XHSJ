@@ -113,5 +113,7 @@ namespace GenerateWorld {
         House,
         Tree,
         Decorate,
+        CreateSea,
+        EnterArea,
     }
 }

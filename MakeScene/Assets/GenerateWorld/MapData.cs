@@ -60,10 +60,6 @@ namespace GenerateWorld {
             SetData(data, "ground_data");
             SetData(triggers, "trigger_data");
         }
-        public void SetTriggerData(SpaceData[] data) {
-            trigger_data = data;
-            SetData(data, "trigger_data");
-        }
 
 
 
