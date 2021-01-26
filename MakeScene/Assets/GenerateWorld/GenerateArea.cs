@@ -25,6 +25,8 @@ namespace GenerateWorld {
         public SpaceData[] wall_datas; // 围墙和道路
         public SpaceData[] house_datas; // 住宅和商店
 
+        SpaceData[] citys; // 树木
+
         List<GameObject> all_objs = new List<GameObject>();
 
         Thread thread;
@@ -38,12 +40,18 @@ namespace GenerateWorld {
         int wall_width = 2;
         int wallnode_size = 3;
         int door_width = 4;
+        float city_height;
+        float ground_height;
 
         public GenerateArea(int area_id, GenerateMap generate, SpaceData groundData, SpaceData spaceData, SpaceData waterData) {
             this.area_id = area_id;
             this.generate = generate;
             this.groundData = groundData;
             this.spaceData = spaceData;
+            citys = new SpaceData[generate.citys.Length];
+            System.Array.Copy(generate.citys, citys, citys.Length);
+            city_height = generate.city_height + 1;
+            ground_height = generate.ground_height + 1;
             thread = new Thread(Generate);
             thread.Start();
 
@@ -55,26 +63,30 @@ namespace GenerateWorld {
         }
 
         void Generate() {
-            bool isCity = spaceData.type == SpaceType.City;
-            if (isCity) {
+            if (spaceData.type == SpaceType.City) {
                 // 创建城市
                 GenerateCity(spaceData);
-
+                Debug.Log("围墙 房子 生成完毕 " + wall_datas + " - " + house_datas + "\tid=" + area_id);
+                Debug.Log("围墙 房子 数量 " + wall_datas.Length + " - " + house_datas.Length + "\tid=" + area_id);
                 BuildOperate wall_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Wall};
-                generate.EnqueueOperate(wall_operate); // 增加创建树的操作
+                generate.EnqueueOperate(wall_operate); // 增加创建围墙的操作
                 BuildOperate decorate_operate = new BuildOperate() { area_id = area_id, state = GenerateState.House};
-                generate.EnqueueOperate(decorate_operate); // 增加创建植物的操作
+                generate.EnqueueOperate(decorate_operate); // 增加创建房子的操作
             }
 
-            GenerateOther(isCity);
-
-            BuildOperate tree_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Tree };
-            generate.EnqueueOperate(tree_operate); // 增加创建围墙的操作
+            GenerateOther();
+            citys = null;
+            Debug.Log("树 草 生成完毕 " + tree_datas + " - " + decorate_datas + "\tid=" + area_id);
+            Debug.Log("树 草 数量 " + tree_datas.Length + " - " + decorate_datas.Length + "\tid=" + area_id);
+            if (tree_datas.Length > 0) {
+                BuildOperate tree_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Tree };
+                generate.EnqueueOperate(tree_operate); // 增加创建树的操作
+            }
             BuildOperate house_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Decorate };
-            generate.EnqueueOperate(house_operate); // 增加创建房子的操作
+            generate.EnqueueOperate(house_operate); // 增加创建植物的操作
         }
 
-        void GenerateOther(bool isCity) {
+        void GenerateOther() {
             float min_x = groundData.min_x + 2;
             float max_x = groundData.max_x - 2;
             float min_z = groundData.min_z + 2;
@@ -91,27 +103,32 @@ namespace GenerateWorld {
                 for (float j = min_z; j <= max_z; j++) {
                     float x = i + MapTools.RandomRange(-0.38f, 0.38f);
                     float z = j + MapTools.RandomRange(-0.38f, 0.38f);
-                    float max_dis = default;
-                    Vector3 center = default;
                     CreateType create = CreateType.Decorate;
-                    {
-                        if (spaceData.IsTherein(new Vector3(x, 0, z))) {
-                            if (spaceData.type == SpaceType.City) {
-                                create = CreateType.City;
-                                break;
-                            } else if (spaceData.type == SpaceType.Forest) {
-                                create = CreateType.Tree;
-                                center = spaceData.pos;
-                                max_dis = Mathf.Max(spaceData.scale.x, spaceData.scale.z) / 2.5f;
-                                break;
-                            }
+                    Vector3 pos = new Vector3(x, ground_height, z);
+                    if (spaceData.IsTherein(pos)) {
+                        if (spaceData.type == SpaceType.City) {
+                            continue;
+                        } else if (spaceData.type == SpaceType.Forest) {
+                            create = CreateType.Tree;
                         }
                     }
 
+                    // todo需要处理异步判断问题
+                    //bool onCity = false;
+                    //for (int k = 0; k < citys.Length;) {
+                    //    if (citys[k].IsTherein(pos)) {
+                    //        onCity = true;
+                    //        break;
+                    //    }
+                    //}
+                    //if (onCity)
+                    //    continue;
+
                     int ran_create_id = MapTools.RandomRange(0, 100);
-                    if (ran_create_id < generate.tree_density) {
-                        if (create == CreateType.Tree && create != CreateType.City) {
-                            Vector3 pos = new Vector3(x, 1, z);
+                    if (create != CreateType.City) {
+                        if (ran_create_id < generate.tree_density && create == CreateType.Tree) {
+                            float max_dis = Mathf.Max(spaceData.scale.x, spaceData.scale.z) / 2.5f;
+                            Vector3 center = spaceData.pos;
                             float center_dis = Vector3.Distance(pos, center);
                             bool can_create = center_dis < max_dis;
                             //// 城门周围50米不创建树
@@ -143,24 +160,21 @@ namespace GenerateWorld {
                                     tmp_trees.Add(tree);
                                 }
                             }
-                        }
-                    } else if (ran_create_id < generate.decorate_density) {
-                        var pos = new Vector3(x, 1, z);
-                        bool can_create = true;
-                        if (create == CreateType.City) {
-                            can_create = false;
-                        }
-                        if (can_create) {
-                            int ran = MapTools.RandomRange(0, generate.decorateObjs[0].objs.Length);
-                            float decorate_size = MapTools.RandomRange(0.2f, 0.5f);
-                            SpaceData decorate = new SpaceData(pos, new Vector3(decorate_size, decorate_size, decorate_size), SpaceType.Decorate, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: (short)ran);
-                            tmp_decorates.Add(decorate);
+                        } else if (ran_create_id < generate.decorate_density) {
+                            bool can_create = true;
+                            if (create == CreateType.City) {
+                                can_create = false;
+                            }
+                            if (can_create) {
+                                int ran = MapTools.RandomRange(0, generate.decorateObjs[0].objs.Length);
+                                float decorate_size = MapTools.RandomRange(0.2f, 0.5f);
+                                SpaceData decorate = new SpaceData(pos, new Vector3(decorate_size, decorate_size, decorate_size), SpaceType.Decorate, angle: MapTools.RandomRange(0f, 360f), id: 0, idx: (short)ran);
+                                tmp_decorates.Add(decorate);
+                            }
                         }
                     }
                 }
             }
-            Debug.Log("树数量 " + tmp_trees.Count + "\tid=" + area_id);
-            Debug.Log("草数量 "+tmp_decorates.Count + "\tid=" + area_id);
             tree_datas = tmp_trees.ToArray();
             decorate_datas = tmp_decorates.ToArray();
         }
@@ -198,29 +212,29 @@ namespace GenerateWorld {
             }
 
             // 东墙
-            Vector3 east_wall_pos = new Vector3(max_x - half_wall_width, 1, pos.z);
+            Vector3 east_wall_pos = new Vector3(max_x - half_wall_width, city_height, pos.z);
             float east_wall_width = wall_width;
             float east_wall_length = length;
             SpaceData east_wall = new SpaceData(east_wall_pos, new Vector3(east_wall_width, 3, east_wall_length), SpaceType.Wall, useMeshScale: true);
             // 西墙
-            Vector3 west_wall_pos = new Vector3(min_x + half_wall_width, 1, pos.z);
+            Vector3 west_wall_pos = new Vector3(min_x + half_wall_width, city_height, pos.z);
             float west_wall_width = wall_width;
             float west_wall_length = length;
             SpaceData west_wall = new SpaceData(west_wall_pos, new Vector3(west_wall_width, 3, west_wall_length), SpaceType.Wall, useMeshScale: true);
             //北墙
-            Vector3 north_wall_pos = new Vector3(pos.x, 1, max_y - half_wall_width);
+            Vector3 north_wall_pos = new Vector3(pos.x, city_height, max_y - half_wall_width);
             float north_wall_width = width;
             float north_wall_length = wall_width;
             SpaceData north_wall = new SpaceData(north_wall_pos, new Vector3(north_wall_width, 3, north_wall_length), SpaceType.Wall, useMeshScale: true);
             // 南墙1
             float south1_wall_width = (int)(max_x - city_center.x - door_width);
             float south1_wall_length = wall_width;
-            Vector3 south1_wall_pos = new Vector3(max_x - south1_wall_width * 0.5f, 1, min_y + half_wall_width);
+            Vector3 south1_wall_pos = new Vector3(max_x - south1_wall_width * 0.5f, city_height, min_y + half_wall_width);
             SpaceData south1_wall = new SpaceData(south1_wall_pos, new Vector3(south1_wall_width, 3, south1_wall_length), SpaceType.Wall, useMeshScale: true);
             // 南墙2
             float south2_wall_width = (int)(city_center.x - min_x - door_width);
             float south2_wall_length = wall_width;
-            Vector3 south2_wall_pos = new Vector3(min_x + south2_wall_width * 0.5f, 1, min_y + half_wall_width);
+            Vector3 south2_wall_pos = new Vector3(min_x + south2_wall_width * 0.5f, city_height, min_y + half_wall_width);
             SpaceData south2_wall = new SpaceData(south2_wall_pos, new Vector3(south2_wall_width, 3, south2_wall_length), SpaceType.Wall, useMeshScale: true);
 
             walls.Add(east_wall);
@@ -230,14 +244,14 @@ namespace GenerateWorld {
             walls.Add(south2_wall);
 
             // 围墙柱子
-            walls.Add(new SpaceData(new Vector3(min_x + half_wall_width, 1, min_y + half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
-            walls.Add(new SpaceData(new Vector3(min_x + half_wall_width, 1, max_y - half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
-            walls.Add(new SpaceData(new Vector3(max_x - half_wall_width, 1, min_y + half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
-            walls.Add(new SpaceData(new Vector3(max_x - half_wall_width, 1, max_y - half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
-            walls.Add(new SpaceData(new Vector3(min_x + south2_wall_width - half_wall_width, 1, min_y + half_wall_width), new Vector3(wallnode_size * 2, 5, wallnode_size * 2), SpaceType.WallNode, useMeshScale: true));
-            walls.Add(new SpaceData(new Vector3(max_x - south1_wall_width + half_wall_width, 1, min_y + half_wall_width), new Vector3(wallnode_size * 2, 5, wallnode_size * 2), SpaceType.WallNode, useMeshScale: true));
+            walls.Add(new SpaceData(new Vector3(min_x + half_wall_width, city_height, min_y + half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
+            walls.Add(new SpaceData(new Vector3(min_x + half_wall_width, city_height, max_y - half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
+            walls.Add(new SpaceData(new Vector3(max_x - half_wall_width, city_height, min_y + half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
+            walls.Add(new SpaceData(new Vector3(max_x - half_wall_width, city_height, max_y - half_wall_width), new Vector3(wallnode_size, 5, wallnode_size), SpaceType.WallNode, useMeshScale: true));
+            walls.Add(new SpaceData(new Vector3(min_x + south2_wall_width - half_wall_width, city_height, min_y + half_wall_width), new Vector3(wallnode_size * 2, 5, wallnode_size * 2), SpaceType.WallNode, useMeshScale: true));
+            walls.Add(new SpaceData(new Vector3(max_x - south1_wall_width + half_wall_width, city_height, min_y + half_wall_width), new Vector3(wallnode_size * 2, 5, wallnode_size * 2), SpaceType.WallNode, useMeshScale: true));
 
-            var door = new SpaceData(new Vector3(city_center.x, 0, min_y), new Vector3(door_width, 1, 1), SpaceType.Door);
+            var door = new SpaceData(new Vector3(city_center.x, city_height, min_y), new Vector3(door_width, 1, 1), SpaceType.Door);
             // 门
             doors.Add(door);
 
@@ -248,8 +262,8 @@ namespace GenerateWorld {
             int main_way_horizontal_width = (int)(max_x - min_x - space_edge * 2);
             int main_way_horizontal_length = door_width;
 
-            Vector3 main_vertical_way_pos = new Vector3(city_center.x, 1, min_y + main_way_vertical_length * 0.5f);
-            Vector3 main_horizontal_way_pos = new Vector3(min_x + main_way_horizontal_width * 0.5f + space_edge, 1, city_center.z);
+            Vector3 main_vertical_way_pos = new Vector3(city_center.x, city_height, min_y + main_way_vertical_length * 0.5f);
+            Vector3 main_horizontal_way_pos = new Vector3(min_x + main_way_horizontal_width * 0.5f + space_edge, city_height, city_center.z);
 
             SpaceData main_vertical_way = new SpaceData(main_vertical_way_pos, new Vector3(main_way_vertical_width, 0.08f, main_way_vertical_length), SpaceType.Way, useMeshScale: true);
             SpaceData main_horizontal_way = new SpaceData(main_horizontal_way_pos, new Vector3(main_way_horizontal_width, 0.08f, main_way_horizontal_length), SpaceType.Way, useMeshScale: true);
@@ -276,13 +290,13 @@ namespace GenerateWorld {
                 }
                 //上面的
                 if (up_y < (main_vertical_way.max_z) && Vector3.Distance(door.pos, new Vector3(main_way_right_x, 1, up_y)) > space_edge) {
-                    shops.Add(GenerateHouse(new Vector3(main_way_right_x, 1, up_y), Direction.West, SpaceType.Shop));
-                    shops.Add(GenerateHouse(new Vector3(main_way_left_x, 1, up_y), Direction.East, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(main_way_right_x, city_height, up_y), Direction.West, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(main_way_left_x, city_height, up_y), Direction.East, SpaceType.Shop));
                 }
                 //下面的
                 if (down_y > (main_vertical_way.min_z) && Vector3.Distance(door.pos, new Vector3(main_way_right_x, 1, down_y)) > space_edge) {
-                    shops.Add(GenerateHouse(new Vector3(main_way_right_x, 1, down_y), Direction.West, SpaceType.Shop));
-                    shops.Add(GenerateHouse(new Vector3(main_way_left_x, 1, down_y), Direction.East, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(main_way_right_x, city_height, down_y), Direction.West, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(main_way_left_x, city_height, down_y), Direction.East, SpaceType.Shop));
                 }
 
 
@@ -290,13 +304,13 @@ namespace GenerateWorld {
                 left_x -= house_size;
                 // 右边的
                 if (right_x < (main_horizontal_way.max_x) && Vector3.Distance(door.pos, new Vector3(right_x, 1, main_way_up_y)) > space_edge) {
-                    shops.Add(GenerateHouse(new Vector3(right_x, 1, main_way_up_y), Direction.South, SpaceType.Shop));
-                    shops.Add(GenerateHouse(new Vector3(right_x, 1, main_way_down_y), Direction.North, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(right_x, city_height, main_way_up_y), Direction.South, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(right_x, city_height, main_way_down_y), Direction.North, SpaceType.Shop));
                 }
                 // 左边的
                 if (left_x > (main_horizontal_way.min_x) && Vector3.Distance(door.pos, new Vector3(left_x, 1, main_way_up_y)) > space_edge) {
-                    shops.Add(GenerateHouse(new Vector3(left_x, 1, main_way_up_y), Direction.South, SpaceType.Shop));
-                    shops.Add(GenerateHouse(new Vector3(left_x, 1, main_way_down_y), Direction.North, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(left_x, city_height, main_way_up_y), Direction.South, SpaceType.Shop));
+                    shops.Add(GenerateHouse(new Vector3(left_x, city_height, main_way_down_y), Direction.North, SpaceType.Shop));
                 }
                 shop_idx += house_size;
             }
@@ -308,7 +322,7 @@ namespace GenerateWorld {
                 int x = (int)MapTools.RandomRange(city.min_x + space_edge, city.max_x - space_edge);
                 int y = (int)MapTools.RandomRange(city.min_z + space_edge, city.max_z - space_edge);
                 bool can_build = true;
-                SpaceData h = GenerateHouse(new Vector3(x, 1, y), x < city_center.x ? Direction.East : Direction.West, SpaceType.House);
+                SpaceData h = GenerateHouse(new Vector3(x, city_height, y), x < city_center.x ? Direction.East : Direction.West, SpaceType.House);
                 foreach (SpaceData shop in shops) {
                     if (shop.IsOverlap(h, 8)) {
                         can_build = false;
@@ -395,10 +409,14 @@ namespace GenerateWorld {
         }
 
         private IEnumerator BuildWorld(GenerateState state, SpaceData[] data) {
-            Debug.Log(state + "创建的数量 " + data.Length + "\tid=" + area_id);
-            yield return 0;
-            if (data.Length < 1)
+            Debug.Log(state + "创建 " + data + "\tid=" + area_id);
+            if (data == null) {
                 yield break;
+            }
+            Debug.Log(state + "数量 " + data.Length + "\tid=" + area_id);
+            if (data.Length < 1) {
+                yield break;
+            }
             int max = data.Length;
             int progress = 0;
             for (int i = 0; i < max; i++) {
@@ -472,9 +490,7 @@ namespace GenerateWorld {
                 } else {
                     obj.transform.localScale = space_data.scale;
                 }
-                if (space_data.type == SpaceType.AreaTrriger) {
-                    obj.GetComponent<AreaTrriger>().area_id = id;
-                }
+                obj.name = space_data.type + " " + area_id;
                 all_objs.Add(obj);
             }
         }
@@ -484,7 +500,9 @@ namespace GenerateWorld {
                 thread.Abort();
             }
             foreach (KeyValuePair<GenerateState, Coroutine> item in coroutines) {
-                generate.StopCoroutine(item.Value);
+                if (item.Value != null) {
+                    generate.StopCoroutine(item.Value);
+                }
             }
             foreach (var item in all_objs) {
                 GameObject.Destroy(item);

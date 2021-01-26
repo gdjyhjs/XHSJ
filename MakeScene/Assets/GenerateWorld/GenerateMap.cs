@@ -152,16 +152,16 @@ namespace GenerateWorld {
         public int seed = 100;
 
         /// <summary>
-        /// 树密度
+        /// 树密度(每一百平方米有多少棵树)
         /// </summary>
         public int tree_density = 5;
         /// <summary>
-        /// 地面装饰物密度
+        /// 地面装饰物密度(每一百平方米有多少)
         /// </summary> 
         public int decorate_density = 20;
 
-        public float city_height = 4;
-        public float forest_height = 3;
+        public float city_height = 2.05f;
+        public float forest_height = 2.05f;
         public float ground_height = 2;
         public float water_height = 1;
         public float sea_height = 0;
@@ -794,6 +794,7 @@ namespace GenerateWorld {
                 if (space_data.type == SpaceType.AreaTrriger) {
                     obj.GetComponent<AreaTrriger>().area_id = id;
                 }
+                obj.name = space_data.type + " " + id;
                 trigger_objs.Add(obj);
             }
         }

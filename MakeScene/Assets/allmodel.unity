@@ -297,7 +297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2022426584}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: 150, y: 3, z: 150}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -467,8 +467,16 @@ PrefabInstance:
       value: world
       objectReference: {fileID: 0}
     - target: {fileID: 864392625369141739, guid: b76242d14bf2b7f4aaf04333ad6074ec, type: 3}
+      propertyPath: tree_density
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 864392625369141739, guid: b76242d14bf2b7f4aaf04333ad6074ec, type: 3}
       propertyPath: players.Array.data[0]
       value: 
       objectReference: {fileID: 2022426584}
+    - target: {fileID: 2878665908299426633, guid: b76242d14bf2b7f4aaf04333ad6074ec, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b76242d14bf2b7f4aaf04333ad6074ec, type: 3}
