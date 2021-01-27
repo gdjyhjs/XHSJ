@@ -9,6 +9,7 @@ namespace GenerateWorld {
     /// 生成一个区域
     /// </summary>
     public class GenerateArea {
+        string debug_test;
         public int area_id;
         GenerateMap generate;
         /// <summary>
@@ -73,22 +74,34 @@ namespace GenerateWorld {
             MapTools.SetRandomSeed(seed, out rand);
 
             if (spaceData.type == SpaceType.City) {
-                // 创建城市
-                GenerateCity(spaceData);
+                if (!generate.map_data.GetHouseData(out wall_datas, out house_datas, area_id)){
+                    // 创建城市
+                    GenerateCity(spaceData);
+                    generate.map_data.SetHouseData(wall_datas, house_datas, area_id);
+                }
+
+                debug_test += "\n增加操作 " + GenerateState.Wall + " " + area_id + "  " + new System.Diagnostics.StackTrace();
+                debug_test += "\n增加操作 " + GenerateState.House + " " + area_id + "  " + new System.Diagnostics.StackTrace();
                 BuildOperate wall_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Wall};
                 generate.EnqueueOperate(wall_operate); // 增加创建围墙的操作
-                BuildOperate decorate_operate = new BuildOperate() { area_id = area_id, state = GenerateState.House};
-                generate.EnqueueOperate(decorate_operate); // 增加创建房子的操作
+                BuildOperate house_operate = new BuildOperate() { area_id = area_id, state = GenerateState.House};
+                generate.EnqueueOperate(house_operate); // 增加创建房子的操作
             }
 
-            GenerateOther();
+            if (!generate.map_data.GetDecorateData(out tree_datas, out decorate_datas, area_id)) {
+                // 创建地表
+                GenerateOther();
+                generate.map_data.SetDecorateData(tree_datas, decorate_datas, area_id);
+            }
             city_rects = null;
             if (tree_datas.Length > 0) {
+                debug_test += "\n增加操作 " + GenerateState.Tree + " " + area_id + "  " + new System.Diagnostics.StackTrace();
                 BuildOperate tree_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Tree };
                 generate.EnqueueOperate(tree_operate); // 增加创建树的操作
             }
-            BuildOperate house_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Decorate };
-            generate.EnqueueOperate(house_operate); // 增加创建植物的操作
+            debug_test += "\n增加操作 " + GenerateState.Decorate + " " + area_id + "  " + new System.Diagnostics.StackTrace();
+            BuildOperate decorate_operate = new BuildOperate() { area_id = area_id, state = GenerateState.Decorate };
+            generate.EnqueueOperate(decorate_operate); // 增加创建植物的操作
         }
 
         void GenerateOther() {
@@ -388,19 +401,25 @@ namespace GenerateWorld {
             return (new SpaceData(pos, new Vector3(size, size, size), typ, angle: angle, id: (short)id, idx: (short)idx));
         }
         public void BuildGameObject(BuildOperate operate) {
-            switch (operate.state) {
-                case GenerateState.Wall:
-                    coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, wall_datas)));
-                    break;
-                case GenerateState.House:
-                    coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, house_datas)));
-                    break;
-                case GenerateState.Tree:
-                    coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, tree_datas)));
-                    break;
-                case GenerateState.Decorate:
-                    coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, decorate_datas)));
-                    break;
+            try {
+                debug_test += "\n增加协程 " + operate.state + " "+ operate.area_id+"/" + area_id + "  " + new System.Diagnostics.StackTrace();
+                switch (operate.state) {
+                    case GenerateState.Wall:
+                        coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, wall_datas)));
+                        break;
+                    case GenerateState.House:
+                        coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, house_datas)));
+                        break;
+                    case GenerateState.Tree:
+                        coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, tree_datas)));
+                        break;
+                    case GenerateState.Decorate:
+                        coroutines.Add(operate.state, generate.StartCoroutine(BuildWorld(operate.state, decorate_datas)));
+                        break;
+                }
+            } catch (System.Exception) {
+                Debug.LogError(debug_test);
+                throw;
             }
         }
 
@@ -423,6 +442,7 @@ namespace GenerateWorld {
             }
             if (coroutines.ContainsKey(state)) {
                 var coroutine = coroutines[state];
+                debug_test += "\n删除协程 " + state + " " + area_id + "  " + new System.Diagnostics.StackTrace();
                 coroutines.Remove(state);
                 if (coroutine != null) {
                     generate.StopCoroutine(coroutine);
@@ -498,9 +518,11 @@ namespace GenerateWorld {
             }
             foreach (KeyValuePair<GenerateState, Coroutine> item in coroutines) {
                 if (item.Value != null) {
+                    debug_test += "\n停止协程 " + item.Value + " " + area_id + "  " + new System.Diagnostics.StackTrace();
                     generate.StopCoroutine(item.Value);
                 }
             }
+
             foreach (var item in all_objs) {
                 GameObject.Destroy(item);
             }

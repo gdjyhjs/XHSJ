@@ -200,7 +200,7 @@ namespace GenerateWorld {
         public MapData map_data;
         System.Random rand;
 
-        Queue<BuildOperate> build_operates = new Queue<BuildOperate>();
+        List<BuildOperate> build_operates = new List<BuildOperate>();
         private void Awake() {
             instance = this;
             Init();
@@ -294,17 +294,17 @@ namespace GenerateWorld {
             }
             map_data = new MapData(this, seed, generate_size);
             // 城市区域
-            if (!readfile || !map_data.HasCityData(out citys)) {
+            if (!readfile || !map_data.GetCityData(out citys)) {
                 citys = CreateSpacePos(city_count, city_min, city_max, city_dis, SpaceType.City);
                 map_data.SetCityData(citys);
             }
             // 森林区域
-            if (!readfile || !map_data.HasForestData(out forests)) {
+            if (!readfile || !map_data.GetForestData(out forests)) {
                 forests = CreateSpacePos(forest_count, forest_min, forest_max, forest_dis, SpaceType.Forest);
                 map_data.SetForestData(forests);
             }
             // 地块区域
-            if (!readfile || !map_data.HasGroundData(out grounds, out triggers)) {
+            if (!readfile || !map_data.GetGroundData(out grounds, out triggers)) {
                 grounds = new SpaceData[(citys.Length + forests.Length) * 2 + 1];
                 triggers = new SpaceData[citys.Length + forests.Length];
                 int create_area_idx = 0;
@@ -402,8 +402,17 @@ namespace GenerateWorld {
                 area.player_count--;
                 return;
             }
-            area_generates.Remove(area_id);
-            area.Close();
+
+            lock (build_operates) {
+                for (int i = build_operates.Count - 1; i >=0; i--) {
+                    var item = build_operates[i];
+                    if (item.area_id == area_id) {
+                        build_operates.RemoveAt(i);
+                    }
+                }
+                area_generates.Remove(area_id);
+                area.Close();
+            }
         }
 
         private void BuildDecorate() {
@@ -963,14 +972,16 @@ namespace GenerateWorld {
                 if (build_operates.Count < 1) {
                     return null;
                 } else {
-                    return build_operates.Dequeue();
+                    BuildOperate item = build_operates[0];
+                    build_operates.RemoveAt(0);
+                    return item;
                 }
             }
         }
 
         public void EnqueueOperate(BuildOperate operate) {
             lock (build_operates) {
-                build_operates.Enqueue(operate);
+                build_operates.Add(operate);
             }
         }
     }
