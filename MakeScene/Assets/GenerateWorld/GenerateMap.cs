@@ -14,7 +14,7 @@ namespace GenerateWorld {
     {
         public static GenerateMap instance;
 
-        public List<GameObject> players;
+        public List<Transform> players;
         public float see_dir = 500;
 
         public bool readfile;
@@ -212,7 +212,9 @@ namespace GenerateWorld {
             if (cur_operate != null) {
                 switch (cur_operate.state) {
                     case GenerateState.AreaTriiger:
-                        StartCoroutine(BuildWorld(triggers));
+                        Debug.Log("开始检测触发");
+                        StartCoroutine(TriggerDetection());
+                        //StartCoroutine(BuildWorld(triggers));
                         break;
                     case GenerateState.CreateSea:
                         CreateWorldGameObject(grounds[0], -1);
@@ -332,8 +334,47 @@ namespace GenerateWorld {
                     EnqueueOperate(area_operate); // 增加创建大陆的操作
                 }
             }
+        }
 
+        /// <summary>
+        /// 触发检测
+        /// </summary>
+        IEnumerator TriggerDetection() {
+            int trigger_count = triggers.Length;
+            List<int>[] trigger_players = new List<int>[trigger_count];
+            float t = Time.time; 
+            while (true) {
 
+                t = Time.time;
+                for (int i = 0; i < triggers.Length; i++) {
+                    SpaceData data = triggers[i];
+                    foreach (var player in players) {
+                        if (data.IsTherein(player.position)) {
+                            // 在这个区域内
+                            if (trigger_players[i] == null) {
+                                trigger_players[i] = new List<int>();
+                            }
+                            int id = player.GetInstanceID();
+                            if (!trigger_players[i].Contains(id)) {
+                                trigger_players[i].Add(id);
+                                EnterArea(i);
+                            }
+                        } else {
+                            // 在这个区域外
+                            if (trigger_players[i] != null) {
+                                int id = player.GetInstanceID();
+                                if (trigger_players[i].Contains(id)) {
+                                    trigger_players[i].Remove(id);
+                                    ExitArea(i);
+                                }
+                            }
+                        }
+                    }
+                    if (i % 100 == 0) {
+                        yield return 0;
+                    }
+                }
+            }
         }
 
         public void EnterArea(int area_id) {
