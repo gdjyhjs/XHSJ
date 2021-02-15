@@ -1690,7 +1690,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7949617935863594995}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 560762332005522007}
+        m_TargetAssemblyTypeName: CreateRole, Assembly-CSharp
+        m_MethodName: ClickClose
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &475280162209301014
 GameObject:
   m_ObjectHideFlags: 0
@@ -3698,7 +3710,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u5185\u5728\u6027\u683C"
+  m_Text: "\u5916\u5728\u6027\u683C"
 --- !u!114 &1641331780024102085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4696,7 +4708,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6619816269379889621}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 560762332005522007}
+        m_TargetAssemblyTypeName: CreateRole, Assembly-CSharp
+        m_MethodName: NewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2096023048948796990
 GameObject:
   m_ObjectHideFlags: 0

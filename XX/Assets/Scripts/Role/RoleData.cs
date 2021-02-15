@@ -26,6 +26,11 @@ public class RoleData
     int[] equip_skills;
 
     /// <summary>
+    /// 种族
+    /// </summary>
+    public int race;
+
+    /// <summary>
     /// 内在性格
     /// </summary>
     public int[] intrinsic_disposition;
@@ -36,29 +41,14 @@ public class RoleData
     public int[] external_disposition;
 
     /// <summary>
-    /// 种族
+    /// 先天气运
     /// </summary>
-    public int race;
-
-    /// <summary>
-    /// 境界 等级
-    /// </summary>
-    public int level;
-
-    /// <summary>
-    /// 经验值
-    /// </summary>
-    public int exp;
-
-    /// <summary>
-    /// 最大经验值
-    /// </summary>
-    public int max_exp;
+    public int[] xiantianqiyun;
 
     /// <summary>
     /// 性别
     /// </summary>
-    public int sex;
+    public Sex sex;
 
     /// <summary>
     /// 名字

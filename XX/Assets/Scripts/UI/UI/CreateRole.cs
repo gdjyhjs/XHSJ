@@ -71,14 +71,14 @@ public class CreateRole : MonoBehaviour {
         if (external_disposition.Length < 1) {
             throw (new System.Exception("external_disposition len less than 2"));
         }
-        external = new List<int>() {};
+        external = new List<int>() { };
         for (int i = 0; i < external_disposition.Length; i++) {
             external_disposition[i].enabled = false;
         }
     }
 
     public void NameRand(Sex sex) {
-        RandName.GetRandName(ref sex, out string surn, out string name);
+        RandName.GetRandRoleName(ref sex, out string surn, out string name);
         this.sex = sex;
         inputField.text = surn + name;
         boy.enabled = sex == Sex.Boy;
@@ -231,5 +231,53 @@ public class CreateRole : MonoBehaviour {
 
     public void ExitXiantian(int idx) {
         EnterPointTips.instance.HideTips();
+    }
+
+    public void ClickClose() {
+        MainUI.HideUI("CreateRole");
+    }
+
+    public void NewGame() {
+        string name = inputField.text;
+        if (string.IsNullOrWhiteSpace(name)) {
+            MessageTips.Message(5);
+            show2.target = new Vector2(37, 0);
+            show1.target = new Vector2(-2000, 0);
+            return;
+        }
+        if (intrinsic < 0) {
+            MessageTips.Message(2);
+            show1.target = new Vector2(37, 0);
+            show2.target = new Vector2(-2000, 0);
+            return;
+        }
+        if (external.Count < 2) {
+            MessageTips.Message(3);
+            show1.target = new Vector2(37, 0);
+            show2.target = new Vector2(-2000, 0);
+            return;
+        }
+        if (sel_xiantian.Count < 3) {
+            MessageTips.Message(4);
+            show2.target = new Vector2(37, 0);
+            show1.target = new Vector2(-2000, 0);
+            return;
+        }
+
+        RoleData roleData = new RoleData();
+        roleData.intrinsic_disposition = new int[] { intrinsic };
+        roleData.external_disposition = external.ToArray();
+        roleData.xiantianqiyun = new int[] { rand_xiantian[sel_xiantian[0]], rand_xiantian[sel_xiantian[1]], rand_xiantian[sel_xiantian[2]] };
+        roleData.sex = sex;
+        roleData.name = inputField.text;
+        roleData.attribute = attribute;
+        roleData.max_attribute = max_attribute;
+
+        SaveData.NewGame(roleData);
+
+        ClickClose();
+        MainUI.HideUI("LoginMenu");
+        //MainUI.ShowUI("MainUI");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("world");
     }
 }

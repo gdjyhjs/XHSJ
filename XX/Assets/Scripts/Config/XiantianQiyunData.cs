@@ -53,7 +53,7 @@ public static class XiantianQiyunData {
             int attr_id = data.attr_id[i];
             int attr_value = data.attr_value[i];
             max_attribute[attr_id] += attr_value;
-            if (attr_id != (int)Attribute.life) {
+            if (attr_id != (int)RoleAttribute.life) {
                 attribute[attr_id] += attr_value;
             }
         }
@@ -65,7 +65,7 @@ public static class XiantianQiyunData {
             int attr_id = data.attr_id[i];
             int attr_value = data.attr_value[i];
             max_attribute[attr_id] -= attr_value;
-            if (attr_id != (int)Attribute.life) {
+            if (attr_id != (int)RoleAttribute.life) {
                 attribute[attr_id] -= attr_value;
             }
         }

@@ -152,8 +152,8 @@ public class AttributeUI : MonoBehaviour {
             }
         }
 
-        int zheng = max_attribute[(int)Attribute.zhengdao];
-        int mo = max_attribute[(int)Attribute.modao];
+        int zheng = max_attribute[(int)RoleAttribute.zhengdao];
+        int mo = max_attribute[(int)RoleAttribute.modao];
         int ozheng = int.Parse(zhengdao.text);
         int omo = int.Parse(modao.text);
         float max = zheng + mo;

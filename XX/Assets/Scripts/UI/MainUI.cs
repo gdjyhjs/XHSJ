@@ -20,12 +20,23 @@ public class MainUI : MonoBehaviour
         foreach (var item in all) {
             if (item.active) {
                 GameObject obj = Instantiate(item.obj);
-                uiList.Add(obj.name, obj.gameObject);
+                uiList.Add(item.obj.name, obj.gameObject);
                 obj.transform.SetParent(transform, false);
                 obj.SetActive(!item.show);
                 obj.SetActive(item.show);
             }
         }
+    }
+
+    public static void ShowUI(string name) {
+        var obj = instance.uiList[name];
+        obj.SetActive(true);
+        obj.transform.SetAsLastSibling();
+    }
+
+    public static void HideUI(string name) {
+        var obj = instance.uiList[name];
+        obj.SetActive(false);
     }
 
 }
