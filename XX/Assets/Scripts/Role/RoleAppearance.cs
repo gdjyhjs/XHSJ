@@ -6,9 +6,9 @@ using UnityEngine;
 /// 角色外貌
 /// </summary>
 [System.Serializable]
-public class RoleAppearance {
+public struct RoleAppearance {
     /// <summary>
     /// 身体
     /// </summary>
-    int body;
+    public int body;
 }

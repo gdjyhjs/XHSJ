@@ -12,9 +12,9 @@ public class MessageTips : MonoBehaviour {
     string last_msg;
     float next_time;
 
-    public float speed = 50; // 飘的速度
-    public float time = 2; // 飘的时间
-    public float interval_time = 0.3f; // 间隔时间
+    public float speed = 50; // 椋樼殑閫熷害
+    public float time = 2; // 椋樼殑鏃堕棿
+    public float interval_time = 0.3f; // 闂撮殧鏃堕棿
     Stack<string> messages;
 
     private void Awake() {
@@ -26,7 +26,11 @@ public class MessageTips : MonoBehaviour {
     }
 
     public static void Message(int id, params string[] values) {
-        string msg = string.Format( MessageData.GetMessage(id), values);
+        string str = MessageData.GetMessage(id);
+        if (string.IsNullOrWhiteSpace(str)) {
+            return;
+        }
+        string msg = string.Format(str, values);
         if (instance.last_msg == msg && instance.next_time > Time.time)
             return;
         instance.last_msg = msg;

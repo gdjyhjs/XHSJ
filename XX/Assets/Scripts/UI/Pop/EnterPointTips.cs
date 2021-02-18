@@ -28,10 +28,14 @@ public class EnterPointTips : MonoBehaviour
     public void HideTips() {
         gameObject.SetActive(false);
     }
+    public int ShowTips(int msg_id, RectTransform rtf, string str = "") {
+        string msg = MessageData.GetMessage(msg_id);
+        return ShowTips(msg, rtf, str);
+    }
 
-    public int ShowTips(string str, RectTransform rtf) {
+    public int ShowTips(string msg, RectTransform rtf, string str = "") {
         gameObject.SetActive(true);
-        SetSize(str);
+        SetSize(msg + str);
         SetPosition(rtf);
         show_id = ++show_id % 10000;
         return show_id;
@@ -44,7 +48,7 @@ public class EnterPointTips : MonoBehaviour
 
         if (tRtf.sizeDelta.x > 500) {
             element.enabled = true;
-            text.text = "¡¡¡¡" + str;
+            text.text = "ã€€ã€€" + str;
             LayoutRebuilder.ForceRebuildLayoutImmediate(tRtf);
         }
 

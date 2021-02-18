@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ½ÇÉ«ÊôĞÔÅäÖÃÊı¾İ
+/// è§’è‰²å±æ€§é…ç½®æ•°æ®
 /// </summary>
 public static class MessageData {
     public static string[] dataList;

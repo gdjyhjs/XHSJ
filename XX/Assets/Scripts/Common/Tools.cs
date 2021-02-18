@@ -38,15 +38,15 @@ public static class Tools {
         {
             string dir = "";
 #if UNITY_EDITOR
-            // dir = Application.dataPath + "Caches/";//Â·¾¶£º/AssetsCaches/
-            //dir = Application.streamingAssetsPath + "/";//Â·¾¶£º/xxx_Data/StreamingAssets/
-            dir = Application.persistentDataPath + "/";//Â·¾¶£º/xxx_Data/StreamingAssets/
+            // dir = Application.dataPath + "Caches/";//è·¯å¾„ï¼š/AssetsCaches/
+            //dir = Application.streamingAssetsPath + "/";//è·¯å¾„ï¼š/xxx_Data/StreamingAssets/
+            dir = Application.persistentDataPath + "/";//è·¯å¾„ï¼š/xxx_Data/StreamingAssets/
 #elif UNITY_IOS
-            dir = Application.temporaryCachePath + "/";//Â·¾¶£ºApplication/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Library/Caches/
+            dir = Application.temporaryCachePath + "/";//è·¯å¾„ï¼šApplication/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Library/Caches/
 #elif UNITY_ANDROID
-            dir = Application.persistentDataPath + "/";//Â·¾¶£º/data/data/xxx.xxx.xxx/files/
+            dir = Application.persistentDataPath + "/";//è·¯å¾„ï¼š/data/data/xxx.xxx.xxx/files/
 #else
-            dir = Application.persistentDataPath + "/";//Â·¾¶£º/xxx_Data/StreamingAssets/
+            dir = Application.persistentDataPath + "/";//è·¯å¾„ï¼š/xxx_Data/StreamingAssets/
 #endif
             return dir;
         }
@@ -54,7 +54,7 @@ public static class Tools {
 
 
 
-    //½«ObjectÀàĞÍ¶ÔÏó(×¢£º±ØĞëÊÇ¿ÉĞòÁĞ»¯µÄ¶ÔÏó)×ª»»Îª¶ş½øÖÆĞòÁĞ×Ö·û´®
+    //å°†Objectç±»å‹å¯¹è±¡(æ³¨ï¼šå¿…é¡»æ˜¯å¯åºåˆ—åŒ–çš„å¯¹è±¡)è½¬æ¢ä¸ºäºŒè¿›åˆ¶åºåˆ—å­—ç¬¦ä¸²
     public static byte[] SerializeObject(object obj) {
         byte[] byt;
         using (MemoryStream ms = new MemoryStream()) {
@@ -64,13 +64,13 @@ public static class Tools {
         }
         return byt;
     }
-    //½«¶ş½øÖÆĞòÁĞ×Ö·û´®×ª»»ÎªObjectÀàĞÍ¶ÔÏó
+    //å°†äºŒè¿›åˆ¶åºåˆ—å­—ç¬¦ä¸²è½¬æ¢ä¸ºObjectç±»å‹å¯¹è±¡
     public static object DeserializeObject(byte[] byt) {
         object obj;
         using (MemoryStream ms = new MemoryStream(byt)) {
-            // //ÒÔ¶ş½øÖÆ¸ñÊ½½«¶ÔÏó»òÕû¸öÁ¬½Ó¶ÔÏóÍ¼ĞÎĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯¡£
+            // //ä»¥äºŒè¿›åˆ¶æ ¼å¼å°†å¯¹è±¡æˆ–æ•´ä¸ªè¿æ¥å¯¹è±¡å›¾å½¢åºåˆ—åŒ–å’Œååºåˆ—åŒ–ã€‚
             IFormatter formatter = new BinaryFormatter();
-            //°Ñ×Ö·û´®ÒÔ¶ş½øÖÆ·Å½ømemStreamÖĞ
+            //æŠŠå­—ç¬¦ä¸²ä»¥äºŒè¿›åˆ¶æ”¾è¿›memStreamä¸­
             obj = formatter.Deserialize(ms);
         }
         return obj;
@@ -78,9 +78,9 @@ public static class Tools {
     public static T DeserializeObject<T>(byte[] byt) {
         object obj;
         using (MemoryStream ms = new MemoryStream(byt)) {
-            // //ÒÔ¶ş½øÖÆ¸ñÊ½½«¶ÔÏó»òÕû¸öÁ¬½Ó¶ÔÏóÍ¼ĞÎĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯¡£
+            // //ä»¥äºŒè¿›åˆ¶æ ¼å¼å°†å¯¹è±¡æˆ–æ•´ä¸ªè¿æ¥å¯¹è±¡å›¾å½¢åºåˆ—åŒ–å’Œååºåˆ—åŒ–ã€‚
             IFormatter formatter = new BinaryFormatter();
-            //°Ñ×Ö·û´®ÒÔ¶ş½øÖÆ·Å½ømemStreamÖĞ
+            //æŠŠå­—ç¬¦ä¸²ä»¥äºŒè¿›åˆ¶æ”¾è¿›memStreamä¸­
             obj = formatter.Deserialize(ms);
         }
         return (T)obj;
@@ -91,7 +91,7 @@ public static class Tools {
         HashSet<string> data = new HashSet<string>();
         foreach (var item in list) {
             if (data.Contains(item)) {
-                Debug.LogError("ÖØ¸´ "+ item);
+                Debug.LogError("é‡å¤ "+ item);
                 modify = true;
                 continue;
             }
@@ -105,7 +105,7 @@ public static class Tools {
 
 
     /// <summary>
-    /// ÊÇ·ñÓĞ´æµµ
+    /// æ˜¯å¦æœ‰å­˜æ¡£
     /// </summary>
     public static bool HasSave(int id) {
         string dir = "SaveData_" + id;
@@ -114,10 +114,10 @@ public static class Tools {
     }
 
     /// <summary>
-    /// ´æµµÂ·¾¶
+    /// å­˜æ¡£è·¯å¾„
     /// </summary>
     public static string SavePath(string path) {
-        string dir = "SaveData_" + GameData.save_id;
+        string dir = "SaveData_" + GameData.instance.save_id;
         if (!Directory.Exists(AssetCachesDir + dir)){
             Directory.CreateDirectory(AssetCachesDir + dir);
         }
@@ -125,7 +125,7 @@ public static class Tools {
     }
 
     /// <summary>
-    /// É¾³ı´æµµ
+    /// åˆ é™¤å­˜æ¡£
     /// </summary>
     public static void DeleteSave(int id) {
         string dir = "SaveData_" + id;
@@ -189,7 +189,7 @@ public static class Tools {
         for (int col = (int)Math.Floor(x0); col < Math.Ceiling(x1); col++) {
             float currY = y0 + mirro * ratio * (col - x0);
 
-            //µÚÒ»¸ö²»½øĞĞÑÓ±ß¼ÆËã
+            //ç¬¬ä¸€ä¸ªä¸è¿›è¡Œå»¶è¾¹è®¡ç®—
             bool skip = false;
             if (col == Math.Floor(x0)) {
                 skip = (int)currY != (int)y0;
@@ -203,15 +203,15 @@ public static class Tools {
                 }
             }
 
-            // ¸ù¾İĞ±ÂÊ¼ÆËãÊÇ·ñÓĞ¿ç¸ñ
+            // æ ¹æ®æ–œç‡è®¡ç®—æ˜¯å¦æœ‰è·¨æ ¼
             if ((mirro > 0 ? (Math.Ceiling(currY) - currY) : (currY - Math.Floor(currY))) < ratio) {
                 int crossY = (int)(Math.Floor(currY) + mirro);
 
-                //// ÅĞ¶ÏÊÇ·ñ³¬³ö·¶Î§
+                //// åˆ¤æ–­æ˜¯å¦è¶…å‡ºèŒƒå›´
                 //if (crossY > Math.Max((int)y0, (int)y1) || crossY >= 0) {
                 //}
 
-                // ¿çÏß¸ñ×Ó
+                // è·¨çº¿æ ¼å­
                 if (!steep) {
                     touched.Add(new Vector3(col, 0, crossY));
                 } else {
@@ -222,172 +222,24 @@ public static class Tools {
         return touched.ToArray();
     }
 
+    public static void SetCameraPos(Transform  cam, Vector3 pos) {
+        cam.position = new Vector3(pos.x, 500, pos.z);
+    }
 
+    public static Vector2Int WorldPointToUnitPos(Vector3 pos) {
+        int x = (int)Math.Floor(pos.x / WorldCreate.instance.scale);
+        int z = (int)Math.Floor(pos.z / WorldCreate.instance.scale);
+        return new Vector2Int(x, z);
+    }
 
-    //    function segs = calLength(P1, P2)
+    public static Vector3 UnitPosToWorldPoint(Vector2Int pos) {
+        float x = pos.x * WorldCreate.instance.scale + WorldCreate.instance.scale * 0.5f;
+        float z = pos.y * WorldCreate.instance.scale + WorldCreate.instance.scale * 0.5f;
+        return new Vector3(x, 0, z);
+    }
 
-    //segs.length = [];
-    //segs.index_x = [];
-    //segs.index_y = [];
-    //segs.index = [];
-
-    //P1_x = P1(1);
-    //    P1_y = P1(2);
-    //    P2_x = P2(1);
-    //    P2_y = P2(2);
-
-    //    xmin = min(P1_x, P2_x);
-    //    ymin = min(P1_y, P2_y);
-    //    xmax = max(P1_x, P2_x);
-    //    ymax = max(P1_y, P2_y);
-
-    //if (P1_x == P2_x) && (round(P1_x) == P1_x)...
-    //        || (P1_y == P2_y) && (round(P1_y) == P1_y)
-    //    return;
-    //end
-
-    //pos = reshape(1:100, 10, 10);
-
-    //if (P1_x == P2_x) && (round(P1_x) ~= P1_x)
-    //    SP = unique([ymin, ymax, ceil(ymin):floor(ymax)]);
-    //    for t = 1 : size(SP,2)-1
-    //        segs(t).length = SP(t+1)-SP(t);
-    //    segs(t).index_x = ceil(P1_x);
-    //    segs(t).index_y = max(ceil(SP(t+1)),ceil(SP(t)));
-    //        segs(t).index = pos(segs(t).index_x, segs(t).index_y);
-    //    end
-    //end
-
-    //if (P1_x ~= P2_x)
-    //    K = polyfit([P1_x, P2_x], [P1_y, P2_y],1);
-    //    xpx = []; xpy = [];
-    //    for i = ceil(xmin) :floor(xmax)
-    //        xpx(i-ceil(xmin)+1) = i;
-    //        xpy(i-ceil(xmin)+1) = K(1)*i+K(2);
-    //    end
-
-    //    ypx = []; ypy = [];
-    //    for j = ceil(ymin) :floor(ymax)
-    //        ypy(j-ceil(ymin)+1) = j;
-    //        syms x;
-    //    ypx(j-ceil(ymin)+1) = double (solve(K(1)*x + K(2) - j, x));
-    //    end
-
-    //    SP = unique([P1_x, P2_x, xpx, ypx; P1_y,P2_y,xpy,ypy]','rows');
-
-    //    L = @(x) sqrt((SP(x+1,1) - SP(x,1)).^2 + (SP(x+1,2) - SP(x,2)).^2);
-
-    //    for t = 1 : size(SP,1)-1
-    //        segs(t).length = L(t);
-    //    segs(t).index_x = max(ceil(SP(t+1,1)),ceil(SP(t,1)));
-    //        segs(t).index_y = max(ceil(SP(t+1,2)),ceil(SP(t,2)));
-    //        segs(t).index = pos(segs(t).index_x, segs(t).index_y);
-    //    end
-    //end
-
-    //n = [];
-    //for i = 1 : size(segs,2)
-    //    if segs(i).length<eps
-    //        n = [n i];
-    //    end
-    //end
-    //segs(n) = [];
-    //1
-    //2
-    //3
-    //4
-    //5
-    //6
-    //7
-    //8
-    //9
-    //10
-    //11
-    //12
-    //13
-    //14
-    //15
-    //16
-    //17
-    //18
-    //19
-    //20
-    //21
-    //22
-    //23
-    //24
-    //25
-    //26
-    //27
-    //28
-    //29
-    //30
-    //31
-    //32
-    //33
-    //34
-    //35
-    //36
-    //37
-    //38
-    //39
-    //40
-    //41
-    //42
-    //43
-    //44
-    //45
-    //46
-    //47
-    //48
-    //49
-    //50
-    //51
-    //52
-    //53
-    //54
-    //55
-    //56
-    //57
-    //58
-    //59
-    //60
-    //61
-    //62
-    //63
-    //64
-    //65
-    //66
-    //67
-    //68
-    //clear;clc;clf;
-    //x = linspace(0,10,11);
-    //    y = linspace(0,10,11);
-    //    [X, Y] = meshgrid(x, y);
-    //    line(X, Y,'color','b');
-    //    line(X',Y','color','b');
-    //    axis equal;
-    //    axis([0 10 0 10]);
-    //    set(gca,'xtick',0:10);
-
-    //    gridindex = reshape(1:100,10,10)';
-    //numposx = 0.5*(X(1:end-1,2:end)+X(1:end-1,1:end-1))-0.1;
-    //numposy = 0.5*(Y(2:end,1:end-1)+Y(1:end-1,1:end-1));
-    //for i = 1 : 10
-    //    for j = 1 : 10
-    //        text(numposx(i, j), numposy(i, j), num2str(gridindex(i, j)));
-    //    end
-    //end
-
-    //P1 = input('P1=');
-    //    P2 = input('P2=');
-    //    segs = calLength(P1, P2);
-    //    line([P1(1) P2(1)], [P1(2) P2(2)],'color','r');
-
-    //    display('Ëù¾­¹ıµÄÍø¸ñĞòºÅ\³¤¶È·Ö±ğÎª:');
-    //for i = 1 : size(segs,2)
-    //    display(['ĞòºÅ: ' num2str(segs(i).index)]);
-    //    display(['³¤¶È: ' num2str(segs(i).length)]);
-    //    end
-
+    public static void SetActive(GameObject obj, bool active) {
+        if (obj.activeSelf != active)
+            obj.SetActive(active);
+    }
 }

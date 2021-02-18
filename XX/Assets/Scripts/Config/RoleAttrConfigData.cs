@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ½ÇÉ«ÊôĞÔÅäÖÃÊı¾İ
+/// è§’è‰²å±æ€§é…ç½®æ•°æ®
 /// </summary>
 public static class RoleAttrConfigData {
     public static Dictionary<int, RoleAttrConfig[]> dataList;
@@ -25,7 +25,7 @@ public static class RoleAttrConfigData {
                 case "level":
                     if (levelData != null) {
                         if (levelData.Count != (int)RoleAttribute.end) {
-                            Debug.LogErrorFormat("ÊôĞÔÊıÁ¿ÓëÃ¶¾Ù²»Æ¥Åä£º{0}-{1}", levelData.Count, (int)RoleAttribute.end);
+                            Debug.LogErrorFormat("å±æ€§æ•°é‡ä¸æšä¸¾ä¸åŒ¹é…ï¼š{0}-{1}", levelData.Count, (int)RoleAttribute.end);
                         }
                         all.Add(level, levelData.ToArray());
                     }
@@ -57,7 +57,7 @@ public static class RoleAttrConfigData {
                     }
                     string des = null;
                     if (id < attrdes.Length) {
-                        des = string.Join("\n\n¡¡¡¡", attrdes[id].Split('|'));
+                        des = string.Join("\n\nã€€ã€€", attrdes[id].Split('|'));
                     }
                     if (typ == RoleAttrShowType.Text) {
                         levelData.Add(new RoleAttrConfig(tmp[0], id,randMin, randMax, tmp[3], des));
@@ -96,7 +96,7 @@ public static class RoleAttrConfigData {
             int max = Random.Range(config.randMin, config.randMax + 1);
             int min = max;
             if (config.type == RoleAttrShowType.FixedMinMax) {
-                // ÊÙÃü²»Ëæ»ú
+                // å¯¿å‘½ä¸éšæœº
                 min = config.randMin;
                 max = config.randMax;
             }
@@ -107,7 +107,7 @@ public static class RoleAttrConfigData {
 }
 
 /// <summary>
-/// ½ÇÉ«ÊôĞÔÅäÖÃ
+/// è§’è‰²å±æ€§é…ç½®
 /// </summary>
 public struct RoleAttrConfig {
     public string name;
@@ -151,7 +151,7 @@ public struct RoleAttrConfig {
         }
     }
 
-    //»ñÈ¡÷ÈÁ¦Ãû³Æ
+    //è·å–é­…åŠ›åç§°
     public static string GetValue(int value, Sex sex) {
         string[] showcharm;
         if (sex == Sex.Girl) {
