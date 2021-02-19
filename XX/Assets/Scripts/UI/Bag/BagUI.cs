@@ -13,6 +13,8 @@ public class BagUI : MonoBehaviour
     public GameObject viewport;
     public ItemCell itemCell;
     public float mouseSpeed = 100;
+    public BagItem[] equip_items;
+    public BagItem[] battle_items;
 
     int max_item;
     int child_count;
@@ -49,11 +51,13 @@ public class BagUI : MonoBehaviour
     
     private void OnEnable() {
         UpdateUI();
+        EventManager.AddEvent(EventTyp.ItemChange, OnItemChange);
     }
 
     private void OnDisable() {
         onBagView = false;
-        ItemTips.instance.HideTips();
+        ItemTips.instance.ClickClose();
+        EventManager.RemoveEvent(EventTyp.ItemChange, OnItemChange);
     }
 
     public void OnTypeToggle(Toggle Tog) {
@@ -62,6 +66,10 @@ public class BagUI : MonoBehaviour
     }
 
     public void OnSubTypeToggle(int idx) {
+    }
+
+    void OnItemChange(object param) {
+        UpdateUI();
     }
 
     private void UpdateUI() {
@@ -77,11 +85,38 @@ public class BagUI : MonoBehaviour
                     show_items.Add(item_id);
                 }
             }
-            max_item = show_items.Count;
+            max_item = show_items.Count + max_item - show_items.Count;
         }
         line_count = (int)Mathf.Ceil(max_item * 1f / child_count);
-        Debug.Log(max_item + " - "+ line_count);
+        // 设置背包
+        scrollView.verticalNormalizedPosition = 1;
         bigDataScroll.cellCount = line_count;
+
+        // 设置装备
+        for (int i = 0; i < equip_items.Length; i++) {
+            int item_id = RoleData.mainRole.equip_items[i];
+            ItemData item;
+            if (item_id >= 0) {
+                item = GameData.instance.all_item[item_id];
+            } else {
+                item = null;
+            }
+            BagItem bagItem = equip_items[i];
+            bagItem.SetItem(item, RoleData.mainRole, isRound: true, show_count: MessageData.GetMessage(29 + i), clickFunc: bagItem.BtnEquip);
+        }
+
+        // 设置战斗药
+        for (int i = 0; i < battle_items.Length; i++) {
+            int item_id = RoleData.mainRole.remedy_items[i];
+            ItemData item;
+            if (item_id >= 0) {
+                item = GameData.instance.all_item[item_id];
+            } else {
+                item = null;
+            }
+            BagItem bagItem = battle_items[i];
+            bagItem.SetItem(item, RoleData.mainRole, show_count: item == null?"":(item.count > 5 ? 5 : item.count).ToString(), clickFunc: bagItem.BtnEquip);
+        }
     }
 
     private void SetData(ItemCell go, int index) {
@@ -96,7 +131,7 @@ public class BagUI : MonoBehaviour
             } else {
                 item = null;
             }
-            go.transform.GetChild(i).GetComponent<BagItem>().SetItem(item, true);
+            go.transform.GetChild(i).GetComponent<BagItem>().SetItem(item, RoleData.mainRole, true);
         }
     }
 

@@ -239,6 +239,8 @@ public static class Tools {
     }
 
     public static void SetActive(GameObject obj, bool active) {
+        if (!obj)
+            return;
         if (obj.activeSelf != active)
             obj.SetActive(active);
     }

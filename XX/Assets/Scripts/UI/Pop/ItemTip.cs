@@ -21,7 +21,7 @@ public class ItemTip : MonoBehaviour {
     }
 
     private void UpdateItem(ItemData item) {
-        ItemStaticData staticData = GameData.instance.item_static_data[item.id];
+        ItemStaticData staticData = GameData.instance.item_static_data[item.static_id];
 
         item_name.text = staticData.name;
         item_type.text = GameConst.itemTypeName[staticData.type];
@@ -32,6 +32,6 @@ public class ItemTip : MonoBehaviour {
         item_bg.sprite = UIAssets.instance.bgColor[staticData.color];
         item_color.sprite = UIAssets.instance.itemColor[staticData.color];
         item_icon.sprite = UIAssets.instance.itemIcon[staticData.icon];
-        item_use.SetActive(false);
+        item_use.SetActive(RoleData.mainRole.ItemIsEquip(item.id));
     }
 }

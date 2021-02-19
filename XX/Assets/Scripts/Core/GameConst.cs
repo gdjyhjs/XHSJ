@@ -4,7 +4,9 @@ using UnityEngine;
 
 
 public static class GameConst {
-    public static int max_color = 6;
+    public const long oneSecondTicks = 864000000000;
+    public const long oneDayTicks = 864000000000;
+    public const int max_color = 5;
     public static Dictionary<ItemType, string> itemTypeName = new Dictionary<ItemType, string>() 
     {
         { ItemType.Other, "ÆäËû"},

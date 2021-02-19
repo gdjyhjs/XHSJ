@@ -9,6 +9,7 @@ public class RoleShow : MonoBehaviour {
     public Animator playerAnim;
     public Animator rideAnim;
     public Transform mainModel;
+    public RoleData showRoleData;
     void Awake()
     {
         if (isMainRole) {
@@ -22,7 +23,23 @@ public class RoleShow : MonoBehaviour {
         }
     }
 
+    private void OnEnable() {
+        EventManager.AddEvent(EventTyp.ChangeRide, OnRideChange);
+    }
+
+    private void OnDisable() {
+        EventManager.RemoveEvent(EventTyp.ChangeRide, OnRideChange);
+    }
+
+    void OnRideChange(object param) {
+        RoleData roleData = (RoleData)param;
+        if (roleData == showRoleData) {
+            InitRole(roleData);
+        }
+    }
+
     public void InitRole(RoleData roleData) {
+        showRoleData = roleData;
         if (playerAnim) {
             Destroy(playerAnim.gameObject);
             playerAnim = null;
@@ -33,15 +50,15 @@ public class RoleShow : MonoBehaviour {
         }
 
         GameObject player_obj;
-        if (roleData.sex == Sex.Girl) {
-            player_obj = UIAssets.instance.grilPrefab[roleData.appearance.body];
+        if (showRoleData.sex == Sex.Girl) {
+            player_obj = UIAssets.instance.grilPrefab[showRoleData.appearance.body];
         } else {
-            player_obj = UIAssets.instance.boyPrefab[roleData.appearance.body];
+            player_obj = UIAssets.instance.boyPrefab[showRoleData.appearance.body];
         }
         player_obj = Instantiate(player_obj);
         playerAnim = player_obj.GetComponent<Animator>();
 
-        int ride_id = roleData.attribute[(int)RoleAttribute.ride_id];
+        int ride_id = showRoleData.GetAttr(RoleAttribute.ride_id);
         if (ride_id >= 0) {
             GameObject ride_obj = UIAssets.instance.ridePrefab[ride_id];
             ride_obj = Instantiate(ride_obj);
@@ -71,21 +88,32 @@ public class RoleShow : MonoBehaviour {
         mainModel.transform.localScale = new Vector3(.5f, .5f, .5f);
         mainModel.localPosition = new Vector3(0, 0, 0);
 
-        SetPos(roleData);
+        SetIdle();
+        SetPos(showRoleData);
     }
 
     void SetPos(RoleData roleData) {
-        int longitude = roleData.attribute[(int)RoleAttribute.longitude];
-        int latitude = roleData.attribute[(int)RoleAttribute.latitude];
-        transform.position = new Vector3(longitude, 0, latitude) * WorldCreate.instance.scale + new Vector3(2.5f, 0, 0.5f);
+        int longitude = roleData.GetAttr(RoleAttribute.longitude);
+        int latitude = roleData.GetAttr(RoleAttribute.latitude);
+        float scale = WorldCreate.instance.scale;
+        transform.position = new Vector3(longitude, 0, latitude) * scale + new Vector3(scale, 0, scale) * 0.5f;
         if (isMainRole) {
             MainCamera.SetPos(transform.position);
         }
     }
 
-
-    void Update()
-    {
-        
+    public void SetIdle() {
+        playerAnim.SetBool("move", false);
+        if (rideAnim) {
+            ///有坐骑
+            rideAnim.SetBool("move", false);
+        }
+    }
+    public void SetWalk() {
+        playerAnim.SetBool("move", true);
+        if (rideAnim) {
+            ///有坐骑
+            rideAnim.SetBool("move", true);
+        }
     }
 }

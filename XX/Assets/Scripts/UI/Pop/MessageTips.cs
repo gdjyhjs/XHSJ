@@ -26,6 +26,8 @@ public class MessageTips : MonoBehaviour {
     }
 
     public static void Message(int id, params string[] values) {
+        if (instance == null)
+            return;
         string str = MessageData.GetMessage(id);
         if (string.IsNullOrWhiteSpace(str)) {
             return;
@@ -64,8 +66,10 @@ public class MessageTips : MonoBehaviour {
         canvas.alpha = 1;
         float t = 0;
         while (t < time) {
-            canvas.alpha -= 1 / time * Time.deltaTime;
-            t += Time.deltaTime;
+            if (t > time / 2) {
+                canvas.alpha -= 1 / (time/2) * Time.deltaTime;
+                t += Time.deltaTime;
+            }
             rtf.anchoredPosition += new Vector2(0, speed * Time.deltaTime);
             yield return 0;
         }

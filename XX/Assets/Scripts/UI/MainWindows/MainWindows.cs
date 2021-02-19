@@ -9,24 +9,30 @@ public class MainWindows : BaseWindow {
     public GameObject boy_head, gril_head;
     public Image img_hp, img_mp, img_nl;
 
-    private void Start() {
-        UpdateUI();
-    }
-
     public void UpdateUI() {
         RoleData roleData = RoleData.mainRole;
+        if (roleData == null)
+            return;
         UpdateInfo();
-        int longitude = roleData.attribute[(int)RoleAttribute.longitude];
-        int latitude = roleData.attribute[(int)RoleAttribute.latitude];
+        int longitude = roleData.GetAttr(RoleAttribute.longitude);
+        int latitude = roleData.GetAttr(RoleAttribute.latitude);
         UpdateSpace(longitude, latitude);
+        UpdateGameData();
     }
 
     private void OnEnable() {
+        UpdateUI();
         EventManager.AddEvent(EventTyp.SpaceChange, OnSelectSpace);
+        EventManager.AddEvent(EventTyp.AttrChange, OnAttrChange);
+        EventManager.AddEvent(EventTyp.MinValueChange, OnAttrChange);
+        EventManager.AddEvent(EventTyp.GameDataChange, OnGameDataChange);
     }
 
     private void OnDisable() {
         EventManager.RemoveEvent(EventTyp.SpaceChange, OnSelectSpace);
+        EventManager.RemoveEvent(EventTyp.AttrChange, OnAttrChange);
+        EventManager.RemoveEvent(EventTyp.MinValueChange, OnAttrChange);
+        EventManager.RemoveEvent(EventTyp.GameDataChange, OnGameDataChange);
     }
 
     public void OnSelectSpace(object param) {
@@ -34,20 +40,33 @@ public class MainWindows : BaseWindow {
         UpdateSpace(pos.x, pos.y);
     }
 
+    public void OnAttrChange(object roleData) {
+        if ((RoleData)roleData == RoleData.mainRole) {
+            UpdateInfo();
+        }
+    }
+
+    public void OnGameDataChange(object param) {
+        UpdateGameData();
+    }
+
     public void UpdateInfo() {
         RoleData roleData = RoleData.mainRole;
-        level_name.text = LevelConfigData.GetName(roleData.attribute[(int)RoleAttribute.level]);
-        long time = GameData.instance.globalAttr[(int)GlobalAttribute.time];
-        show_time.text = Tools.ShowTime(new System.DateTime(time));
-        hp.text = string.Format("{0}/{1}", roleData.attribute[(int)RoleAttribute.hp], roleData.max_attribute[(int)RoleAttribute.hp]);
-        mp.text = string.Format("{0}/{1}", roleData.attribute[(int)RoleAttribute.mp], roleData.max_attribute[(int)RoleAttribute.mp]);
-        nl.text = string.Format("{0}/{1}", roleData.attribute[(int)RoleAttribute.spirit], roleData.max_attribute[(int)RoleAttribute.spirit]);
+        level_name.text = LevelConfigData.GetName(roleData.GetAttr(RoleAttribute.level));
+        hp.text = string.Format("{0}/{1}", roleData.GetAttr(RoleAttribute.hp), roleData.GetMaxAttr(RoleAttribute.hp));
+        mp.text = string.Format("{0}/{1}", roleData.GetAttr(RoleAttribute.mp), roleData.GetMaxAttr(RoleAttribute.mp));
+        nl.text = string.Format("{0}/{1}", roleData.GetAttr(RoleAttribute.spirit), roleData.GetMaxAttr(RoleAttribute.spirit));
         role_name.text = roleData.name;
-        show_coin.text = roleData.attribute[(int)RoleAttribute.coin].ToString(); ;
-        show_contributions.text = roleData.attribute[(int)RoleAttribute.contributions].ToString(); ;
-        show_city_token.text = roleData.attribute[(int)RoleAttribute.city_token].ToString(); ;
+        show_coin.text = roleData.GetAttr(RoleAttribute.coin).ToString(); ;
+        show_contributions.text = roleData.GetAttr(RoleAttribute.contributions).ToString(); ;
+        show_city_token.text = roleData.GetAttr(RoleAttribute.city_token).ToString(); ;
         gril_head.SetActive(roleData.sex == Sex.Girl);
         boy_head.SetActive(roleData.sex == Sex.Boy);
+    }
+
+    public void UpdateGameData() {
+        long time = GameData.instance.globalAttr[(int)GlobalAttribute.time];
+        show_time.text = Tools.ShowTime(new System.DateTime(time));
     }
 
     public void UpdateSpace(int longitude,int latitude) {

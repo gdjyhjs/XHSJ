@@ -48,8 +48,6 @@ public class RoleWindow : BaseWindow {
         attrUI.SetActive(show_role || show_skill || show_artistry || show_bag);
         rolemodelUI.SetActive(show_role || show_skill || show_artistry);
         bagUI.SetActive(show_bag);
-
-
     }
 
 

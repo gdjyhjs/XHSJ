@@ -25,14 +25,7 @@ public class SaveData {
         GameData.instance = new GameData();
         GameData.instance.NewGame(save_id);
 
-        // 测试数据start
         roleData.UpdateAttr();
-        roleData.bag_items = new List<int>();
-        for (int i = 0; i < GameData.instance.item_static_data.Length; i++) {
-            if (!roleData.AddNewItem(i))
-                break;
-        }
-        // 测试数据end
         GameData.instance.SaveGame();
         byte[] byt2 = Tools.SerializeObject(GameData.instance);
         Tools.WriteAllBytes(game_path, byt2);

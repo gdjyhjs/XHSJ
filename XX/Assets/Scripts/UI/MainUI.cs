@@ -15,6 +15,29 @@ public class MainUI : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+    }
+
+
+
+    private IEnumerator Init() {
+        string[] files = new string[]
+        { "boyname", "cityname", "globalAttr", "grilname",
+            "level", "MessageData", "popename", "popesuffix",
+            "roleAttr", "roleAttrDes", "surn", "xiantianqiyun",
+        "gongfaAttrConfig","itemConfig"};
+
+#if UNITY_EDITOR
+        if (true) {
+            Debug.Log("±‡º≠∆˜∏¥÷∆≈‰÷√ " + string.Join(",", files));
+#else
+        if (!Tools.FileExists("config/" + files[files.Length - 1] + ".txt")) {
+#endif
+            foreach (var item in files) {
+                yield return StartCoroutine(MoveConfig("config/" + item + ".txt"));
+            }
+        }
+
+
 
         uiList = new Dictionary<string, GameObject>();
 
@@ -30,10 +53,33 @@ public class MainUI : MonoBehaviour
                 }
             }
         }
+
+
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("login");
+        ShowUI("LoginMenu");
+    }
+
+    private IEnumerator MoveConfig(string file_path) {
+        string path = Application.dataPath + "/StreamingAssets/" + file_path;
+        var url = new System.Uri(path);
+        UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(url);
+        www.SendWebRequest();
+        while (!www.isDone) {
+            yield return 0;
+        }
+        if (string.IsNullOrWhiteSpace(www.error)) {
+            string result = www.downloadHandler.text;
+            Tools.WriteAllText(file_path, result);
+        } else {
+            Debug.LogError(file_path);
+            Debug.LogError(www.error);
+        }
+        yield return 0;
     }
 
     private void Start() {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("login");
+        StartCoroutine(Init());
     }
 
     public static void ChangeUI(string name, string sub_show = null) {

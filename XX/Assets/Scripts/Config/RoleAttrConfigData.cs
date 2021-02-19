@@ -38,7 +38,7 @@ public static class RoleAttrConfigData {
                     int progressMin = 0, progressMax = 0, randMin = 0, randMax = 0;
                     string randattr = tmp[1];
                     RoleAttrShowType typ = (RoleAttrShowType)int.Parse(tmp[2]);
-                    string[] randattrlist = randattr.Split('-');
+                    string[] randattrlist = randattr.Split('*');
                     if (randattrlist.Length < 1) {
                         continue;
                     } else if (randattrlist.Length == 1) {
@@ -50,7 +50,7 @@ public static class RoleAttrConfigData {
                     }
                     if (typ == RoleAttrShowType.Progress || typ == RoleAttrShowType.RateProgress) {
                         string progressattr = tmp[3];
-                        string[] progressattrlist = progressattr.Split('-');
+                        string[] progressattrlist = progressattr.Split('*');
 
                         progressMin = int.Parse(progressattrlist[0]);
                         progressMax = int.Parse(progressattrlist[1]);
@@ -140,7 +140,7 @@ public struct RoleAttrConfig {
         boy_showcharm = new string[count];
         this.describe = describe;
         for (int i = 0; i < count; i++) {
-            string[] values = tmp[i].Split('-');
+            string[] values = tmp[i].Split('*');
             charm_value[i] = int.Parse(values[0]);
             boy_showcharm[i] = values[1];
             if (values.Length == 3) {

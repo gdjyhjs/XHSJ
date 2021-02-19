@@ -7,43 +7,41 @@ public class RoleMove : MonoBehaviour
 {
     public bool isMainRole;
     public float speed = 30;
-    public bool onMove;
+    Vector3 last_pos;
     NavMeshAgent nav;
     RoleShow show;
+    bool onMove;
     private void Awake() {
         nav = GetComponent<NavMeshAgent>();
     }
 
     private void Start() {
         if (isMainRole) {
+            last_pos = transform.position;
             RoleData roleData = RoleData.mainRole;
-            nav.speed = roleData.attribute[(int)RoleAttribute.stamina] * 0.025f;
+            nav.speed = roleData.GetAttr( RoleAttribute.stamina) * 0.025f;
             show = RoleShow.mainRole;
-            transform.localEulerAngles = new Vector3(0, roleData.attribute[(int)RoleAttribute.orientation], 0);
+            transform.localEulerAngles = new Vector3(0, roleData.GetAttr(RoleAttribute.orientation), 0);
 
-
-            int longitude = roleData.attribute[(int)RoleAttribute.longitude];
-            int latitude = roleData.attribute[(int)RoleAttribute.latitude];
+            int longitude = roleData.GetAttr(RoleAttribute.longitude);
+            int latitude = roleData.GetAttr(RoleAttribute.latitude);
             MinCamera.SetPos(Tools.UnitPosToWorldPoint(new Vector2Int(longitude, latitude)));
         }
     }
 
     private void Update() {
-        if (onMove) {
-            if (isMainRole) {
-                if (Vector3.Distance(transform.position, target) <= 1.5f) {
-                    nav.enabled = false;
-                    onMove = false;
-                    target = new Vector3(-100, -100, -100);
-                }
+        if (isMainRole) {
+            if (transform.position != last_pos) {
+                last_pos = transform.position;
                 MainCamera.SetPos(transform.position);
                 Vector3 pos = CorrectPos(transform.position);
                 Vector2Int p = Tools.WorldPointToUnitPos(pos);
-                RoleData.mainRole.attribute[(int)RoleAttribute.longitude] = p.x;
-                RoleData.mainRole.attribute[(int)RoleAttribute.latitude] = p.y;
-                RoleData.mainRole.attribute[(int)RoleAttribute.orientation] = (int)transform.eulerAngles.y;
+                RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.longitude, p.x);
+                RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.latitude, p.y);
+                RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.orientation, (int)transform.eulerAngles.y);
+            } else if (onMove && Vector3.Distance(transform.position, target) < 2) {
+                show.SetIdle();
             }
-            return;
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -108,6 +106,7 @@ public class RoleMove : MonoBehaviour
         nav.enabled = true;
         nav.SetDestination(point);
         target = point;
+        show.SetWalk();
     }
 
     /// <summary>

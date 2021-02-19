@@ -79,7 +79,7 @@ public enum ItemSubType {
 
 
     /// <summary>
-    /// 恢复丹药 参数：战斗中消耗念力,持续时间
+    /// 恢复丹药 参数：战斗中消耗念力
     /// </summary>
     recoverRemedy = 3000,
     /// <summary>

@@ -12,6 +12,7 @@ public class UIAssets : MonoBehaviour {
 
     public Sprite[] itemColor;
     public Sprite[] bgColor;
+    public Sprite[] gongfaColor;
     public GameObject[] grilPrefab;
     public GameObject[] boyPrefab;
     public GameObject[] ridePrefab;

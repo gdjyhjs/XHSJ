@@ -26,6 +26,11 @@ public class GameData {
         globalAttr = new long[(int)GlobalAttribute.end];
     }
 
+    public void SetGameData(GlobalAttribute attr, long value) {
+        globalAttr[(int)attr] = value;
+        EventManager.SendEvent(EventTyp.GameDataChange, attr);
+    }
+
     public static int GetMonthCount() {
         long time = GameData.instance.globalAttr[(int)GlobalAttribute.time];
         DateTime dateTime = new DateTime(time);
@@ -76,16 +81,33 @@ public class GameData {
     public List<ItemData> all_item = new List<ItemData>();
 
     /// <summary>
+    /// 记录丢弃或删除的物品id 以便复用
+    /// </summary>
+    public Queue<int> remove_items = new Queue<int>();
+
+    /// <summary>
     /// 创建新物品
     /// </summary>
-    public int NewItem(int static_id) {
-        int item_id = all_item.Count;
+    public int NewItem(int static_id, ref int count) {
+        bool old_id = remove_items.Count > 0; // 是否复用丢弃的物品id
+        int item_id;
+        if (old_id)
+            item_id = remove_items.Dequeue();
+        else
+            item_id = all_item.Count;
         ItemData item = new ItemData() { static_id = static_id, count = 1, id = item_id };
-        all_item.Add(item);
+        if (old_id)
+            all_item[item_id] = item;
+        else
+            all_item.Add(item);
+        ItemStaticData static_data = item_static_data[static_id];
+        int item_count = Mathf.Min(count, static_data.maxcount);
+        item.count = item_count;
+        count -= item_count;
         return item_id;
     }
 
     public void RemoveItem(int item_id) {
-        // Todo
+        remove_items.Enqueue(item_id);
     }
 }

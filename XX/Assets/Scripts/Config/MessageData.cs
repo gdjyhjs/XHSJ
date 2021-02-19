@@ -12,6 +12,9 @@ public static class MessageData {
     }
 
     public static string GetMessage(int id) {
+        if (id > dataList.Length || id < 1) {
+            Debug.LogErrorFormat("message id range 1-{0} , but will get id = {1}", dataList.Length, id);
+        }
         return dataList[id - 1];
     }
 }

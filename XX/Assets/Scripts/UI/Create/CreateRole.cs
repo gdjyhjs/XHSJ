@@ -39,7 +39,7 @@ public class CreateRole : BaseWindow {
     /// </summary>
     RoleAttrConfig[] attribute_config;
 
-    private void Start() {
+    private void OnEnable() {
         RandInit();
         RandomAttr();
     }
@@ -264,8 +264,7 @@ public class CreateRole : BaseWindow {
         roleData.xiantianqiyun = new int[] { rand_xiantian[sel_xiantian[0]], rand_xiantian[sel_xiantian[1]], rand_xiantian[sel_xiantian[2]] };
         roleData.sex = sex;
         roleData.name = inputField.text;
-        roleData.attribute = attribute;
-        roleData.max_attribute = max_attribute;
+        roleData.SetRoleAttr(attribute, max_attribute);
 
 
         ClickClose();

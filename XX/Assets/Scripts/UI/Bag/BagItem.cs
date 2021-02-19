@@ -12,7 +12,7 @@ public class BagItem : MonoBehaviour {
     public Text count;
     public GameObject useing;
     public BagItemType itemType;
-
+    RoleData roleData;
     ItemData item;
     private void Awake() {
         var ent = color.gameObject.AddComponent<EventTrigger>();
@@ -57,7 +57,8 @@ public class BagItem : MonoBehaviour {
 
     bool can_drag;
     bool onItem;
-    Vector2 beginDragPos;
+    bool isBag;
+    System.Action clickFunc;
     private void OnEnter(BaseEventData data) {
         if (item != null) {
             onItem = true;
@@ -69,68 +70,143 @@ public class BagItem : MonoBehaviour {
         ItemTips.instance.HideTips();
     }
     private void OnClickUp(BaseEventData data) {
-        if (onItem) {
+        if (!onItem)
+            return;
+        if (item != null && roleData == RoleData.mainRole && isBag) {
             ItemTips.instance.ShowTips(item.id, (RectTransform)transform, GetItemBtns());
         }
+        clickFunc?.Invoke();
     }
     private void OnDrag(BaseEventData data) {
-        if (item!=null) {
+        if (can_drag && item != null&&roleData == RoleData.mainRole) {
             EventManager.SendEvent(EventTyp.DragItem, item);
         }
     }
     private void OnBeginDrag(BaseEventData data) {
-        beginDragPos = ((RectTransform)transform).anchoredPosition;
-        EventManager.SendEvent(EventTyp.BeginDragItem, item);
+        if (can_drag && item != null && roleData == RoleData.mainRole) {
+            EventManager.SendEvent(EventTyp.BeginDragItem, item);
+        }
     }
     private void OnEndDrag(BaseEventData data) {
-        EventManager.SendEvent(EventTyp.EndDragItem, item);
+        if (can_drag && item != null && roleData == RoleData.mainRole) {
+            EventManager.SendEvent(EventTyp.EndDragItem, item);
+        }
     }
 
     private ItemTipsBtn[] GetItemBtns() {
+        if (item == null || roleData == null || !isBag) {
+            return new ItemTipsBtn[0];
+        }
+        bool item_is_equip = roleData.ItemIsEquip(item.id);
         List<ItemTipsBtn> btns = new List<ItemTipsBtn>();
-        // 丢弃按钮
-        btns.Add(new ItemTipsBtn() { btn_name= 24, btn_func = BtnDiscard });
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy
+            || static_data.sub_ype == ItemSubType.Ring || static_data.sub_ype == ItemSubType.Ride) {
+            if (item_is_equip) {
+                // 卸载按钮
+                btns.Add(new ItemTipsBtn() { btn_name = 28, btn_func = BtnEquip });
+            } else {
+                // 装备按钮
+                btns.Add(new ItemTipsBtn() { btn_name = 22, btn_func = BtnEquip });
+            }
+        }
+        if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.aptitudesRemedy) {
+            // 使用按钮
+            btns.Add(new ItemTipsBtn() { btn_name = 23, btn_func = BtnUse });
+        }
+        if (!item_is_equip) {
+            // 丢弃按钮
+            btns.Add(new ItemTipsBtn() { btn_name = 24, btn_func = BtnDiscard });
+        }
         return btns.ToArray();
     }
 
-    private void BtnDiscard() {
-        if (item != null) {
-            Debug.Log("todu  丢弃 " + item.id);
+    public void BtnDiscard() {
+        if (item != null && roleData != null) {
+            roleData.RemoveItem(item.id);
         }
     }
 
-    public void SetItem(ItemData item, bool canDrag = false) {
+    public void BtnEquip() {
+        if (item != null && roleData != null) {
+            roleData.EquipItem(item.id);
+        }
+    }
+
+    public void BtnUse() {
+        if (item != null && roleData != null) {
+            roleData.UseItem(item.id);
+        }
+    }
+
+    public void SetItem(ItemData item, RoleData role, bool isBag = false, bool isRound = false,string show_count = null, System.Action clickFunc = null) {
+        roleData = role;
         this.item = item;
+        this.isBag = isBag;
+        this.clickFunc = clickFunc;
         if (item == null) {
-            color.sprite = UIAssets.instance.itemColor[0];
+            if (isRound)
+                color.sprite = UIAssets.instance.gongfaColor[0];
+            else
+                color.sprite = UIAssets.instance.itemColor[0];
             icon.enabled = false;
-            count.enabled = false;
-            Tools.SetActive(useing, false);
-        } else {
-            icon.enabled = true;
-            count.enabled = true;
-            ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
-            icon.sprite = UIAssets.instance.itemIcon[static_data.icon];
-            color.sprite = UIAssets.instance.itemColor[static_data.color];
-            switch (static_data.type) {
-                case ItemType.Gongfa:
-                    count.text = static_data.name;
-                    break;
-                case ItemType.Equip:
-                case ItemType.Other:
-                case ItemType.Remedy:
-                case ItemType.Material:
-                case ItemType.Toy:
-                default:
-                    if (static_data.maxcount > 1) {
-                        count.text = item.count.ToString();
-                    } else {
-                        count.text = "";
-                    }
-                    break;
+            if (show_count != null) {
+                count.enabled = true;
+                count.text = show_count;
+            } else {
+                count.enabled = false;
             }
             Tools.SetActive(useing, false);
+            can_drag = false;
+            return;
         }
-        can_drag = canDrag;
+
+
+        icon.enabled = true;
+        count.enabled = true;
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        icon.sprite = UIAssets.instance.itemIcon[static_data.icon];
+        if (isRound)
+            color.sprite = UIAssets.instance.gongfaColor[static_data.color];
+        else
+            color.sprite = UIAssets.instance.itemColor[static_data.color];
+        //switch (static_data.type) {
+        //    case ItemType.Gongfa:
+        //        count.text = static_data.name;
+        //        break;
+        //    case ItemType.Equip:
+        //    case ItemType.Other:
+        //    case ItemType.Remedy:
+        //    case ItemType.Material:
+        //    case ItemType.Toy:
+        //    default:
+        //        if (static_data.maxcount > 1) {
+        //            count.text = item.count.ToString();
+        //        } else {
+        //            count.text = "";
+        //        }
+        //        break;
+        //}
+        if (show_count != null) {
+            count.text = show_count;
+        } else if (static_data.maxcount > 1) {
+            count.text = item.count.ToString();
+        } else {
+            count.text = "";
+        }
+
+
+        if (roleData == null || !isBag) {
+            can_drag = false;
+            Tools.SetActive(useing, false);
+            return;
+        }
+
+        bool isWear = roleData.ItemIsEquip(item.id); // 是否穿戴者
+        Tools.SetActive(useing, isWear);
+        can_drag = roleData == RoleData.mainRole && !isWear &&
+            (static_data.type == ItemType.Equip || // 装备
+            static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy); // 恢复丹药或增益丹药
+
     }
 }

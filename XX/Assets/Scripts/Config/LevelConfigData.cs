@@ -45,6 +45,11 @@ public static class LevelConfigData {
             throw;
         }
     }
+
+    // 玩家的等级是小境界等级 从1开始 物品的等级是大境界等级，从0开始
+    public static bool CheckLevel(int roleLv,int itemLv) {
+        return (roleLv - 1) / 3 >= itemLv;
+    }
 }
 
 /// <summary>

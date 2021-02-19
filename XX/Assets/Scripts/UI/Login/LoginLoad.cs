@@ -43,7 +43,7 @@ public class LoginLoad : BaseWindow {
         }
     }
 
-    private void Start() {
+    private void OnEnable() {
         OnUpdate();
     }
 
@@ -73,7 +73,7 @@ public class LoginLoad : BaseWindow {
                 GameData.instance = Tools.DeserializeObject<GameData>(byt2);
                 long time = GameData.instance.globalAttr[(int)GlobalAttribute.time];
                 info.Find("TextTime").GetComponent<Text>().text = Tools.ShowTime(new System.DateTime(time));
-                info.Find("TextLevel").GetComponent<Text>().text = LevelConfigData.GetName(roleData.attribute[(int)RoleAttribute.level]);
+                info.Find("TextLevel").GetComponent<Text>().text = LevelConfigData.GetName(roleData.GetAttr(RoleAttribute.level));
             }
         }
     }

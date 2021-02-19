@@ -60,7 +60,7 @@ public class ItemTips : MonoBehaviour
             return -1;
         gameObject.SetActive(true);
         mainitemtip.ShowTip(item);
-        equipitemtip.ShowTip(item);
+        //equipitemtip.ShowTip(item);
         if (btn_list.Length > 0) {
             lockui = true;
             mask.SetActive(true);

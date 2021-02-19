@@ -61,18 +61,40 @@ public class AttributeUI : MonoBehaviour {
         zhengdaoP = zhengdaoImg.gameObject.AddComponent<UIProgress>();
     }
 
+    RoleData showRoleData;
     bool onEnable = false;
     private void OnEnable() {
         onEnable = true;
-        RoleData roleData = RoleData.mainRole;
-        if (roleData != null) {
-            ShowAttr(roleData.tmp_attribute, roleData.tmp_max_attribute, RoleAttrConfigData.GetAttrConfig(), roleData.sex);
+        if (RoleData.mainRole != null) {
+            ShowRoleAttr(RoleData.mainRole);
         }
         onEnable = false;
+        EventManager.AddEvent(EventTyp.AttrChange, OnChange);
+        EventManager.AddEvent(EventTyp.MinValueChange, OnChange);
+    }
+
+    private void OnDisable() {
+        EventManager.RemoveEvent(EventTyp.AttrChange, OnChange);
+        EventManager.RemoveEvent(EventTyp.MinValueChange, OnChange);
+        EnterPointTips.instance.HideTips();
+        showRoleData = null;
+    }
+
+    void OnChange(object roleData) {
+        if ((RoleData)roleData == showRoleData) {
+            ShowRoleAttr((RoleData)roleData);
+        }
+    }
+
+    public void ShowRoleAttr(RoleData roleData) {
+        showRoleData = roleData;
+        ShowAttr(showRoleData.GetAllAttr(), showRoleData.GetAllMaxAttr(), RoleAttrConfigData.GetAttrConfig(), showRoleData.sex);
     }
 
     int last_charm;
     public void ShowAttr(int[] min_attribute, int[] max_attribute, RoleAttrConfig[] attribute_config, Sex sex) {
+        if (attrs == null)
+            return;
         int count = attrs.Length;
         for (int i = 0; i < count; i++) {
             attrs[i].name.text = attribute_config[i].name;
@@ -143,6 +165,9 @@ public class AttributeUI : MonoBehaviour {
                 if (old_progress > 0) {
                     old_progress += 4;
                 }
+
+                old_progress = Mathf.Min(Mathf.Max(old_progress, 0), 100);
+                progress = Mathf.Min(Mathf.Max(progress, 0), 100);
                 if (onEnable) {
                     attrs[i].progress.SetMove(progress, progress);
                 } else {
@@ -211,7 +236,4 @@ public class AttributeUI : MonoBehaviour {
         }
     }
 
-    private void OnDisable() {
-        EnterPointTips.instance.HideTips();
-    }
 }
