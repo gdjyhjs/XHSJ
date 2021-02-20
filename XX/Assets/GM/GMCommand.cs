@@ -105,7 +105,7 @@ public class GMCommand : MonoBehaviour
         }
     }
 
-    string err_command = "please input command: additem, clearbag, clearlog, set";
+    string err_command = "please input command: additem, clearbag, clearlog, set, game";
 
     private void DoCommand(string command) {
         string[] str = command.Split(' ');
@@ -120,11 +120,21 @@ public class GMCommand : MonoBehaviour
                     break;
                 }
                 int count = 1;
-                int item_id = int.Parse(str[1]);
                 if (str.Length > 2) {
                     count = int.Parse(str[2]);
                 }
-                RoleData.mainRole.AddOrCreateItem(item_id, ref count);
+                string[] ids = str[1].Split('-');
+                if (ids.Length == 2) {
+                    int min_id = int.Parse(ids[0]);
+                    int max_id = int.Parse(ids[1]);
+                    for (int item_id = min_id; item_id <= max_id; item_id++) {
+                        int c = count;
+                        RoleData.mainRole.AddOrCreateItem(item_id, ref c);
+                    }
+                } else {
+                    int item_id = int.Parse(str[1]);
+                    RoleData.mainRole.AddOrCreateItem(item_id, ref count);
+                }
                 break;
             case "clearbag":
                 List<int> rm = new List<int>(); ;
@@ -142,13 +152,27 @@ public class GMCommand : MonoBehaviour
                 show.text = string.Join("\n", gm_msg.ToArray());
                 break;
             case "set":
-                if (str.Length < 3) {
-                    AddMsg("please input command: set attributeName value.");
+                if (str.Length < 2) {
+                    AddMsg("please input command: set attributeName value. set value.");
                     break;
                 }
-                RoleAttribute attr = (RoleAttribute)Enum.Parse(typeof(RoleAttribute), str[1]); 
-                int value = int.Parse(str[2]);
-                RoleData.mainRole.ChangeAttrebuteValue(attr, value);
+                int set_value;
+                if (str.Length < 2) {
+                    set_value = int.Parse(str[1]);
+                    for (RoleAttribute i = 0; i < RoleAttribute.modao; i++) {
+                        RoleData.mainRole.ChangeAttrebuteValue(i, set_value);
+                    }
+                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.max_item, set_value);
+                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.xinde, set_value);
+                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.daodian, set_value);
+                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.coin, set_value);
+                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.contributions, set_value);
+                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.city_token, set_value);
+                    break;
+                }
+                RoleAttribute attr = (RoleAttribute)Enum.Parse(typeof(RoleAttribute), str[1]);
+                set_value = int.Parse(str[2]);
+                RoleData.mainRole.ChangeAttrebuteValue(attr, set_value);
                 break;
             case "game":
                 if (str.Length < 3) {
@@ -163,11 +187,6 @@ public class GMCommand : MonoBehaviour
                 }
                 break;
             case "test":
-                Debug.Log(new System.DateTime(1, 1, 1, 23, 59, 59).Ticks);
-                for (int i = 1; i < 30; i++) {
-                    Debug.Log(i + ":  " + new System.DateTime(1, 1, i).Ticks);
-                    Debug.Log(i + ":  " + new System.DateTime(1, 1, i).Ticks);
-                }
                 break;
             default:
                 AddMsg("please input command:" + err_command);

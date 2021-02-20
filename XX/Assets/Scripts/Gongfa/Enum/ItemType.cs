@@ -48,13 +48,9 @@ public enum ItemSubType {
     /// </summary>
     Body,
     /// <summary>
-    /// 武技 普攻
+    /// 武技/灵技
     /// </summary>
     Attack,
-    /// <summary>
-    /// 灵技 普攻
-    /// </summary>
-    Magic,
     /// <summary>
     /// 绝技 技能
     /// </summary>
@@ -63,7 +59,7 @@ public enum ItemSubType {
     /// 神通 大招/怒招
     /// </summary>
     /// 
-    Witchcraft,
+    Magic,
 
 
 

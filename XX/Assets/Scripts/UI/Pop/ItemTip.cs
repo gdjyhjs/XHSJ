@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,10 +29,28 @@ public class ItemTip : MonoBehaviour {
         item_sub_type.text = GameConst.itemSubTypeName[staticData.sub_ype];
         item_need_lv.text = LevelConfigData.GetBigName(staticData.level);
         item_describe.text = staticData.des;
-        item_attr.text = "";
+        item_attr.text = GetItemAttrDes(staticData);
         item_bg.sprite = UIAssets.instance.bgColor[staticData.color];
         item_color.sprite = UIAssets.instance.itemColor[staticData.color];
         item_icon.sprite = UIAssets.instance.itemIcon[staticData.icon];
         item_use.SetActive(RoleData.mainRole.ItemIsEquip(item.id));
+    }
+    /*
+     * <color=#E28225FF>装备后可获得以下属性属性</color>
+背包上限：<color=#20C123FF>+12</color>
+     * 
+     */
+    private string GetItemAttrDes(ItemStaticData staticData) {
+        if (staticData.attributes == null || staticData.attributes.Length < 1) {
+            return null;
+        }
+        RoleAttrConfig[] attribute_config = RoleAttrConfigData.GetAttrConfig();
+        StringBuilder myString = new StringBuilder("<color=#E28225FF>装备后可获得以下属性</color>");
+        for (int i = 0; i < staticData.attributes.Length; i++) {
+            myString.AppendLine();
+            myString.Append(attribute_config[(int)staticData.attributes[i]].name);
+            myString.AppendFormat("<color=#20C123FF>+{0}</color>", staticData.attr_values[i]);
+        }
+        return myString.ToString();
     }
 }

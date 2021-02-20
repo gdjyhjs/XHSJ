@@ -11,8 +11,8 @@ public class ItemTips : MonoBehaviour
     public ItemTip mainitemtip;
     public ItemTip equipitemtip;
     public GameObject btns;
-    public Button[] tfbtns;
-    public Text[] txtbtns;
+    Button[] tfbtns;
+    Text[] txtbtns;
     public GameObject mask;
 
     int btn_count;
@@ -86,14 +86,24 @@ public class ItemTips : MonoBehaviour
     }
 
     private void SetPosition(RectTransform rtf) {
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)mainitemtip.transform);
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)equipitemtip.transform);
+        LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)btns.transform);
         LayoutRebuilder.ForceRebuildLayoutImmediate(bg);
 
         bg.position = rtf.position;
 
         float x = bg.anchoredPosition.x, y = bg.anchoredPosition.y + rtf.sizeDelta.y / 2 + bg.sizeDelta.y / 2;
         
+        // 判断是否超过屏幕上面       若：坐标y+一半高度 大于 屏幕高度的一半
         if ((y + bg.sizeDelta.y / 2) > pop.sizeDelta.y / 2) {
             y = bg.anchoredPosition.y - rtf.sizeDelta.y / 2 - bg.sizeDelta.y / 2;
+            // 判断是否超过屏幕下面       若：坐标y-一半高度 大于 -屏幕高度的一半
+            if ((y - bg.sizeDelta.y / 2) < - pop.sizeDelta.y / 2) {
+                // 需要提高高度到完整显示      得到面板高度比屏幕一半高多少
+                float offset = pop.sizeDelta.y / 2 - Mathf.Abs(y - bg.sizeDelta.y / 2);
+                y -= offset;
+            }
         }
 
         if ((x + bg.sizeDelta.x / 2) > (pop.sizeDelta.x / 2)) {
