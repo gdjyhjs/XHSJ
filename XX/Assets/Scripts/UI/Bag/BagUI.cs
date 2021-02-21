@@ -16,6 +16,11 @@ public class BagUI : MonoBehaviour
     public BagItem[] equip_items;
     public BagItem[] battle_items;
 
+    public GameObject yuan1;
+    public GameObject yuan2;
+    public GameObject fang;
+    public RectTransform dragItem;
+
     int max_item;
     int child_count;
     ItemType show_pack = ItemType.end;
@@ -52,12 +57,72 @@ public class BagUI : MonoBehaviour
     private void OnEnable() {
         UpdateUI();
         EventManager.AddEvent(EventTyp.ItemChange, OnItemChange);
+        EventManager.AddEvent(EventTyp.BeginDragItem, OnItemBeginDragItem);
+        EventManager.AddEvent(EventTyp.DragItem, OnItemDragItem);
+        EventManager.AddEvent(EventTyp.EndDragItem, OnItemEndDragItem);
+
+        Tools.SetActive(fang, false);
+        Tools.SetActive(yuan1, false);
+        Tools.SetActive(yuan2, false);
     }
 
     private void OnDisable() {
         onBagView = false;
         ItemTips.instance.ClickClose();
         EventManager.RemoveEvent(EventTyp.ItemChange, OnItemChange);
+        EventManager.RemoveEvent(EventTyp.BeginDragItem, OnItemBeginDragItem);
+        EventManager.RemoveEvent(EventTyp.DragItem, OnItemDragItem);
+        EventManager.RemoveEvent(EventTyp.EndDragItem, OnItemEndDragItem);
+    }
+
+    private void OnItemBeginDragItem(object param) {
+        ItemData item = (ItemData)param;
+        dragItem.GetComponent<BagItem>().SetItem(item);
+        dragItem.gameObject.SetActive(true);
+        ShowMask(item, true);
+    }
+
+    private void OnItemDragItem(object param) {
+        Vector2 size = ((RectTransform)MainUI.instance.transform).sizeDelta;
+        Vector2 pos = Input.mousePosition;
+        Vector2 result = new Vector2(pos.x / Screen.width * size.x, pos.y / Screen.height * size.y);
+        dragItem.anchoredPosition = result;
+    }
+
+    private void OnItemEndDragItem(object param) {
+        dragItem.gameObject.SetActive(false);
+        ItemData item = (ItemData)param;
+        ShowMask(item, false);
+
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        if (static_data.sub_ype == ItemSubType.Ring && equip_items[0].onItem) {
+            RoleData.mainRole.EquipItem(item.id);
+        } else if (static_data.sub_ype == ItemSubType.Ride && equip_items[1].onItem) {
+            RoleData.mainRole.EquipItem(item.id);
+        } else if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy) {
+            for (int idx = 0; idx < battle_items.Length; idx++) {
+                if (battle_items[idx].onItem) {
+                    RoleData.mainRole.EquipItem(item.id, idx);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void ShowMask(ItemData item, bool show) {
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        switch (static_data.sub_ype) {
+            case ItemSubType.Ring:
+                yuan1.SetActive(show);
+                break;
+            case ItemSubType.Ride:
+                yuan2.SetActive(show);
+                break;
+            case ItemSubType.recoverRemedy:
+            case ItemSubType.buffRemedy:
+                fang.SetActive(show);
+                break;
+        }
     }
 
     public void OnTypeToggle(Toggle Tog) {
@@ -69,10 +134,10 @@ public class BagUI : MonoBehaviour
     }
 
     void OnItemChange(object param) {
-        UpdateUI();
+        UpdateUI(true);
     }
 
-    private void UpdateUI() {
+    private void UpdateUI(bool isChange = false) {
         if (RoleData.mainRole == null)
             return;
         max_item = RoleData.mainRole.GetAttr(RoleAttribute.max_item);
@@ -85,11 +150,13 @@ public class BagUI : MonoBehaviour
                     show_items.Add(item_id);
                 }
             }
-            max_item = show_items.Count + max_item - show_items.Count;
+            max_item = show_items.Count;
         }
         line_count = (int)Mathf.Ceil(max_item * 1f / child_count);
         // 设置背包
-        scrollView.verticalNormalizedPosition = 1;
+        if (!isChange) {
+            scrollView.verticalNormalizedPosition = 1;
+        }
         bigDataScroll.cellCount = line_count;
 
         // 设置装备

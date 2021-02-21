@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2449240905768884568}
   - component: {fileID: 2449240905768884569}
   - component: {fileID: 1386516849712875874}
+  - component: {fileID: 1786454433}
   m_Layer: 5
   m_Name: PopCanvas
   m_TagString: Untagged
@@ -59,7 +60,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 100
   m_TargetDisplay: 0
 --- !u!114 &2449240905768884568
 MonoBehaviour:
@@ -126,6 +127,18 @@ MonoBehaviour:
   - obj: {fileID: 2217470301041444047, guid: ea9ab12a5dccf134db8c677a64c2fdf7, type: 3}
     active: 1
     show: 1
+--- !u!114 &1786454433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2449240905768884571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20df5cda46cbc9c489bdc2d7f598921f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4975756861142051581
 GameObject:
   m_ObjectHideFlags: 0

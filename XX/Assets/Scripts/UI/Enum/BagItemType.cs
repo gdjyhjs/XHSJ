@@ -1,4 +1,4 @@
-public enum BagItemType
+public enum UIItemType
 {
     BagItem,
     EquipItem,

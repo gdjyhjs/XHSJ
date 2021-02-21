@@ -160,19 +160,19 @@ public class GMCommand : MonoBehaviour
                 if (str.Length < 2) {
                     set_value = int.Parse(str[1]);
                     for (RoleAttribute i = 0; i < RoleAttribute.modao; i++) {
-                        RoleData.mainRole.ChangeAttrebuteValue(i, set_value);
+                        RoleData.mainRole.SetAttrebuteValue(i, set_value);
                     }
-                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.max_item, set_value);
-                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.xinde, set_value);
-                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.daodian, set_value);
-                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.coin, set_value);
-                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.contributions, set_value);
-                    RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.city_token, set_value);
+                    RoleData.mainRole.SetAttrebuteValue(RoleAttribute.max_item, set_value);
+                    RoleData.mainRole.SetAttrebuteValue(RoleAttribute.xinde, set_value);
+                    RoleData.mainRole.SetAttrebuteValue(RoleAttribute.daodian, set_value);
+                    RoleData.mainRole.SetAttrebuteValue(RoleAttribute.coin, set_value);
+                    RoleData.mainRole.SetAttrebuteValue(RoleAttribute.contributions, set_value);
+                    RoleData.mainRole.SetAttrebuteValue(RoleAttribute.city_token, set_value);
                     break;
                 }
                 RoleAttribute attr = (RoleAttribute)Enum.Parse(typeof(RoleAttribute), str[1]);
                 set_value = int.Parse(str[2]);
-                RoleData.mainRole.ChangeAttrebuteValue(attr, set_value);
+                RoleData.mainRole.SetAttrebuteValue(attr, set_value);
                 break;
             case "game":
                 if (str.Length < 3) {

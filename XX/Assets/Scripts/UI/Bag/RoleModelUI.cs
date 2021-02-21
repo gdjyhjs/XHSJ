@@ -8,17 +8,33 @@ public class RoleModelUI : MonoBehaviour {
     public RectTransform rawimage;
 
     private void Awake() {
-        rawimage.anchoredPosition = new Vector2(0, 0);
-        rawimage.localEulerAngles = Vector3.one;
+        //rawimage.anchoredPosition = new Vector2(0, 0);
+        //rawimage.localEulerAngles = Vector3.one;
     }
 
-    private void OnEnable() {
+    Vector3 last_pos;
+    private void UpdateCamera(object param = null) {
         RoleShow mainRole = RoleShow.mainRole;
         if (mainRole) {
             Transform target = mainRole.playerAnim.transform;
-            roleCamera.position = target.position + target.forward * 4 + new Vector3(0,1,0) + target.right * 3;
-            roleCamera.LookAt(target.position);
-        } else {
+            if (last_pos != target.position) {
+                if (mainRole.rideAnim) {
+                    roleCamera.position = target.position + target.forward * 5 + target.right * 2f;
+                    roleCamera.LookAt(target.position);
+                } else {
+                    roleCamera.position = target.position + target.forward * 2.5f + target.right * 1f + new Vector3(0, 1f, 0);
+                    roleCamera.LookAt(target.position + new Vector3(0, 1f, 0));
+                }
+            }
         }
+    }
+
+    private void OnEnable() {
+        UpdateCamera();
+        EventManager.AddEvent(EventTyp.ChangePos, UpdateCamera);
+    }
+
+    private void OnDisable() {
+        EventManager.RemoveEvent(EventTyp.ChangePos, UpdateCamera);
     }
 }

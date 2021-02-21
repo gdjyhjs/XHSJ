@@ -122,9 +122,6 @@ public static class GongfaAttrConfig {
         }
 #endif
         GongfaAttrData congfa_attr_data = list[Random.Range(0, list.Count)];
-#if UNITY_EDITOR
-        Debug.Log("随机词条 : " + congfa_attr_data.name + " >> " + string.Join(", ", typs));
-#endif
         return congfa_attr_data;
     }
 
@@ -132,7 +129,6 @@ public static class GongfaAttrConfig {
     /// 获取主词条
     /// </summary>
     public static GongfaAttrData[] GetMainAttr(GongfaType gongfa_typ) {
-        Debug.LogError("GongfaAttrData GetMainAttr gongfa_typ = "+ LogList(gongfa_typ));
         List<GongfaAttrData> list = new List<GongfaAttrData>();
         foreach (KeyValuePair<GongfaType, GongfaAttrData[]> item in typeList) {
             if ((gongfa_typ & item.Key) == item.Key) {
@@ -157,7 +153,6 @@ public static class GongfaAttrConfig {
         List<GongfaAttrData> result = new List<GongfaAttrData>();
         for (int i = list.Count - 1; i >= 0; i--) {
             GongfaAttrData item = list[i];
-            Debug.Log(i + " " + item.des + " " + item.name + " " + item.isSkill);
             if (item.isSkill) {
                 result.Add(item);
                 list.RemoveAt(i);
@@ -167,25 +162,11 @@ public static class GongfaAttrConfig {
             // 如果有技能属性，排到第一，多条只随机取一条
             var main_attr = result[Random.Range(0, result.Count - 1)]; // 随机一条技能主属性
             result = new List<GongfaAttrData>();
-            Debug.Log("主属性技能 " + main_attr.des + " " + main_attr.name);
-            Debug.Log("主属性词条数量" + list.Count);
-            for (int i = 0; i < result.Count; i++) {
-                Debug.Log(i + "主属性词条 " + result[i].des + " " + result[i].name);
-            }
             result.Add(main_attr);
             result.AddRange(list);
         } else {
             result = list;
         }
-        Debug.Log("排序主词条数量" + list.Count);
-        for (int i = 0; i < result.Count; i++) {
-            Debug.Log(i+"排序主词条 " + result[i].des + " " + result[i].name);
-        }
-#if UNITY_EDITOR
-        for (int i = 0; i < result.Count; i++) {
-            Debug.Log(i + " 主词条 : " + result[i].name + " >> " + string.Join(", ", typs));
-        }
-#endif
         return result.ToArray();
     }
 

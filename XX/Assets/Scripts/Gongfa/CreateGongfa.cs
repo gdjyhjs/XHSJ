@@ -13,7 +13,7 @@ using System.Text;
 public static class CreateGongfa {
     static int gongfa_count = 12;
     // 1劲 2御 3录 4诀 5经 6神功 7密卷 8大法 9身法 10武技灵技 11绝技 12神通
-    static int create_count = 1;
+    static int create_count = 20;
     static CreateGongfa() {
 
     }
@@ -36,11 +36,13 @@ public static class CreateGongfa {
         //                if (bigtype == GongfaType.heart) {
         //                    for (GongfaType subtyp = GongfaType.jin; subtyp <= GongfaType.juan; subtyp = (GongfaType)((int)subtyp << 1)) { // 劲 御 录 诀 经 神功 密卷 大法
         //                        for (int gongfa_idx = 0; gongfa_idx < create_count; gongfa_idx++) { // 每个境界每个属性该功法创建数量
-        //                            CreateRandomGongfa(lv, typ | bigtype | subtyp, color, gongfa_list);
+        //                            CreateRandomGongfa(lv, typ | bigtype | subtyp, color, gongfa_list, item_list);
         //                        }
         //                    }
         //                } else {
-        //                    CreateRandomGongfa(lv, typ | bigtype, color, gongfa_list);
+        //                    for (int gongfa_idx = 0; gongfa_idx < create_count; gongfa_idx++) { // 每个境界每个属性该功法创建数量
+        //                        CreateRandomGongfa(lv, typ | bigtype, color, gongfa_list, item_list);
+        //                    }
         //                }
         //            }
         //            role_attr_offset++; // 刀枪剑拳掌指火水雷风土木
@@ -63,6 +65,8 @@ public static class CreateGongfa {
         CreateRandomGongfa(0, GongfaType.heart | GongfaType.juan | GongfaType.sword, 5, gongfa_list, item_list);
         // 测试 end
         Debug.Log("功法总创建数量   " + create_id + "/" + max_id + "   id{" + (item_list.Count - create_id - 1) + "-" + (item_list.Count - 1) + "}");
+
+
         GameData.instance.gongfa_static_data = gongfa_list.ToArray();
         GameData.instance.item_static_data = item_list.ToArray();
     }

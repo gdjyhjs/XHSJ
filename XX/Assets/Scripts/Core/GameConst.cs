@@ -1,22 +1,22 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public static class GameConst {
-    public const long oneSecondTicks = 864000000000;
+    public const long oneSecondTicks = 864000000000 / 3600 / 24;
     public const long oneDayTicks = 864000000000;
     public const int max_color = 6;
     public const int max_role_level = 12;
     public const int max_item_level = max_role_level / 3;
     public static Dictionary<ItemType, string> itemTypeName = new Dictionary<ItemType, string>() 
     {
-        { ItemType.Other, "ÆäËû"},
-        { ItemType.Remedy, "µ¤Ò©"},
-        { ItemType.Gongfa, "ÃØ¼®"},
-        { ItemType.Equip, "×°±¸"},
-        { ItemType.Material, "²ÄÁÏ"},
-        { ItemType.Toy, "Íæ¾ß"},
+        { ItemType.Other, "å…¶ä»–"},
+        { ItemType.Remedy, "ä¸¹è¯"},
+        { ItemType.Gongfa, "ç§˜ç±"},
+        { ItemType.Equip, "è£…å¤‡"},
+        { ItemType.Material, "ææ–™"},
+        { ItemType.Toy, "ç©å…·"},
     };
 
     public static string[] item_color_str = new string[] { "E6D6BEFF", "3FBD8CFF", "397CB8FF", "A73BBDFF", "DEB731FF", "FC7425FF", "E73E47FF", };
@@ -30,24 +30,24 @@ public static class GameConst {
         new Color(0xE7 / 255f, 0x3E / 255f, 0x47 / 255f),
     };
 
-    // ¼¼ÄÜµÄÍşÁ¦»á¸ù¾İÊìÁ·¶ÈÀ´¾ö¶¨£º³õÑ§70%£¬ÊìÁ·80%£¬Ğ¡³É90%£¬´ó³É100%£¬Ô²Âú110%£¬»¯¾³120%¡£
-    public static string[] attr_level_name = new string[] { "Õ¦Á·", "æµÊì", "Í¨Ïş", "Ğ¡³É", "Áé¶¯", "¾«Í¨", "´ó³É", "Ô²Âú", "¾õĞÑ", "»¯¾³", "´óµÀ",
-    "Ò»Ç§", "¶şÇ§", "ÈıÇ§", "ËÄÇ§", "ÎåÇ§", "ÁùÇ§", "ÆßÇ§", "°ËÇ§", "¾ÅÇ§", "Ò»Íò", "Ê®Íò", };
+    // æŠ€èƒ½çš„å¨åŠ›ä¼šæ ¹æ®ç†Ÿç»ƒåº¦æ¥å†³å®šï¼šåˆå­¦70%ï¼Œç†Ÿç»ƒ80%ï¼Œå°æˆ90%ï¼Œå¤§æˆ100%ï¼Œåœ†æ»¡110%ï¼ŒåŒ–å¢ƒ120%ã€‚
+    public static string[] attr_level_name = new string[] { "ä¹ç»ƒ", "å¨´ç†Ÿ", "é€šæ™“", "å°æˆ", "çµåŠ¨", "ç²¾é€š", "å¤§æˆ", "åœ†æ»¡", "è§‰é†’", "åŒ–å¢ƒ", "å¤§é“",
+    "ä¸€åƒ", "äºŒåƒ", "ä¸‰åƒ", "å››åƒ", "äº”åƒ", "å…­åƒ", "ä¸ƒåƒ", "å…«åƒ", "ä¹åƒ", "ä¸€ä¸‡", "åä¸‡", };
 
     public static Dictionary<ItemSubType, string> itemSubTypeName = new Dictionary<ItemSubType, string>()
     {
         { ItemSubType.None, ""},
-        { ItemSubType.Heart, "ĞÄ·¨"},
-        { ItemSubType.Body, "Éí·¨"},
-        { ItemSubType.Attack, "Îä¼¼/Áé¼¼"},
-        { ItemSubType.Magic, "ÉñÍ¨"},
-        { ItemSubType.Skill, "¾ø¼¼"},
-        { ItemSubType.Ring, "½äÖ¸"},
-        { ItemSubType.Ride, "×øÆï"},
-        { ItemSubType.recoverRemedy, "»Ö¸´µ¤Ò©"},
-        { ItemSubType.buffRemedy, "ÔöÒæµ¤Ò©"},
-        { ItemSubType.aptitudesRemedy, "×ÊÖÊµ¤Ò©"},
-        { ItemSubType.otherRemedy, "ÆäËûµ¤Ò©"},
+        { ItemSubType.Heart, "å¿ƒæ³•"},
+        { ItemSubType.Body, "èº«æ³•"},
+        { ItemSubType.Attack, "æ­¦æŠ€/çµæŠ€"},
+        { ItemSubType.Magic, "ç¥é€š"},
+        { ItemSubType.Skill, "ç»æŠ€"},
+        { ItemSubType.Ring, "æˆ’æŒ‡"},
+        { ItemSubType.Ride, "åéª‘"},
+        { ItemSubType.recoverRemedy, "æ¢å¤ä¸¹è¯"},
+        { ItemSubType.buffRemedy, "å¢ç›Šä¸¹è¯"},
+        { ItemSubType.aptitudesRemedy, "èµ„è´¨ä¸¹è¯"},
+        { ItemSubType.otherRemedy, "å…¶ä»–ä¸¹è¯"},
     };
 
     public static UIShortcutKey[] uIShortcutKeys = new UIShortcutKey[]{

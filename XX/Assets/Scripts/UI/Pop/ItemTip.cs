@@ -29,7 +29,7 @@ public class ItemTip : MonoBehaviour {
         item_sub_type.text = GameConst.itemSubTypeName[staticData.sub_ype];
         item_need_lv.text = LevelConfigData.GetBigName(staticData.level);
         item_describe.text = staticData.des;
-        item_attr.text = GetItemAttrDes(staticData);
+        //item_attr.text = GetItemAttrDes(staticData);
         item_bg.sprite = UIAssets.instance.bgColor[staticData.color];
         item_color.sprite = UIAssets.instance.itemColor[staticData.color];
         item_icon.sprite = UIAssets.instance.itemIcon[staticData.icon];

@@ -11,11 +11,10 @@ public class BagItem : MonoBehaviour {
     public Image icon;
     public Text count;
     public GameObject useing;
-    public BagItemType itemType;
+    public UIItemType uiType;
     RoleData roleData;
     ItemData item;
     private void Awake() {
-        var ent = color.gameObject.AddComponent<EventTrigger>();
         UnityAction<BaseEventData> enter = new UnityAction<BaseEventData>(OnEnter);
         EventTrigger.Entry enterev = new EventTrigger.Entry();
         enterev.eventID = EventTriggerType.PointerEnter;
@@ -56,12 +55,12 @@ public class BagItem : MonoBehaviour {
     }
 
     bool can_drag;
-    bool onItem;
+    public bool onItem;
     bool isBag;
     System.Action clickFunc;
     private void OnEnter(BaseEventData data) {
+        onItem = true;
         if (item != null) {
-            onItem = true;
             ItemTips.instance.ShowTips(item.id, (RectTransform)transform);
         }
     }
@@ -106,13 +105,22 @@ public class BagItem : MonoBehaviour {
                 // 卸载按钮
                 btns.Add(new ItemTipsBtn() { btn_name = 28, btn_func = BtnEquip });
             } else {
-                // 装备按钮
-                btns.Add(new ItemTipsBtn() { btn_name = 22, btn_func = BtnEquip });
+                if (static_data.sub_ype == ItemSubType.Ride) {
+                    // 乘骑按钮
+                    btns.Add(new ItemTipsBtn() { btn_name = 31, btn_func = BtnEquip });
+                } else {
+                    // 装备按钮
+                    btns.Add(new ItemTipsBtn() { btn_name = 22, btn_func = BtnEquip });
+                }
             }
         }
         if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.aptitudesRemedy) {
-            // 使用按钮
+            // 食用按钮
             btns.Add(new ItemTipsBtn() { btn_name = 23, btn_func = BtnUse });
+        }
+        if (static_data.type == ItemType.Gongfa) {
+            // 学习按钮
+            btns.Add(new ItemTipsBtn() { btn_name = 25, btn_func = BtnUse });
         }
         if (!item_is_equip) {
             // 丢弃按钮
@@ -139,7 +147,13 @@ public class BagItem : MonoBehaviour {
         }
     }
 
-    public void SetItem(ItemData item, RoleData role, bool isBag = false, bool isRound = false,string show_count = null, System.Action clickFunc = null) {
+    public void BtnStudy() {
+        if (item != null && roleData != null) {
+            roleData.UseItem(item.id);
+        }
+    }
+
+    public void SetItem(ItemData item, RoleData role = null, bool isBag = false, bool isRound = false,string show_count = null, System.Action clickFunc = null) {
         roleData = role;
         this.item = item;
         this.isBag = isBag;
@@ -170,23 +184,7 @@ public class BagItem : MonoBehaviour {
             color.sprite = UIAssets.instance.gongfaColor[static_data.color];
         else
             color.sprite = UIAssets.instance.itemColor[static_data.color];
-        //switch (static_data.type) {
-        //    case ItemType.Gongfa:
-        //        count.text = static_data.name;
-        //        break;
-        //    case ItemType.Equip:
-        //    case ItemType.Other:
-        //    case ItemType.Remedy:
-        //    case ItemType.Material:
-        //    case ItemType.Toy:
-        //    default:
-        //        if (static_data.maxcount > 1) {
-        //            count.text = item.count.ToString();
-        //        } else {
-        //            count.text = "";
-        //        }
-        //        break;
-        //}
+
         if (show_count != null) {
             count.text = show_count;
         } else if (static_data.maxcount > 1) {

@@ -96,7 +96,7 @@ public static class RoleAttrConfigData {
             int max = Random.Range(config.randMin, config.randMax + 1);
             int min = max;
             if (config.type == RoleAttrShowType.FixedMinMax) {
-                // 寿命不随机
+                // 固定大小值不随机 寿命、道点、心得
                 min = config.randMin;
                 max = config.randMax;
             }

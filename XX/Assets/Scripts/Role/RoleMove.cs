@@ -36,9 +36,10 @@ public class RoleMove : MonoBehaviour
                 MainCamera.SetPos(transform.position);
                 Vector3 pos = CorrectPos(transform.position);
                 Vector2Int p = Tools.WorldPointToUnitPos(pos);
-                RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.longitude, p.x);
-                RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.latitude, p.y);
-                RoleData.mainRole.ChangeAttrebuteValue(RoleAttribute.orientation, (int)transform.eulerAngles.y);
+                RoleData.mainRole.SetAttrebuteValue(RoleAttribute.longitude, p.x, false);
+                RoleData.mainRole.SetAttrebuteValue(RoleAttribute.latitude, p.y, false);
+                RoleData.mainRole.SetAttrebuteValue(RoleAttribute.orientation, (int)transform.eulerAngles.y, false);
+                EventManager.SendEvent(EventTyp.SpaceChange, null);
             } else if (onMove && Vector3.Distance(transform.position, target) < 2) {
                 show.SetIdle();
             }
@@ -91,7 +92,7 @@ public class RoleMove : MonoBehaviour
         if (isMainRole) {
             MinCamera.SetPos(point);
             Vector2Int p = Tools.WorldPointToUnitPos(point);
-            EventManager.SendEvent(EventTyp.SpaceChange, p);
+            EventManager.SendEvent(EventTyp.ChangePos, p);
         }
 
         if (IsSame(point, target) || move) {

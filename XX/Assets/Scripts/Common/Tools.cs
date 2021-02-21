@@ -37,15 +37,15 @@ public static class Tools {
         get
         {
             string dir = "";
-#if UNITY_EDITOR
+#if UNITY_EDITOR //编辑器
             // dir = Application.dataPath + "Caches/";//路径：/AssetsCaches/
             //dir = Application.streamingAssetsPath + "/";//路径：/xxx_Data/StreamingAssets/
             dir = Application.persistentDataPath + "/";//路径：/xxx_Data/StreamingAssets/
-#elif UNITY_IOS
+#elif UNITY_IOS // ios
             dir = Application.temporaryCachePath + "/";//路径：Application/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/Library/Caches/
-#elif UNITY_ANDROID
+#elif UNITY_ANDROID // 安卓
             dir = Application.persistentDataPath + "/";//路径：/data/data/xxx.xxx.xxx/files/
-#else
+#else //其他
             dir = Application.persistentDataPath + "/";//路径：/xxx_Data/StreamingAssets/
 #endif
             return dir;

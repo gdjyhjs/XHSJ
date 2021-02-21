@@ -7,8 +7,41 @@ using UnityEngine;
 /// 角色数据
 /// </summary>
 [System.Serializable]
-public class RoleData
-{
+public class RoleData {
+
+    /// <summary>
+    /// 背包数据
+    /// </summary>
+    [System.NonSerialized]
+    public List<int> bag_items = new List<int>();
+
+    /// <summary>
+    /// 角色技能
+    /// </summary>
+    [System.NonSerialized]
+    public List<GongfaData> all_gongfa = new List<GongfaData>();
+
+    /// <summary>
+    /// 装备的心法
+    /// </summary>
+    public GongfaData[] heart_gongfa = new GongfaData[8];
+    /// <summary>
+    /// 装备的武技/灵技
+    /// </summary>
+    public GongfaData attack_gongfa;
+    /// <summary>
+    /// 装备的身法
+    /// </summary>
+    public GongfaData body_gongfa;
+    /// <summary>
+    /// 装备的绝技
+    /// </summary>
+    public GongfaData skill_gongfa;
+    /// <summary>
+    /// 装备的神通
+    /// </summary>
+    public GongfaData magic_gongfa;
+
     public static RoleData mainRole;
 
     /// <summary>
@@ -19,12 +52,7 @@ public class RoleData
     /// <summary>
     /// 角色技能
     /// </summary>
-    private int[] save_skills;
-
-    /// <summary>
-    /// 装备的技能 
-    /// </summary>
-    private int[] save_equip_skills;
+    private GongfaData[] save_all_gongfa;
 
     /// <summary>
     /// 背包物品
@@ -82,30 +110,212 @@ public class RoleData
     private int[] definitive_max_attribute;
 
     /// <summary>
-    /// 背包数据
-    /// </summary>
-    [System.NonSerialized]
-    public List<int> bag_items = new List<int>();
-
-    /// <summary>
     /// 装备的物品id
     /// </summary>
-    public int[] equip_items = new int[2] { -1, -1};
+    public int[] equip_items = new int[2] { -1, -1 };
 
     /// <summary>
     /// 装备的丹药id
     /// </summary>
-    public int[] remedy_items = new int[5] { -1, -1, -1, -1, -1};
+    public int[] remedy_items = new int[5] { -1, -1, -1, -1, -1 };
+
+
+
+
 
 
     public void SaveGame() {
         save_bag_items = bag_items.ToArray();
+        save_all_gongfa = all_gongfa.ToArray();
     }
     public void ReadGame() {
         bag_items = new List<int>(save_bag_items);
-
+        all_gongfa = new List<GongfaData>(save_all_gongfa);
         UpdateAttr();
     }
+
+
+
+
+
+
+    #region 功法
+
+    /// <summary>
+    /// 获取功法静态数据
+    /// </summary>
+    public GongfaStaticData GetGongfaStaticData(GongfaData gongfa) {
+        int item_id = gongfa.item_id;
+        ItemData item = GameData.instance.all_item[item_id];
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        int gongfa_static_id = static_data.param[0]; // 根据物品获取功法静态数据id
+        GongfaStaticData static_gongfa = GameData.instance.gongfa_static_data[gongfa_static_id];
+        return static_gongfa;
+    }
+
+    /// <summary>
+    /// 获取心法类型 返回 劲 御 录 诀 经 神功 密卷 大法
+    /// </summary>
+    /// <returns></returns>
+    public GongfaType GetHeartType(GongfaType typ) {
+        for (GongfaType subtyp = GongfaType.jin; subtyp <= GongfaType.juan; subtyp = (GongfaType)((int)subtyp << 1)) { // 劲 御 录 诀 经 神功 密卷 大法
+            if ((typ & subtyp) == subtyp) {
+                return subtyp;
+            }
+        }
+        return GongfaType.none;
+    }
+
+
+    public bool CheckDaodian(GongfaData gongfa, int daodian = 0) {
+        HeartGongfaStaticData static_gongfa = (HeartGongfaStaticData)GetGongfaStaticData(gongfa);
+        return (GetMaxAttr(RoleAttribute.daodian) - GetAttr(RoleAttribute.daodian) + daodian) >= static_gongfa.need_daodian;
+    }
+
+    /// <summary>
+    /// 装配功法
+    /// </summary>
+    public void EquipGongfa(GongfaData gongfa, int idx = -1) {
+        int item_id = gongfa.item_id;
+        ItemData item = GameData.instance.all_item[item_id];
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        switch (static_data.sub_ype) {
+            case ItemSubType.Heart:
+                GongfaStaticData static_gongfa = GetGongfaStaticData(gongfa);
+                GongfaType sub_type = GetHeartType(static_gongfa.type);
+                // 先判断是否有装备相同类型的功法
+                int same = -1;
+                for (int i = 0; i < heart_gongfa.Length; i++) {
+                    if (heart_gongfa[i] == null) {
+                        if (idx == -1) {
+                            idx = i;
+                        }
+                        continue;
+                    }
+                    GongfaStaticData equip_gongfa = GetGongfaStaticData(heart_gongfa[i]);
+                    if ((equip_gongfa.type & sub_type) == sub_type) {
+                        same = i;
+                        if (idx == -1) {
+                            idx = i;
+                        }
+                    }
+                }
+                if (CheckDaodian(gongfa, same == -1 ? 0 : ((HeartGongfaStaticData)GetGongfaStaticData(gongfa)).need_daodian)) {
+                    if (same != -1) {
+                        heart_gongfa[same] = null;
+                    }
+                    heart_gongfa[idx] = gongfa;
+                } else {
+                    MessageTips.Message(47);
+                }
+                break;
+            case ItemSubType.Body:
+                body_gongfa = gongfa;
+                break;
+            case ItemSubType.Attack:
+                attack_gongfa = gongfa;
+                break;
+            case ItemSubType.Skill:
+                skill_gongfa = gongfa;
+                break;
+            case ItemSubType.Magic:
+                magic_gongfa = gongfa;
+                break;
+        }
+        EventManager.SendEvent(EventTyp.GongfaChange, null);
+        UpdateAttr();
+    }
+
+    /// <summary>
+    /// 卸下功法
+    /// </summary>
+    public void UnfixGongfa(GongfaData gongfa) {
+        int item_id = gongfa.item_id;
+        ItemData item = GameData.instance.all_item[item_id];
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        GongfaStaticData static_gongfa = GetGongfaStaticData(gongfa);
+        UnfixGongfa(static_data.sub_ype, GetHeartType(static_gongfa.type));
+    }
+
+    /// <summary>
+    /// 卸下功法
+    /// </summary>
+    public void UnfixGongfa(ItemSubType item_sub_typ, GongfaType gongfa_typ = GongfaType.none) {
+        switch (item_sub_typ) {
+            case ItemSubType.Heart:
+                for (int i = 0; i < heart_gongfa.Length; i++) {
+                    if (heart_gongfa[i] == null) {
+                        continue;
+                    }
+                    GongfaStaticData equip_gongfa = GetGongfaStaticData(heart_gongfa[i]);
+                    if (equip_gongfa != null && ((equip_gongfa.type & gongfa_typ) == gongfa_typ)) {
+                        heart_gongfa[i] = null;
+                        break;
+                    }
+                }
+                break;
+            case ItemSubType.Body:
+                body_gongfa = null;
+                break;
+            case ItemSubType.Attack:
+                attack_gongfa = null;
+                break;
+            case ItemSubType.Skill:
+                skill_gongfa = null;
+                break;
+            case ItemSubType.Magic:
+                magic_gongfa = null;
+                break;
+        }
+        EventManager.SendEvent(EventTyp.GongfaChange, null);
+        UpdateAttr();
+    }
+
+    /// <summary>
+    /// 物品是否装备着
+    /// </summary>
+    /// <returns></returns>
+    public bool GonfaIsEquip(GongfaData gongfa) {
+        bool isWear = false; // 是否穿戴着
+
+        int item_id = gongfa.item_id;
+        ItemData item = GameData.instance.all_item[item_id];
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        switch (static_data.sub_ype) {
+            case ItemSubType.Heart:
+                for (int i = 0; i < heart_gongfa.Length; i++) {
+                    if (gongfa == heart_gongfa[i]) {
+                        isWear = true;
+                    }
+                }
+                break;
+            case ItemSubType.Body:
+                isWear = body_gongfa == gongfa;
+                break;
+            case ItemSubType.Attack:
+                isWear = attack_gongfa == gongfa;
+                break;
+            case ItemSubType.Skill:
+                isWear = skill_gongfa == gongfa;
+                break;
+            case ItemSubType.Magic:
+                isWear = magic_gongfa == gongfa;
+                break;
+        }
+
+        return isWear;
+    }
+
+    #endregion
+
+
+
+
+
+
+
+
+    #region 属性
 
     /// <summary>
     /// 更新属性 重新计算装备增加的属性
@@ -153,7 +363,7 @@ public class RoleData
             if (attribute_config[i].type == RoleAttrShowType.FixedMinMax) {
                 definitive_max_attribute[i] = max_value[i];
                 continue;
-            }else if (attribute_config[i].type != RoleAttrShowType.MinMax)
+            } else if (attribute_config[i].type != RoleAttrShowType.MinMax)
                 rate = 1;
             definitive_max_attribute[i] = max_value[i];
             definitive_attribute[i] = (int)(max_value[i] * rate);
@@ -164,7 +374,7 @@ public class RoleData
         EventManager.SendEvent(EventTyp.AttrChange, this);
 
         if (old_ride != new_ride) {
-            ChangeAttrebuteValue(RoleAttribute.ride_id, new_ride);
+            SetAttrebuteValue(RoleAttribute.ride_id, new_ride);
             EventManager.SendEvent(EventTyp.ChangeRide, this);
         }
     }
@@ -189,35 +399,61 @@ public class RoleData
         return definitive_max_attribute[(int)attr];
     }
 
-    public void ChangeAttrebuteMinValue(RoleAttribute role_attr, int add_value) {
-        // 恢复最终数值，然后按照比例恢复本身数值
+    public void ChangeAttrebuteValue(RoleAttribute role_attr, int add_value) {
+        // 恢复最终数值，然后按照比例恢复本身数值 不影响最大数值
         int attr = (int)role_attr;
         definitive_attribute[attr] = Mathf.Min(0, Mathf.Min(definitive_attribute[attr] + add_value, definitive_max_attribute[attr]));
         if (definitive_attribute[attr] == definitive_max_attribute[attr]) {
             attribute[attr] = max_attribute[attr];
         } else {
-            attribute[attr] = (int)(max_attribute[attr] * (definitive_attribute[attr] *1f / definitive_max_attribute[attr]));
+            attribute[attr] = (int)(max_attribute[attr] * (definitive_attribute[attr] * 1f / definitive_max_attribute[attr]));
         }
         EventManager.SendEvent(EventTyp.AttrChange, this);
     }
 
     public void ChangeAttrebuteMaxValue(RoleAttribute role_attr, int add_value) {
-        // 增加本身数值，然后重新计算数值
+        // 增加本身最大数值，然后重新计算数值
         int attr = (int)role_attr;
         max_attribute[attr] += add_value;
 
         UpdateAttr();
     }
 
-    public void ChangeAttrebuteValue(RoleAttribute role_attr, int set_value) {
+    /// <summary>
+    /// 修改数值
+    /// </summary>
+    public void SetAttrebuteValue(RoleAttribute role_attr, int set_value, bool need_update = true) {
         // 直接修改数值
         int attr = (int)role_attr;
-        max_attribute[attr] = set_value;
-        if (role_attr != RoleAttribute.life) {
+        if (need_update) {
+            max_attribute[attr] = set_value;
+            if (role_attr != RoleAttribute.life) {
+                attribute[attr] = set_value;
+            }
+            UpdateAttr();
+        } else {
+            max_attribute[attr] = set_value;
             attribute[attr] = set_value;
+            definitive_attribute[attr] = set_value;
+            definitive_max_attribute[attr] = set_value;
         }
-        UpdateAttr();
     }
+
+    public int GetItemAttrbuite(int item_id, RoleAttribute attribute) {
+        ItemData item = GameData.instance.all_item[item_id];
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        for (int i = 0; i < static_data.attributes.Length; i++) {
+            if (static_data.attributes[i] == RoleAttribute.max_item) {
+                return static_data.attr_values[i];
+            }
+        }
+        return 0;
+    }
+
+
+    #endregion
+
+    #region 物品
 
     /// <summary>
     /// 添加或新建道具
@@ -330,6 +566,22 @@ public class RoleData
         EventManager.SendEvent(EventTyp.ItemChange, null);
     }
 
+    public void EquipItem(int item_id, int idx) {
+        ItemData item = GameData.instance.all_item[item_id];
+        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
+        if (!LevelConfigData.CheckLevel(GetAttr(RoleAttribute.level), static_data.level)) {
+            MessageTips.Message(43, LevelConfigData.GetBigName(static_data.level));
+            return;
+        }
+
+        if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy) {
+            remedy_items[idx] = item_id;
+            EventManager.SendEvent(EventTyp.ItemChange, null);
+        } else {
+            EquipItem(item_id);
+        }
+    }
+
     public void UseItem(int item_id, int count = 1) {
         ItemData item = GameData.instance.all_item[item_id];
         ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
@@ -338,24 +590,64 @@ public class RoleData
             return;
         }
 
-        if (static_data.sub_ype == ItemSubType.recoverRemedy) { // 恢复药物
-            // 扣除道具
-            RemoveItem(item_id, count);
-            // 恢复
-            for (int i = 0; i < static_data.attributes.Length; i++) {
-                ChangeAttrebuteMinValue(static_data.attributes[i], static_data.attr_values[i] * count);
-            }
-        } else if (static_data.sub_ype == ItemSubType.aptitudesRemedy) { // 灵根药物
-            // 扣除道具
-            RemoveItem(item_id, count);
-            // 增加属性
-            for (int i = 0; i < static_data.attributes.Length; i++) {
-                int multiple = (GetAttr(static_data.attributes[i]) >= static_data.param[0]) ? 0 : 1;
-                ChangeAttrebuteMaxValue(static_data.attributes[i], static_data.attr_values[i] * count * multiple);
-            }
+
+        switch (static_data.type) {
+            case ItemType.Remedy: // 丹药类
+                switch (static_data.sub_ype) {
+                    case ItemSubType.recoverRemedy: // 恢复类丹药
+                        // 扣除道具
+                        RemoveItem(item_id, count);
+                        // 恢复
+                        for (int i = 0; i < static_data.attributes.Length; i++) {
+                            ChangeAttrebuteValue(static_data.attributes[i], static_data.attr_values[i] * count);
+                        }
+                        break;
+                    case ItemSubType.aptitudesRemedy: // 资质丹药
+                        // 扣除道具
+                        RemoveItem(item_id, count);
+                        // 增加属性
+                        for (int i = 0; i < static_data.attributes.Length; i++) {
+                            int multiple = (GetAttr(static_data.attributes[i]) >= static_data.param[0]) ? 0 : 1;
+                            ChangeAttrebuteMaxValue(static_data.attributes[i], static_data.attr_values[i] * count * multiple);
+                            if (multiple < 1) {
+                                MessageTips.Message(46);
+                            }
+                        }
+                        break;
+                    case ItemSubType.buffRemedy:
+                        break;
+                    case ItemSubType.otherRemedy:
+                        break;
+                }
+                break;
+            case ItemType.Gongfa: // 功法类
+                GongfaStaticData gongfa = GameData.GetStaticGongfaFromItem(item_id);
+                RoleAttribute[][] need_attr = gongfa.attr_condition;
+                var need_value = gongfa.value_condition;
+                int condition_count = need_value.Length;
+                for (int i = 0; i < condition_count; i++) {
+                    RoleAttribute[] need = need_attr[i];
+                    int value = need_value[i];
+                    Debug.Log("需求资质：");
+                    bool can = false;
+                    foreach (RoleAttribute attr in need) {
+                        Debug.Log("\t" + attr + " -> " + GetAttr(attr) + "/" + value);
+                        if (GetAttr(attr) >= value) {
+                            can = true;
+                            break;
+                        }
+                    }
+                    if (!can) {
+                        // 修炼资质不足
+                        MessageTips.Message(45);
+                        return;
+                    }
+                }
+                RemoveItem(item_id, count);
+                all_gongfa.Add(new GongfaData() { item_id = item.id, attr_value = gongfa.attr_value, ex_values = gongfa.ex_values, ex_color = gongfa.ex_color });
+                break;
         }
     }
-
     /// <summary>
     /// 装备物品
     /// 戒指或坐骑：如果是已穿戴就卸下，否则就穿戴
@@ -372,21 +664,15 @@ public class RoleData
         if (static_data.sub_ype == ItemSubType.Ring) {
             if (equip_items[0] != -1) {
                 int empty_count = GetAttr(RoleAttribute.max_item) - bag_items.Count;
-                Debug.Log("max_item = " + GetAttr(RoleAttribute.max_item));
-                Debug.Log("bag_items.Count = " + bag_items.Count);
-                Debug.Log("empty_count = " + empty_count);
                 if (equip_items[0] == item_id) {
                     // 脱下
                     empty_count -= GetItemAttrbuite(item_id, RoleAttribute.max_item);
-                    Debug.Log("脱下 = " + empty_count);
                 } else {
                     // 更换
                     if (equip_items[0] != -1) {
                         empty_count -= GetItemAttrbuite(equip_items[0], RoleAttribute.max_item);
-                        Debug.Log("更换 = " + empty_count);
                     }
                     empty_count += GetItemAttrbuite(item_id, RoleAttribute.max_item);
-                    Debug.Log("穿戴 = " + empty_count);
                 }
                 if (empty_count < 0) {
                     // 无法更换或脱下戒指
@@ -429,17 +715,6 @@ public class RoleData
         }
     }
 
-    public int GetItemAttrbuite(int item_id, RoleAttribute attribute) {
-        ItemData item = GameData.instance.all_item[item_id];
-        ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
-        for (int i = 0; i < static_data.attributes.Length; i++) {
-            if (static_data.attributes[i] == RoleAttribute.max_item) {
-                return static_data.attr_values[i];
-            }
-        }
-        return 0;
-    }
-
     /// <summary>
     /// 是否可以穿戴物品
     /// </summary>
@@ -455,7 +730,7 @@ public class RoleData
             if (equip_items[0] == -1) { // 戒指
                 return 0;
             }
-        }else if (static_data.sub_ype == ItemSubType.Ride) {
+        } else if (static_data.sub_ype == ItemSubType.Ride) {
             if (equip_items[1] == -1) { // 坐骑
                 return 1;
             }
@@ -491,4 +766,5 @@ public class RoleData
         }
         return isWear;
     }
+    #endregion
 }

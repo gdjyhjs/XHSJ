@@ -113,8 +113,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 600}
+  m_AnchoredPosition: {x: -223, y: 118}
+  m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2863719110587158787
 CanvasRenderer:
@@ -204,6 +204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roleCamera: {fileID: 8575060819598272334}
   rawimage: {fileID: 5776212458057957681}
+  forward: 5
+  up: 1.5
+  right: 2.5
 --- !u!114 &6784338459649641574
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@
  * 词条属性数值[][] 第一个idx是指第几条属性，第二个idx是指该属性第几个数值
  * 学习条件需求属性[][] 第一个idx=x表示第几个条件（需要同时达成） 第二个idx=y表示第x个条件达成任意一条y条件即可
  * 学习条件需求数值[]
+ * 学习难度
  */
 public class GongfaStaticData
 {
@@ -49,6 +50,9 @@ public class GongfaStaticData
             }
         }
         this.name = name + main_attr_data[0].name;
+
+        difficult = lv * lv + color;
+
         SetGongfaCondition();
     }
 
@@ -124,4 +128,9 @@ public class GongfaStaticData
     /// 功法需求数值
     /// </summary>
     public int[] value_condition;
+
+    /// <summary>
+    /// 难度
+    /// </summary>
+    public int difficult;
 }

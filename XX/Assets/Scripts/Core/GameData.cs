@@ -59,10 +59,8 @@ public class GameData {
     public int save_id;
     public long[] globalAttr;
     public int seed;
-    /// <summary>
-    /// 静态功法数据
-    /// </summary>
-    public GongfaStaticData[] gongfa_static_data = new GongfaStaticData[0];
+
+    #region 物品
     /// <summary>
     /// 静态物品数据
     /// </summary>
@@ -110,4 +108,22 @@ public class GameData {
     public void RemoveItem(int item_id) {
         remove_items.Enqueue(item_id);
     }
+    #endregion
+
+
+
+
+    #region 功法
+    /// <summary>
+    /// 静态功法数据
+    /// </summary>
+    public GongfaStaticData[] gongfa_static_data = new GongfaStaticData[0];
+
+    public static GongfaStaticData GetStaticGongfaFromItem(int item_id) {
+        ItemData item = instance.all_item[item_id];
+        ItemStaticData static_data = instance.item_static_data[item.static_id];
+        GongfaStaticData gongfa = instance.gongfa_static_data[static_data.param[0]];
+        return gongfa;
+    }
+    #endregion
 }

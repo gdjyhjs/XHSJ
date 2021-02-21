@@ -9,6 +9,7 @@ public class RoleWindow : BaseWindow {
     public GameObject attrUI;
     public GameObject rolemodelUI;
     public GameObject bagUI;
+    public GameObject GongfaUI;
     public int[] packParamID;
     public Text[] packText;
     public string packPName;
@@ -39,15 +40,31 @@ public class RoleWindow : BaseWindow {
         bool show_bag = sub_show == "bag";
         bool show_experience = sub_show == "experience";
         bool show_relation = sub_show == "relation";
-        roleSel.SetActive(show_role);
-        skillSel.SetActive(show_skill);
-        artistrySel.SetActive(show_artistry);
-        bagSel.SetActive(show_bag);
-        experienceSel.SetActive(show_experience);
-        relationSel.SetActive(show_relation);
-        attrUI.SetActive(show_role || show_skill || show_artistry || show_bag);
-        rolemodelUI.SetActive(show_role || show_skill || show_artistry);
-        bagUI.SetActive(show_bag);
+
+        Tools.SetActive(roleSel, show_role);
+        Tools.SetActive(skillSel, show_skill);
+        Tools.SetActive(artistrySel, show_artistry);
+        Tools.SetActive(bagSel, show_bag);
+        Tools.SetActive(experienceSel, show_experience);
+        Tools.SetActive(relationSel, show_relation);
+        Tools.SetActive(attrUI, show_role || show_skill || show_artistry || show_bag);
+        Tools.SetActive(rolemodelUI, show_role || show_artistry);
+        Tools.SetActive(bagUI, show_bag);
+        Tools.SetActive(GongfaUI, show_skill);
+
+        if (show_role) {
+            title_text.text = MessageData.GetMessage(packParamID[0]);
+        } else if (show_bag) {
+            title_text.text = MessageData.GetMessage(packParamID[1]);
+        } else if (show_skill) {
+            title_text.text = MessageData.GetMessage(packParamID[2]);
+        } else if (show_artistry) {
+            title_text.text = MessageData.GetMessage(packParamID[3]);
+        } else if (show_experience) {
+            title_text.text = MessageData.GetMessage(packParamID[4]);
+        } else if (show_relation) {
+            title_text.text = MessageData.GetMessage(packParamID[5]);
+        }
     }
 
 
