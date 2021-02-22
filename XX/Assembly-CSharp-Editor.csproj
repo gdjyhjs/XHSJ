@@ -54,7 +54,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\World\Editor\EditorTools.cs" />
+    <Compile Include="Assets\EmojiText\Editor\CreateSpriteAsset.cs" />
+    <Compile Include="Assets\EmojiText\Editor\SpriteAssetEditor.cs" />
+    <Compile Include="Assets\EmojiText\Editor\DrawSpriteAsset.cs" />
+    <Compile Include="Assets\EmojiText\Editor\TextMenuExtender.cs" />
     <Compile Include="Assets\World\Editor\DrawGameLevel.cs" />
+    <Compile Include="Assets\EmojiText\Editor\EmojiShaderGUI.cs" />
+    <Compile Include="Assets\EmojiText\Editor\InlineTextEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

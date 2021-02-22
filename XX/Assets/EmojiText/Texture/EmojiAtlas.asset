@@ -1,0 +1,813 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5efe682ead7eb154f97508822f9d073c, type: 3}
+  m_Name: EmojiAtlas
+  m_EditorClassIdentifier: 
+  Id: 0
+  IsStatic: 1
+  TexSource: {fileID: 2800000, guid: 954b3334e59ed2e43a62dc74ca8d0931, type: 3}
+  Row: 6
+  Column: 6
+  Speed: 10
+  ListSpriteGroup:
+  - Tag: emoji_0
+    ListSpriteInfor:
+    - Id: 0
+      Rect:
+        serializedVersion: 2
+        x: 0
+        y: 426.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0
+        y: 0.8333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0, y: 1}
+      - {x: 0.16666667, y: 1}
+      - {x: 0.16666667, y: 0.8333333}
+      - {x: 0, y: 0.8333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_1
+    ListSpriteInfor:
+    - Id: 1
+      Rect:
+        serializedVersion: 2
+        x: 85.333336
+        y: 426.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.16666667
+        y: 0.8333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.16666667, y: 1}
+      - {x: 0.33333334, y: 1}
+      - {x: 0.33333334, y: 0.8333333}
+      - {x: 0.16666667, y: 0.8333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_2
+    ListSpriteInfor:
+    - Id: 2
+      Rect:
+        serializedVersion: 2
+        x: 170.66667
+        y: 426.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.33333334
+        y: 0.8333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.33333334, y: 1}
+      - {x: 0.5, y: 1}
+      - {x: 0.5, y: 0.8333333}
+      - {x: 0.33333334, y: 0.8333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_3
+    ListSpriteInfor:
+    - Id: 3
+      Rect:
+        serializedVersion: 2
+        x: 256
+        y: 426.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.5
+        y: 0.8333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.5, y: 1}
+      - {x: 0.6666667, y: 1}
+      - {x: 0.6666667, y: 0.8333333}
+      - {x: 0.5, y: 0.8333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_4
+    ListSpriteInfor:
+    - Id: 4
+      Rect:
+        serializedVersion: 2
+        x: 341.33334
+        y: 426.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.6666667
+        y: 0.8333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.6666667, y: 1}
+      - {x: 0.8333334, y: 1}
+      - {x: 0.8333334, y: 0.8333333}
+      - {x: 0.6666667, y: 0.8333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_5
+    ListSpriteInfor:
+    - Id: 5
+      Rect:
+        serializedVersion: 2
+        x: 426.6667
+        y: 426.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.8333334
+        y: 0.8333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.8333334, y: 1}
+      - {x: 1, y: 1}
+      - {x: 1, y: 0.8333333}
+      - {x: 0.8333334, y: 0.8333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_6
+    ListSpriteInfor:
+    - Id: 6
+      Rect:
+        serializedVersion: 2
+        x: 0
+        y: 341.3333
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0
+        y: 0.6666666
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0, y: 0.8333333}
+      - {x: 0.16666667, y: 0.8333333}
+      - {x: 0.16666667, y: 0.6666666}
+      - {x: 0, y: 0.6666666}
+    Width: 1
+    Size: 24
+  - Tag: emoji_7
+    ListSpriteInfor:
+    - Id: 7
+      Rect:
+        serializedVersion: 2
+        x: 85.333336
+        y: 341.3333
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.16666667
+        y: 0.6666666
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.16666667, y: 0.8333333}
+      - {x: 0.33333334, y: 0.8333333}
+      - {x: 0.33333334, y: 0.6666666}
+      - {x: 0.16666667, y: 0.6666666}
+    Width: 1
+    Size: 24
+  - Tag: emoji_8
+    ListSpriteInfor:
+    - Id: 8
+      Rect:
+        serializedVersion: 2
+        x: 170.66667
+        y: 341.3333
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.33333334
+        y: 0.6666666
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.33333334, y: 0.8333333}
+      - {x: 0.5, y: 0.8333333}
+      - {x: 0.5, y: 0.6666666}
+      - {x: 0.33333334, y: 0.6666666}
+    Width: 1
+    Size: 24
+  - Tag: emoji_9
+    ListSpriteInfor:
+    - Id: 9
+      Rect:
+        serializedVersion: 2
+        x: 256
+        y: 341.3333
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.5
+        y: 0.6666666
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.5, y: 0.8333333}
+      - {x: 0.6666667, y: 0.8333333}
+      - {x: 0.6666667, y: 0.6666666}
+      - {x: 0.5, y: 0.6666666}
+    Width: 1
+    Size: 24
+  - Tag: emoji_10
+    ListSpriteInfor:
+    - Id: 10
+      Rect:
+        serializedVersion: 2
+        x: 341.33334
+        y: 341.3333
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.6666667
+        y: 0.6666666
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.6666667, y: 0.8333333}
+      - {x: 0.8333334, y: 0.8333333}
+      - {x: 0.8333334, y: 0.6666666}
+      - {x: 0.6666667, y: 0.6666666}
+    Width: 1
+    Size: 24
+  - Tag: emoji_11
+    ListSpriteInfor:
+    - Id: 11
+      Rect:
+        serializedVersion: 2
+        x: 426.6667
+        y: 341.3333
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.8333334
+        y: 0.6666666
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.8333334, y: 0.8333333}
+      - {x: 1, y: 0.8333333}
+      - {x: 1, y: 0.6666666}
+      - {x: 0.8333334, y: 0.6666666}
+    Width: 1
+    Size: 24
+  - Tag: emoji_12
+    ListSpriteInfor:
+    - Id: 12
+      Rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0
+        y: 0.5
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0, y: 0.6666667}
+      - {x: 0.16666667, y: 0.6666667}
+      - {x: 0.16666667, y: 0.5}
+      - {x: 0, y: 0.5}
+    Width: 1
+    Size: 24
+  - Tag: emoji_13
+    ListSpriteInfor:
+    - Id: 13
+      Rect:
+        serializedVersion: 2
+        x: 85.333336
+        y: 256
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.16666667
+        y: 0.5
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.16666667, y: 0.6666667}
+      - {x: 0.33333334, y: 0.6666667}
+      - {x: 0.33333334, y: 0.5}
+      - {x: 0.16666667, y: 0.5}
+    Width: 1
+    Size: 24
+  - Tag: emoji_14
+    ListSpriteInfor:
+    - Id: 14
+      Rect:
+        serializedVersion: 2
+        x: 170.66667
+        y: 256
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.33333334
+        y: 0.5
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.33333334, y: 0.6666667}
+      - {x: 0.5, y: 0.6666667}
+      - {x: 0.5, y: 0.5}
+      - {x: 0.33333334, y: 0.5}
+    Width: 1
+    Size: 24
+  - Tag: emoji_15
+    ListSpriteInfor:
+    - Id: 15
+      Rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.5
+        y: 0.5
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.5, y: 0.6666667}
+      - {x: 0.6666667, y: 0.6666667}
+      - {x: 0.6666667, y: 0.5}
+      - {x: 0.5, y: 0.5}
+    Width: 1
+    Size: 24
+  - Tag: emoji_16
+    ListSpriteInfor:
+    - Id: 16
+      Rect:
+        serializedVersion: 2
+        x: 341.33334
+        y: 256
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.6666667
+        y: 0.5
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.6666667, y: 0.6666667}
+      - {x: 0.8333334, y: 0.6666667}
+      - {x: 0.8333334, y: 0.5}
+      - {x: 0.6666667, y: 0.5}
+    Width: 1
+    Size: 24
+  - Tag: emoji_17
+    ListSpriteInfor:
+    - Id: 17
+      Rect:
+        serializedVersion: 2
+        x: 426.6667
+        y: 256
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.8333334
+        y: 0.5
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.8333334, y: 0.6666667}
+      - {x: 1, y: 0.6666667}
+      - {x: 1, y: 0.5}
+      - {x: 0.8333334, y: 0.5}
+    Width: 1
+    Size: 24
+  - Tag: emoji_18
+    ListSpriteInfor:
+    - Id: 18
+      Rect:
+        serializedVersion: 2
+        x: 0
+        y: 170.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0
+        y: 0.3333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0, y: 0.5}
+      - {x: 0.16666667, y: 0.5}
+      - {x: 0.16666667, y: 0.3333333}
+      - {x: 0, y: 0.3333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_19
+    ListSpriteInfor:
+    - Id: 19
+      Rect:
+        serializedVersion: 2
+        x: 85.333336
+        y: 170.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.16666667
+        y: 0.3333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.16666667, y: 0.5}
+      - {x: 0.33333334, y: 0.5}
+      - {x: 0.33333334, y: 0.3333333}
+      - {x: 0.16666667, y: 0.3333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_20
+    ListSpriteInfor:
+    - Id: 20
+      Rect:
+        serializedVersion: 2
+        x: 170.66667
+        y: 170.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.33333334
+        y: 0.3333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.33333334, y: 0.5}
+      - {x: 0.5, y: 0.5}
+      - {x: 0.5, y: 0.3333333}
+      - {x: 0.33333334, y: 0.3333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_21
+    ListSpriteInfor:
+    - Id: 21
+      Rect:
+        serializedVersion: 2
+        x: 256
+        y: 170.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.5
+        y: 0.3333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.5, y: 0.5}
+      - {x: 0.6666667, y: 0.5}
+      - {x: 0.6666667, y: 0.3333333}
+      - {x: 0.5, y: 0.3333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_22
+    ListSpriteInfor:
+    - Id: 22
+      Rect:
+        serializedVersion: 2
+        x: 341.33334
+        y: 170.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.6666667
+        y: 0.3333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.6666667, y: 0.5}
+      - {x: 0.8333334, y: 0.5}
+      - {x: 0.8333334, y: 0.3333333}
+      - {x: 0.6666667, y: 0.3333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_23
+    ListSpriteInfor:
+    - Id: 23
+      Rect:
+        serializedVersion: 2
+        x: 426.6667
+        y: 170.66666
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.8333334
+        y: 0.3333333
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.8333334, y: 0.5}
+      - {x: 1, y: 0.5}
+      - {x: 1, y: 0.3333333}
+      - {x: 0.8333334, y: 0.3333333}
+    Width: 1
+    Size: 24
+  - Tag: emoji_24
+    ListSpriteInfor:
+    - Id: 24
+      Rect:
+        serializedVersion: 2
+        x: 0
+        y: 85.33332
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0
+        y: 0.16666664
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0, y: 0.3333333}
+      - {x: 0.16666667, y: 0.3333333}
+      - {x: 0.16666667, y: 0.16666664}
+      - {x: 0, y: 0.16666664}
+    Width: 1
+    Size: 24
+  - Tag: emoji_25
+    ListSpriteInfor:
+    - Id: 25
+      Rect:
+        serializedVersion: 2
+        x: 85.333336
+        y: 85.33332
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.16666667
+        y: 0.16666664
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.16666667, y: 0.3333333}
+      - {x: 0.33333334, y: 0.3333333}
+      - {x: 0.33333334, y: 0.16666664}
+      - {x: 0.16666667, y: 0.16666664}
+    Width: 1
+    Size: 24
+  - Tag: emoji_26
+    ListSpriteInfor:
+    - Id: 26
+      Rect:
+        serializedVersion: 2
+        x: 170.66667
+        y: 85.33332
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.33333334
+        y: 0.16666664
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.33333334, y: 0.3333333}
+      - {x: 0.5, y: 0.3333333}
+      - {x: 0.5, y: 0.16666664}
+      - {x: 0.33333334, y: 0.16666664}
+    Width: 1
+    Size: 24
+  - Tag: emoji_27
+    ListSpriteInfor:
+    - Id: 27
+      Rect:
+        serializedVersion: 2
+        x: 256
+        y: 85.33332
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.5
+        y: 0.16666664
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.5, y: 0.3333333}
+      - {x: 0.6666667, y: 0.3333333}
+      - {x: 0.6666667, y: 0.16666664}
+      - {x: 0.5, y: 0.16666664}
+    Width: 1
+    Size: 24
+  - Tag: emoji_28
+    ListSpriteInfor:
+    - Id: 28
+      Rect:
+        serializedVersion: 2
+        x: 341.33334
+        y: 85.33332
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.6666667
+        y: 0.16666664
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.6666667, y: 0.3333333}
+      - {x: 0.8333334, y: 0.3333333}
+      - {x: 0.8333334, y: 0.16666664}
+      - {x: 0.6666667, y: 0.16666664}
+    Width: 1
+    Size: 24
+  - Tag: emoji_29
+    ListSpriteInfor:
+    - Id: 29
+      Rect:
+        serializedVersion: 2
+        x: 426.6667
+        y: 85.33332
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.8333334
+        y: 0.16666664
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.8333334, y: 0.3333333}
+      - {x: 1, y: 0.3333333}
+      - {x: 1, y: 0.16666664}
+      - {x: 0.8333334, y: 0.16666664}
+    Width: 1
+    Size: 24
+  - Tag: emoji_30
+    ListSpriteInfor:
+    - Id: 30
+      Rect:
+        serializedVersion: 2
+        x: 0
+        y: -0.000015258789
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0
+        y: -0.000000029802322
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0, y: 0.16666664}
+      - {x: 0.16666667, y: 0.16666664}
+      - {x: 0.16666667, y: -0.000000029802322}
+      - {x: 0, y: -0.000000029802322}
+    Width: 1
+    Size: 24
+  - Tag: emoji_31
+    ListSpriteInfor:
+    - Id: 31
+      Rect:
+        serializedVersion: 2
+        x: 85.333336
+        y: -0.000015258789
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.16666667
+        y: -0.000000029802322
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.16666667, y: 0.16666664}
+      - {x: 0.33333334, y: 0.16666664}
+      - {x: 0.33333334, y: -0.000000029802322}
+      - {x: 0.16666667, y: -0.000000029802322}
+    Width: 1
+    Size: 24
+  - Tag: emoji_32
+    ListSpriteInfor:
+    - Id: 32
+      Rect:
+        serializedVersion: 2
+        x: 170.66667
+        y: -0.000015258789
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.33333334
+        y: -0.000000029802322
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.33333334, y: 0.16666664}
+      - {x: 0.5, y: 0.16666664}
+      - {x: 0.5, y: -0.000000029802322}
+      - {x: 0.33333334, y: -0.000000029802322}
+    Width: 1
+    Size: 24
+  - Tag: emoji_33
+    ListSpriteInfor:
+    - Id: 33
+      Rect:
+        serializedVersion: 2
+        x: 256
+        y: -0.000015258789
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.5
+        y: -0.000000029802322
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.5, y: 0.16666664}
+      - {x: 0.6666667, y: 0.16666664}
+      - {x: 0.6666667, y: -0.000000029802322}
+      - {x: 0.5, y: -0.000000029802322}
+    Width: 1
+    Size: 24
+  - Tag: emoji_34
+    ListSpriteInfor:
+    - Id: 34
+      Rect:
+        serializedVersion: 2
+        x: 341.33334
+        y: -0.000015258789
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.6666667
+        y: -0.000000029802322
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.6666667, y: 0.16666664}
+      - {x: 0.8333334, y: 0.16666664}
+      - {x: 0.8333334, y: -0.000000029802322}
+      - {x: 0.6666667, y: -0.000000029802322}
+    Width: 1
+    Size: 24
+  - Tag: emoji_35
+    ListSpriteInfor:
+    - Id: 35
+      Rect:
+        serializedVersion: 2
+        x: 426.6667
+        y: -0.000015258789
+        width: 85.333336
+        height: 85.333336
+      DrawTexCoord:
+        serializedVersion: 2
+        x: 0.8333334
+        y: -0.000000029802322
+        width: 0.16666667
+        height: 0.16666667
+      Uv:
+      - {x: 0.8333334, y: 0.16666664}
+      - {x: 1, y: 0.16666664}
+      - {x: 1, y: -0.000000029802322}
+      - {x: 0.8333334, y: -0.000000029802322}
+    Width: 1
+    Size: 24

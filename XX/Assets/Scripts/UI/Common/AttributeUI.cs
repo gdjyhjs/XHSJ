@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Wanderer.EmojiText;
 
 public class AttributeUI : MonoBehaviour {
 
@@ -14,7 +15,7 @@ public class AttributeUI : MonoBehaviour {
     struct AttributeItem {
         public Image add1;
         public Image add2;
-        public Text name;
+        public InlineText name;
         public Text value;
         public Text addvalue;
         public UIProgress progress;
@@ -30,11 +31,11 @@ public class AttributeUI : MonoBehaviour {
             Transform child = tf.GetChild(i);
             int itemcount = child.childCount;
             Transform nametf = child.GetChild(0);
-            Text name = nametf.GetComponent<Text>();
+            InlineText name = nametf.GetComponent<InlineText>();
             Image add1 = nametf.GetChild(0).GetComponent<Image>();
             Image add2 = nametf.GetChild(1).GetComponent<Image>();
             add1.sprite = add2.sprite;
-            add1.transform.position = add2.transform.position;
+            add2.transform.position = add1.transform.position;
 
             Text value;
             Text addvalue;

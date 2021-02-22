@@ -11,8 +11,8 @@ public class CreateRole : BaseWindow {
 
     public GameObject boyObj;
     public GameObject grilObj;
-    public UIMove show1;
-    public UIMove show2;
+    public GameObject show1;
+    public GameObject show2;
 
     public AttributeUI attributeUI;
 
@@ -40,8 +40,12 @@ public class CreateRole : BaseWindow {
     RoleAttrConfig[] attribute_config;
 
     private void OnEnable() {
+        show1.SetActive(true);
+        show2.SetActive(true);
         RandInit();
         RandomAttr();
+        show2.SetActive(false);
+        Toggle1.isOn = true;
     }
 
     /// <summary>
@@ -140,15 +144,16 @@ public class CreateRole : BaseWindow {
 
     public void Show1(Toggle tog) {
         if (tog.isOn) {
-            show1.target = new Vector2(37, 0);
-            show2.target = new Vector2(-2000, 0);
+
+            show1.SetActive(true);
+            show2.SetActive(false);
         }
     }
 
     public void Show2(Toggle tog) {
         if (tog.isOn) {
-            show2.target = new Vector2(37, 0);
-            show1.target = new Vector2(-2000, 0);
+            show1.SetActive(false);
+            show2.SetActive(true);
         }
     }
 

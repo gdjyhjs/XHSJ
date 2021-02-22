@@ -9,8 +9,6 @@ public class ItemTip : MonoBehaviour {
     public Text item_type;
     public Text item_sub_type;
     public Text item_need_lv;
-    public Text item_describe;
-    public Text item_attr;
     public Image item_bg;
     public Image item_color;
     public Image item_icon;
@@ -28,7 +26,17 @@ public class ItemTip : MonoBehaviour {
         item_type.text = GameConst.itemTypeName[staticData.type];
         item_sub_type.text = GameConst.itemSubTypeName[staticData.sub_ype];
         item_need_lv.text = LevelConfigData.GetBigName(staticData.level);
-        item_describe.text = staticData.des;
+
+        string[] array = staticData.des.Split('\n');
+        for (int i = 1; i < transform.childCount; i++) {
+            if (i > array.Length) {
+                transform.GetChild(i).gameObject.SetActive(false);
+            } else {
+                GameObject obj = transform.GetChild(i).gameObject;
+                obj.SetActive(true);
+                obj.GetComponent<Text>().text = array[i - 1];
+            }
+        }
         //item_attr.text = GetItemAttrDes(staticData);
         item_bg.sprite = UIAssets.instance.bgColor[staticData.color];
         item_color.sprite = UIAssets.instance.itemColor[staticData.color];
