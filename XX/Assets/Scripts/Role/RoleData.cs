@@ -16,7 +16,7 @@ public class RoleData {
     public List<int> bag_items = new List<int>();
 
     /// <summary>
-    /// 角色技能
+    /// 已学习的所有功法
     /// </summary>
     [System.NonSerialized]
     public List<GongfaData> all_gongfa = new List<GongfaData>();
@@ -306,6 +306,10 @@ public class RoleData {
         return isWear;
     }
 
+    public void RemoveGongfa(GongfaData gongfa) {
+        // TODO:需要删除对应的物品和功法
+    }
+
     #endregion
 
 
@@ -356,6 +360,36 @@ public class RoleData {
                 new_ride = static_data.param[0];
             }
         }
+        // 计算功法加的属性
+        int daodian = 0; // 记录功法使用的道点
+        List<GongfaData> gongfas = new List<GongfaData>(heart_gongfa);
+        gongfas.Add(attack_gongfa);
+        gongfas.Add(skill_gongfa);
+        gongfas.Add(body_gongfa);
+        gongfas.Add(magic_gongfa);
+        for (int i = 0; i < gongfas.Count; i++) {
+            GongfaData gongfa = gongfas[i];
+            if (gongfa != null) {
+                GongfaStaticData static_gongfa = GetGongfaStaticData(gongfa);
+                for (int j = 0; j < static_gongfa.attr_id.Length; j++) {
+                    GongfaAttrData attr_data = GongfaAttrConfig.GetAttrConfig(static_gongfa.attr_id[j]);
+                    if (!attr_data.isSkill) {
+                        int value = gongfa.attr_value[j][0];
+                        max_value[(int)attr_data.attr] += value;
+                    }
+                }
+                for (int j = 0; j < static_gongfa.ex_id.Length; j++) {
+                    GongfaAttrData attr_data = GongfaAttrConfig.GetAttrConfig(static_gongfa.ex_id[j]);
+                    if (!attr_data.isSkill) {
+                        int value = gongfa.ex_values[j][0];
+                        max_value[(int)attr_data.attr] += value;
+                    }
+                }
+                if (static_gongfa is HeartGongfaStaticData) {
+                    daodian += ((HeartGongfaStaticData)static_gongfa).need_daodian;
+                }
+            }
+        }
 
         RoleAttrConfig[] attribute_config = RoleAttrConfigData.GetAttrConfig();
         for (int i = 0; i < count; i++) {
@@ -368,14 +402,13 @@ public class RoleData {
             definitive_max_attribute[i] = max_value[i];
             definitive_attribute[i] = (int)(max_value[i] * rate);
         }
-
-        for (int i = 0; i < max_attribute.Length; i++) {
-        }
-        EventManager.SendEvent(EventTyp.AttrChange, this);
+        definitive_attribute[(int)RoleAttribute.daodian] = daodian; // 修改当前使用的道点
+        
+        EventManager.SendEvent(EventTyp.AttrChange, this); // 通知属性变更
 
         if (old_ride != new_ride) {
             SetAttrebuteValue(RoleAttribute.ride_id, new_ride);
-            EventManager.SendEvent(EventTyp.ChangeRide, this);
+            EventManager.SendEvent(EventTyp.ChangeRide, this); // 通知坐骑变更
         }
     }
 
@@ -531,7 +564,7 @@ public class RoleData {
         return true;
     }
 
-    public void RemoveItem(int item_id, int count = 1) {
+    public void RemoveItem(int item_id, int count = 1, bool removeDepot = true) {
         ItemData item = GameData.instance.all_item[item_id];
         ItemStaticData static_data = GameData.instance.item_static_data[item.static_id];
         if (count == 0) {
@@ -559,9 +592,10 @@ public class RoleData {
                     }
                 }
             }
-
-            // 移除物品库
-            GameData.instance.RemoveItem(item_id);
+            if (removeDepot) {
+                // 移除物品库
+                GameData.instance.RemoveItem(item_id);
+            }
         }
         EventManager.SendEvent(EventTyp.ItemChange, null);
     }
@@ -628,10 +662,8 @@ public class RoleData {
                 for (int i = 0; i < condition_count; i++) {
                     RoleAttribute[] need = need_attr[i];
                     int value = need_value[i];
-                    Debug.Log("需求资质：");
                     bool can = false;
                     foreach (RoleAttribute attr in need) {
-                        Debug.Log("\t" + attr + " -> " + GetAttr(attr) + "/" + value);
                         if (GetAttr(attr) >= value) {
                             can = true;
                             break;
@@ -643,7 +675,7 @@ public class RoleData {
                         return;
                     }
                 }
-                RemoveItem(item_id, count);
+                RemoveItem(item_id, count, false);
                 all_gongfa.Add(new GongfaData() { item_id = item.id, attr_value = gongfa.attr_value, ex_values = gongfa.ex_values, ex_color = gongfa.ex_color });
                 break;
         }

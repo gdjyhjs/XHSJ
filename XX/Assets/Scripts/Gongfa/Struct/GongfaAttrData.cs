@@ -8,7 +8,7 @@ public struct GongfaAttrData
     public GongfaType type;
     public string name;
     public string des;
-    public bool isSkill; // 是否技能词条
+    public bool isSkill; // 是否技能词条 否则为属性词条
     public RoleAttribute attr; // 如果不是技能，增加属性的类型
     public GongfaSkill skill; // 如果是技能，对应的技能枚举
     public int[][] min_attr; // 第一个索引是保存不同境界的最小随机范围 第二个索引是有些词条会有多个属性变量
