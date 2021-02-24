@@ -39,7 +39,7 @@ public class RoleMove : MonoBehaviour
                 RoleData.mainRole.SetAttrebuteValue(RoleAttribute.longitude, p.x, false);
                 RoleData.mainRole.SetAttrebuteValue(RoleAttribute.latitude, p.y, false);
                 RoleData.mainRole.SetAttrebuteValue(RoleAttribute.orientation, (int)transform.eulerAngles.y, false);
-                EventManager.SendEvent(EventTyp.SpaceChange, null);
+                EventManager.SendEvent(EventTyp.SpaceChange, p);
             } else if (onMove && Vector3.Distance(transform.position, target) < 2) {
                 show.SetIdle();
             }

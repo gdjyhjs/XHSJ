@@ -16,6 +16,7 @@ public class HeartGongfaStaticData : GongfaStaticData {
             value_condition = new int[1] { level * level * 6 + level * color + level * 2 + color }; // 等级*等级*6+等级*品质+等级*2+品质
             attr_condition[0] = new RoleAttribute[] { RoleAttribute.gongfa_knife, RoleAttribute.gongfa_spear, RoleAttribute.gongfa_sword,
             RoleAttribute.gongfa_fist,RoleAttribute.gongfa_palm,RoleAttribute.gongfa_finger,};
+            UnityEngine.Debug.Log("功法资质  B属性条件  " + attr_condition);
         }
     }
 

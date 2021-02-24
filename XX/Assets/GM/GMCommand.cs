@@ -136,17 +136,18 @@ public class GMCommand : MonoBehaviour
                     RoleData.mainRole.AddOrCreateItem(item_id, ref count);
                 }
                 break;
-            case "clearbag":
-                List<int> rm = new List<int>(); ;
-                foreach (var item in RoleData.mainRole.bag_items) {
-                    if (!RoleData.mainRole.ItemIsEquip(item)) {
-                        rm.Add(item);
+            case "clearbag": {
+                    List<int> rm = new List<int>(); ;
+                    foreach (var item in RoleData.mainRole.bag_items) {
+                        if (!RoleData.mainRole.ItemIsEquip(item)) {
+                            rm.Add(item);
+                        }
                     }
+                    foreach (var item in rm) {
+                        RoleData.mainRole.RemoveItem(item, 0);
+                    }
+                    break;
                 }
-                foreach (var item in rm) {
-                    RoleData.mainRole.RemoveItem(item, 0);
-                }
-                break;
             case "clearlog":
                 gm_msg.Clear();
                 show.text = string.Join("\n", gm_msg.ToArray());
@@ -186,8 +187,36 @@ public class GMCommand : MonoBehaviour
                     AddMsg("can't find GameData.");
                 }
                 break;
-            case "test":
-                break;
+            case "test": {
+                    MainUI.ShowUI("RoleWindow", "bag");
+                    // 清空背包
+                    List<int> rm = new List<int>(); ;
+                    foreach (var item in RoleData.mainRole.bag_items) {
+                        if (!RoleData.mainRole.ItemIsEquip(item)) {
+                            rm.Add(item);
+                        }
+                    }
+                    foreach (var item in rm) {
+                        RoleData.mainRole.RemoveItem(item, 0);
+                    }
+                    MessageWindow.Message(51, 52, () => {
+                        //背包容量
+                        RoleData.mainRole.SetAttrebuteValue(RoleAttribute.max_item, GameData.instance.item_static_data.Length + 5);
+                        EventManager.SendEvent(EventTyp.ItemChange, RoleData.mainRole);
+                        MessageWindow.Message(51, 53, () => {
+                            //背包容量
+                            RoleData.mainRole.SetAttrebuteValue(RoleAttribute.max_item, GameData.instance.item_static_data.Length + 5);
+                            // 添加所有物品
+                            for (int i = 0; i < GameData.instance.item_static_data.Length; i++) {
+                                int c = GameData.instance.item_static_data[i].maxcount;
+                                RoleData.mainRole.AddOrCreateItem(i, ref c);
+                            }
+                            MessageWindow.Message(51, 54);
+                        });
+
+                    });
+                    break;
+                }
             default:
                 AddMsg("please input command:" + err_command);
                 break;

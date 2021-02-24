@@ -37,8 +37,6 @@ public class MainUI : MonoBehaviour
             }
         }
 
-
-
         uiList = new Dictionary<string, GameObject>();
 
         foreach (var item in all) {
@@ -112,7 +110,7 @@ public class MainUI : MonoBehaviour
     public static void HideUI(string name) {
         instance.sub_show = null;
         if (!instance.uiList.ContainsKey(name)) {
-            Debug.LogError(name+" hide UI err");
+            Debug.LogError(" hide UI err: "+ name);
             return;
         }
 
@@ -136,7 +134,7 @@ public class MainUI : MonoBehaviour
         }
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "world") {
-            foreach (UIShortcutKey item in GameConst.uIShortcutKeys) {
+            foreach (SettingStruct item in SettingData.instance.worldShortcutKeys) {
                 switch (item.type) {
                     case "uiwindow":
                         if (Input.GetKeyDown(item.keyCode)) {
@@ -156,8 +154,10 @@ public class MainUI : MonoBehaviour
             Transform child = transform.GetChild(i);
             if (child.name != "MainWindows" && child.name != "LoginMenu") {
                 if (child.gameObject.activeSelf) {
-                    HideUI(child.name);
-                    return;
+                    if (instance.uiList.ContainsKey(child.gameObject.name)) {
+                        HideUI(child.name);
+                        return;
+                    }
                 }
             }
         }
@@ -174,13 +174,4 @@ public struct UIWindow {
     public GameObject obj;
     public bool active;
     public bool show;
-}
-
-
-[System.Serializable]
-public struct UIShortcutKey {
-    public string type;
-    public string param1;
-    public string param2;
-    public KeyCode keyCode;
 }

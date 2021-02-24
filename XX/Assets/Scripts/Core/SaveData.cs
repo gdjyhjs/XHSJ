@@ -38,6 +38,23 @@ public class SaveData {
         roleData.SaveGame();
         byte[] byt = Tools.SerializeObject(roleData);
         Tools.WriteAllBytes(main_role_path, byt);
+
+
+
+
+
+        QuickSave save = new QuickSave() {
+            time = GameData.instance.GetGameData(GlobalAttribute.time),
+            name = roleData.name,
+            level = roleData.GetAttr(RoleAttribute.level),
+            sex = roleData.sex,
+        };
+        string quick_save_path = Tools.SavePath("quick_save.data");
+        byte[] byt3 = Tools.SerializeObject(save);
+        Tools.WriteAllBytes(quick_save_path, byt3);
+
+
+
         progress = 100;
 
         SaveData.ReadGame(save_id);
@@ -84,6 +101,17 @@ public class SaveData {
         RoleData.mainRole.SaveGame();
         byte[] byt = Tools.SerializeObject(RoleData.mainRole);
         Tools.WriteAllBytes(main_role_path, byt);
+
+        QuickSave save = new QuickSave() {
+            time = GameData.instance.GetGameData(GlobalAttribute.time),
+            name = RoleData.mainRole.name,
+            level = RoleData.mainRole.GetAttr(RoleAttribute.level),
+            sex = RoleData.mainRole.sex,
+        };
+        string quick_save_path = Tools.SavePath("quick_save.data");
+        byte[] byt3 = Tools.SerializeObject(save);
+        Tools.WriteAllBytes(quick_save_path, byt3);
+
 
         MessageTips.Message(17);
     }

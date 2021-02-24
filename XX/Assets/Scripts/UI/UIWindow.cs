@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BaseWindow : MonoBehaviour
 {
-    public void ClickClose() {
+    public virtual void ClickClose() {
         MainUI.instance.OnEsc();
     }
 }

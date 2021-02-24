@@ -63,13 +63,15 @@ public class GongfaStaticData
         value_condition = new int[1] { level * level * 6 + level * color + level * 2 + color }; // 等级*等级*6+等级*品质+等级*2+品质
 
         int max = RoleAttribute.linggen_wood - RoleAttribute.gongfa_knife;
-        for (int i = 0; i < max; i++) {
+        for (int i = 0; i <= max; i++) {
             GongfaType typ = (GongfaType)(1 << i);
             if ((type & typ) == typ) {
                 attr_condition[0] = new RoleAttribute[] { RoleAttribute.gongfa_knife + i };
                 break;
             }
         }
+        UnityEngine.Debug.Log("  A属性条件  " + attr_condition);
+        UnityEngine.Debug.Log("  A属性条件  " + attr_condition[0][0]);
     }
 
     /// <summary>

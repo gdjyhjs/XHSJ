@@ -79,13 +79,14 @@ public class RoleShow : MonoBehaviour {
             mainModel = rideAnim.transform;
             rideAnim.SetBool("idle", true);
             playerAnim.SetBool("ride_idle", true);
+            mainModel.transform.localScale = new Vector3(1f, 1f, 1f);
         } else {
             //没坐骑
             playerAnim.transform.SetParent(transform, false);
             mainModel = playerAnim.transform;
             playerAnim.SetBool("ride_idle", false);
+            mainModel.transform.localScale = new Vector3(2f, 2f, 2f);
         }
-        mainModel.transform.localScale = new Vector3(.5f, .5f, .5f);
         mainModel.localPosition = new Vector3(0, 0, 0);
 
         SetIdle();

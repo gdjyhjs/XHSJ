@@ -49,35 +49,4 @@ public static class GameConst {
         { ItemSubType.aptitudesRemedy, "资质丹药"},
         { ItemSubType.otherRemedy, "其他丹药"},
     };
-
-    public static UIShortcutKey[] uIShortcutKeys = new UIShortcutKey[]{
-        new UIShortcutKey(){
-            type = "uiwindow",
-            param1 = "RoleWindow",
-            param2 = "role",
-            keyCode = KeyCode.I
-        },
-        new UIShortcutKey(){
-            type = "uiwindow",
-            param1 = "RoleWindow",
-            param2 = "skill",
-            keyCode = KeyCode.X
-        },
-        new UIShortcutKey(){
-            type = "uiwindow",
-            param1 = "RoleWindow",
-            param2 = "artistry",
-            keyCode = KeyCode.O
-        },
-        new UIShortcutKey(){
-            type = "uiwindow",
-            param1 = "RoleWindow",
-            param2 = "bag",
-            keyCode = KeyCode.B
-        },
-        new UIShortcutKey(){
-            type = "occupy",
-            keyCode = KeyCode.Escape
-        },
-    };
 }

@@ -13,7 +13,7 @@ using System.Text;
 public static class CreateGongfa {
     static int gongfa_count = 12;
     // 1劲 2御 3录 4诀 5经 6神功 7密卷 8大法 9身法 10武技灵技 11绝技 12神通
-    static int create_count = 20;
+    static int create_count = 1; // 每种功法创建的数量
     static CreateGongfa() {
 
     }
@@ -28,42 +28,42 @@ public static class CreateGongfa {
         // 心法 等级数量 * 品质数量 * 功法类型数量  * 
         // 等级数量 * 品质数量 * 功法类型数量  * 
         max_id = lv_count * GameConst.max_color * gongfa_count * create_count * 12 * 12;
-        //for (int lv = 0; lv < lv_count; lv++) { // 炼气期 筑基期 结丹期 金丹期 ... 
-        //    for (int color = 1; color <= GameConst.max_color; color++) { // 绿 蓝 紫 黄 橙 ...
-        //        int role_attr_offset = 0;
-        //        for (GongfaType typ = GongfaType.knife; typ <= GongfaType.wood; typ = (GongfaType)((int)typ << 1)) { // 刀枪剑拳掌指火水雷风土木
-        //            for (GongfaType bigtype = GongfaType.heart; bigtype <= GongfaType.magic; bigtype = (GongfaType)((int)bigtype << 1)) { // 心法 武技/灵技 身法 绝技 神通
-        //                if (bigtype == GongfaType.heart) {
-        //                    for (GongfaType subtyp = GongfaType.jin; subtyp <= GongfaType.juan; subtyp = (GongfaType)((int)subtyp << 1)) { // 劲 御 录 诀 经 神功 密卷 大法
-        //                        for (int gongfa_idx = 0; gongfa_idx < create_count; gongfa_idx++) { // 每个境界每个属性该功法创建数量
-        //                            CreateRandomGongfa(lv, typ | bigtype | subtyp, color, gongfa_list, item_list);
-        //                        }
-        //                    }
-        //                } else {
-        //                    for (int gongfa_idx = 0; gongfa_idx < create_count; gongfa_idx++) { // 每个境界每个属性该功法创建数量
-        //                        CreateRandomGongfa(lv, typ | bigtype, color, gongfa_list, item_list);
-        //                    }
-        //                }
-        //            }
-        //            role_attr_offset++; // 刀枪剑拳掌指火水雷风土木
-        //        }
-        //    }
-        //}
+        for (int lv = 0; lv < lv_count; lv++) { // 炼气期 筑基期 结丹期 金丹期 ... 
+            for (int color = 1; color <= GameConst.max_color; color++) { // 绿 蓝 紫 黄 橙 ...
+                int role_attr_offset = 0;
+                for (GongfaType typ = GongfaType.knife; typ <= GongfaType.wood; typ = (GongfaType)((int)typ << 1)) { // 刀枪剑拳掌指火水雷风土木
+                    for (GongfaType bigtype = GongfaType.heart; bigtype <= GongfaType.magic; bigtype = (GongfaType)((int)bigtype << 1)) { // 心法 武技/灵技 身法 绝技 神通
+                        if (bigtype == GongfaType.heart) {
+                            for (GongfaType subtyp = GongfaType.jin; subtyp <= GongfaType.juan; subtyp = (GongfaType)((int)subtyp << 1)) { // 劲 御 录 诀 经 神功 密卷 大法
+                                for (int gongfa_idx = 0; gongfa_idx < create_count; gongfa_idx++) { // 每个境界每个属性该功法创建数量
+                                    CreateRandomGongfa(lv, typ | bigtype | subtyp, color, gongfa_list, item_list);
+                                }
+                            }
+                        } else {
+                            for (int gongfa_idx = 0; gongfa_idx < create_count; gongfa_idx++) { // 每个境界每个属性该功法创建数量
+                                CreateRandomGongfa(lv, typ | bigtype, color, gongfa_list, item_list);
+                            }
+                        }
+                    }
+                    role_attr_offset++; // 刀枪剑拳掌指火水雷风土木
+                }
+            }
+        }
 
-        // 测试 start
-        CreateRandomGongfa(0, GongfaType.attack | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.body | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.skill | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.magic | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.jin | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.shi | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.lu | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.jue | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.jing | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.fa | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.gong | GongfaType.sword, 5, gongfa_list, item_list);
-        CreateRandomGongfa(0, GongfaType.heart | GongfaType.juan | GongfaType.sword, 5, gongfa_list, item_list);
-        // 测试 end
+        //// 测试 start
+        //CreateRandomGongfa(0, GongfaType.attack | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.body | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.skill | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.magic | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.jin | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.shi | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.lu | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.jue | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.jing | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.fa | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.gong | GongfaType.sword, 5, gongfa_list, item_list);
+        //CreateRandomGongfa(0, GongfaType.heart | GongfaType.juan | GongfaType.sword, 5, gongfa_list, item_list);
+        //// 测试 end
         Debug.Log("功法总创建数量   " + create_id + "/" + max_id + "   id{" + (item_list.Count - create_id - 1) + "-" + (item_list.Count - 1) + "}");
 
 

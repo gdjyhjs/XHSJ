@@ -32,7 +32,7 @@ public class BtnScale : MonoBehaviour {
         if (show_id> 0) {
             string ex = "";
             if (!string.IsNullOrWhiteSpace(window_name)) {
-                foreach (UIShortcutKey item in GameConst.uIShortcutKeys) {
+                foreach (SettingStruct item in SettingData.instance.worldShortcutKeys) {
                     if (item.type == "uiwindow") {
                         if ((window_name == item.param1) && (string.IsNullOrWhiteSpace(sub_window_name) || sub_window_name == item.param2)) {
                             ex = string.Format("({0})", item.keyCode);

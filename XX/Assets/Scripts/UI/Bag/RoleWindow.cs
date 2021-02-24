@@ -22,7 +22,7 @@ public class RoleWindow : BaseWindow {
 
         for (int i = 0; i < packText.Length; i++) {
             string ex = "";
-            foreach (UIShortcutKey item in GameConst.uIShortcutKeys) {
+            foreach (SettingStruct item in SettingData.instance.worldShortcutKeys) {
                 if (item.type == "uiwindow") {
                     if ((packPName == item.param1) && (string.IsNullOrWhiteSpace(packParams[i]) || packParams[i] == item.param2)) {
                         ex = string.Format("({0})", item.keyCode);

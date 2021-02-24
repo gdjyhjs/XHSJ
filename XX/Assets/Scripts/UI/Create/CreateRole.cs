@@ -262,6 +262,12 @@ public class CreateRole : BaseWindow {
             Toggle2.isOn = true;
             return;
         }
+        StartCoroutine(CreateNewGame());
+    }
+
+    IEnumerator CreateNewGame() {
+        LoadingUI.instance.Show(55);
+        yield return 0;
 
         RoleData roleData = new RoleData();
         roleData.intrinsic_disposition = new int[] { intrinsic };

@@ -21,6 +21,7 @@ public class MainWindows : BaseWindow {
     }
 
     private void OnEnable() {
+        LoadingUI.instance.Hide();
         UpdateUI();
         EventManager.AddEvent(EventTyp.SpaceChange, OnSelectSpace);
         EventManager.AddEvent(EventTyp.AttrChange, OnAttrChange);

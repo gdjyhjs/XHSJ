@@ -22,8 +22,8 @@ public class RoleModelUI : MonoBehaviour {
                     roleCamera.position = target.position + target.forward * 5 + target.right * 2f;
                     roleCamera.LookAt(target.position);
                 } else {
-                    roleCamera.position = target.position + target.forward * 2.5f + target.right * 1f + new Vector3(0, 1f, 0);
-                    roleCamera.LookAt(target.position + new Vector3(0, 1f, 0));
+                    roleCamera.position = target.position + target.forward * 10f + target.right * 1f + new Vector3(0, 4f, 0);
+                    roleCamera.LookAt(target.position + new Vector3(0, 4f, 0));
                 }
             }
         }

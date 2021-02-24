@@ -26,6 +26,10 @@ public class GameData {
         globalAttr = new long[(int)GlobalAttribute.end];
     }
 
+    public long GetGameData(GlobalAttribute attr) {
+        return globalAttr[(int)attr];
+    }
+
     public void SetGameData(GlobalAttribute attr, long value) {
         globalAttr[(int)attr] = value;
         EventManager.SendEvent(EventTyp.GameDataChange, attr);

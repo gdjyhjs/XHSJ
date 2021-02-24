@@ -676,7 +676,12 @@ public class RoleData {
                     }
                 }
                 RemoveItem(item_id, count, false);
-                all_gongfa.Add(new GongfaData() { item_id = item.id, attr_value = gongfa.attr_value, ex_values = gongfa.ex_values, ex_color = gongfa.ex_color });
+                GongfaData new_gongfa = new GongfaData() { item_id = item.id, attr_value = gongfa.attr_value, ex_values = gongfa.ex_values, ex_color = gongfa.ex_color };
+                all_gongfa.Add(new_gongfa);
+                int mood = 10;
+                ChangeAttrebuteValue(RoleAttribute.mood, -mood);
+                GameData.instance.SetGameData(GlobalAttribute.time, GameData.instance.GetGameData(GlobalAttribute.time) + GameConst.oneDayTicks * 15);
+                MessageWindow.Message(49, 50, null, 0, mood.ToString(), gongfa.name);
                 break;
         }
     }

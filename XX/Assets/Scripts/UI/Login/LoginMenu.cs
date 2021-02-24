@@ -39,6 +39,17 @@ public class LoginMenu : BaseWindow {
         StartCoroutine(Show());
     }
 
+    private void OnEnable() {
+        StartCoroutine(WaitShow());
+    }
+
+    IEnumerator WaitShow() {
+        yield return new WaitForSeconds(0.2f);
+        LoadingUI.instance.Hide();
+    }
+
+
+
     private IEnumerator Show() {
         canvasGroup.alpha = 0;
         canvasGroup.gameObject.SetActive(true);
