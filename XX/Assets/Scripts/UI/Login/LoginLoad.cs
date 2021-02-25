@@ -45,7 +45,6 @@ public class LoginLoad : BaseWindow {
             create.Find("TextNew").GetComponent<Button>().onClick.AddListener(() => {
                 // 创建存档
                 GameData.instance.save_id = id;
-                ClickClose();
                 MainUI.ShowUI("CreateRole");
             });
         }

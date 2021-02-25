@@ -8,19 +8,24 @@ public class SettingWindow : BaseWindow {
     public Dropdown dropdown;
     public Toggle windowType;
     public Toggle mouseType;
+    public GameObject[] pages;
     private void Awake() {
         var v = SettingData.instance;
     }
 
     bool initok = false;
     private void Start() {
-        Debug.Log("initok");
         UpdateUI();
     }
 
     private void OnEnable() {
         if (!initok)
             return;
+
+        string sub_show = MainUI.instance.sub_show == "" ? "system" : MainUI.instance.sub_show;
+        pages[0].SetActive(sub_show == "system");
+        pages[1].SetActive(sub_show == "key");
+
         UpdateUI();
     }
 
@@ -133,27 +138,31 @@ public class SettingData {
         get
         {
             if (_instance == null) {
-                bool has_data = Tools.FileExists(data_path);
-                if (!has_data) {
-                    _instance = new SettingData();
-                } else {
-                    byte[] byt = Tools.ReadAllBytes(data_path);
-                    SettingData setting_data = Tools.DeserializeObject<SettingData>(byt);
-                    _instance = setting_data;
-                }
-                if (_instance.resolutionl_width == 0 || _instance.resolutionl_height == 0) {
-                    Resolution resolutionl = Screen.resolutions[Screen.resolutions.Length - 1];
-                    _instance.resolutionl_width = resolutionl.width;
-                    _instance.resolutionl_height = resolutionl.height;
-                    _instance.fullScreen = true;
-                    _instance.cursorLockMode = CursorLockMode.None;
-                    SaveSetting();
-                }
-                Screen.SetResolution(_instance.resolutionl_width, _instance.resolutionl_height, _instance.fullScreen);
-
+                Rest();
             }
             return _instance;
         }
+    }
+
+    public static void Rest() {
+        bool has_data = Tools.FileExists(data_path);
+        if (!has_data) {
+            _instance = new SettingData();
+        } else {
+            byte[] byt = Tools.ReadAllBytes(data_path);
+            SettingData setting_data = Tools.DeserializeObject<SettingData>(byt);
+            _instance = setting_data;
+        }
+        if (_instance.resolutionl_width == 0 || _instance.resolutionl_height == 0) {
+            Resolution resolutionl = Screen.resolutions[Screen.resolutions.Length - 1];
+            _instance.resolutionl_width = resolutionl.width;
+            _instance.resolutionl_height = resolutionl.height;
+            _instance.fullScreen = true;
+            _instance.cursorLockMode = CursorLockMode.None;
+            SaveSetting();
+        }
+        Screen.SetResolution(_instance.resolutionl_width, _instance.resolutionl_height, _instance.fullScreen);
+        Cursor.lockState = _instance.cursorLockMode;
     }
 
     public static void SaveSetting() {
@@ -387,106 +396,5 @@ public struct SettingStruct {
     public string param2;
     public KeyCode keyCode;
 
-
-
-    public static SettingStruct[] battleShortcutKeys = new SettingStruct[]{
-        // 上 W
-        new SettingStruct(){
-            type = "move",
-            param1 = "up",
-            param2 = "",
-            keyCode = KeyCode.W
-        },
-        // 下 S
-        new SettingStruct(){
-            type = "move",
-            param1 = "down",
-            param2 = "",
-            keyCode = KeyCode.S
-        },
-        // 左 A
-        new SettingStruct(){
-            type = "move",
-            param1 = "left",
-            param2 = "",
-            keyCode = KeyCode.A
-        },
-        // 右 D
-        new SettingStruct(){
-            type = "move",
-            param1 = "right",
-            param2 = "",
-            keyCode = KeyCode.D
-        },
-        // 武技/灵技 左键
-        new SettingStruct(){
-            type = "battle",
-            param1 = "attack",
-            param2 = "",
-            keyCode = KeyCode.Mouse0
-        },
-        // 绝技 右键
-        new SettingStruct(){
-            type = "battle",
-            param1 = "skill",
-            param2 = "",
-            keyCode = KeyCode.Mouse1
-        },
-        // 身法 空格
-        new SettingStruct(){
-            type = "battle",
-            param1 = "body",
-            param2 = "",
-            keyCode = KeyCode.Space
-        },
-        // 神通 R
-        new SettingStruct(){
-            type = "battle",
-            param1 = "magic",
-            param2 = "",
-            keyCode = KeyCode.R
-        },
-        // 道具1 1
-        new SettingStruct(){
-            type = "item",
-            param1 = "1",
-            param2 = "",
-            keyCode = KeyCode.Alpha1
-        },
-        // 道具2 2
-        new SettingStruct(){
-            type = "item",
-            param1 = "2",
-            param2 = "",
-            keyCode = KeyCode.Alpha2
-        },
-        // 道具3 3
-        new SettingStruct(){
-            type = "item",
-            param1 = "3",
-            param2 = "",
-            keyCode = KeyCode.Alpha3
-        },
-        // 道具4 4
-        new SettingStruct(){
-            type = "item",
-            param1 = "4",
-            param2 = "",
-            keyCode = KeyCode.Alpha4
-        },
-        // 道具5 5
-        new SettingStruct(){
-            type = "item",
-            param1 = "5",
-            param2 = "",
-            keyCode = KeyCode.Alpha5
-        },
-        // 互动 E
-        new SettingStruct(){
-            type = "action",
-            param1 = "talk",
-            param2 = "",
-            keyCode = KeyCode.Alpha6
-        },
-    };
+    
 }

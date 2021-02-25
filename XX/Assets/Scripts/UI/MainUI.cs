@@ -56,6 +56,8 @@ public class MainUI : MonoBehaviour
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("login");
         ShowUI("LoginMenu");
+
+        SoundManager.SetUIMute(false);
     }
 
     private IEnumerator MoveConfig(string file_path) {
@@ -105,6 +107,8 @@ public class MainUI : MonoBehaviour
         }
         obj.SetActive(true);
         obj.transform.SetAsLastSibling();
+
+        SoundManager.PlayUIClip(SoundManager.UIClipType.bag_open);
     }
 
     public static void HideUI(string name) {
@@ -116,13 +120,16 @@ public class MainUI : MonoBehaviour
 
         var obj = instance.uiList[name];
         obj.SetActive(false);
+        SoundManager.PlayUIClip(SoundManager.UIClipType.button_close);
     }
 
     public static void HideAll() {
+        SoundManager.SetUIMute(true);
         foreach (KeyValuePair<string, GameObject> obj in instance.uiList) {
             if (obj.Value.activeSelf)
                 obj.Value.SetActive(false);
         }
+        SoundManager.SetUIMute(false);
     }
 
     private void Update() {

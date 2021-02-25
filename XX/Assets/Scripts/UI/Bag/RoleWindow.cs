@@ -33,7 +33,7 @@ public class RoleWindow : BaseWindow {
         }
 
 
-        string sub_show = MainUI.instance.sub_show;
+        string sub_show = MainUI.instance.sub_show == "" ? "role" : MainUI.instance.sub_show;
         bool show_role = sub_show == "role";
         bool show_skill = sub_show == "skill";
         bool show_artistry = sub_show == "artistry";
