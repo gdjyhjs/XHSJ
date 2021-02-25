@@ -5,6 +5,6 @@ using UnityEngine;
 public class BaseWindow : MonoBehaviour
 {
     public virtual void ClickClose() {
-        MainUI.instance.OnEsc();
+        MainUI.HideUI(name);
     }
 }

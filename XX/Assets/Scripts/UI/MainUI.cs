@@ -60,6 +60,15 @@ public class MainUI : MonoBehaviour
         SoundManager.SetUIMute(false);
     }
 
+    public static bool IsOpen(string uiname, string sub_name = null) {
+        if (instance.uiList == null) {
+            return false;
+        }
+        var obj = instance.uiList[uiname];
+        return ((instance.sub_show == sub_name)||(string.IsNullOrWhiteSpace(sub_name)))
+            && obj.activeSelf && (obj.transform.GetSiblingIndex() == (instance.transform.childCount - 1));
+    }
+
     private IEnumerator MoveConfig(string file_path) {
         string path = Application.dataPath + "/StreamingAssets/" + file_path;
         var url = new System.Uri(path);
@@ -81,14 +90,19 @@ public class MainUI : MonoBehaviour
     private void Start() {
         StartCoroutine(Init());
     }
-
+    
+    /// <summary>
+    /// UI是显示的（并且是最前的）就隐藏，否则就显示（到最前）
+    /// </summary>
     public static void ChangeUI(string name, string sub_show = null) {
+        if (instance.uiList == null) {
+            return;
+        }
         if (!instance.uiList.ContainsKey(name)) {
             MessageTips.Message(1);
             return;
         }
-        var obj = instance.uiList[name];
-        if ((instance.sub_show == sub_show) && obj.activeSelf && (obj.transform.GetSiblingIndex() == (instance.transform.childCount - 1))) {
+        if (IsOpen(name, sub_show)) {
             HideUI(name);
         } else {
             ShowUI(name, sub_show);
@@ -96,6 +110,9 @@ public class MainUI : MonoBehaviour
     }
 
     public static void ShowUI(string name, string sub_show = null) {
+        if (instance.uiList == null) {
+            return;
+        }
         if (!instance.uiList.ContainsKey(name)) {
             MessageTips.Message(1);
             return;
@@ -112,6 +129,9 @@ public class MainUI : MonoBehaviour
     }
 
     public static void HideUI(string name) {
+        if (instance.uiList == null) {
+            return;
+        }
         instance.sub_show = null;
         if (!instance.uiList.ContainsKey(name)) {
             Debug.LogError(" hide UI err: "+ name);
@@ -124,6 +144,9 @@ public class MainUI : MonoBehaviour
     }
 
     public static void HideAll() {
+        if (instance.uiList == null) {
+            return;
+        }
         SoundManager.SetUIMute(true);
         foreach (KeyValuePair<string, GameObject> obj in instance.uiList) {
             if (obj.Value.activeSelf)
@@ -133,11 +156,16 @@ public class MainUI : MonoBehaviour
     }
 
     private void Update() {
+
         if (Input.GetKeyDown(KeyCode.Escape)) {
             OnEsc();
         }
         if (Input.GetMouseButtonDown(1)) {
             OnEsc(true);
+        }
+
+        if (IsOpen("SettingWindow") || IsOpen("MenuWindow")) {
+            return;
         }
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "world") {
@@ -156,23 +184,29 @@ public class MainUI : MonoBehaviour
     }
 
     public void OnEsc(bool onlyHide = false) {
+        if (instance.uiList == null) {
+            return;
+        }
         int child_count = transform.childCount;
         for (int i = child_count - 1; i >= 0; i--) {
             Transform child = transform.GetChild(i);
-            if (child.name != "MainWindows" && child.name != "LoginMenu") {
+            if (child.name != "MainWindows" && child.name != "LoginMenu" && child.name != "BattleMainWindow") {
                 if (child.gameObject.activeSelf) {
                     if (instance.uiList.ContainsKey(child.gameObject.name)) {
-                        HideUI(child.name);
-                        return;
+                        //HideUI(child.name);
+                        var win = child.GetComponent<BaseWindow>();
+                        if (win) {
+                            win.ClickClose();
+                            return;
+                        }
                     }
                 }
             }
         }
         if (onlyHide)
             return;
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "world") {
-            ShowUI("MenuWindow");
-        }
+
+        ShowUI("MenuWindow");
     }
 }
 

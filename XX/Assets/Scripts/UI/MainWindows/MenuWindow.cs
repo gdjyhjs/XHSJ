@@ -4,10 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuWindow : BaseWindow {
-
+    public GameObject[] worldBtn;
     public void ClickSave() {
         ClickClose();
         SaveData.SaveGame();
+    }
+
+    private void OnEnable() {
+        bool on_world = (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "world");
+        foreach (var item in worldBtn) {
+            Tools.SetActive(item, on_world);
+        }
     }
 
     public void ClickSetting() {

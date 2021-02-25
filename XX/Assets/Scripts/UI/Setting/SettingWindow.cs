@@ -9,38 +9,269 @@ public class SettingWindow : BaseWindow {
     public Toggle windowType;
     public Toggle mouseType;
     public GameObject[] pages;
+
+    public Slider s_volume;
+    public Slider s_music;
+    public Slider s_sound_effect;
+
+    public Text t_volume;
+    public Text t_music;
+    public Text t_sound_effect;
+
+    public Transform battleRoot;
+    public Transform worldRoot;
+
+    public PageUI page;
+
     private void Awake() {
         var v = SettingData.instance;
+        for (int i = 0; i < battleRoot.childCount; i++) {
+            var child = battleRoot.GetChild(i);
+            int idx = i;
+            child.Find("tKeyCode").GetComponent<Button>().onClick.AddListener(() => {
+                ClickKeyChange(idx);
+            });
+        }
+        for (int i = 0; i < worldRoot.childCount; i++) {
+            var child = worldRoot.GetChild(i);
+            int idx = i + 10000;
+            child.Find("tKeyCode").GetComponent<Button>().onClick.AddListener(() => {
+                ClickKeyChange(idx);
+            });
+        }
     }
 
+    bool ischange = false;
     bool initok = false;
     private void Start() {
-        UpdateUI();
+        OnOpen();
     }
 
     private void OnEnable() {
         if (!initok)
             return;
-
-        string sub_show = MainUI.instance.sub_show == "" ? "system" : MainUI.instance.sub_show;
-        pages[0].SetActive(sub_show == "system");
-        pages[1].SetActive(sub_show == "key");
-
-        UpdateUI();
+        OnOpen();
     }
 
-    private void UpdateUI() {
-        initok = false;
+    private void OnDisable() {
+        wait_key = -1;
+    }
+
+    private void OnOpen() {
         int idx = GetResolutionOptions();
+        string sub_show = string.IsNullOrWhiteSpace(MainUI.instance.sub_show) ? "system" : MainUI.instance.sub_show;
+        pages[0].SetActive(sub_show == "system");
+        pages[1].SetActive(sub_show == "key");
+        page.SetPack(sub_show == "system" ? 0 : 1);
+
+        initok = false;
         dropdown.value = idx;
         windowType.isOn = !SettingData.instance.fullScreen;
         mouseType.isOn = Cursor.lockState == CursorLockMode.Confined;
+        s_volume.value = SettingData.instance.volume;
+        s_music.value = SettingData.instance.music;
+        s_sound_effect.value = SettingData.instance.sound_effect;
+        t_volume.text = SettingData.instance.volume.ToString();
+        t_music.text = SettingData.instance.music.ToString();
+        t_sound_effect.text = SettingData.instance.sound_effect.ToString();
+        SetKeyShow();
+
+
+
         initok = true;
+
+        ischange = false;
+    }
+    
+    readonly Color waitColor = new Color(0xA6 / 255f, 0x93 / 255f, 0x85 / 255f);
+    readonly Color codeColor = new Color(0x60 / 255f, 0x49 / 255f, 0x42 / 255f);
+
+    void SetKeyShow() {
+        for (int i = 0; i < battleRoot.childCount; i++) {
+            var child = battleRoot.GetChild(i);
+            int idx = i;
+
+            if (i >= SettingData.instance.battleShortcutKeys.Length) {
+                Debug.LogError("i = " + i + " but battleShortcutKeys len = " + SettingData.instance.battleShortcutKeys.Length);
+            }
+
+            child.Find("tKeyName").GetComponent<Text>().text = MessageData.GetMessage(SettingData.instance.battleShortcutKeys[i].name_id);
+            Text tKeyCode = child.Find("tKeyCode").GetComponent<Text>();
+            tKeyCode.text = SettingData.instance.battleShortcutKeys[i].keyCode.ToString();
+            tKeyCode.color = codeColor;
+        }
+        for (int i = 0; i < worldRoot.childCount; i++) {
+            var child = worldRoot.GetChild(i);
+            int idx = i + 10000;
+
+            if (i >= SettingData.instance.worldShortcutKeys.Length) {
+                Debug.LogError("i = " + i + " but worldShortcutKeys len = " + SettingData.instance.worldShortcutKeys.Length);
+            }
+
+            child.Find("tKeyName").GetComponent<Text>().text = MessageData.GetMessage(SettingData.instance.worldShortcutKeys[i].name_id);
+            Text tKeyCode = child.Find("tKeyCode").GetComponent<Text>();
+            tKeyCode.text = SettingData.instance.worldShortcutKeys[i].keyCode.ToString();
+            tKeyCode.color = codeColor;
+        }
+        wait_key = -1;
+    }
+
+    public static int wait_key = -1;
+    // ÁÇπÂáª‰∫ÜË¶Å‰øÆÊîπÂø´Êç∑ÈîÆ idx0ÂºÄÂßãÊòØÊàòÊñó 10000ÂºÄÂßãÁöÑÊòØÂ§ß‰∏ñÁïå
+    void ClickKeyChange(int idx) {
+        if (wait_key > -1) {
+            if (wait_key < 10000) {
+                if(IsCanChangeKey(SettingData.instance.battleShortcutKeys[wait_key])){
+                    Text tKeyCode = battleRoot.GetChild(wait_key).Find("tKeyCode").GetComponent<Text>();
+                    tKeyCode.text = SettingData.instance.battleShortcutKeys[wait_key].keyCode.ToString();
+                    tKeyCode.color = codeColor;
+                }
+            } else {
+                if (IsCanChangeKey(SettingData.instance.worldShortcutKeys[wait_key])) {
+                    Text tKeyCode = worldRoot.GetChild(wait_key - 10000).Find("tKeyCode").GetComponent<Text>();
+                    tKeyCode.text = SettingData.instance.worldShortcutKeys[wait_key - 10000].keyCode.ToString();
+                    tKeyCode.color = codeColor;
+                }
+            }
+        }
+        StartCoroutine(SetWaitClick(idx));
+        if (idx < 10000) {
+            Text tKeyCode = battleRoot.GetChild(idx).Find("tKeyCode").GetComponent<Text>();
+            tKeyCode.text = MessageData.GetMessage(103);
+            tKeyCode.color = waitColor;
+        } else {
+            Text tKeyCode = worldRoot.GetChild(idx - 10000).Find("tKeyCode").GetComponent<Text>();
+            tKeyCode.text = MessageData.GetMessage(103);
+            tKeyCode.color = waitColor;
+        }
+    }
+
+    bool IsCanChangeKey(SettingStruct data) {
+        if (!data.canChange) {
+            MessageWindow.Message(51, 107);
+        }
+        return data.canChange;
+    }
+
+    bool onMsg = false;
+    void OnKeyChange(KeyCode key) {
+        if (onMsg)
+            return;
+        if (wait_key > -1) {
+            if (wait_key < 10000) {
+                for (int i = 0; i < SettingData.instance.battleShortcutKeys.Length; i++) {
+                    if (i != wait_key && SettingData.instance.battleShortcutKeys[i].keyCode == key) {
+                        onMsg = true;
+                        MessageWindow.Message(51, 104, values: MessageData.GetMessage(SettingData.instance.battleShortcutKeys[i].name_id), ok_func:()=> {
+                            onMsg = false;
+                        });
+                        return;
+                    }
+                }
+
+                SettingData.instance.battleShortcutKeys[wait_key].keyCode = key;
+                Text tKeyCode = battleRoot.GetChild(wait_key).Find("tKeyCode").GetComponent<Text>();
+                tKeyCode.text = SettingData.instance.battleShortcutKeys[wait_key].keyCode.ToString();
+                tKeyCode.color = codeColor;
+            } else {
+                for (int i = 0; i < SettingData.instance.worldShortcutKeys.Length; i++) {
+                    if (i != (wait_key-10000) && SettingData.instance.worldShortcutKeys[i].keyCode == key) {
+                        onMsg = true;
+                        MessageWindow.Message(51, 104, values: MessageData.GetMessage(SettingData.instance.worldShortcutKeys[i].name_id), ok_func: () => {
+                            onMsg = false;
+                        });
+                        return;
+                    }
+                }
+
+                SettingData.instance.worldShortcutKeys[wait_key - 10000].keyCode = key;
+                Text tKeyCode = worldRoot.GetChild(wait_key - 10000).Find("tKeyCode").GetComponent<Text>();
+                tKeyCode.text = SettingData.instance.worldShortcutKeys[wait_key - 10000].keyCode.ToString();
+                tKeyCode.color = codeColor;
+            }
+        }
+        wait_key = -1;
+    }
+
+    // Âª∂Ëøü‰∏ÄÂ∏ßËÆæÁΩÆÔºåÁÇπÂáªË¶ÅËÆæÁΩÆÂø´Êç∑ÈîÆÈ©¨‰∏äÊ£ÄÊµãÂà∞ÁÇπÂáª‰∫ÜÂ∑¶ÈîÆ
+    private IEnumerator SetWaitClick(int wait) {
+        yield return 0;
+        wait_key = wait;
+    }
+
+    private void OnGUI() {
+        if (wait_key > -1) {
+            Event fee = Event.current; //Ëé∑ÂèñGUIÊ≠£Âú®Â§ÑÁêÜÁöÑ‰∫ã‰ª∂„ÄÇ
+            if (fee != null && fee.isKey) //ÂΩì‰∏∫ÊåâÈîÆ‰∫ã‰ª∂
+            {
+                KeyCode currentkey = fee.keyCode;//Ëé∑ÂèñÊåâÈîÆ
+                if (currentkey != KeyCode.None) //ÂΩìÊåâÈîÆ‰∏ç‰∏∫Á©∫Êó∂ ËÆæÁΩÆ
+                {
+                    OnKeyChange(currentkey);
+                }
+            }
+        }
+    }
+
+    //private void Update() {
+    //    if (wait_key > -1) {
+    //        if (Input.GetMouseButtonUp(0)) {
+    //            OnKeyChange(KeyCode.Mouse0);
+    //        } else if (Input.GetMouseButtonUp(1)) {
+    //            OnKeyChange(KeyCode.Mouse1);
+    //        } else if (Input.GetMouseButtonUp(2)) {
+    //            OnKeyChange(KeyCode.Mouse2);
+    //        }
+    //    }
+    //}
+
+    public void OnRecoverBattleKey() {
+        ischange = true;
+        SettingData.instance.battleShortcutKeys = new SettingData().battleShortcutKeys;
+        SetKeyShow();
+    }
+    public void OnRecoverWorldKey() {
+        ischange = true;
+        SettingData.instance.worldShortcutKeys = new SettingData().worldShortcutKeys;
+        SetKeyShow();
+    }
+
+    public void OnVolumeChange() {
+        if (!initok)
+            return;
+
+        ischange = true;
+        SettingData.instance.volume = s_volume.value;
+        t_volume.text = s_volume.value.ToString();
+        SoundManager.SetVolume();
+    }
+
+    public void OnMusicChange() {
+        if (!initok)
+            return;
+
+        ischange = true;
+        SettingData.instance.music = s_music.value;
+        t_music.text = s_music.value.ToString();
+        SoundManager.SetVolume();
+    }
+
+    public void OnSoundEffectChange() {
+        if (!initok)
+            return;
+
+        ischange = true;
+        SettingData.instance.sound_effect = s_sound_effect.value;
+        t_sound_effect.text = s_sound_effect.value.ToString();
+        SoundManager.SetVolume();
     }
 
     public void SetResolution() {
         if (!initok)
             return;
+
+        ischange = true;
+
 
         int width = ResolutionList[dropdown.value].x;
         int height = ResolutionList[dropdown.value].y;
@@ -68,7 +299,7 @@ public class SettingWindow : BaseWindow {
         GetResolutionOptions();
     }
     /// <summary>
-    /// …Ë÷√∑÷±Ê¬ —°œÓ
+    /// ËÆæÁΩÆÂàÜËæ®ÁéáÈÄâÈ°π
     /// </summary>
     public int GetResolutionOptions() {
         initok = false;
@@ -85,7 +316,7 @@ public class SettingWindow : BaseWindow {
                     if (item.width == cur_resolution.x && item.height == cur_resolution.y) {
                         idx = list.Count;
                     }
-                    options.Add(new OptionData(item.width + "°¡" + item.height));
+                    options.Add(new OptionData(item.width + "√ó" + item.height));
                     list.Add(resolution);
                 }
             }
@@ -93,7 +324,7 @@ public class SettingWindow : BaseWindow {
 
         if (!list.Contains(cur_resolution)) {
             idx = list.Count;
-            options.Add(new OptionData(cur_resolution.x + "°¡" + cur_resolution.y));
+            options.Add(new OptionData(cur_resolution.x + "√ó" + cur_resolution.y));
             list.Add(cur_resolution);
         }
 
@@ -108,6 +339,9 @@ public class SettingWindow : BaseWindow {
     public void SetWindowType() {
         if (!initok)
             return;
+
+        ischange = true;
+
         SettingData.instance.fullScreen = !windowType.isOn;
         Screen.SetResolution(SettingData.instance.resolutionl_width, SettingData.instance.resolutionl_height, SettingData.instance.fullScreen);
     }
@@ -115,6 +349,9 @@ public class SettingWindow : BaseWindow {
     public void SetMouseType() {
         if (!initok)
             return;
+
+        ischange = true;
+
         if (mouseType.isOn) {
             SettingData.instance.cursorLockMode = CursorLockMode.Confined;
         } else {
@@ -124,9 +361,23 @@ public class SettingWindow : BaseWindow {
     }
 
     public override void ClickClose() {
-        SettingData.SaveSetting();
-        base.ClickClose();
+        if (wait_key >= 0) {
+            return;
+        }
+
+        if (ischange) {
+            MessageWindow.CheckMessage(51, 81, () => {
+                SettingData.SaveSetting();
+                base.ClickClose();
+            }, () => {
+                SettingData.Rest();
+                base.ClickClose();
+            });
+        } else {
+            base.ClickClose();
+        }
     }
+
 }
 
 [System.Serializable]
@@ -161,8 +412,11 @@ public class SettingData {
             _instance.cursorLockMode = CursorLockMode.None;
             SaveSetting();
         }
+
         Screen.SetResolution(_instance.resolutionl_width, _instance.resolutionl_height, _instance.fullScreen);
         Cursor.lockState = _instance.cursorLockMode;
+
+        SoundManager.SetVolume();
     }
 
     public static void SaveSetting() {
@@ -175,215 +429,307 @@ public class SettingData {
     public int resolutionl_height;
     public bool fullScreen;
     public CursorLockMode cursorLockMode;
-    public float volume = 50;
+    public float volume = 100;
     public float sound_effect = 50;
     public float music = 50;
 
 
-    // ¥Û ¿ΩÁøÏΩ›º¸
+    // Â§ß‰∏ñÁïåÂø´Êç∑ÈîÆ
     public SettingStruct[] worldShortcutKeys = new SettingStruct[]{
-        // …œ W
+        // ‰∏ä W
         new SettingStruct(){
             type = "move",
             param1 = "up",
             param2 = "",
-            keyCode = KeyCode.W
+            keyCode = KeyCode.W,
+            name_id = 82,
+            canChange = true,
         },
-        // œ¬ S
+        // ‰∏ã S
         new SettingStruct(){
             type = "move",
             param1 = "down",
             param2 = "",
-            keyCode = KeyCode.S
+            keyCode = KeyCode.S,
+            name_id = 83,
+            canChange = true,
         },
-        // ◊Û A
+        // Â∑¶ A
         new SettingStruct(){
             type = "move",
             param1 = "left",
             param2 = "",
-            keyCode = KeyCode.A
+            keyCode = KeyCode.A,
+            name_id = 84,
+            canChange = true,
         },
-        // ”“ D
+        // Âè≥ D
         new SettingStruct(){
             type = "move",
             param1 = "right",
             param2 = "",
-            keyCode = KeyCode.D
+            keyCode = KeyCode.D,
+            name_id = 85,
+            canChange = true,
         },
 
-        // »ÀŒÔ Ù–‘ I
+        // ‰∫∫Áâ©Â±ûÊÄß I
         new SettingStruct(){
             type = "uiwindow",
             param1 = "RoleWindow",
             param2 = "role",
-            keyCode = KeyCode.I
+            keyCode = KeyCode.I,
+            name_id = 18,
+            canChange = true,
         },
 
-        // ººƒ‹ X
+        // ÊäÄËÉΩ X
         new SettingStruct(){
             type = "uiwindow",
             param1 = "RoleWindow",
             param2 = "skill",
-            keyCode = KeyCode.X
+            keyCode = KeyCode.X,
+            name_id = 7,
+            canChange = true,
         },
 
-        // ±≥∞¸ B
+        // ËÉåÂåÖ B
         new SettingStruct(){
             type = "uiwindow",
             param1 = "RoleWindow",
             param2 = "bag",
-            keyCode = KeyCode.B
+            keyCode = KeyCode.B,
+            name_id = 8,
+            canChange = true,
         },
-        // »ŒŒÒ L
+        // ‰ªªÂä° L
         new SettingStruct(){
             type = "uiwindow",
             param1 = "XXXXX",
             param2 = "",
-            keyCode = KeyCode.L
+            keyCode = KeyCode.L,
+            name_id = 6,
+            canChange = true,
         },
-        // –≈º˛ H
+        // ‰ø°‰ª∂ H
         new SettingStruct(){
             type = "uiwindow",
             param1 = "XXXXX",
             param2 = "",
-            keyCode = KeyCode.H
+            keyCode = KeyCode.H,
+            name_id = 96,
+            canChange = true,
         },
-        // ¥Û ¬º˛ N
+        // Â§ß‰∫ã‰ª∂ N
         new SettingStruct(){
             type = "uiwindow",
             param1 = "XXXXX",
             param2 = "",
-            keyCode = KeyCode.N
+            keyCode = KeyCode.N,
+            name_id = 97,
+            canChange = true,
         },
-        // –°µÿÕº M
+        // Â∞èÂú∞Âõæ M
         new SettingStruct(){
             type = "uiwindow",
             param1 = "XXXXX",
             param2 = "",
-            keyCode = KeyCode.M
+            keyCode = KeyCode.M,
+            name_id = 98,
+            canChange = true,
         },
-        // ºº“’ O
+        // ÊäÄËâ∫ O
         new SettingStruct(){
             type = "uiwindow",
             param1 = "RoleWindow",
             param2 = "artistry",
-            keyCode = KeyCode.O
+            keyCode = KeyCode.O,
+            name_id = 9,
+            canChange = true,
         },
-        // Ã¯π˝±æ‘¬ Z
+        // Ë∑≥ËøáÊú¨Êúà Z
         new SettingStruct(){
             type = "uiwindow",
             param1 = "XXXXX",
             param2 = "",
-            keyCode = KeyCode.Z
+            keyCode = KeyCode.Z,
+            name_id = 99,
+            canChange = true,
         },
-        // ƒÊÃÏ∏ƒ√¸ J
+        // ÈÄÜÂ§©ÊîπÂëΩ J
         new SettingStruct(){
             type = "uiwindow",
             param1 = "XXXXX",
             param2 = "",
-            keyCode = KeyCode.J
+            keyCode = KeyCode.J,
+            name_id = 100,
+            canChange = true,
+        },
+        // ÂÖ≥Èó≠/ËèúÂçï
+        new SettingStruct(){
+            type = "exitui",
+            param1 = "",
+            param2 = "",
+            keyCode = KeyCode.Escape,
+            name_id = 106,
+            canChange = false,
+        },
+        // ÂÖ≥Èó≠
+        new SettingStruct(){
+            type = "exitui",
+            param1 = "",
+            param2 = "",
+            keyCode = KeyCode.J,
+            name_id = 105,
+            canChange = false,
         },
     };
 
-    // ’Ω∂∑øÏΩ›º¸
+    // ÊàòÊñóÂø´Êç∑ÈîÆ
     public SettingStruct[] battleShortcutKeys = new SettingStruct[]{
-        // …œ W
+        // ‰∏ä W
         new SettingStruct(){
             type = "move",
             param1 = "up",
             param2 = "",
-            keyCode = KeyCode.W
+            keyCode = KeyCode.W,
+            name_id = 82,
+            canChange = true,
         },
-        // œ¬ S
+        // ‰∏ã S
         new SettingStruct(){
             type = "move",
             param1 = "down",
             param2 = "",
-            keyCode = KeyCode.S
+            keyCode = KeyCode.S,
+            name_id = 83,
+            canChange = true,
         },
-        // ◊Û A
+        // Â∑¶ A
         new SettingStruct(){
             type = "move",
             param1 = "left",
             param2 = "",
-            keyCode = KeyCode.A
+            keyCode = KeyCode.A,
+            name_id = 84,
+            canChange = true,
         },
-        // ”“ D
+        // Âè≥ D
         new SettingStruct(){
             type = "move",
             param1 = "right",
             param2 = "",
-            keyCode = KeyCode.D
+            keyCode = KeyCode.D,
+            name_id = 85,
+            canChange = true,
         },
-        // Œ‰ºº/¡Èºº ◊Ûº¸
+        // Ê≠¶ÊäÄ/ÁÅµÊäÄ Â∑¶ÈîÆ
         new SettingStruct(){
             type = "battle",
             param1 = "attack",
             param2 = "",
-            keyCode = KeyCode.Mouse0
+            keyCode = KeyCode.Mouse0,
+            name_id = 101,
+            canChange = false,
         },
-        // æ¯ºº ”“º¸
+        // ÁªùÊäÄ Âè≥ÈîÆ
         new SettingStruct(){
             type = "battle",
             param1 = "skill",
             param2 = "",
-            keyCode = KeyCode.Mouse1
+            keyCode = KeyCode.Mouse1,
+            name_id = 102,
+            canChange = false,
         },
-        // …Ì∑® ø’∏Ò
+        // Ë∫´Ê≥ï Á©∫Ê†º
         new SettingStruct(){
             type = "battle",
             param1 = "body",
             param2 = "",
-            keyCode = KeyCode.Space
+            keyCode = KeyCode.Space,
+            name_id = 88,
+            canChange = true,
         },
-        // …ÒÕ® R
+        // Á•ûÈÄö R
         new SettingStruct(){
             type = "battle",
             param1 = "magic",
             param2 = "",
-            keyCode = KeyCode.R
+            keyCode = KeyCode.R,
+            name_id = 89,
+            canChange = true,
         },
-        // µ¿æﬂ1 1
+        // ÈÅìÂÖ∑1 1
         new SettingStruct(){
             type = "item",
             param1 = "1",
             param2 = "",
-            keyCode = KeyCode.Alpha1
+            keyCode = KeyCode.Alpha1,
+            name_id = 90,
+            canChange = true,
         },
-        // µ¿æﬂ2 2
+        // ÈÅìÂÖ∑2 2
         new SettingStruct(){
             type = "item",
             param1 = "2",
             param2 = "",
-            keyCode = KeyCode.Alpha2
+            keyCode = KeyCode.Alpha2,
+            name_id = 91,
+            canChange = true,
         },
-        // µ¿æﬂ3 3
+        // ÈÅìÂÖ∑3 3
         new SettingStruct(){
             type = "item",
             param1 = "3",
             param2 = "",
-            keyCode = KeyCode.Alpha3
+            keyCode = KeyCode.Alpha3,
+            name_id = 92,
+            canChange = true,
         },
-        // µ¿æﬂ4 4
+        // ÈÅìÂÖ∑4 4
         new SettingStruct(){
             type = "item",
             param1 = "4",
             param2 = "",
-            keyCode = KeyCode.Alpha4
+            keyCode = KeyCode.Alpha4,
+            name_id = 93,
+            canChange = true,
         },
-        // µ¿æﬂ5 5
+        // ÈÅìÂÖ∑5 5
         new SettingStruct(){
             type = "item",
             param1 = "5",
             param2 = "",
-            keyCode = KeyCode.Alpha5
+            keyCode = KeyCode.Alpha5,
+            name_id = 94,
+            canChange = true,
         },
-        // ª•∂Ø E
+        // ‰∫íÂä® E
         new SettingStruct(){
             type = "action",
             param1 = "talk",
             param2 = "",
-            keyCode = KeyCode.Alpha6
+            keyCode = KeyCode.E,
+            name_id = 95,
+            canChange = true,
+        },
+        // ÂÖ≥Èó≠/ËèúÂçï
+        new SettingStruct(){
+            type = "exitui",
+            param1 = "",
+            param2 = "",
+            keyCode = KeyCode.Escape,
+            name_id = 106,
+            canChange = false,
+        },
+        // ÂÖ≥Èó≠
+        new SettingStruct(){
+            type = "exitui",
+            param1 = "",
+            param2 = "",
+            keyCode = KeyCode.J,
+            name_id = 105,
+            canChange = false,
         },
     };
 }
@@ -395,6 +741,6 @@ public struct SettingStruct {
     public string param1;
     public string param2;
     public KeyCode keyCode;
-
-    
+    public int name_id;
+    public bool canChange;
 }

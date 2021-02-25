@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour {
         if (instance == null) {
             instance = this;
             music.loop = true;
-            SetRandomMusic();
+            SetMusic(MusicClipType.bg_3);
             music.Play();
         }
     }
@@ -18,6 +18,12 @@ public class SoundManager : MonoBehaviour {
 
     public AudioClip[] bg_music;
     public AudioClip[] ui_clip;
+
+    public static void SetVolume() {
+        SettingData data = SettingData.instance;
+        instance.music.volume = data.volume * data.music / 10000f;
+        instance.sound_effect.volume = data.volume * data.sound_effect / 10000f;
+    }
 
     public static void SetRandomMusic(MusicClipType min = MusicClipType.bg_1, MusicClipType max = MusicClipType.end) {
         SetMusic((MusicClipType)Random.Range((int)min, (int)max));
