@@ -1,4 +1,4 @@
-using GuiBaseUI;
+锘縰sing GuiBaseUI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -196,7 +196,7 @@ public class GongfaUI : MonoBehaviour {
         max_item = show_items.Count;
 
         line_count = (int)Mathf.Ceil(max_item * 1f / child_count);
-        // 设置背包
+        // 璁剧疆鑳屽寘
         scrollView.verticalNormalizedPosition = 1;
         bigDataScroll.cellCount = line_count;
 
@@ -205,13 +205,13 @@ public class GongfaUI : MonoBehaviour {
         Tools.SetActive(atk_root, !show_heart);
         Tools.SetActive(heart_root, show_heart);
         if (show_heart) {
-            // 显示心法
+            // 鏄剧ず蹇冩硶
             GongfaData[] hearts = RoleData.mainRole.heart_gongfa;
             for (int i = 0; i < hearts.Length; i++) {
                 heart_items[i].SetItem(hearts[i], RoleData.mainRole);
             }
         } else {
-            // 显示武功
+            // 鏄剧ず姝﹀姛
             atk_items[0].SetItem(RoleData.mainRole.attack_gongfa, RoleData.mainRole);
             atk_items[1].SetItem(RoleData.mainRole.skill_gongfa, RoleData.mainRole);
             atk_items[2].SetItem(RoleData.mainRole.body_gongfa, RoleData.mainRole);

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -106,9 +106,9 @@ public class MessageWindow : MonoBehaviour {
         t_ok.text = MessageData.GetMessage(78);
         t_cancel.text = MessageData.GetMessage(79);
         if (cur_msg.auto_ok != 0) {
-            t_ok.text = string.Format("{0}£¨{1}£©", MessageData.GetMessage(78), (int)(cur_msg.auto_ok - show_time));
+            t_ok.text = string.Format("{0}ï¼ˆ{1}ï¼‰", MessageData.GetMessage(78), (int)(cur_msg.auto_ok - show_time));
         } else if (cur_msg.auto_cancel != 0) {
-            t_ok.text = string.Format("{0}£¨{1}£©", MessageData.GetMessage(79), (int)(cur_msg.auto_cancel - show_time));
+            t_ok.text = string.Format("{0}ï¼ˆ{1}ï¼‰", MessageData.GetMessage(79), (int)(cur_msg.auto_cancel - show_time));
         }
     }
 }
