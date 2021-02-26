@@ -121,34 +121,38 @@ public class SettingWindow : BaseWindow {
     void ClickKeyChange(int idx) {
         if (wait_key > -1) {
             if (wait_key < 10000) {
-                if(IsCanChangeKey(SettingData.instance.battleShortcutKeys[wait_key])){
-                    Text tKeyCode = battleRoot.GetChild(wait_key).Find("tKeyCode").GetComponent<Text>();
-                    tKeyCode.text = SettingData.instance.battleShortcutKeys[wait_key].keyCode.ToString();
-                    tKeyCode.color = codeColor;
-                }
+                Text tKeyCode = battleRoot.GetChild(wait_key).Find("tKeyCode").GetComponent<Text>();
+                tKeyCode.text = SettingData.instance.battleShortcutKeys[wait_key].keyCode.ToString();
+                tKeyCode.color = codeColor;
             } else {
-                if (IsCanChangeKey(SettingData.instance.worldShortcutKeys[wait_key])) {
-                    Text tKeyCode = worldRoot.GetChild(wait_key - 10000).Find("tKeyCode").GetComponent<Text>();
-                    tKeyCode.text = SettingData.instance.worldShortcutKeys[wait_key - 10000].keyCode.ToString();
-                    tKeyCode.color = codeColor;
-                }
+                Text tKeyCode = worldRoot.GetChild(wait_key - 10000).Find("tKeyCode").GetComponent<Text>();
+                tKeyCode.text = SettingData.instance.worldShortcutKeys[wait_key - 10000].keyCode.ToString();
+                tKeyCode.color = codeColor;
             }
         }
         StartCoroutine(SetWaitClick(idx));
         if (idx < 10000) {
-            Text tKeyCode = battleRoot.GetChild(idx).Find("tKeyCode").GetComponent<Text>();
-            tKeyCode.text = MessageData.GetMessage(103);
-            tKeyCode.color = waitColor;
+            if (IsCanChangeKey(SettingData.instance.battleShortcutKeys[idx])) {
+                Text tKeyCode = battleRoot.GetChild(idx).Find("tKeyCode").GetComponent<Text>();
+                tKeyCode.text = MessageData.GetMessage(103);
+                tKeyCode.color = waitColor;
+            } else {
+                return;
+            }
         } else {
-            Text tKeyCode = worldRoot.GetChild(idx - 10000).Find("tKeyCode").GetComponent<Text>();
-            tKeyCode.text = MessageData.GetMessage(103);
-            tKeyCode.color = waitColor;
+            if (IsCanChangeKey(SettingData.instance.worldShortcutKeys[idx - 10000])) {
+                Text tKeyCode = worldRoot.GetChild(idx - 10000).Find("tKeyCode").GetComponent<Text>();
+                tKeyCode.text = MessageData.GetMessage(103);
+                tKeyCode.color = waitColor;
+            } else {
+                return;
+            }
         }
     }
 
     bool IsCanChangeKey(SettingStruct data) {
         if (!data.canChange) {
-            MessageWindow.Message(51, 107);
+            MessageWindow.Message(51, 107, values: MessageData.GetMessage(data.name_id));
         }
         return data.canChange;
     }

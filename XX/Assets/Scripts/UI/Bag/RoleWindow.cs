@@ -8,6 +8,7 @@ public class RoleWindow : BaseWindow {
     public GameObject roleSel, skillSel, artistrySel, bagSel, experienceSel, relationSel;
     public GameObject attrUI;
     public GameObject rolemodelUI;
+    public GameObject roleUI;
     public GameObject bagUI;
     public GameObject GongfaUI;
     public int[] packParamID;
@@ -49,6 +50,7 @@ public class RoleWindow : BaseWindow {
         Tools.SetActive(relationSel, show_relation);
         Tools.SetActive(attrUI, show_role || show_skill || show_artistry || show_bag);
         Tools.SetActive(rolemodelUI, show_role || show_artistry);
+        Tools.SetActive(roleUI, show_role);
         Tools.SetActive(bagUI, show_bag);
         Tools.SetActive(GongfaUI, show_skill);
 

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour {
         if (instance == null) {
             instance = this;
             music.loop = true;
+            var v = SettingData.instance; // åˆå§‹åŒ–å£°éŸ³è®¾ç½®
             SetMusic(MusicClipType.bg_3);
             music.Play();
         }
@@ -45,39 +46,39 @@ public class SoundManager : MonoBehaviour {
 
     public enum MusicClipType {
         /// <summary>
-        /// ÃÅÅÉ
+        /// é—¨æ´¾
         /// </summary>
         bg_1,
         /// <summary>
-        /// ÃØ¾³
+        /// ç§˜å¢ƒ
         /// </summary>
         bg_2,
         /// <summary>
-        /// ³ÇÊĞ3
+        /// åŸå¸‚3
         /// </summary>
         bg_3,
         /// <summary>
-        /// ³ÇÊĞ4
+        /// åŸå¸‚4
         /// </summary>
         bg_4,
         /// <summary>
-        /// Õ½¶·5
+        /// æˆ˜æ–—5
         /// </summary>
         bg_5,
         /// <summary>
-        /// Õ½¶·6
+        /// æˆ˜æ–—6
         /// </summary>
         bg_6,
         /// <summary>
-        /// Õ½¶·7
+        /// æˆ˜æ–—7
         /// </summary>
         bg_7,
         /// <summary>
-        /// Ò°Íâ8
+        /// é‡å¤–8
         /// </summary>
         bg_8,
         /// <summary>
-        /// Ò°Íâ9
+        /// é‡å¤–9
         /// </summary>
         bg_9,
 
@@ -88,63 +89,63 @@ public class SoundManager : MonoBehaviour {
 
     public enum UIClipType {
         /// <summary>
-        /// ´ò¿ª±³°ü
+        /// æ‰“å¼€èƒŒåŒ…
         /// </summary>
         bag_open,
         /// <summary>
-        /// ÓÂÆø ĞÅĞÄ buff
+        /// å‹‡æ°” ä¿¡å¿ƒ buff
         /// </summary>
         bottle,
         /// <summary>
-        /// Âò¶«Î÷
+        /// ä¹°ä¸œè¥¿
         /// </summary>
         button_buy,
         /// <summary>
-        /// °´Å¥ÇĞ»»
+        /// æŒ‰é’®åˆ‡æ¢
         /// </summary>
         button_change,
         /// <summary>
-        /// ¹Ø±Õ°´Å¥
+        /// å…³é—­æŒ‰é’®
         /// </summary>
         button_close,
         /// <summary>
-        /// °´Å¥Í¨ÓÃµã»÷
+        /// æŒ‰é’®é€šç”¨ç‚¹å‡»
         /// </summary>
         button_common,
         /// <summary>
-        /// °´Å¥½øÈë
+        /// æŒ‰é’®è¿›å…¥
         /// </summary>
         button_in,
         /// <summary>
-        /// Ç®±ÒÉùÒô
+        /// é’±å¸å£°éŸ³
         /// </summary>
         coin,
         /// <summary>
-        /// ÃüÔË àÛµÄÒ»Éù
+        /// å‘½è¿ å™—çš„ä¸€å£°
         /// </summary>
         destiny,
         /// <summary>
-        /// ¶ÍÔì
+        /// é”»é€ 
         /// </summary>
         duanzao,
         /// <summary>
-        /// ×°±¸
+        /// è£…å¤‡
         /// </summary>
         equip,
         /// <summary>
-        /// ºÏ³É
+        /// åˆæˆ
         /// </summary>
         hecheng,
         /// <summary>
-        /// ĞÂµÄÏûÏ¢
+        /// æ–°çš„æ¶ˆæ¯
         /// </summary>
         new_message,
         /// <summary>
-        /// ÕûÀí±³°ü
+        /// æ•´ç†èƒŒåŒ…
         /// </summary>
         stuff_bag,
         /// <summary>
-        /// ½âËø
+        /// è§£é”
         /// </summary>
         unlock = 14,
     }

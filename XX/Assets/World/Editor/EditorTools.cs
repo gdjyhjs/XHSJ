@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -18,7 +18,7 @@ public class EditorTools : Editor
     public static void WorldScene() {
         UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/World/Scene/world.unity");
     }
-    [MenuItem("Tools/´æµµ/É¾³ýËùÓÐ´æµµ",false , 2000)]
+    [MenuItem("Tools/å­˜æ¡£/åˆ é™¤æ‰€æœ‰å­˜æ¡£",false , 2000)]
     public static void SaveDelete() {
         for (int id = 0; id < 9; id++) {
             string dir = "SaveData_" + id;
@@ -29,17 +29,17 @@ public class EditorTools : Editor
         }
     }
 
-    [MenuItem("Tools/Í³¼Æ´úÂëÁ¿", false, 2001)]
+    [MenuItem("Tools/ç»Ÿè®¡ä»£ç é‡", false, 2001)]
     public static void Test() {
         int fileCount = 0, codeCount = 0, lineCount = 0;long count = 0;
         GetallfilesOfDir("Assets", ".cs", ref fileCount, ref codeCount, ref lineCount, ref count);
-        Debug.LogFormat("C#´úÂë ÎÄ¼þÊý{0} \t ×ÜÐÐÊý{1}/{2} \t ×ÖÊý{3}", fileCount, codeCount, lineCount, count);
+        Debug.LogFormat("C#ä»£ç  æ–‡ä»¶æ•°{0} \t æ€»è¡Œæ•°{1}/{2} \t å­—æ•°{3}", fileCount, codeCount, lineCount, count);
         fileCount = 0; codeCount = 0; lineCount = 0; count = 0;
         GetallfilesOfDir("Assets", ".txt", ref fileCount, ref codeCount, ref lineCount, ref count);
-        Debug.LogFormat("ÅäÖÃ ÎÄ¼þÊý{0} \t ×ÜÐÐÊý{1}/{2} \t ×ÖÊý{3}", fileCount, codeCount, lineCount, count);
+        Debug.LogFormat("é…ç½® æ–‡ä»¶æ•°{0} \t æ€»è¡Œæ•°{1}/{2} \t å­—æ•°{3}", fileCount, codeCount, lineCount, count);
     }
     private static void GetallfilesOfDir(string path, string extName, ref int fileCount, ref int codeCount, ref int lineCount, ref long count) {
-        string[] dir = Directory.GetDirectories(path); //ÎÄ¼þ¼ÐÁÐ±í   
+        string[] dir = Directory.GetDirectories(path); //æ–‡ä»¶å¤¹åˆ—è¡¨   
         DirectoryInfo fdir = new DirectoryInfo(path);
         string[] file = Directory.GetFiles(path);
         foreach (string f in file)
@@ -60,5 +60,35 @@ public class EditorTools : Editor
         foreach (string d in dir) {
             GetallfilesOfDir(d, extName, ref fileCount, ref codeCount, ref lineCount, ref count);
         }
+    }
+
+
+
+
+    [MenuItem("Tools/æ–‡ä»¶è½¬å­˜UTF8", false, 2001)]
+    public static void ToUtf8() {
+        ToUtf8("Assets", ".cs");
+    }
+    private static void ToUtf8(string path, string extName) {
+        //string[] dir = Directory.GetDirectories(path); //æ–‡ä»¶å¤¹åˆ—è¡¨   
+        //DirectoryInfo fdir = new DirectoryInfo(path);
+        //string[] file = Directory.GetFiles(path);
+        //foreach (string f in file) {
+        //    if (Path.GetExtension(f) == extName) {
+        //        fileCount++;
+        //        string text = File.ReadAllText(f);
+        //        count += text.Length;
+        //        string[] lines = text.Split('\n');
+        //        foreach (var item in lines) {
+        //            lineCount++;
+        //            if (!string.IsNullOrWhiteSpace(item)) {
+        //                codeCount++;
+        //            }
+        //        }
+        //    }
+        //}
+        //foreach (string d in dir) {
+        //    GetallfilesOfDir(d, extName, ref fileCount, ref codeCount, ref lineCount, ref count);
+        //}
     }
 }

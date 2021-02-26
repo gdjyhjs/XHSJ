@@ -65,6 +65,21 @@ public class RoleData {
     public int race;
 
     /// <summary>
+    /// 宗门
+    /// </summary>
+    public int pope = -1;
+
+    /// <summary>
+    /// 身份
+    /// </summary>
+    public int identity;
+
+    /// <summary>
+    /// 兴趣
+    /// </summary>
+    public int[] interest = new int[] { 1, 2, 3 };
+
+    /// <summary>
     /// 内在性格
     /// </summary>
     public int[] intrinsic_disposition;
@@ -78,6 +93,11 @@ public class RoleData {
     /// 先天气运
     /// </summary>
     public int[] xiantianqiyun;
+
+    /// <summary>
+    /// 后天气运
+    /// </summary>
+    public int[] houtianqiyun;
 
     /// <summary>
     /// 性别
