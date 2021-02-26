@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -102,28 +102,28 @@ public class BagItem : MonoBehaviour {
         if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy
             || static_data.sub_ype == ItemSubType.Ring || static_data.sub_ype == ItemSubType.Ride) {
             if (item_is_equip) {
-                // Ğ¶ÔØ°´Å¥
+                // å¸è½½æŒ‰é’®
                 btns.Add(new ItemTipsBtn() { btn_name = 28, btn_func = BtnEquip });
             } else {
                 if (static_data.sub_ype == ItemSubType.Ride) {
-                    // ³ËÆï°´Å¥
+                    // ä¹˜éª‘æŒ‰é’®
                     btns.Add(new ItemTipsBtn() { btn_name = 31, btn_func = BtnEquip });
                 } else {
-                    // ×°±¸°´Å¥
+                    // è£…å¤‡æŒ‰é’®
                     btns.Add(new ItemTipsBtn() { btn_name = 22, btn_func = BtnEquip });
                 }
             }
         }
         if (static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.aptitudesRemedy) {
-            // Ê³ÓÃ°´Å¥
+            // é£Ÿç”¨æŒ‰é’®
             btns.Add(new ItemTipsBtn() { btn_name = 23, btn_func = BtnUse });
         }
         if (static_data.type == ItemType.Gongfa) {
-            // Ñ§Ï°°´Å¥
+            // å­¦ä¹ æŒ‰é’®
             btns.Add(new ItemTipsBtn() { btn_name = 25, btn_func = BtnUse });
         }
         if (!item_is_equip) {
-            // ¶ªÆú°´Å¥
+            // ä¸¢å¼ƒæŒ‰é’®
             btns.Add(new ItemTipsBtn() { btn_name = 24, btn_func = BtnDiscard });
         }
         return btns.ToArray();
@@ -200,11 +200,11 @@ public class BagItem : MonoBehaviour {
             return;
         }
 
-        bool isWear = roleData.ItemIsEquip(item.id); // ÊÇ·ñ´©´÷Õß
+        bool isWear = roleData.ItemIsEquip(item.id); // æ˜¯å¦ç©¿æˆ´è€…
         Tools.SetActive(useing, isWear);
         can_drag = roleData == RoleData.mainRole && !isWear &&
-            (static_data.type == ItemType.Equip || // ×°±¸
-            static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy); // »Ö¸´µ¤Ò©»òÔöÒæµ¤Ò©
+            (static_data.type == ItemType.Equip || // è£…å¤‡
+            static_data.sub_ype == ItemSubType.recoverRemedy || static_data.sub_ype == ItemSubType.buffRemedy); // æ¢å¤ä¸¹è¯æˆ–å¢ç›Šä¸¹è¯
 
     }
 }

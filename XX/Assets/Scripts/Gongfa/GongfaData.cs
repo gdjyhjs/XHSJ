@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 public class GongfaData {
     /// <summary>
-    /// ¶ÔÓ¦¹¦·¨ÎïÆ·id
+    /// å¯¹åº”åŠŸæ³•ç‰©å“id
     /// </summary>
     public int item_id;
     /// <summary>
-    /// Ö÷ÊôĞÔ´ÊÌõÊôĞÔÖµ
+    /// ä¸»å±æ€§è¯æ¡å±æ€§å€¼
     /// </summary>
     public int[][] attr_value;
     /// <summary>
-    /// ´ÊÌõÊôĞÔÊıÖµ
+    /// è¯æ¡å±æ€§æ•°å€¼
     /// </summary>
     public int[][] ex_values;
     /// <summary>
-    /// ´ÊÌõÊôĞÔÆ·ÖÊ
+    /// è¯æ¡å±æ€§å“è´¨
     /// </summary>
     public int[] ex_color;
     /// <summary>
-    /// ĞŞÁ¶¾­Ñé
+    /// ä¿®ç‚¼ç»éªŒ
     /// </summary>
     public int exp;
 }

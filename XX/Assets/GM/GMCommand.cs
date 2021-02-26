@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,7 +62,7 @@ public class GMCommand : MonoBehaviour
     }
 
     private void OnInputChange(string value) {
-        if (!value.EndsWith("`") && !value.EndsWith("¡¤")) {
+        if (!value.EndsWith("`") && !value.EndsWith("Â·")) {
             command = input.text;
         }
     }
@@ -189,7 +189,7 @@ public class GMCommand : MonoBehaviour
                 break;
             case "test": {
                     MainUI.ShowUI("RoleWindow", "bag");
-                    // Çå¿Õ±³°ü
+                    // æ¸…ç©ºèƒŒåŒ…
                     List<int> rm = new List<int>(); ;
                     foreach (var item in RoleData.mainRole.bag_items) {
                         if (!RoleData.mainRole.ItemIsEquip(item)) {
@@ -200,13 +200,13 @@ public class GMCommand : MonoBehaviour
                         RoleData.mainRole.RemoveItem(item, 0);
                     }
                     MessageWindow.Message(51, 52, () => {
-                        //±³°üÈİÁ¿
+                        //èƒŒåŒ…å®¹é‡
                         RoleData.mainRole.SetAttrebuteValue(RoleAttribute.max_item, GameData.instance.item_static_data.Length + 5);
                         EventManager.SendEvent(EventTyp.ItemChange, RoleData.mainRole);
                         MessageWindow.Message(51, 53, () => {
-                            //±³°üÈİÁ¿
+                            //èƒŒåŒ…å®¹é‡
                             RoleData.mainRole.SetAttrebuteValue(RoleAttribute.max_item, GameData.instance.item_static_data.Length + 5);
-                            // Ìí¼ÓËùÓĞÎïÆ·
+                            // æ·»åŠ æ‰€æœ‰ç‰©å“
                             for (int i = 0; i < GameData.instance.item_static_data.Length; i++) {
                                 int c = GameData.instance.item_static_data[i].maxcount;
                                 RoleData.mainRole.AddOrCreateItem(i, ref c);

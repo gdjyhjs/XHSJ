@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -153,13 +153,13 @@ public class BagUI : MonoBehaviour
             max_item = show_items.Count;
         }
         line_count = (int)Mathf.Ceil(max_item * 1f / child_count);
-        // ÉèÖÃ±³°ü
+        // è®¾ç½®èƒŒåŒ…
         if (!isChange) {
             scrollView.verticalNormalizedPosition = 1;
         }
         bigDataScroll.cellCount = line_count;
 
-        // ÉèÖÃ×°±¸
+        // è®¾ç½®è£…å¤‡
         for (int i = 0; i < equip_items.Length; i++) {
             int item_id = RoleData.mainRole.equip_items[i];
             ItemData item;
@@ -172,7 +172,7 @@ public class BagUI : MonoBehaviour
             bagItem.SetItem(item, RoleData.mainRole, isRound: true, show_count: MessageData.GetMessage(29 + i), clickFunc: bagItem.BtnEquip);
         }
 
-        // ÉèÖÃÕ½¶·Ò©
+        // è®¾ç½®æˆ˜æ–—è¯
         for (int i = 0; i < battle_items.Length; i++) {
             int item_id = RoleData.mainRole.remedy_items[i];
             ItemData item;

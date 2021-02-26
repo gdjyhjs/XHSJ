@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,27 +73,27 @@ public class RoleWindow : BaseWindow {
 
 
     public void ClickRole() {
-        // ÈËÎï
+        // äººç‰©
         MainUI.ShowUI("RoleWindow", "role");
     }
     public void ClickSkill() {
-        // ¼¼ÄÜ
+        // æŠ€èƒ½
         MainUI.ShowUI("RoleWindow", "skill");
     }
     public void ClickArtistry() {
-        // ¼¼ÒÕ
+        // æŠ€è‰º
         MainUI.ShowUI("RoleWindow", "artistry");
     }
     public void ClickBag() {
-        // ±³°ü
+        // èƒŒåŒ…
         MainUI.ShowUI("RoleWindow", "bag");
     }
     public void ClickExperience() {
-        // ¾­Àú
+        // ç»å†
         MainUI.ShowUI("RoleWindow", "experience");
     }
     public void ClickRelation() {
-        // ¹ØÏµ
+        // å…³ç³»
         MainUI.ShowUI("RoleWindow", "relation");
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
@@ -8,8 +8,8 @@ public class ItemData
     public int static_id;
     public int count;
     /// <summary>
-    /// 物品参数
-    /// 对于功法就是学习进度
+    /// 鐗╁搧鍙傛暟
+    /// 瀵逛簬鍔熸硶灏辨槸瀛︿範杩涘害
     /// </summary>
     public int param;
 }

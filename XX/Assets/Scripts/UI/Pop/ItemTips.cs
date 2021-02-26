@@ -1,4 +1,4 @@
-using System.Collections;
+О╩©using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -95,12 +95,12 @@ public class ItemTips : MonoBehaviour
 
         float x = bg.anchoredPosition.x, y = bg.anchoredPosition.y + rtf.sizeDelta.y / 2 + bg.sizeDelta.y / 2;
         
-        // еп╤ойг╥ЯЁ╛╧Щфад╩иоцФ       хТё╨вЬ╠Йy+р╩╟К╦ъ╤х ╢Ссз фад╩╦ъ╤х╣др╩╟К
+        // Е┬╓Ф√╜Ф≤╞Е░╕Х╤┘Х©┤Е╠▐Е╧∙Д╦┼И²╒       Х▀╔О╪ Е²░Ф═┤y+Д╦─Е█┼И╚≤Е╨╕ Е╓╖Д╨▌ Е╠▐Е╧∙И╚≤Е╨╕Г └Д╦─Е█┼
         if ((y + bg.sizeDelta.y / 2) > pop.sizeDelta.y / 2) {
             y = bg.anchoredPosition.y - rtf.sizeDelta.y / 2 - bg.sizeDelta.y / 2;
-            // еп╤ойг╥ЯЁ╛╧Щфад╩обцФ       хТё╨вЬ╠Йy-р╩╟К╦ъ╤х ╢Ссз -фад╩╦ъ╤х╣др╩╟К
+            // Е┬╓Ф√╜Ф≤╞Е░╕Х╤┘Х©┤Е╠▐Е╧∙Д╦▀И²╒       Х▀╔О╪ Е²░Ф═┤y-Д╦─Е█┼И╚≤Е╨╕ Е╓╖Д╨▌ -Е╠▐Е╧∙И╚≤Е╨╕Г └Д╦─Е█┼
             if ((y - bg.sizeDelta.y / 2) < - pop.sizeDelta.y / 2) {
-                // пХр╙лА╦ъ╦ъ╤х╣╫мЙуШотй╬      ╣ц╣╫цФ╟Е╦ъ╤х╠хфад╩р╩╟К╦ъ╤Юиы
+                // И°─Х╕│Ф▐░И╚≤И╚≤Е╨╕Е┬╟Е╝▄Ф∙╢Ф≤╬Г╓╨      Е╬≈Е┬╟И²╒Ф²©И╚≤Е╨╕Ф╞■Е╠▐Е╧∙Д╦─Е█┼И╚≤Е╓ Е╟▒
                 float offset = pop.sizeDelta.y / 2 - Mathf.Abs(y - bg.sizeDelta.y / 2);
                 y -= offset;
             }

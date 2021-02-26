@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ҡ��
+// 摇摆
 public class UISway : MonoBehaviour
 {
     public float speed = 2;

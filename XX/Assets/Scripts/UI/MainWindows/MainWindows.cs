@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -126,60 +126,60 @@ public class MainWindows : BaseWindow {
 
 
     public void ClickRole() {
-        // ÈËÎï
+        // äººç‰©
         MainUI.ShowUI("RoleWindow", "role");
     }
     public void ClickNotice() {
-        // Í¨Öª
+        // é€šçŸ¥
         MessageTips.Message(1);
     }
     public void ClickTask() {
-        // ÈÎÎñ
+        // ä»»åŠ¡
         MessageTips.Message(1);
     }
     public void ClickSkill() {
-        // ¼¼ÄÜ
+        // æŠ€èƒ½
         MainUI.ShowUI("RoleWindow", "skill");
     }
     public void ClickBag() {
-        // ±³°ü
+        // èƒŒåŒ…
         MainUI.ShowUI("RoleWindow", "bag");
     }
     public void ClickArtistry() {
-        // ¼¼ÒÕ
+        // æŠ€è‰º
         MainUI.ShowUI("RoleWindow", "artistry");
     }
     public void ClickMap() {
-        // Ğ¡µØÍ¼
+        // å°åœ°å›¾
         MessageTips.Message(1);
     }
     public void ClickLevel() {
-        // ÄæÌì¸ÄÃü
+        // é€†å¤©æ”¹å‘½
         MessageTips.Message(1);
     }
     public void ClickTime() {
-        // Ìø¹ı±¾ÔÂ
+        // è·³è¿‡æœ¬æœˆ
         MessageTips.Message(1);
     }
     public void ClickChangeTask() {
-        // ÏÔÊ¾/Òş²ØÈÎÎñ
+        // æ˜¾ç¤º/éšè—ä»»åŠ¡
         MessageTips.Message(1);
     }
 
     public void ClickXiu() {
-        // ĞŞÁ¶
+        // ä¿®ç‚¼
         MessageTips.Message(1);
     }
     public void ClickKan() {
-        // ¿°Óß
+        // å ªèˆ†
         MessageTips.Message(1);
     }
     public void ClickCai() {
-        // ²ÉÒ©
+        // é‡‡è¯
         MessageTips.Message(1);
     }
     public void ClickWa() {
-        // ÍÚ¿ó
+        // æŒ–çŸ¿
         MessageTips.Message(1);
     }
 }

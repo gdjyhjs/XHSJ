@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,8 +17,8 @@ public class UIAssets : MonoBehaviour {
     public GameObject[] boyPrefab;
     public GameObject[] ridePrefab;
 
-    // 0-5 ĞÄ·¨ Îä¼¼/Áé¼¼ ¾ø¼¼ Éí·¨ ÉñÍ¨
-    // 6-21 ×øÆï
-    // 22-25 ½äÖ¸
+    // 0-5 å¿ƒæ³• æ­¦æŠ€/çµæŠ€ ç»æŠ€ èº«æ³• ç¥é€š
+    // 6-21 åéª‘
+    // 22-25 æˆ’æŒ‡
     public Sprite[] itemIcon;
 }

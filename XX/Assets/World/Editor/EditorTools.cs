@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Text;
 
 public class EditorTools : Editor
 {
@@ -70,25 +71,18 @@ public class EditorTools : Editor
         ToUtf8("Assets", ".cs");
     }
     private static void ToUtf8(string path, string extName) {
-        //string[] dir = Directory.GetDirectories(path); //文件夹列表   
-        //DirectoryInfo fdir = new DirectoryInfo(path);
-        //string[] file = Directory.GetFiles(path);
-        //foreach (string f in file) {
-        //    if (Path.GetExtension(f) == extName) {
-        //        fileCount++;
-        //        string text = File.ReadAllText(f);
-        //        count += text.Length;
-        //        string[] lines = text.Split('\n');
-        //        foreach (var item in lines) {
-        //            lineCount++;
-        //            if (!string.IsNullOrWhiteSpace(item)) {
-        //                codeCount++;
-        //            }
-        //        }
-        //    }
-        //}
-        //foreach (string d in dir) {
-        //    GetallfilesOfDir(d, extName, ref fileCount, ref codeCount, ref lineCount, ref count);
-        //}
+        string[] dir = Directory.GetDirectories(path); //文件夹列表   
+        DirectoryInfo fdir = new DirectoryInfo(path);
+        string[] file = Directory.GetFiles(path);
+        foreach (string f in file) {
+            if (Path.GetExtension(f) == extName) {
+                string text = File.ReadAllText(f);
+                File.WriteAllText(f, text, Encoding.UTF8);
+                Debug.Log("转存UTF8");
+            }
+        }
+        foreach (string d in dir) {
+            ToUtf8(d, extName);
+        }
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +28,7 @@ public class MainUI : MonoBehaviour
 
 #if UNITY_EDITOR
         if (true) {
-            Debug.Log("±à¼­Æ÷¸´ÖÆÅäÖÃ " + string.Join(",", files));
+            Debug.Log("ç¼–è¾‘å™¨å¤åˆ¶é…ç½® " + string.Join(",", files));
 #else
         if (!Tools.FileExists("config/" + files[files.Length - 1] + ".txt")) {
 #endif
@@ -92,7 +92,7 @@ public class MainUI : MonoBehaviour
     }
     
     /// <summary>
-    /// UIÊÇÏÔÊ¾µÄ£¨²¢ÇÒÊÇ×îÇ°µÄ£©¾ÍÒş²Ø£¬·ñÔò¾ÍÏÔÊ¾£¨µ½×îÇ°£©
+    /// UIæ˜¯æ˜¾ç¤ºçš„ï¼ˆå¹¶ä¸”æ˜¯æœ€å‰çš„ï¼‰å°±éšè—ï¼Œå¦åˆ™å°±æ˜¾ç¤ºï¼ˆåˆ°æœ€å‰ï¼‰
     /// </summary>
     public static void ChangeUI(string name, string sub_show = null) {
         if (instance.uiList == null) {

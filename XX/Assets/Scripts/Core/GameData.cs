@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -47,9 +47,9 @@ public class GameData {
         GameData.instance.save_id = save_id;
         UnityEngine.Random.InitState(System.DateTime.Now.Second);
         GameData.instance.seed = UnityEngine.Random.Range(0, 1000);
-        // ³õÊ¼»¯¾²Ì¬ÎïÆ·Êı¾İ
+        // åˆå§‹åŒ–é™æ€ç‰©å“æ•°æ®
         item_static_data = ItemConfigData.dataList;
-        // ³õÊ¼»¯¹¦·¨
+        // åˆå§‹åŒ–åŠŸæ³•
         CreateGongfa.Init();
     }
     public void SaveGame() {
@@ -64,34 +64,34 @@ public class GameData {
     public long[] globalAttr;
     public int seed;
 
-    #region ÎïÆ·
+    #region ç‰©å“
     /// <summary>
-    /// ¾²Ì¬ÎïÆ·Êı¾İ
+    /// é™æ€ç‰©å“æ•°æ®
     /// </summary>
     public ItemStaticData[] item_static_data = new ItemStaticData[0];
 
 
     /// <summary>
-    ///  ÓÎÏ·ËùÓĞÎïÆ·
+    ///  æ¸¸æˆæ‰€æœ‰ç‰©å“
     /// </summary>
     private ItemData[] save_all_item;
 
     /// <summary>
-    ///  ÓÎÏ·ËùÓĞÎïÆ·
+    ///  æ¸¸æˆæ‰€æœ‰ç‰©å“
     /// </summary>
     [System.NonSerialized]
     public List<ItemData> all_item = new List<ItemData>();
 
     /// <summary>
-    /// ¼ÇÂ¼¶ªÆú»òÉ¾³ıµÄÎïÆ·id ÒÔ±ã¸´ÓÃ
+    /// è®°å½•ä¸¢å¼ƒæˆ–åˆ é™¤çš„ç‰©å“id ä»¥ä¾¿å¤ç”¨
     /// </summary>
     public Queue<int> remove_items = new Queue<int>();
 
     /// <summary>
-    /// ´´½¨ĞÂÎïÆ·
+    /// åˆ›å»ºæ–°ç‰©å“
     /// </summary>
     public int NewItem(int static_id, ref int count) {
-        bool old_id = remove_items.Count > 0; // ÊÇ·ñ¸´ÓÃ¶ªÆúµÄÎïÆ·id
+        bool old_id = remove_items.Count > 0; // æ˜¯å¦å¤ç”¨ä¸¢å¼ƒçš„ç‰©å“id
         int item_id;
         if (old_id)
             item_id = remove_items.Dequeue();
@@ -117,9 +117,9 @@ public class GameData {
 
 
 
-    #region ¹¦·¨
+    #region åŠŸæ³•
     /// <summary>
-    /// ¾²Ì¬¹¦·¨Êı¾İ
+    /// é™æ€åŠŸæ³•æ•°æ®
     /// </summary>
     public GongfaStaticData[] gongfa_static_data = new GongfaStaticData[0];
 

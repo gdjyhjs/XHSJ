@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -67,7 +67,7 @@ public class GongfaItem : MonoBehaviour {
         if (!onItem)
             return;
         if (gongfa != null && roleData == RoleData.mainRole) {
-            bool isWear = roleData.GonfaIsEquip(gongfa); // ÊÇ·ñ´©´÷×Å
+            bool isWear = roleData.GonfaIsEquip(gongfa); // æ˜¯å¦ç©¿æˆ´ç€
             if (isWear) {
                 if (isBag) {
                     MessageTips.Message(48);
@@ -148,7 +148,7 @@ public class GongfaItem : MonoBehaviour {
             return;
         }
 
-        bool isWear = roleData.GonfaIsEquip(gongfa); // ÊÇ·ñ´©´÷×Å
+        bool isWear = roleData.GonfaIsEquip(gongfa); // æ˜¯å¦ç©¿æˆ´ç€
         Tools.SetActive(useing, isWear);
         can_drag = roleData == RoleData.mainRole && !isWear;
     }

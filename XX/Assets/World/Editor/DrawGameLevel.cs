@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -7,30 +7,30 @@ public class DrawGameLevel : EditorWindow {
 
     enum DrawMode {
         /// <summary>
-        /// µã»æÖÆ
+        /// ç‚¹ç»˜åˆ¶
         /// </summary>
         Point,
         /// <summary>
-        /// ¾ØĞÎ»æÖÆ
+        /// çŸ©å½¢ç»˜åˆ¶
         /// </summary>
         Rect,
     }
     enum DrawType {
         /// <summary>
-        /// Ìí¼Ó
+        /// æ·»åŠ 
         /// </summary>
         Add,
         /// <summary>
-        /// ÒÆ³ı
+        /// ç§»é™¤
         /// </summary>
         Remove,
     }
 
-    [MenuItem("Maps/Creater %M")]//ºóÃæ¿ì½İ¼ü
+    [MenuItem("Maps/Creater %M")]//åé¢å¿«æ·é”®
     public static void OpenMapCreate() {
-        DrawGameLevel window = EditorWindow.GetWindow<DrawGameLevel>("µØÍ¼±à¼­Æ÷");
+        DrawGameLevel window = EditorWindow.GetWindow<DrawGameLevel>("åœ°å›¾ç¼–è¾‘å™¨");
         window.Show();
-        window.minSize = new Vector2(400, 800);//ÉèÖÃ×î´óºÍ×îĞ¡
+        window.minSize = new Vector2(400, 800);//è®¾ç½®æœ€å¤§å’Œæœ€å°
         window.maxSize = new Vector2(400, 1200);
     }
 
@@ -52,16 +52,16 @@ public class DrawGameLevel : EditorWindow {
     private void OnSceneGUI(SceneView sceneVie) {
         HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
         if (Event.current.type == EventType.MouseDown && Event.current.button == 0) {
-            //µã»÷
+            //ç‚¹å‡»
             OnMouseEvent(Event.current.type);
         } else if (Event.current.type == EventType.MouseUp && Event.current.button == 0) {
-            //Ì§Æğ
+            //æŠ¬èµ·
             if (!_drag) {
                 OnMouseEvent(Event.current.type);
             }
             _drag = false;
         } else if (Event.current.type == EventType.MouseDrag && Event.current.button == 0) {
-            //ÍÏ¶¯
+            //æ‹–åŠ¨
             OnMouseEvent(Event.current.type);
             _drag = true;
         }
@@ -69,19 +69,19 @@ public class DrawGameLevel : EditorWindow {
 
     private void OnMouseEvent(EventType type) {
         if (world == null) {
-            Debug.Log("Ã»ÓĞµØÍ¼Êı¾İ");
+            Debug.Log("æ²¡æœ‰åœ°å›¾æ•°æ®");
             return;
         }
-        //»ñÈ¡Êó±ê×ø±ê
+        //è·å–é¼ æ ‡åæ ‡
         Vector2 mousePos = Event.current.mousePosition;
-        //ÕâÀïµÄÊó±êÔ­µãÔÚ×óÉÏ,¶øÆÁÄ»¿Õ¼äÔ­µã×óÏÂ,·­×ªËü
+        //è¿™é‡Œçš„é¼ æ ‡åŸç‚¹åœ¨å·¦ä¸Š,è€Œå±å¹•ç©ºé—´åŸç‚¹å·¦ä¸‹,ç¿»è½¬å®ƒ
         mousePos.y = Camera.current.pixelHeight - mousePos.y;
         Ray ray = Camera.current.ScreenPointToRay(mousePos);
         RaycastHit rh;
         
         if (Physics.Raycast(ray, out rh)) {
-            //ÅĞ¶ÏÊÇ·ñÉäµ½ÁËplane,ÊÇµÄ»°½øĞĞ²Ù×÷±ãÊÇ
-            //Debug.Log("Éäµ½ " + rh.point);
+            //åˆ¤æ–­æ˜¯å¦å°„åˆ°äº†plane,æ˜¯çš„è¯è¿›è¡Œæ“ä½œä¾¿æ˜¯
+            //Debug.Log("å°„åˆ° " + rh.point);
 
             if (drawMode == DrawMode.Rect) {
                 switch (type) {
@@ -115,7 +115,7 @@ public class DrawGameLevel : EditorWindow {
                 }
             }
         } else {
-            //Debug.Log("Ã»ÓĞÉäÖĞ");
+            //Debug.Log("æ²¡æœ‰å°„ä¸­");
         }
     }
 
@@ -150,7 +150,7 @@ public class DrawGameLevel : EditorWindow {
         if (world == null) {
             world = FindObjectOfType<WorldCreate>();
             if (world == null) {
-                GUILayout.Label("Ã»ÓĞµØÍ¼Êı¾İ");
+                GUILayout.Label("æ²¡æœ‰åœ°å›¾æ•°æ®");
                 return;
             }
         }
@@ -159,12 +159,12 @@ public class DrawGameLevel : EditorWindow {
             this.size = world.size;
         }
         GUILayout.BeginHorizontal();
-        GUILayout.Label("µØÍ¼´óĞ¡£º");
+        GUILayout.Label("åœ°å›¾å¤§å°ï¼š");
         if (int.TryParse(GUILayout.TextField(this.size.ToString()), out int size)) {
             this.size = size;
         }
         GUILayout.Space(40);
-        if (GUILayout.Button("³õÊ¼»¯")) {
+        if (GUILayout.Button("åˆå§‹åŒ–")) {
             world.size = size;
             world.units = new int[size * size];
             world.Init();
@@ -180,7 +180,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("µã»æÖÆ")) {
+        if (GUILayout.Button("ç‚¹ç»˜åˆ¶")) {
             drawMode = DrawMode.Point;
         }
         if (drawMode == DrawMode.Rect) {
@@ -188,7 +188,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("¾ØĞÎ»æÖÆ")) {
+        if (GUILayout.Button("çŸ©å½¢ç»˜åˆ¶")) {
             drawMode = DrawMode.Rect;
         }
         GUILayout.EndHorizontal();
@@ -201,7 +201,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("Ôö¼ÓÄ£Ê½")) {
+        if (GUILayout.Button("å¢åŠ æ¨¡å¼")) {
             drawType = DrawType.Add;
         }
         if (drawType == DrawType.Remove) {
@@ -209,7 +209,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("ÒÆ³ıÄ£Ê½")) {
+        if (GUILayout.Button("ç§»é™¤æ¨¡å¼")) {
             drawType = DrawType.Remove;
         }
         GUILayout.EndHorizontal();
@@ -222,7 +222,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆ¿ÕµØ")) {
+        if (GUILayout.Button("ç»˜åˆ¶ç©ºåœ°")) {
             unitMode = WorldUnit.None;
         }
         if (unitMode == WorldUnit.Impede) {
@@ -230,7 +230,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆÕÏ°­")) {
+        if (GUILayout.Button("ç»˜åˆ¶éšœç¢")) {
             unitMode = WorldUnit.Impede;
         }
         if (unitMode == WorldUnit.Monster) {
@@ -238,7 +238,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆÒ°¹Ö")) {
+        if (GUILayout.Button("ç»˜åˆ¶é‡æ€ª")) {
             unitMode = WorldUnit.Monster;
         }
         if (unitMode == WorldUnit.City) {
@@ -246,7 +246,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆ³ÇÊĞ")) {
+        if (GUILayout.Button("ç»˜åˆ¶åŸå¸‚")) {
             unitMode = WorldUnit.City;
         }
         if (unitMode == WorldUnit.Mountain) {
@@ -254,7 +254,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆ¸ßÉ½")) {
+        if (GUILayout.Button("ç»˜åˆ¶é«˜å±±")) {
             unitMode = WorldUnit.Mountain;
         }
         if (unitMode == WorldUnit.NewVillage) {
@@ -262,7 +262,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆĞÂÊÖ´å")) {
+        if (GUILayout.Button("ç»˜åˆ¶æ–°æ‰‹æ‘")) {
             unitMode = WorldUnit.NewVillage;
         }
 
@@ -272,7 +272,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆÒ»¼¶ÇøÓò")) {
+        if (GUILayout.Button("ç»˜åˆ¶ä¸€çº§åŒºåŸŸ")) {
             unitMode = WorldUnit.Level1;
         }
         if (unitMode == WorldUnit.Level2) {
@@ -280,7 +280,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆ¶ş¼¶ÇøÓò")) {
+        if (GUILayout.Button("ç»˜åˆ¶äºŒçº§åŒºåŸŸ")) {
             unitMode = WorldUnit.Level2;
         }
         if (unitMode == WorldUnit.Level3) {
@@ -288,7 +288,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆÈı¼¶ÇøÓò")) {
+        if (GUILayout.Button("ç»˜åˆ¶ä¸‰çº§åŒºåŸŸ")) {
             unitMode = WorldUnit.Level3;
         }
         if (unitMode == WorldUnit.Level4) {
@@ -296,7 +296,7 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆËÄ¼¶ÇøÓò")) {
+        if (GUILayout.Button("ç»˜åˆ¶å››çº§åŒºåŸŸ")) {
             unitMode = WorldUnit.Level4;
         }
         if (unitMode == WorldUnit.Level5) {
@@ -304,26 +304,26 @@ public class DrawGameLevel : EditorWindow {
         } else {
             GUI.color = def;
         }
-        if (GUILayout.Button("»æÖÆÎå¼¶ÇøÓò")) {
+        if (GUILayout.Button("ç»˜åˆ¶äº”çº§åŒºåŸŸ")) {
             unitMode = WorldUnit.Level5;
         }
         GUI.color = def;
         //EditorGUILayout.BeginHorizontal("box");
         //int sizeY = 100 * Mathf.CeilToInt(_items.Length / 4f);
-        //_select = GUI.SelectionGrid(new Rect(new Vector2(0, 155), new Vector2(100 * 4, sizeY)), _select, _items, 4);//¿ÉÒÔ¸ø³ögridÑ¡Ôñ¿ò,ĞèÒª´«ÈëÌùÍ¼Êı×é_items}
+        //_select = GUI.SelectionGrid(new Rect(new Vector2(0, 155), new Vector2(100 * 4, sizeY)), _select, _items, 4);//å¯ä»¥ç»™å‡ºgridé€‰æ‹©æ¡†,éœ€è¦ä¼ å…¥è´´å›¾æ•°ç»„_items}
 
         GUILayout.Space(20);
-        GUILayout.Label("µØÍ¼¸ñ×ÓÊı£º"+ world.units_count());
+        GUILayout.Label("åœ°å›¾æ ¼å­æ•°ï¼š"+ world.units_count());
 
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("¶ÁÈ¡Êı¾İ")) {
+        if (GUILayout.Button("è¯»å–æ•°æ®")) {
             byte[] byt = Tools.ReadAllBytes("config/map.data");
             world.units = Tools.DeserializeObject(byt) as int[];
             world.size = (int)Mathf.Sqrt(world.units_count());
             world.Init();
         }
-        if (GUILayout.Button("±£´æÊı¾İ")) {
+        if (GUILayout.Button("ä¿å­˜æ•°æ®")) {
             byte[] byt = Tools.SerializeObject(world.units);
             Tools.WriteAllBytes("config/map.data", byt);
         }
@@ -331,23 +331,23 @@ public class DrawGameLevel : EditorWindow {
 
 
         GUILayout.Space(20);
-        if (GUILayout.Button("Éú³ÉµØµã")) {
+        if (GUILayout.Button("ç”Ÿæˆåœ°ç‚¹")) {
             PointCreate point = FindObjectOfType<PointCreate>();
             if (point) {
                 point.Create();
             } else {
-                Debug.LogError("ÕÒ²»µ½¾İµãÉú³ÉÆ÷");
+                Debug.LogError("æ‰¾ä¸åˆ°æ®ç‚¹ç”Ÿæˆå™¨");
             }
         }
 
 
         GUILayout.Space(20);
-        if (GUILayout.Button("Éú³ÉÉ½Âö")) {
+        if (GUILayout.Button("ç”Ÿæˆå±±è„‰")) {
             GameObjectCreate obj = FindObjectOfType<GameObjectCreate>();
             if (obj) {
                 obj.CreateWorld();
             } else {
-                Debug.LogError("ÕÒ²»µ½¶ÔÏóÉú³ÉÆ÷");
+                Debug.LogError("æ‰¾ä¸åˆ°å¯¹è±¡ç”Ÿæˆå™¨");
             }
         }
     }

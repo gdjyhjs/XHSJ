@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -44,8 +44,8 @@ public class ItemTip : MonoBehaviour {
         item_use.SetActive(RoleData.mainRole.ItemIsEquip(item.id));
     }
     /*
-     * <color=#E28225FF>×°±¸ºó¿É»ñµÃÒÔÏÂÊôĞÔÊôĞÔ</color>
-±³°üÉÏÏŞ£º<color=#20C123FF>+12</color>
+     * <color=#E28225FF>è£…å¤‡åå¯è·å¾—ä»¥ä¸‹å±æ€§å±æ€§</color>
+èƒŒåŒ…ä¸Šé™ï¼š<color=#20C123FF>+12</color>
      * 
      */
     private string GetItemAttrDes(ItemStaticData staticData) {
@@ -53,7 +53,7 @@ public class ItemTip : MonoBehaviour {
             return null;
         }
         RoleAttrConfig[] attribute_config = RoleAttrConfigData.GetAttrConfig();
-        StringBuilder myString = new StringBuilder("<color=#E28225FF>×°±¸ºó¿É»ñµÃÒÔÏÂÊôĞÔ</color>");
+        StringBuilder myString = new StringBuilder("<color=#E28225FF>è£…å¤‡åå¯è·å¾—ä»¥ä¸‹å±æ€§</color>");
         for (int i = 0; i < staticData.attributes.Length; i++) {
             myString.AppendLine();
             myString.Append(attribute_config[(int)staticData.attributes[i]].name);
