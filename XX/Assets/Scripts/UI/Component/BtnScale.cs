@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class BtnScale : MonoBehaviour {
     public int scale_speed = 1;
     public int show_id = -1;
+    public string show_str;
     public string window_name;
     public string sub_window_name;
     float scale = 1;
@@ -29,7 +30,7 @@ public class BtnScale : MonoBehaviour {
     }
 
     private void OnEnter(BaseEventData data) {
-        if (show_id> 0) {
+        if (show_id > 0) {
             string ex = "";
             if (!string.IsNullOrWhiteSpace(window_name)) {
                 foreach (SettingStruct item in SettingData.instance.worldShortcutKeys) {
@@ -41,11 +42,13 @@ public class BtnScale : MonoBehaviour {
                 }
             }
             EnterPointTips.instance.ShowTips(show_id, (RectTransform)transform, ex);
+        } else if (!string.IsNullOrWhiteSpace(show_str)) {
+            EnterPointTips.instance.ShowTips("", (RectTransform)transform, show_str);
         }
         target_scale = 1.2f;
     }
     private void OnExit(BaseEventData data) {
-        if (show_id > 0) {
+        if (show_id > 0 || !string.IsNullOrWhiteSpace(show_str)) {
             EnterPointTips.instance.HideTips();
         }
         target_scale = 1;
