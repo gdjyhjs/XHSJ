@@ -1,4 +1,4 @@
-
+﻿
 
 [System.Serializable]
 public struct PointGameObject {

@@ -1,4 +1,4 @@
-
+﻿
 public enum GlobalAttribute {
     /// <summary>
     /// 时间(游戏中的虚拟时间)

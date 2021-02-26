@@ -1,4 +1,4 @@
-[System.Serializable]
+﻿[System.Serializable]
 public enum Sex {
     Both,
     Girl,
