@@ -108,7 +108,7 @@ public class MessageWindow : MonoBehaviour {
         if (cur_msg.auto_ok != 0) {
             t_ok.text = string.Format("{0}（{1}）", MessageData.GetMessage(78), (int)(cur_msg.auto_ok - show_time));
         } else if (cur_msg.auto_cancel != 0) {
-            t_ok.text = string.Format("{0}（{1}）", MessageData.GetMessage(79), (int)(cur_msg.auto_cancel - show_time));
+            t_cancel.text = string.Format("{0}（{1}）", MessageData.GetMessage(79), (int)(cur_msg.auto_cancel - show_time));
         }
     }
 }

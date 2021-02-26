@@ -119,6 +119,7 @@ public class SettingWindow : BaseWindow {
     public static int wait_key = -1;
     // 点击了要修改快捷键 idx0开始是战斗 10000开始的是大世界
     void ClickKeyChange(int idx) {
+        ischange = true;
         if (wait_key > -1) {
             if (wait_key < 10000) {
                 Text tKeyCode = battleRoot.GetChild(wait_key).Find("tKeyCode").GetComponent<Text>();
@@ -217,18 +218,6 @@ public class SettingWindow : BaseWindow {
         }
     }
 
-    //private void Update() {
-    //    if (wait_key > -1) {
-    //        if (Input.GetMouseButtonUp(0)) {
-    //            OnKeyChange(KeyCode.Mouse0);
-    //        } else if (Input.GetMouseButtonUp(1)) {
-    //            OnKeyChange(KeyCode.Mouse1);
-    //        } else if (Input.GetMouseButtonUp(2)) {
-    //            OnKeyChange(KeyCode.Mouse2);
-    //        }
-    //    }
-    //}
-
     public void OnRecoverBattleKey() {
         ischange = true;
         SettingData.instance.battleShortcutKeys = new SettingData().battleShortcutKeys;
@@ -285,7 +274,7 @@ public class SettingWindow : BaseWindow {
 
         }
 
-        MessageWindow.CheckMessage(51, 80, () => {
+        MessageWindow.CheckMessage(51, 80, () => { // 是否保存设置
             SettingData.instance.resolutionl_width = width;
             SettingData.instance.resolutionl_height = height;
         }, () => {
@@ -294,7 +283,7 @@ public class SettingWindow : BaseWindow {
             int idx = GetResolutionOptions();
             dropdown.value = idx;
             initok = true;
-        }, 0, 10);
+        }, 5, 0);
 
     }
 
@@ -371,11 +360,11 @@ public class SettingWindow : BaseWindow {
 
         if (ischange) {
             MessageWindow.CheckMessage(51, 81, () => {
+                base.ClickClose();
                 SettingData.SaveSetting();
-                base.ClickClose();
             }, () => {
-                SettingData.Rest();
                 base.ClickClose();
+                SettingData.Rest();
             });
         } else {
             base.ClickClose();
