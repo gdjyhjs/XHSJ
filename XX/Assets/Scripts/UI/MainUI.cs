@@ -70,7 +70,7 @@ public class MainUI : MonoBehaviour
     }
 
     private IEnumerator MoveConfig(string file_path) {
-        //string path = Application.dataPath + "/StreamingAssets/" + file_path;
+        string //path = Application.dataPath + "/StreamingAssets/" + file_path;
         path = Application.streamingAssetsPath +"/"+ file_path;
         var url = new System.Uri(path);
         Debug.LogError(url);
