@@ -70,8 +70,10 @@ public class MainUI : MonoBehaviour
     }
 
     private IEnumerator MoveConfig(string file_path) {
-        string path = Application.dataPath + "/StreamingAssets/" + file_path;
+        //string path = Application.dataPath + "/StreamingAssets/" + file_path;
+        path = Application.streamingAssetsPath +"/"+ file_path;
         var url = new System.Uri(path);
+        Debug.LogError(url);
         UnityEngine.Networking.UnityWebRequest www = UnityEngine.Networking.UnityWebRequest.Get(url);
         www.SendWebRequest();
         while (!www.isDone) {
@@ -81,9 +83,10 @@ public class MainUI : MonoBehaviour
             string result = www.downloadHandler.text;
             Tools.WriteAllText(file_path, result);
         } else {
-            Debug.LogError(file_path);
+            Debug.LogError(url);
             Debug.LogError(www.error);
         }
+        
         yield return 0;
     }
 

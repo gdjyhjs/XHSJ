@@ -105,7 +105,7 @@ public class GMCommand : MonoBehaviour
         }
     }
 
-    string err_command = "please input command: additem, clearbag, clearlog, set, game";
+    string err_command = "please input command: additem, clearbag, clearlog, set, game, test";
 
     private void DoCommand(string command) {
         string[] str = command.Split(' ');
