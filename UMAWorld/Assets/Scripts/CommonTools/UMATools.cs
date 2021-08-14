@@ -52,6 +52,12 @@ public static class UMATools {
         Avatar.BuildCharacter(true);
     }
 
+    // 清除槽位
+    public static void ClearRecipe(DynamicCharacterAvatar Avatar, string slotName) {
+        Avatar.ClearSlot(slotName);
+        Avatar.BuildCharacter(true);
+    }
+
     // 获取颜色
     public static void GetColors(DynamicCharacterAvatar Avatar) {
         OverlayColorData[] colors = Avatar.CurrentSharedColors;
@@ -68,11 +74,8 @@ public static class UMATools {
 
 
     // 获取DNA
-    public static void GetDna(DynamicCharacterAvatar Avatar) {
-        Dictionary<string, DnaSetter> AllDNA = Avatar.GetDNA();
-        foreach (KeyValuePair<string, DnaSetter> ds in AllDNA) {
-            Debug.Log("dna = " + ds.Value.Name);
-        }
+    public static Dictionary<string, DnaSetter> GetDna(DynamicCharacterAvatar Avatar) {
+        return Avatar.GetDNA();
     }
 
 
