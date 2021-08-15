@@ -109,7 +109,8 @@ public class UICreateRole : MonoBehaviour
     }
 
     private void Start() {
-        UMATools.SaveUMA(Avatar, "DefaultUMA");
+        InitAvatar();
+        InitColor();
     }
 
     public void GenerateANewUMA()
@@ -149,6 +150,7 @@ public class UICreateRole : MonoBehaviour
             go.GetComponentInChildren<LanguageText>().text = face;
             go.GetComponent<Button>().onClick.AddListener(() => {
                 UMATools.ChangeRace(Avatar, face);
+                InitAvatar();
             });
         }
     }
@@ -293,14 +295,10 @@ public class UICreateRole : MonoBehaviour
         }
     }
 
-    private void InitAvatar() {
-
-    }
-
 
     private void LookHead() {
         cam.TargetBone = MouseOrbitImproved.targetOpts.Head;
-        cam.distance = 0.5f;
+        cam.distance = 0.75f;
     }
     private void LookBody() {
         cam.TargetBone = MouseOrbitImproved.targetOpts.Chest;
@@ -309,5 +307,93 @@ public class UICreateRole : MonoBehaviour
     private void LookFoot() {
         cam.TargetBone = MouseOrbitImproved.targetOpts.LeftFoot;
         cam.distance = 1;
+    }
+    public void OnClickColors() {
+        StaticTools.DestoryChilds(list1);
+        StaticTools.DestoryChilds(list2);
+        LookHead();
+        OverlayColorData[] colors = UMATools.GetColors(Avatar);
+        foreach (OverlayColorData item in colors) {
+            GameObject go = Instantiate(btnPrefab, list1);
+            go.SetActive(true);
+            go.GetComponentInChildren<LanguageText>().text = item.name;
+            go.GetComponent<Button>().onClick.AddListener(() => {
+                StaticTools.DestoryChilds(list2);
+                Color[] cs = new Color[] { Color.white, Color.black, Color.red, Color.black, Color.gray, Color.green, Color.yellow };
+                string[] name = new string[] { "white", "black", "red", "black", "gray", "green", "yellow" };
+                int idx = 0;
+                foreach (Color color in cs) {
+                    string n = name[idx ++];
+                    GameObject go2 = Instantiate(btnPrefab, list2);
+                    go2.SetActive(true);
+                    go2.GetComponentInChildren<LanguageText>().text = n;
+                    go2.GetComponentInChildren<Button>().onClick.AddListener(()=> {
+                        UMATools.SetColors(Avatar, item, color);
+                    });
+                }
+            });
+        }
+    }
+
+    private void InitAvatar() {
+        // 随机上衣 裤子 鞋子
+        Dictionary<string, List<UMATextRecipe>> wardrobes = UMATools.GetWardrobes(Avatar);
+        foreach (string slotName in wardrobes.Keys) {
+            if (slotName == "Hands" || slotName == "AlternateHead" || slotName == "Complexion" || slotName == "Face" ||
+                slotName == "Helmet" || slotName == "Underwear" || slotName == "Ears" || slotName == "Physique" || slotName == "Shoulders"
+                || slotName == "Eyebrows" || slotName == "Eyes")
+                continue;
+
+            if (slotName == "Beard" && StaticTools.Random(0, wardrobes[slotName].Count + 1) == 0) {
+                UMATools.ClearRecipe(Avatar, slotName);
+                continue;
+            }
+            UMATools.SetRecipe(Avatar, wardrobes[slotName][StaticTools.Random(0, wardrobes[slotName].Count)]);
+        }
+    }
+
+    private void Update() {
+        OnColorChange();
+    }
+
+    [SerializeField]
+    GameObject colorPanel;
+    [SerializeField]
+    Color rawColor;
+    [SerializeField]
+    RawImage colorSV,colorH,colorR,colorG,colorB;
+    [SerializeField]
+    Texture2D texSV, texH, texR, texG, texB;
+
+    private void InitColor() {
+        texSV = new Texture2D(80, 80);
+        texH = new Texture2D(160, 160);
+        texR = new Texture2D(150, 20);
+        texG = new Texture2D(150, 20);
+        texB = new Texture2D(150, 20);
+        colorSV.texture = texSV;
+        colorH.texture = texH;
+        colorR.texture = texR;
+        colorG.texture = texG;
+        colorB.texture = texB;
+    }
+
+    public void OnColorChange() {
+        float h, s, v, r = rawColor.r, g = rawColor.g, b = rawColor.b;
+        StaticTools.ColorToHSV(rawColor, out h, out s, out v);
+        for (int x = 0; x < 80; x++) {
+            for (int y = 0; y < 80; y++) {
+                Color c = StaticTools.ColorFromHSV(h, x/80, y/80);
+                texSV.SetPixel(x, y, c);
+            }
+        }
+        for (int x = 0; x < 150; x++) {
+            for (int y = 0; y < 20; y++) {
+                texR.SetPixel(x, y, new Color(x / 255f, g, b, 1));
+                texG.SetPixel(x, y, new Color(r, x / 255f, b, 1));
+                texB.SetPixel(x, y, new Color(r, g, x / 255f, 1));
+            }
+        }
+
     }
 }

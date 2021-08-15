@@ -151,7 +151,7 @@ public static class ConfLanguage {
         ["eyeSize"] = new StructLanguage() { ch = "眼睛大小", en = "eyeSize" },
         ["breastSize"] = new StructLanguage() { ch = "乳房大小", en = "breastSize" },
         ["eyeSpacing"] = new StructLanguage() { ch = "眼间距", en = "eyeSpacing" },
-        ["Undies"] = new StructLanguage() { ch = "内衣1", en = "Undies" },
+        ["Undies"] = new StructLanguage() { ch = "内衣", en = "Undies" },
         ["Ladies Intimate Wear"] = new StructLanguage() { ch = "内衣2", en = "Ladies Intimate Wear" },
         ["FemaleHandsMid"] = new StructLanguage() { ch = "女性双手中间", en = "Female Hands Mid" },
         ["FemaleTankTop"] = new StructLanguage() { ch = "背心", en = "Female Tank Top" },
@@ -167,5 +167,10 @@ public static class ConfLanguage {
         ["High Tops - Black"] = new StructLanguage() { ch = "黑色", en = "High Tops Black" },
         ["High Tops - Turquoise"] = new StructLanguage() { ch = "松绿", en = "High Tops Turquoise" },
         ["High Tops - White"] = new StructLanguage() { ch = "白色", en = "High Tops White" },
+        ["Color"] = new StructLanguage() { ch = "颜色", en = "Color" },
+        ["Lipstick"] = new StructLanguage() { ch = "口红", en = "Lipstick" },
+        ["Shirt"] = new StructLanguage() { ch = "衬衫", en = "Shirt" },
+        ["Pants Accent"] = new StructLanguage() { ch = "裤子", en = "Pants Accent" },
+        ["Pants"] = new StructLanguage() { ch = "裤子", en = "Pants" },
     };
 }

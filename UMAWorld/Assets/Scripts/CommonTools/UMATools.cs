@@ -30,19 +30,6 @@ public static class UMATools {
     // 获取槽位
     public static Dictionary<string, List<UMATextRecipe>> GetWardrobes(DynamicCharacterAvatar Avatar) {
         Dictionary<string, List<UMATextRecipe>> recipes = Avatar.AvailableRecipes;
-        //foreach (KeyValuePair<string, List<UMATextRecipe>> item in recipes) {
-        //    string SlotName = item.Key;
-        //    Debug.Log("槽位名字 = " + SlotName);
-        //    List<UMATextRecipe> SlotRecipes = item.Value;
-        //    foreach (UMATextRecipe utr in SlotRecipes) {
-        //        string name;
-        //        if (string.IsNullOrEmpty(utr.DisplayValue))
-        //            name = utr.name;
-        //        else
-        //            name = utr.DisplayValue;
-        //        Debug.Log("配件名字 = " + name);
-        //    }
-        //}
         return recipes;
     }
 
@@ -59,17 +46,15 @@ public static class UMATools {
     }
 
     // 获取颜色
-    public static void GetColors(DynamicCharacterAvatar Avatar) {
+    public static OverlayColorData[] GetColors(DynamicCharacterAvatar Avatar) {
         OverlayColorData[] colors = Avatar.CurrentSharedColors;
-        foreach (UMA.OverlayColorData ocd in colors) {
-            Debug.Log("颜色配件 = " + ocd.name);
-        }
+        return colors;
     }
 
     // 设置颜色
-    public static void SetColors(DynamicCharacterAvatar Avatar, string colorName, OverlayColorData ocd) {
-        OverlayColorData[] colors = Avatar.CurrentSharedColors;
-        Avatar.SetColor(colorName, ocd);
+    public static void SetColors(DynamicCharacterAvatar Avatar, OverlayColorData ocd, Color color) {
+        ocd.channelMask[0] = color;
+        Avatar.SetColor(ocd.name, ocd, true);
     }
 
 
