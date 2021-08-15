@@ -170,7 +170,8 @@ public static class ConfLanguage {
         ["Color"] = new StructLanguage() { ch = "颜色", en = "Color" },
         ["Lipstick"] = new StructLanguage() { ch = "口红", en = "Lipstick" },
         ["Shirt"] = new StructLanguage() { ch = "衬衫", en = "Shirt" },
-        ["Pants Accent"] = new StructLanguage() { ch = "裤子", en = "Pants Accent" },
+        ["Pants Accent"] = new StructLanguage() { ch = "裤子花纹", en = "Pants Accent" },
         ["Pants"] = new StructLanguage() { ch = "裤子", en = "Pants" },
+        ["HairAccent"] = new StructLanguage() { ch = "发饰", en = "HairAccent" },
     };
 }

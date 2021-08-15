@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[ExecuteInEditMode]
 [RequireComponent(typeof(Text))]
 public class LanguageText : MonoBehaviour
 {

@@ -21,6 +21,12 @@ public class UICreateRole : MonoBehaviour
     public Transform list2;
     public MouseOrbitImproved cam;
 
+    [SerializeField]
+    GameObject colorPanel;
+
+
+    string Select2;
+
 
     string[] races = new string[]{
         "HumanFemale",
@@ -110,7 +116,6 @@ public class UICreateRole : MonoBehaviour
 
     private void Start() {
         InitAvatar();
-        InitColor();
     }
 
     public void GenerateANewUMA()
@@ -140,6 +145,7 @@ public class UICreateRole : MonoBehaviour
 
 
     public void OnClickRace() {
+        colorPanel.gameObject.SetActive(false);
         StaticTools.DestoryChilds(list1);
         StaticTools.DestoryChilds(list2);
         LookBody();
@@ -156,6 +162,7 @@ public class UICreateRole : MonoBehaviour
     }
 
     public void OnClickWardrobes() {
+        colorPanel.gameObject.SetActive(false);
         StaticTools.DestoryChilds(list1);
         StaticTools.DestoryChilds(list2);
         LookBody();
@@ -208,6 +215,7 @@ public class UICreateRole : MonoBehaviour
     }
 
     public void OnClickBody() {
+        colorPanel.gameObject.SetActive(false);
         StaticTools.DestoryChilds(list1);
         StaticTools.DestoryChilds(list2);
         LookBody();
@@ -215,6 +223,7 @@ public class UICreateRole : MonoBehaviour
     }
 
     public void OnClickFace() {
+        colorPanel.gameObject.SetActive(false);
         StaticTools.DestoryChilds(list1);
         StaticTools.DestoryChilds(list2);
         LookHead();
@@ -309,6 +318,7 @@ public class UICreateRole : MonoBehaviour
         cam.distance = 1;
     }
     public void OnClickColors() {
+        colorPanel.gameObject.SetActive(false);
         StaticTools.DestoryChilds(list1);
         StaticTools.DestoryChilds(list2);
         LookHead();
@@ -318,19 +328,10 @@ public class UICreateRole : MonoBehaviour
             go.SetActive(true);
             go.GetComponentInChildren<LanguageText>().text = item.name;
             go.GetComponent<Button>().onClick.AddListener(() => {
-                StaticTools.DestoryChilds(list2);
-                Color[] cs = new Color[] { Color.white, Color.black, Color.red, Color.black, Color.gray, Color.green, Color.yellow };
-                string[] name = new string[] { "white", "black", "red", "black", "gray", "green", "yellow" };
-                int idx = 0;
-                foreach (Color color in cs) {
-                    string n = name[idx ++];
-                    GameObject go2 = Instantiate(btnPrefab, list2);
-                    go2.SetActive(true);
-                    go2.GetComponentInChildren<LanguageText>().text = n;
-                    go2.GetComponentInChildren<Button>().onClick.AddListener(()=> {
-                        UMATools.SetColors(Avatar, item, color);
-                    });
-                }
+                colorPanel.gameObject.SetActive(true);
+                colorPanel.GetComponent<UIColorPanel>().SetColor(item.channelMask[0], (color)=> {
+                    UMATools.SetColors(Avatar, item, color);
+                });
             });
         }
     }
@@ -350,50 +351,5 @@ public class UICreateRole : MonoBehaviour
             }
             UMATools.SetRecipe(Avatar, wardrobes[slotName][StaticTools.Random(0, wardrobes[slotName].Count)]);
         }
-    }
-
-    private void Update() {
-        OnColorChange();
-    }
-
-    [SerializeField]
-    GameObject colorPanel;
-    [SerializeField]
-    Color rawColor;
-    [SerializeField]
-    RawImage colorSV,colorH,colorR,colorG,colorB;
-    [SerializeField]
-    Texture2D texSV, texH, texR, texG, texB;
-
-    private void InitColor() {
-        texSV = new Texture2D(80, 80);
-        texH = new Texture2D(160, 160);
-        texR = new Texture2D(150, 20);
-        texG = new Texture2D(150, 20);
-        texB = new Texture2D(150, 20);
-        colorSV.texture = texSV;
-        colorH.texture = texH;
-        colorR.texture = texR;
-        colorG.texture = texG;
-        colorB.texture = texB;
-    }
-
-    public void OnColorChange() {
-        float h, s, v, r = rawColor.r, g = rawColor.g, b = rawColor.b;
-        StaticTools.ColorToHSV(rawColor, out h, out s, out v);
-        for (int x = 0; x < 80; x++) {
-            for (int y = 0; y < 80; y++) {
-                Color c = StaticTools.ColorFromHSV(h, x/80, y/80);
-                texSV.SetPixel(x, y, c);
-            }
-        }
-        for (int x = 0; x < 150; x++) {
-            for (int y = 0; y < 20; y++) {
-                texR.SetPixel(x, y, new Color(x / 255f, g, b, 1));
-                texG.SetPixel(x, y, new Color(r, x / 255f, b, 1));
-                texB.SetPixel(x, y, new Color(r, g, x / 255f, 1));
-            }
-        }
-
     }
 }

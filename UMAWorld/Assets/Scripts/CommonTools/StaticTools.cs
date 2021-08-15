@@ -5,7 +5,6 @@ using UnityEngine;
 public static class StaticTools
 {
     public static void Init() {
-        language = GetString("language", "cn");
     }
 
     public static string GetString(string key, string defValue = null) {
@@ -188,6 +187,7 @@ public static class StaticTools
     static string language = "ch";
     static List<string> list = new List<string>();
     public static string LS(string key) {
+        language = GetString("language", "cn");
         if (string.IsNullOrWhiteSpace(key))
             return key;
         if (ConfLanguage.config.ContainsKey(key)) {
