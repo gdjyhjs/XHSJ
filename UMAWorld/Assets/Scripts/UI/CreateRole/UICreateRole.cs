@@ -127,6 +127,7 @@ public class UICreateRole : MonoBehaviour
     public void StartGame()
     {
         UMATools.SaveUMA(Avatar);
+        StaticTools.LoadScene("World");
     }
 
     public void RestUMA() {

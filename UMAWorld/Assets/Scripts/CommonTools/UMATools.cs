@@ -1,4 +1,4 @@
-using System.Collections;
+锘縰sing System.Collections;
 using System.Collections.Generic;
 using UMA;
 using UMA.CharacterSystem;
@@ -6,12 +6,12 @@ using UnityEngine;
 
 public static class UMATools {
 
-    // 保存捏人
+    // 淇濆瓨鎹忎汉
     public static void SaveUMA(DynamicCharacterAvatar Avatar, string key = "PlayerUMA") {
         StaticTools.SetString(key, Avatar.GetCurrentRecipe());
     }
 
-    // 读取捏人
+    // 璇诲彇鎹忎汉
     public static void LoadUMA(DynamicCharacterAvatar Avatar, string key = "PlayerUMA") {
         string str = StaticTools.GetString(key);
         if (string.IsNullOrEmpty(str))
@@ -20,51 +20,51 @@ public static class UMATools {
         Avatar.BuildCharacter(false);
     }
 
-    // 变更种族
+    // 鍙樻洿绉嶆棌
     public static void ChangeRace(DynamicCharacterAvatar Avatar, string race) {
         Avatar.ChangeRace(race);
         Avatar.gameObject.SetActive(true);
         Avatar.BuildCharacterEnabled = true;
     }
     
-    // 获取槽位
+    // 鑾峰彇妲戒綅
     public static Dictionary<string, List<UMATextRecipe>> GetWardrobes(DynamicCharacterAvatar Avatar) {
         Dictionary<string, List<UMATextRecipe>> recipes = Avatar.AvailableRecipes;
         return recipes;
     }
 
-    // 插入槽位
+    // 鎻掑叆妲戒綅
     public static void SetRecipe(DynamicCharacterAvatar Avatar, UMATextRecipe recipe) {
         Avatar.SetSlot(recipe);
         Avatar.BuildCharacter(true);
     }
 
-    // 清除槽位
+    // 娓呴櫎妲戒綅
     public static void ClearRecipe(DynamicCharacterAvatar Avatar, string slotName) {
         Avatar.ClearSlot(slotName);
         Avatar.BuildCharacter(true);
     }
 
-    // 获取颜色
+    // 鑾峰彇棰滆壊
     public static OverlayColorData[] GetColors(DynamicCharacterAvatar Avatar) {
         OverlayColorData[] colors = Avatar.CurrentSharedColors;
         return colors;
     }
 
-    // 设置颜色
+    // 璁剧疆棰滆壊
     public static void SetColors(DynamicCharacterAvatar Avatar, OverlayColorData ocd, Color color) {
         ocd.channelMask[0] = color;
         Avatar.SetColor(ocd.name, ocd, true);
     }
 
 
-    // 获取DNA
+    // 鑾峰彇DNA
     public static Dictionary<string, DnaSetter> GetDna(DynamicCharacterAvatar Avatar) {
         return Avatar.GetDNA();
     }
 
 
-    // 设置DNA
+    // 璁剧疆DNA
     public static void SetDna(DynamicCharacterAvatar Avatar, string dnaName, float value) {
         Avatar.GetDNA()[dnaName].Set(value);
         Avatar.ForceUpdate(true);

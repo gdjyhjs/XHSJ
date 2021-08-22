@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,6 +47,7 @@ public static class StaticTools
     public static int Random(int min, int max) {
         return UnityEngine.Random.Range(min, max);
     }
+
 
     public static float Random(float min, float max) {
         return UnityEngine.Random.Range(min, max);
@@ -146,7 +147,9 @@ public static class StaticTools
             h += 360;
     }
 
-
+    public static void LoadScene(string sceneName) {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
 
 
 
@@ -185,26 +188,34 @@ public static class StaticTools
 
 
     static string language = "ch";
+#if UNITY_EDITOR
     static List<string> list = new List<string>();
+#endif
     public static string LS(string key) {
         language = GetString("language", "cn");
-        if (string.IsNullOrWhiteSpace(key))
+        if (key == null)
             return key;
-        if (ConfLanguage.config.ContainsKey(key)) {
+        ConfLanguageItem item = g.conf.language.GetItem(key);
+        if (item != null) {
             switch (language) {
                 case "en":
-                    return ConfLanguage.config[key].en;
+                    return item.en;
                 case "ch":
                 default:
-                    return ConfLanguage.config[key].ch;
+                    return item.ch;
             }
         }
+
+#if UNITY_EDITOR
         if (!list.Contains(key)) {
             list.Add(key);
             Debug.LogWarning(string.Join("\n", list.ToArray()));
         }
+        return "?" + key;
+#else
+        return key;
+#endif
 
-        return "?"+ key;
     }
 
 

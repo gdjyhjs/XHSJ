@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -40,6 +40,24 @@ public class UIColorPanel : MonoBehaviour {
         sliderG.onValueChanged.AddListener(OnChangeG);
         sliderB.onValueChanged.AddListener(OnChangeB);
 
+        InputR.onValueChanged.AddListener((value) => {
+            int.TryParse(value, out int r);
+            r = Mathf.Clamp(r, 0, 255);
+            OnChangeR(r / 255f);
+        });
+
+        InputG.onValueChanged.AddListener((value) => {
+            int.TryParse(value, out int g);
+            g = Mathf.Clamp(g, 0, 255);
+            OnChangeG(g / 255f);
+        });
+
+        InputB.onValueChanged.AddListener((value) => {
+            int.TryParse(value, out int b);
+            b = Mathf.Clamp(b, 0, 255);
+            OnChangeB(b / 255f);
+        });
+
         EventTrigger triggerSV = colorSV.gameObject.AddComponent<EventTrigger>();
 
         EventTrigger.Entry clickSV = new EventTrigger.Entry();
@@ -65,24 +83,6 @@ public class UIColorPanel : MonoBehaviour {
 
         triggerH.triggers.Add(clickH);
         triggerH.triggers.Add(dragH);
-
-        InputR.onValueChanged.AddListener((value) => {
-            int.TryParse(value, out int r);
-            r = Mathf.Clamp(r, 0, 255);
-            OnChangeR(r / 255f);
-        });
-
-        InputG.onValueChanged.AddListener((value) => {
-            int.TryParse(value, out int g);
-            g = Mathf.Clamp(g, 0, 255);
-            OnChangeG(g / 255f);
-        });
-
-        InputB.onValueChanged.AddListener((value) => {
-            int.TryParse(value, out int b);
-            b = Mathf.Clamp(b, 0, 255);
-            OnChangeB(b / 255f);
-        });
     }
 
     private void OnDisable() {
