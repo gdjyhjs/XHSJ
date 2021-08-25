@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public static class StaticTools
 {
@@ -11,7 +15,14 @@ public static class StaticTools
         return PlayerPrefs.GetString(key, defValue);
     }
 
-    public static bool HasString(string key) {
+    public static int GetInt(string key, int defValue = 0) {
+        if (int.TryParse(PlayerPrefs.GetString(key), out int value))
+            return value;
+        else
+            return defValue;
+    }
+
+    public static bool HasKey(string key) {
         return PlayerPrefs.HasKey(key);
     }
 
@@ -19,8 +30,12 @@ public static class StaticTools
         PlayerPrefs.SetString(key, value);
     }
 
+    public static void SetString(string key, int value) {
+        PlayerPrefs.SetString(key, value.ToString());
+    }
+
     public static void ChangeLanguage(string l) {
-        SetString("language", l);
+        SetString(DataKey.Language, l);
         language = l;
         LanguageText[] v = GameObject.FindObjectsOfType<LanguageText>();
         foreach (LanguageText item in v) {
@@ -151,7 +166,42 @@ public static class StaticTools
         UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
+    private class Pack<T> {
+        public T data;
+    }
 
+    public static string ToJson<T>(T obj) {
+        string json = JsonConvert.SerializeObject(obj);
+        return json;
+    }
+
+    public static T FromJson<T>(string json) {
+        return JsonConvert.DeserializeObject<T>(json);
+    }
+
+    /// <summary> 
+    /// 将一个object对象序列化，返回一个byte[]         
+    /// </summary> 
+    /// <param name="obj">能序列化的对象</param>         
+    /// <returns></returns> 
+    public static byte[] ObjectToBytes<T>(T obj) {
+        using (MemoryStream ms = new MemoryStream()) {
+            IFormatter formatter = new BinaryFormatter(); formatter.Serialize(ms, obj);
+            return ms.GetBuffer();
+        }
+    }
+
+    /// <summary> 
+    /// 将一个序列化后的byte[]数组还原         
+    /// </summary>
+    /// <param name="Bytes"></param>         
+    /// <returns></returns> 
+    public static T BytesToObject<T>(byte[] Bytes) {
+        using (MemoryStream ms = new MemoryStream(Bytes)) {
+            IFormatter formatter = new BinaryFormatter();
+            return (T)formatter.Deserialize(ms);
+        }
+    }
 
 
 
@@ -192,7 +242,7 @@ public static class StaticTools
     static List<string> list = new List<string>();
 #endif
     public static string LS(string key) {
-        language = GetString("language", "cn");
+        language = GetString(DataKey.Language, "cn");
         if (key == null)
             return key;
         ConfLanguageItem item = g.conf.language.GetItem(key);

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class g : MonoBehaviour {
-    private static Game _game;
-    public static Game game
+    private static game _game;
+    public static game game
     {
         get {
             if (_game == null) {
@@ -21,6 +21,9 @@ public class g : MonoBehaviour {
     }
     public static TimerMgr timer { get { return game.timer; } }
     public static ConfMgr conf { get { return game.conf; } }
+    public static WorldMgr world { get { return game.world; } }
+    public static DataMgr data { get { return game.data; } }
+    public static UnitMgr units { get { return game.units; } }
 
     bool isInit;
     public void Awake() {
@@ -29,7 +32,7 @@ public class g : MonoBehaviour {
 
     public void Init() {
         isInit = true;
-        _game = StaticTools.GetOrAddComponent<Game>(gameObject);
+        _game = StaticTools.GetOrAddComponent<game>(gameObject);
         _game.Init();
     }
 }

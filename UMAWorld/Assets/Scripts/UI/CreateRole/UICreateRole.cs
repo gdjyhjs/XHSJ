@@ -20,6 +20,7 @@ public class UICreateRole : MonoBehaviour
     public Transform list1;
     public Transform list2;
     public MouseOrbitImproved cam;
+    public InputField inputPlayerName;
 
     [SerializeField]
     GameObject colorPanel;
@@ -126,12 +127,22 @@ public class UICreateRole : MonoBehaviour
 
     public void StartGame()
     {
-        UMATools.SaveUMA(Avatar);
+        if (string.IsNullOrWhiteSpace(inputPlayerName.text)) {
+            return;
+        }
+
+        string data = UMATools.SaveUMA(Avatar);
+        string id = inputPlayerName.text;
+        UnitBase player = g.units.NewUnit(id);
+        g.units.playerUnitID = id;
+        player.appearance.umaData = data;
+        g.data.SaveGame(id);
+        StaticTools.SetString(DataKey.onPlayerName, id);
         StaticTools.LoadScene("World");
     }
 
     public void RestUMA() {
-        UMATools.LoadUMA(Avatar);
+        //UMATools.LoadUMA(Avatar);
     }
 
     

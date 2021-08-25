@@ -7,17 +7,14 @@ using UnityEngine;
 public static class UMATools {
 
     // 保存捏人
-    public static void SaveUMA(DynamicCharacterAvatar Avatar, string key = "PlayerUMA") {
-        StaticTools.SetString(key, Avatar.GetCurrentRecipe());
+    public static string SaveUMA(DynamicCharacterAvatar Avatar) {
+        return Avatar.GetCurrentRecipe();
     }
 
     // 读取捏人
-    public static void LoadUMA(DynamicCharacterAvatar Avatar, string key = "PlayerUMA") {
-        string str = StaticTools.GetString(key);
-        if (string.IsNullOrEmpty(str))
-            return;
-        Avatar.LoadFromRecipeString(str);
-        Avatar.BuildCharacter(false);
+    public static void LoadUMA(DynamicCharacterAvatar Avatar, string data) {
+        Avatar.LoadFromRecipeString(data);
+        Avatar.BuildCharacter(true);
     }
 
     // 变更种族

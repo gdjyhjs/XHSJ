@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+
 [ExecuteInEditMode]
 [RequireComponent(typeof(Text))]
 public class LanguageText : MonoBehaviour
@@ -18,7 +19,7 @@ public class LanguageText : MonoBehaviour
     }
     private Text uitext;
     private void Awake() {
-        uitext = GetComponent<Text>();
+        uitext = StaticTools.GetOrAddComponent<Text>(gameObject);
     }
     public void OnEnable() {
         uitext.text = StaticTools.LS(m_text);

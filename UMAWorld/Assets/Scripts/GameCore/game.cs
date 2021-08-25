@@ -2,11 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Game : MonoBehaviour {
+public class game : MonoBehaviour {
     public TimerMgr timer;
-    public ConfMgr conf = new ConfMgr();
+    public WorldMgr world;
+    public ConfMgr conf;
+    public DataMgr data;
+    public UnitMgr units;
+
 
     public void Init() {
+        conf = new ConfMgr();
+        data = new DataMgr();
+        units = new UnitMgr();
+
         timer = StaticTools.GetOrAddComponent<TimerMgr>(gameObject);
         conf.Init(() => Debug.Log("conf ok"));
     }

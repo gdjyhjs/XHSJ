@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-// 外观
+// 外观json
 public class Appearance
 {
     public enum Sex {
