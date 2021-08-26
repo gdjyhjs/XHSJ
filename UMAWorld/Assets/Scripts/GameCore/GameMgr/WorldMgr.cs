@@ -15,7 +15,9 @@ public class WorldMgr : MonoBehaviour {
         g.data.LoadGame(playerName);
     }
 
-    private void Start() {
+    private IEnumerator Start() {
+        yield return InitWorld();
+
         UnitBase player = g.units.player;
         GameObject go = GameObject.Instantiate(Avatar.gameObject);
         mainRoleCamera.SwitchTarget(go.transform);
@@ -26,5 +28,13 @@ public class WorldMgr : MonoBehaviour {
         go.AddComponent<UnitMono>().unitData = player;
 
         go.AddComponent<PlayerInput>();
+    }
+
+    private IEnumerator InitWorld() {
+        
+
+
+
+        yield break;
     }
 }

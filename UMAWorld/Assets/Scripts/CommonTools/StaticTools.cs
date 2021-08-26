@@ -172,6 +172,7 @@ public static class StaticTools
 
     public static string ToJson<T>(T obj) {
         string json = JsonConvert.SerializeObject(obj);
+        Debug.Log(json);
         return json;
     }
 

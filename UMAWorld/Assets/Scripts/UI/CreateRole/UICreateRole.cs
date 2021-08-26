@@ -136,7 +136,7 @@ public class UICreateRole : MonoBehaviour
         UnitBase player = g.units.NewUnit(id);
         g.units.playerUnitID = id;
         player.appearance.umaData = data;
-        g.data.SaveGame(id);
+        g.data.SaveGame(id, 0);
         StaticTools.SetString(DataKey.onPlayerName, id);
         StaticTools.LoadScene("World");
     }
