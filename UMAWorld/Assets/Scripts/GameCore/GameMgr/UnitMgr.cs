@@ -17,13 +17,13 @@ public class UnitMgr{
         return null;
     }
 
-    public UnitBase NewUnit(string id) {
-        if (allUnit.ContainsKey(id)) {
+    public UnitBase NewUnit(string unitName) {
+        if (allUnit.ContainsKey(unitName)) {
             return null;
         }
         UnitBase unit = new UnitBase();
-        unit.id = id;
-        allUnit.Add(id, unit);
+        unit.id = unitName;
+        allUnit.Add(unitName, unit);
         return unit;
     }
 }

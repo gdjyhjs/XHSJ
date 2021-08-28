@@ -19,7 +19,7 @@ public class UIColorPanel : MonoBehaviour {
     float h
     {
         get { return m_h; }
-        set { m_h = value; if(h < 0 || h == 300)Debug.Log(h); }
+        set { m_h = value; if(h < 0 || h == 300); }
     }
 
     [SerializeField]

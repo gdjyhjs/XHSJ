@@ -73,4 +73,6 @@ public static class GameConf {
     }             //是否开启多线程
     public static bool isDebug = true;             //是否测试模式
     public static int version = 1;             //游戏版本
+
+    public static string unitTag = "WorldUnit";
 }
