@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 72ec7e30b213b6946830c90162c53dbe, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4512573, g: 0.5009575, b: 0.57346565, a: 1}
+  m_IndirectSpecularColor: {r: 0.30638552, g: 0.3686609, b: 0.4502297, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 8a52c95db5ba6d645bcea95be652ba64, type: 2}
 --- !u!1 &11800564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1312,34 @@ PrefabInstance:
     - target: {fileID: 1895455497775062649, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
       propertyPath: m_Name
       value: Environment Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775062649, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775078631, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775086147, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775122445, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775133985, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775141159, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1895455497775151599, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1895455497775359435, guid: 550eea02e5d133341887fa742755c7b8, type: 3}
       propertyPath: m_RootOrder

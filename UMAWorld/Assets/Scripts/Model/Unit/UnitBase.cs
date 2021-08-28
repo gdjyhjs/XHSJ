@@ -33,6 +33,8 @@ public class UnitBase {
     public SkillManager skillManager;
     public BuffManager buffManager;
 
+    public List<string> enemys = new List<string>();
+
     public UnitBase() {
         appearance = new Appearance();
         attribute = new Attribute();
@@ -48,13 +50,14 @@ public class UnitBase {
     /// <param name="skillQuale">技能性质</param>
     /// <param name="skillType">技能类型</param>
     public void SkillEffect(float value, UnitBase attacker, SkillQuale skillQuale, SkillType skillType) {
-        if (skillType <= SkillType.EffectSkillStart && skillType <= SkillType.EffectSkillEnd) {
+
+        if (skillType >= SkillType.EffectSkillStart && skillType <= SkillType.EffectSkillEnd) {
+            // 特殊技能的效果
             if (skillType == SkillType.Recover) {
                 attribute.health_cur = Mathf.Min(attribute.health_max, attribute.health_cur + value);
-                return;
             }
-        } else if (skillType <= SkillType.DamageSkillStart && skillType <= SkillType.DamageSkillEnd) {
-
+        } else if (skillType >= SkillType.DamageSkillStart && skillType <= SkillType.DamageSkillEnd) {
+            // 造成伤害的技能
             switch (skillQuale) {
                 case SkillQuale.Without:
                     value -= attribute.defence;
@@ -80,10 +83,30 @@ public class UnitBase {
                 default:
                     break;
             }
-            attribute.health_cur = attribute.health_cur + Mathf.Min(-1, value);
+            value = Mathf.Max(1, value);
+            attribute.health_cur = attribute.health_cur - value;
+        } else {
+            Debug.Log("意外的技能类型：" + skillType);
         }
         if (attribute.health_cur <= 0) {
             Die();
+        }
+        if (id == g.units.playerUnitID) {
+            g.uiWorldMain.UpdateHP();
+        } else {
+            AddEnemy(attacker.id);
+        }
+    }
+
+    public void AddEnemy(string id) {
+        if (!enemys.Contains(id)) {
+            enemys.Add(id);
+        }
+    }
+
+    public void RemoveEnemy(string id) {
+        if (enemys.Contains(id)) {
+            enemys.Remove(id);
         }
     }
 
@@ -93,7 +116,7 @@ public class UnitBase {
     public void Die() {
         isDie = true;
         if (mono != null) {
-            mono.persion.PlayDie(true);
+            mono.persion.PlayDie();
         }
     }
 
@@ -103,7 +126,7 @@ public class UnitBase {
     public void Revive() {
         isDie = false;
         if (mono != null) {
-            mono.persion.PlayDie(false);
+            mono.persion.PlayRevive();
         }
     }
 }

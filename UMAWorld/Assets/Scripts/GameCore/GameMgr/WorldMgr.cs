@@ -42,6 +42,8 @@ public class WorldMgr : MonoBehaviour {
         g.uiWorldMain.UpdateUI();
 
         StartCoroutine(Test());
+
+        player.attribute.damage += 30;
     }
 
     private IEnumerator InitWorld() {
@@ -60,7 +62,7 @@ public class WorldMgr : MonoBehaviour {
 
             for (int i = npcs.Count - 1; i >= 0; i--) {
                 if (npcs[i].unitData.isDie) {
-                    Destroy(npcs[i].unitData.mono.gameObject);
+                    Destroy(npcs[i].unitData.mono.gameObject, 5f);
                     npcs.RemoveAt(i);
                 }
             }
@@ -85,8 +87,8 @@ public class WorldMgr : MonoBehaviour {
                 unit.mono.unitData = unit;
                 unit.mono.avatar = avatar;
                 // 添加控制器
-                //go.AddComponent<UserInput>();
-                //unit.mono.persion = go.GetComponent<ThirdPersonCharacter>();
+                go.AddComponent<UnitAI>();
+                unit.mono.persion = go.GetComponent<ThirdPersonCharacter>();
                 go.transform.position = new Vector3(StaticTools.Random(-10, 10), 0, StaticTools.Random(-10, 10));
                 // 动画事件
                 go.GetComponent<AnimEvent>().unitMono = unit.mono;

@@ -226,8 +226,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
              m_Animator.SetTrigger(name);
         }
 
-        public void PlayDie(bool isDie) {
-            m_Animator.SetBool("IsDie", isDie);
+        public void PlayDie() {
+            m_Animator.SetTrigger("OnDie");
+        }
+
+        public void PlayRevive() {
+            m_Animator.SetTrigger("OnRevive");
         }
     }
 }

@@ -10,7 +10,8 @@ public class SkillMono:MonoBehaviour
     public SkillBase skillData;
     public ConfSkillItem skillConf;
     public Vector3 targetPos;
-    public float duration;
+    public float duration; // 持续时间
+    public float through; // 穿透次数
 
 
     public void Init(UnitBase ownerUnit, UnitMono ownerMono, SkillBase skillData, Vector3 targetPos) {
@@ -20,6 +21,7 @@ public class SkillMono:MonoBehaviour
         this.targetPos = targetPos;
         skillConf = g.conf.skill.GetItem(skillData.ID);
         duration = skillConf.duration;
+        through = skillConf.through;
     }
 
     protected virtual void Start() {
@@ -38,11 +40,13 @@ public class SkillMono:MonoBehaviour
     }
 
     protected virtual void OnTriggerEnter(Collider other) {
-        if (ownerMono.gameObject == other.gameObject)
+        if (ownerMono.gameObject == other.gameObject) {
+            //撞到自己不算数
             return;
+        }
         if (other.tag == GameConf.unitTag) {
             UnitMono enemy = other.GetComponent<UnitMono>();
-            if (enemy) {
+            if (enemy && !enemy.unitData.isDie) {
                 OnHit(enemy);
             }
         }
@@ -56,12 +60,17 @@ public class SkillMono:MonoBehaviour
     }
 
     protected virtual void OnHit(UnitMono target) {
+
         ConfSkillItem conf = g.conf.skill.GetItem(skillData.ID);
         SkillQuale skillQuale = (SkillQuale)conf.skillQuale;
         SkillType skillType = (SkillType)conf.skillType;
         
         float value = conf.might * ownerUnit.attribute.damage;
         value *= StaticTools.Random(0.8f, 1.2f);
-        ownerUnit.SkillEffect(value, ownerUnit, skillQuale, skillType);
+        target.unitData.SkillEffect(value, ownerUnit, skillQuale, skillType);
+
+        if (--through < 0) {
+            Destroy();
+        }
     }
 }

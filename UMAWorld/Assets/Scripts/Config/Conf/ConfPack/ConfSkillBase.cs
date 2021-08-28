@@ -15,12 +15,14 @@ public class ConfSkillItem : ConfBaseItem
 	public float speed;				//移动速度
 	public int magic;				//消耗MP
 	public float might;				//技能威力
+	public int cool;				//冷却时间
+	public int through ;				//穿透次数
 
 	public ConfSkillItem()
 	{
 	}
 
-	public ConfSkillItem(int id, string name, string className, string spriteName, int skillQuale, int skillType, string instruction, string prefab, float duration, float speed, int magic, float might)
+	public ConfSkillItem(int id, string name, string className, string spriteName, int skillQuale, int skillType, string instruction, string prefab, float duration, float speed, int magic, float might, int cool, int through )
 	{
 		this.id = id;
 		this.name = name;
@@ -34,6 +36,8 @@ public class ConfSkillItem : ConfBaseItem
 		this.speed = speed;
 		this.magic = magic;
 		this.might = might;
+		this.cool = cool;
+		this.through  = through ;
 	}	
 
 	public ConfSkillItem Clone()
@@ -58,8 +62,8 @@ public class ConfSkillBase : ConfBase
 
 	private void Init1()
 	{
-		allConfBase.Add(new ConfSkillItem(1, "fireBall", "SkillLine", "xxx", 1, 100000, "xxx", "Prefab/Bullet/FireBall", 3f, 20f, 5, 1f));
-		allConfBase.Add(new ConfSkillItem(2, "soilBall", "SkillLine", "xxx", 0, 100000, "xxx", "Prefab/Bullet/SoilBall", 5f, 20f, 20, 1.2f));
+		allConfBase.Add(new ConfSkillItem(1, "fireBall", "SkillLine", "xxx", 1, 100000, "xxx", "Prefab/Bullet/FireBall", 3f, 20f, 5, 1f, 1, 0));
+		allConfBase.Add(new ConfSkillItem(2, "soilBall", "SkillLine", "xxx", 0, 100000, "xxx", "Prefab/Bullet/SoilBall", 5f, 20f, 20, 1.2f, 3, 0));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)
