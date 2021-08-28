@@ -1,8 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 // 属性
 public class Attribute {
+    public int seed;
+
+    public Attribute() {
+        seed = StaticTools.Random(int.MinValue, int.MaxValue);
+    }
+
+    public int hp
+    {
+        get { return Mathf.CeilToInt( health_cur); }
+    }
+    public int maxHp
+    {
+        get { return Mathf.CeilToInt(health_max); }
+    }
+    public int mp
+    {
+        get { return Mathf.CeilToInt(magic_cur); }
+    }
+    public int maxMp
+    {
+        get { return Mathf.CeilToInt(magic_max); }
+    }
+
     public int level = 1;//等级
     public int exp = 0;//经验值
     public float power = 10;//力量-影响物理伤害、物理防御和暴击伤害

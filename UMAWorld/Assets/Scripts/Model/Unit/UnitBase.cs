@@ -9,6 +9,9 @@ public class UnitBase {
     /// 角色名字
     /// </summary>
     public string id;
+    public bool isDie = false;
+    [JsonIgnore]
+    public UnitMono mono;
     [JsonIgnore]
     public Vector3 pos
     {
@@ -37,5 +40,70 @@ public class UnitBase {
         buffManager = new BuffManager();
     }
 
+    /// <summary>
+    /// 收到技能效果
+    /// </summary>
+    /// <param name="value">技能威力值</param>
+    /// <param name="attacker">技能释放者</param>
+    /// <param name="skillQuale">技能性质</param>
+    /// <param name="skillType">技能类型</param>
+    public void SkillEffect(float value, UnitBase attacker, SkillQuale skillQuale, SkillType skillType) {
+        if (skillType <= SkillType.EffectSkillStart && skillType <= SkillType.EffectSkillEnd) {
+            if (skillType == SkillType.Recover) {
+                attribute.health_cur = Mathf.Min(attribute.health_max, attribute.health_cur + value);
+                return;
+            }
+        } else if (skillType <= SkillType.DamageSkillStart && skillType <= SkillType.DamageSkillEnd) {
 
+            switch (skillQuale) {
+                case SkillQuale.Without:
+                    value -= attribute.defence;
+                    break;
+                case SkillQuale.Fire:
+                    value -= value * attribute.resist_fire / 100;
+                    break;
+                case SkillQuale.Forzen:
+                    value -= value * attribute.resist_forzen / 100;
+                    break;
+                case SkillQuale.Lighting:
+                    value -= value * attribute.resist_lighting / 100;
+                    break;
+                case SkillQuale.Poison:
+                    value -= value * attribute.resist_poison / 100;
+                    break;
+                case SkillQuale.Holy:
+                    value -= value * attribute.resist_holy / 100;
+                    break;
+                case SkillQuale.Dark:
+                    value -= value * attribute.resist_dark / 100;
+                    break;
+                default:
+                    break;
+            }
+            attribute.health_cur = attribute.health_cur + Mathf.Min(-1, value);
+        }
+        if (attribute.health_cur <= 0) {
+            Die();
+        }
+    }
+
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    public void Die() {
+        isDie = true;
+        if (mono != null) {
+            mono.persion.PlayDie(true);
+        }
+    }
+
+    /// <summary>
+    ///  复活
+    /// </summary>
+    public void Revive() {
+        isDie = false;
+        if (mono != null) {
+            mono.persion.PlayDie(false);
+        }
+    }
 }

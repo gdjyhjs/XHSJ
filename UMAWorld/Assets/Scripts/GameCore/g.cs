@@ -25,6 +25,11 @@ public class g : MonoBehaviour {
     public static DataMgr data { get { return game.data; } }
     public static UnitMgr units { get { return game.units; } }
 
+
+    #region UI
+    public static UIWorldMain uiWorldMain { get; set; }
+    #endregion
+
     bool isInit;
     public void Awake() {
         Init();

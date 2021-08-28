@@ -6,11 +6,6 @@ using System.Collections.Generic;
 
 public class UICreateRole : MonoBehaviour
 {
-    private class SliderClamp:MonoBehaviour {
-        public float min = 0;
-        public float max = 1;
-    }
-
 
     public DynamicCharacterAvatar Avatar;
     public UMARandomAvatar Randomizer;

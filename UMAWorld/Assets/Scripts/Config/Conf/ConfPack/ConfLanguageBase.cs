@@ -204,6 +204,9 @@ public class ConfLanguageBase : ConfBase
 		allConfBase.Add(new ConfLanguageItem(160, "Pants Accent", "裤子花纹", "Pants Accent"));
 		allConfBase.Add(new ConfLanguageItem(161, "HairAccent", "发饰", "HairAccent"));
 		allConfBase.Add(new ConfLanguageItem(162, "InputName", "请输入名字", "Please Input Name"));
+		allConfBase.Add(new ConfLanguageItem(163, "fireBall", "火球术", "fireBall"));
+		allConfBase.Add(new ConfLanguageItem(164, "HP", "生命", "HP"));
+		allConfBase.Add(new ConfLanguageItem(165, "MP", "内力", "MP"));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)

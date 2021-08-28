@@ -39,32 +39,37 @@ public enum SkillQuale {
 /// </summary>
 public enum SkillType {
 
-    /// <summary>
-    /// 恢复魔法
-    /// </summary>
-    Recover = 0,
-    /// <summary>
-    /// 增益魔法
-    /// </summary>
-    Buff = 1,
-    /// <summary>
-    /// 减益魔法
-    /// </summary>
-    Debuff = 2,
+    DamageSkillStart = 100000,
     /// <summary>
     /// 直线魔法
     /// </summary>
-    Line = 3,
+    Line = 100000,
     /// <summary>
     /// 区域魔法
     /// </summary>
-    Area = 4,
+    Area = 100001,
     /// <summary>
     /// 近战魔法
     /// </summary>
-    Melee = 5,
+    Melee = 100002,
+    DamageSkillEnd = 199999,
+
+    EffectSkillStart = 200000,
     /// <summary>
     /// 召唤魔法
     /// </summary>
-    Summon = 6
+    Summon = 200000,
+    /// <summary>
+    /// 恢复魔法
+    /// </summary>
+    Recover = 200001,
+    /// <summary>
+    /// 增益魔法
+    /// </summary>
+    Buff = 200002,
+    /// <summary>
+    /// 减益魔法
+    /// </summary>
+    Debuff = 200003,
+    EffectSkillEnd = 299999,
 }

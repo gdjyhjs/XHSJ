@@ -3,5 +3,5 @@ using System.Collections.Generic;
 
 public class SkillManager
 {
-    SkillBase[] skills;
+    public List<SkillBase> skills;
 }

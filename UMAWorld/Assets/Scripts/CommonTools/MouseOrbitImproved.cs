@@ -13,7 +13,7 @@ public class MouseOrbitImproved : MonoBehaviour
 {
 
     //DOS Modified added an option to choose which mose button to use (for touch you dont have a right button option)
-    public enum mouseBtnOpts { Left = 0, Right = 1, Middle = 2 }
+    public enum mouseBtnOpts { Left = 0, Right = 1, Middle = 2 , No = -1}
     public mouseBtnOpts mouseButtonToUse = mouseBtnOpts.Right;
 
     public Transform target;
@@ -183,7 +183,7 @@ public class MouseOrbitImproved : MonoBehaviour
 		}
 
         //DOS Modified tweaked this to be selectable
-        if (Input.GetMouseButton((int)mouseButtonToUse) && Input.touchCount == 0)
+        if ((mouseButtonToUse == mouseBtnOpts.No || Input.GetMouseButton((int)mouseButtonToUse) )&& Input.touchCount == 0)
         {
             x += Input.GetAxis("Mouse X") * xSpeed * 0.04f;
             y -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;

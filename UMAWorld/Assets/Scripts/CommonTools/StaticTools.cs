@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using Newtonsoft.Json;
+using System;
+using System.Reflection;
 
 public static class StaticTools
 {
@@ -205,8 +207,31 @@ public static class StaticTools
     }
 
 
+    public static T LoadResources<T>(string path) where T : UnityEngine.Object{
+        return Resources.Load<T>(path);
+    }
+
+    //public static void LoadAsyncResources<T>(string path) where T : UnityEngine.Object{
+    //    ResourceRequest  request = Resources.LoadAsync<T>(path);
+    //}
 
 
+
+
+    //根据字符串创建类
+    public static T CreateClass<T>(string className) {
+        return (T)CreateClass(className);
+    }
+
+    //根据字符串创建类
+    public static object CreateClass(string className) {
+        Type t = Type.GetType(className);
+        if (t != null) {
+            return Activator.CreateInstance(t);
+        }
+
+        return null;
+    }
 
 
 
