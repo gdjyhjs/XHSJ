@@ -904,7 +904,7 @@ MonoBehaviour:
   treeColliderLayer: 13
   gameObjectsProperties:
   - density: 250
-    prototype: {fileID: 6623258594451402597, guid: bcb74e7208c756043a9eda83eaafbb93, type: 3}
+    prototype: {fileID: 1803890508361881808, guid: a38530e65f7c22f4e8fcb306d483e5f5, type: 3}
     minScale: 0.8
     maxScale: 1.2
     minSteepness: 0
@@ -926,7 +926,7 @@ MonoBehaviour:
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   - density: 250
-    prototype: {fileID: 3032036221580919281, guid: 1e2d5825c9f00d44d94922289d547cb3, type: 3}
+    prototype: {fileID: 4074215803205377433, guid: a3e3227c35f15454e9237974ee098f4d, type: 3}
     minScale: 0.8
     maxScale: 1.2
     minSteepness: 0
@@ -948,7 +948,7 @@ MonoBehaviour:
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   - density: 250
-    prototype: {fileID: 1787527858945935561, guid: f22a79a8dda1eb6478b989b97b692574, type: 3}
+    prototype: {fileID: 1135701433688129929, guid: f43996fafd0cbb9418e7470a0359cb7b, type: 3}
     minScale: 0.8
     maxScale: 1.2
     minSteepness: 0
@@ -1013,6 +1013,72 @@ MonoBehaviour:
     minDistance: 8.524603
     preventMeshOverlap: 1
     applyToSplatTexture: 01010100
+  - density: 10
+    prototype: {fileID: 5853978888904972487, guid: b86cc30f4c364e748b1e949ca4a013bd, type: 3}
+    minScale: 0.5
+    maxScale: 5
+    minSteepness: 0
+    maxSteepness: 90
+    forceHorizontalPlacement: 0
+    useNoiseLayer: 1
+    noiseSettings:
+      type: 3
+      offsetX: 0
+      offsetY: 597
+      offsetZ: 0
+      frequency: 0.0013850415
+      octaves: 1
+      lacunarity: 1
+      persistence: 1
+      threshold: 0.5
+      falloff: 0.226
+    minDistance: 8.524603
+    preventMeshOverlap: 1
+    applyToSplatTexture: 01010100
+  - density: 10
+    prototype: {fileID: 277223095145580376, guid: 999fbd1d678715448be1b7fd4e5e7c2d, type: 3}
+    minScale: 0.5
+    maxScale: 5
+    minSteepness: 0
+    maxSteepness: 90
+    forceHorizontalPlacement: 0
+    useNoiseLayer: 1
+    noiseSettings:
+      type: 3
+      offsetX: 0
+      offsetY: 597
+      offsetZ: 0
+      frequency: 0.0013850415
+      octaves: 1
+      lacunarity: 1
+      persistence: 1
+      threshold: 0.5
+      falloff: 0.226
+    minDistance: 8.524603
+    preventMeshOverlap: 1
+    applyToSplatTexture: 00010100
+  - density: 10
+    prototype: {fileID: 5449952459070023011, guid: ca0e0e00135da48428681c83743a5630, type: 3}
+    minScale: 0.5
+    maxScale: 5
+    minSteepness: 0
+    maxSteepness: 90
+    forceHorizontalPlacement: 0
+    useNoiseLayer: 1
+    noiseSettings:
+      type: 3
+      offsetX: 0
+      offsetY: 597
+      offsetZ: 0
+      frequency: 0.0013850415
+      octaves: 1
+      lacunarity: 1
+      persistence: 1
+      threshold: 0.5
+      falloff: 0.226
+    minDistance: 8.524603
+    preventMeshOverlap: 1
+    applyToSplatTexture: 00010100
   player: {fileID: 330375188}
   playerStartupFreeRadius: 10
   playerStartupGroundDistance: 5
@@ -1030,7 +1096,7 @@ MonoBehaviour:
   inspMenuIndex: 4
   inspGrassSelectorIndex: 5
   inspTreeSelectorIndex: 0
-  inspGameObjectSelectorIndex: 4
+  inspGameObjectSelectorIndex: 5
   inspTileListEnabled: 0
   inspDebugMode: 0
 --- !u!4 &239580293

@@ -52,16 +52,6 @@ public class WorldMgr : MonoBehaviour {
         initOK = true;
     }
 
-    private void Update() {
-        if (!initOK)
-            return;
-        g.date.AddTime(Time.deltaTime);
-
-        if (Input.GetKeyDown(KeyCode.B)) {
-            g.uiCharInfo.gameObject.SetActive(!g.uiCharInfo.gameObject.activeSelf);
-        }
-    }
-
     private IEnumerator InitWorld() {
         while (true) {
             float statusPercentage = MouseSoftware.EasyTerrain.GetUpdateStatusPercentage();
@@ -73,8 +63,18 @@ public class WorldMgr : MonoBehaviour {
         yield break;
     }
 
+    private void Update() {
+        if (!initOK)
+            return;
+        g.date.AddTime(Time.deltaTime);
 
-    
+        if (Input.GetKeyDown(KeyCode.B)) {
+            g.uiCharInfo.gameObject.SetActive(!g.uiCharInfo.gameObject.activeSelf);
+        }
+    }
+
+
+
 
     //List<UnitMono> npcs = new List<UnitMono>();
     //private IEnumerator Test() {
