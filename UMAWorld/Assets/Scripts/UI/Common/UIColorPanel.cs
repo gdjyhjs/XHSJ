@@ -31,7 +31,7 @@ public class UIColorPanel : MonoBehaviour {
 
     System.Action<Color> changeCall;
 
-    private void Start() {
+    private void Awake() {
         InitColor();
 
         SetColor(rawColor);

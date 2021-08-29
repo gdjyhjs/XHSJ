@@ -24,6 +24,7 @@ public class g : MonoBehaviour {
     public static WorldMgr world { get { return game.world; } }
     public static DataMgr data { get { return game.data; } }
     public static UnitMgr units { get { return game.units; } }
+    public static DateMgr date { get { return game.date; } }
 
 
     #region UI

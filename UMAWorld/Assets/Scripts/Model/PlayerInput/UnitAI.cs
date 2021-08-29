@@ -20,14 +20,7 @@ public class UnitAI:MonoBehaviour {
         ai = GetComponent<AICharacterControl>();
     }
 
-    float actionTime = 0;
     private void Update() {
-        if (actionTime < Time.time)
-            actionTime = Time.time + 1;
-        else
-            return;
-
-
         target = null;
         for (int i = unitMono.unitData.enemys.Count - 1; i >= 0; i--) {
             UnitBase enemy = g.units.GetUnit(unitMono.unitData.enemys[i]);
@@ -44,7 +37,6 @@ public class UnitAI:MonoBehaviour {
             float dis = Vector3.Distance(transform.position, target.transform.position);
             if (dis < 10) {
                 ai.SetTarget(Vector3.zero);
-                
                 transform.LookAt(target.transform);
                 if (StaticTools.Random(0, 2) == 0) { person.PlayTrigger("Attack1"); } else { person.PlayTrigger("Attack2"); }
             } else {

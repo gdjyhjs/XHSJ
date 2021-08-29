@@ -51,6 +51,9 @@ public class UnitMono:MonoBehaviour
             Debug.Log("技能为空 " + skill);
             return;
         }
+        
+
+
         Transform hand = hands[handid];
         // 冷却时间
 

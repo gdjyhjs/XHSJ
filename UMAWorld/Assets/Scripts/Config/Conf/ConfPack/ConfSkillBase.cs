@@ -62,8 +62,8 @@ public class ConfSkillBase : ConfBase
 
 	private void Init1()
 	{
-		allConfBase.Add(new ConfSkillItem(1, "fireBall", "SkillLine", "xxx", 1, 100000, "xxx", "Prefab/Bullet/FireBall", 3f, 20f, 5, 1f, 1, 0));
-		allConfBase.Add(new ConfSkillItem(2, "soilBall", "SkillLine", "xxx", 0, 100000, "xxx", "Prefab/Bullet/SoilBall", 5f, 20f, 20, 1.2f, 3, 0));
+		allConfBase.Add(new ConfSkillItem(1, "fireBall", "SkillLine", "xxx", 1, 100000, "xxx", "Prefab/Bullet/FireBall", 3f, 8f, 5, 1f, 1, 0));
+		allConfBase.Add(new ConfSkillItem(2, "soilBall", "SkillLine", "xxx", 0, 100000, "xxx", "Prefab/Bullet/SoilBall", 5f, 10f, 20, 1.2f, 3, 0));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)

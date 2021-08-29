@@ -328,13 +328,15 @@ public class UICreateRole : MonoBehaviour
         colorPanel.gameObject.SetActive(false);
         StaticTools.DestoryChilds(list1);
         StaticTools.DestoryChilds(list2);
-        LookHead();
+        LookBody();
         OverlayColorData[] colors = UMATools.GetColors(Avatar);
         foreach (OverlayColorData item in colors) {
             GameObject go = Instantiate(btnPrefab, list1);
             go.SetActive(true);
             go.GetComponentInChildren<LanguageText>().text = item.name;
             go.GetComponent<Button>().onClick.AddListener(() => {
+
+
                 colorPanel.gameObject.SetActive(true);
                 colorPanel.GetComponent<UIColorPanel>().SetColor(item.channelMask[0], (color)=> {
                     UMATools.SetColors(Avatar, item, color);

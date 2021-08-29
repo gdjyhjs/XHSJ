@@ -65,7 +65,7 @@ public class SkillMono:MonoBehaviour
         SkillQuale skillQuale = (SkillQuale)conf.skillQuale;
         SkillType skillType = (SkillType)conf.skillType;
         
-        float value = conf.might * ownerUnit.attribute.damage;
+        float value = conf.might * ownerUnit.attribute.attack;
         value *= StaticTools.Random(0.8f, 1.2f);
         target.unitData.SkillEffect(value, ownerUnit, skillQuale, skillType);
 

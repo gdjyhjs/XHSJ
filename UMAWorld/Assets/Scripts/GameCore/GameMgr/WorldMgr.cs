@@ -37,13 +37,16 @@ public class WorldMgr : MonoBehaviour {
         // 动画事件
         go.GetComponent<AnimEvent>().unitMono = player.mono;
         go.tag = GameConf.unitTag;
-        // 更新UI
-        g.uiWorldMain.unit = player;
+        // 更新主界面
+
+        g.uiWorldMain.unit = g.units.player;
         g.uiWorldMain.UpdateUI();
 
-        StartCoroutine(Test());
+        player.attribute.attack += 30;
+    }
 
-        player.attribute.damage += 30;
+    private void Update() {
+        g.date.AddTime(Time.deltaTime);
     }
 
     private IEnumerator InitWorld() {
@@ -55,55 +58,55 @@ public class WorldMgr : MonoBehaviour {
     }
 
 
-    List<UnitMono> npcs = new List<UnitMono>();
-    private IEnumerator Test() {
-        int idx = 0;
-        while (true) {
+    //List<UnitMono> npcs = new List<UnitMono>();
+    //private IEnumerator Test() {
+    //    int idx = 0;
+    //    while (true) {
 
-            for (int i = npcs.Count - 1; i >= 0; i--) {
-                if (npcs[i].unitData.isDie) {
-                    Destroy(npcs[i].unitData.mono.gameObject, 5f);
-                    npcs.RemoveAt(i);
-                }
-            }
-            if (npcs.Count < 10) {
-                string id = "npc" + idx++;
-                UnitBase unit = g.units.NewUnit(id);
-                g.units.playerUnitID = id;
+    //        for (int i = npcs.Count - 1; i >= 0; i--) {
+    //            if (npcs[i].unitData.isDie) {
+    //                Destroy(npcs[i].unitData.mono.gameObject, 5f);
+    //                npcs.RemoveAt(i);
+    //            }
+    //        }
+    //        if (npcs.Count < 10) {
+    //            string id = "npc" + idx++;
+    //            UnitBase unit = g.units.NewUnit(id);
+    //            g.units.playerUnitID = id;
 
-                GameObject go = GameObject.Instantiate(Avatar.gameObject);
-                go.SetActive(true);
+    //            GameObject go = GameObject.Instantiate(Avatar.gameObject);
+    //            go.SetActive(true);
 
-                // 加载模型
-                DynamicCharacterAvatar avatar = go.GetComponent<DynamicCharacterAvatar>();
-                Randomizer.Randomize(avatar);
-                avatar.BuildCharacter(true);
+    //            // 加载模型
+    //            DynamicCharacterAvatar avatar = go.GetComponent<DynamicCharacterAvatar>();
+    //            Randomizer.Randomize(avatar);
+    //            avatar.BuildCharacter(true);
 
-                //UMATools.LoadUMA(avatar, unit.appearance.umaData);
-                unit.appearance.umaData = UMATools.SaveUMA(avatar);
+    //            //UMATools.LoadUMA(avatar, unit.appearance.umaData);
+    //            unit.appearance.umaData = UMATools.SaveUMA(avatar);
 
-                // 添加世界单位基类
-                unit.mono = go.AddComponent<UnitMono>();
-                unit.mono.unitData = unit;
-                unit.mono.avatar = avatar;
-                // 添加控制器
-                go.AddComponent<UnitAI>();
-                unit.mono.persion = go.GetComponent<ThirdPersonCharacter>();
-                go.transform.position = new Vector3(StaticTools.Random(-10, 10), 0, StaticTools.Random(-10, 10));
-                // 动画事件
-                go.GetComponent<AnimEvent>().unitMono = unit.mono;
-                go.tag = GameConf.unitTag;
+    //            // 添加世界单位基类
+    //            unit.mono = go.AddComponent<UnitMono>();
+    //            unit.mono.unitData = unit;
+    //            unit.mono.avatar = avatar;
+    //            // 添加控制器
+    //            go.AddComponent<UnitAI>();
+    //            unit.mono.persion = go.GetComponent<ThirdPersonCharacter>();
+    //            go.transform.position = new Vector3(StaticTools.Random(-10, 10), 0, StaticTools.Random(-10, 10));
+    //            // 动画事件
+    //            go.GetComponent<AnimEvent>().unitMono = unit.mono;
+    //            go.tag = GameConf.unitTag;
 
-                npcs.Add(unit.mono);
-            }
+    //            npcs.Add(unit.mono);
+    //        }
 
-            yield return new WaitForSeconds(1);
-        }
-    }
+    //        yield return new WaitForSeconds(1);
+    //    }
+    //}
 
-    private void OnGUI() {
-        for (int i = 0; i < npcs.Count; i++) {
-            GUILayout.Label(npcs[i].unitData.id + " " + npcs[i].unitData.attribute.hp + "/" + npcs[i].unitData.attribute.maxHp);
-        }
-    }
+    //private void OnGUI() {
+    //    for (int i = 0; i < npcs.Count; i++) {
+    //        GUILayout.Label(npcs[i].unitData.id + " " + npcs[i].unitData.attribute.hp + "/" + npcs[i].unitData.attribute.maxHp);
+    //    }
+    //}
 }
