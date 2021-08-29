@@ -10,6 +10,7 @@ public class WorldMgr : MonoBehaviour {
     public UMARandomAvatar Randomizer;
     public MouseOrbitImproved mainRoleCamera;
     public bool initOK;
+    public Transform treeainPoint;
 
     private void Awake() {
         initOK = false;
@@ -41,14 +42,12 @@ public class WorldMgr : MonoBehaviour {
         go.GetComponent<AnimEvent>().unitMono = player.mono;
         go.tag = GameConf.unitTag;
         // 更新主界面
-
         g.uiWorldMain.unit = g.units.player;
         g.uiWorldMain.UpdateUI();
-
-        player.attribute.attack += 30;
-
         yield return new WaitForSeconds(0.75f);
         g.uiWorldLoading.Close();
+        // 地形创造器
+        treeainPoint.SetParent(go.transform, false);
 
         initOK = true;
     }
