@@ -9,14 +9,17 @@ public class WorldMgr : MonoBehaviour {
     public DynamicCharacterAvatar Avatar;
     public UMARandomAvatar Randomizer;
     public MouseOrbitImproved mainRoleCamera;
+    public bool initOK;
 
     private void Awake() {
+        initOK = false;
         g.game.world = this;
         string playerName = StaticTools.GetString(DataKey.onPlayerName);
         g.data.LoadGame(playerName);
     }
 
     private IEnumerator Start() {
+        g.uiWorldLoading.Open();
         yield return InitWorld();
         // 加载玩家
         UnitBase player = g.units.player;
@@ -33,7 +36,7 @@ public class WorldMgr : MonoBehaviour {
         // 添加控制器
         go.AddComponent<UserInput>();
         player.mono.persion = go.GetComponent<ThirdPersonCharacter>();
-        go.transform.position = new Vector3();
+        go.transform.position = StaticTools.GetGroundPoint(Vector3.zero);
         // 动画事件
         go.GetComponent<AnimEvent>().unitMono = player.mono;
         go.tag = GameConf.unitTag;
@@ -43,20 +46,36 @@ public class WorldMgr : MonoBehaviour {
         g.uiWorldMain.UpdateUI();
 
         player.attribute.attack += 30;
+
+        yield return new WaitForSeconds(0.75f);
+        g.uiWorldLoading.Close();
+
+        initOK = true;
     }
 
     private void Update() {
+        if (!initOK)
+            return;
         g.date.AddTime(Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.B)) {
+            g.uiCharInfo.gameObject.SetActive(!g.uiCharInfo.gameObject.activeSelf);
+        }
     }
 
     private IEnumerator InitWorld() {
-        
-
-
-
+        while (true) {
+            float statusPercentage = MouseSoftware.EasyTerrain.GetUpdateStatusPercentage();
+            if (statusPercentage >= 100f && Application.isPlaying) {
+                break;
+            }
+            yield return 0;
+        }
         yield break;
     }
 
+
+    
 
     //List<UnitMono> npcs = new List<UnitMono>();
     //private IEnumerator Test() {

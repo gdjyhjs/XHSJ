@@ -233,7 +233,12 @@ public static class StaticTools
         return null;
     }
 
-
+    public static Vector3 GetGroundPoint(Vector3 point) {
+        if (Physics.Raycast(point + Vector3.up * 1000, Vector3.down,out RaycastHit hit, 2000)) {
+            return hit.point;
+        }
+        return point;
+    }
 
 
 

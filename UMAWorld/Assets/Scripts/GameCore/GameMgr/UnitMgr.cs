@@ -11,9 +11,6 @@ public class UnitMgr{
         if (allUnit.ContainsKey(id)) {
             return allUnit[id];
         }
-        foreach (var item in allUnit) {
-            UnityEngine.Debug.Log(item.Key + " >> " + item.Value);
-        }
         return null;
     }
 

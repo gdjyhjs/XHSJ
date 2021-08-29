@@ -280,6 +280,10 @@ public class ConfLanguageBase : ConfBase
 		allConfBase.Add(new ConfLanguageItem(236, "BigLevel8", "合道期", "hedao"));
 		allConfBase.Add(new ConfLanguageItem(237, "BigLevel9", "大乘期", "dacheng"));
 		allConfBase.Add(new ConfLanguageItem(238, "BigLevel10", "渡劫期", "dujie"));
+		allConfBase.Add(new ConfLanguageItem(239, "Man", "男", "Man"));
+		allConfBase.Add(new ConfLanguageItem(240, "Woman", "女", "Woman"));
+		allConfBase.Add(new ConfLanguageItem(241, "Human", "人类", "Human"));
+		allConfBase.Add(new ConfLanguageItem(242, "Elf", "精灵", "Elf"));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)

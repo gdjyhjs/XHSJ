@@ -29,6 +29,8 @@ public class g : MonoBehaviour {
 
     #region UI
     public static UIWorldMain uiWorldMain { get; set; }
+    public static UIWorldLoading uiWorldLoading { get; set; }
+    public static UICharInfo uiCharInfo { get; set; }
     #endregion
 
     bool isInit;

@@ -10,23 +10,23 @@ public class Attribute {
         seed = StaticTools.Random(int.MinValue, int.MaxValue);
     }
 
-    public int hp
+    public int hp // 用于显示的 生命
     {
         get { return Mathf.CeilToInt( health_cur); }
     }
-    public int maxHp
+    public int maxHp // 用于显示的 最大生命
     {
         get { return Mathf.CeilToInt(health_max); }
     }
-    public int mp
+    public int mp // 用于显示的 内力
     {
         get { return Mathf.CeilToInt(magic_cur); }
     }
-    public int maxMp
+    public int maxMp // 用于显示的 最大内力
     {
         get { return Mathf.CeilToInt(magic_max); }
     }
-    public int Speed
+    public int Speed // 用于显示的 移动速度
     {
         get { return Mathf.CeilToInt(speed)  * 100; }
     }

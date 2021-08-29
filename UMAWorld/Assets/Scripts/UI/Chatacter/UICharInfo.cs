@@ -8,8 +8,23 @@ public class UICharInfo : UIBase {
     public UnitBase unit;
 
     private void Awake() {
+        g.uiCharInfo = this;
+        GetComponent<CanvasGroup>().alpha = 1;
+        gameObject.SetActive(false);
+    }
+
+    private void OnEnable() {
+        UpdateUI();
+    }
+
+    private void UpdateUI() {
         unit = g.units.player;
-        string[] attr = new string[]{
+        if (unit == null)
+            return;
+
+
+
+        string[] attrname = new string[]{
             "name",
             "race",
             "gender",
@@ -26,17 +41,11 @@ public class UICharInfo : UIBase {
             "resist_lighting",
             "resist_poison",
         };
-        for (int i = 0; i < attr.Length; i++) {
-            m_attrRoot.GetChild(i * 2).GetComponent<LanguageText>().text = attr[i];
+        for (int i = 0; i < attrname.Length; i++) {
+            m_attrRoot.GetChild(i * 2).GetComponent<LanguageText>().text = attrname[i];
         }
-    }
 
-    private void OnEnable() {
-        UpdateUI();
-    }
 
-    private void UpdateUI() {
-        Debug.Log("unit = "+ unit);
 
         int[] attr = new int[]{
             0,
@@ -49,7 +58,7 @@ public class UICharInfo : UIBase {
             Mathf.CeilToInt(  unit.attribute.magic_restore),
            Mathf.CeilToInt(  unit.attribute.attack),
         Mathf.CeilToInt(   unit.attribute.defence),
-        Mathf.CeilToInt(    unit.attribute.speed),
+        Mathf.CeilToInt(    unit.attribute.Speed),
          unit.attribute.resist_fire,
             unit.attribute.resist_forzen,
            unit.attribute.resist_lighting,
