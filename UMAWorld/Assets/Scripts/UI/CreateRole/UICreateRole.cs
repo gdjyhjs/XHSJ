@@ -3,6 +3,7 @@ using UMA;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Collections;
 
 public class UICreateRole : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class UICreateRole : MonoBehaviour
     public Transform list2;
     public MouseOrbitImproved cam;
     public InputField inputPlayerName;
+    public string defUMAData;
 
     [SerializeField]
     GameObject colorPanel;
@@ -111,7 +113,12 @@ public class UICreateRole : MonoBehaviour
     }
 
     private void Start() {
-        InitAvatar();
+        g.timer.Frame(() => {
+            InitAvatar();
+            //Randomizer.Randomize(Avatar);
+            //Avatar.BuildCharacter(true);
+            //UMATools.LoadUMA(Avatar, defUMAData);
+        }, 1);
     }
 
     public void GenerateANewUMA()
