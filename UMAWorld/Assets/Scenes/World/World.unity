@@ -601,9 +601,9 @@ MonoBehaviour:
   heightmapPixelError: 1
   heightmapNoiseSettings:
     type: 6
-    offsetX: 2434
-    offsetY: -1388
-    offsetZ: 4568
+    offsetX: -1558
+    offsetY: -1091
+    offsetZ: 4234
     frequency: 0.00066666666
     octaves: 3
     lacunarity: 2
@@ -914,7 +914,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 2255
+      offsetY: -2541
       offsetZ: 0
       frequency: 0.001
       octaves: 1
@@ -922,7 +922,7 @@ MonoBehaviour:
       persistence: 1
       threshold: 0.1
       falloff: 0.4
-    minDistance: 10.062005
+    minDistance: 5.726308
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   - density: 250
@@ -936,7 +936,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 2255
+      offsetY: -2541
       offsetZ: 0
       frequency: 0.001
       octaves: 1
@@ -944,7 +944,7 @@ MonoBehaviour:
       persistence: 1
       threshold: 0.1
       falloff: 0.4
-    minDistance: 6.2006345
+    minDistance: 5.726308
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   - density: 250
@@ -958,7 +958,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 2255
+      offsetY: -2541
       offsetZ: 0
       frequency: 0.001
       octaves: 1
@@ -966,7 +966,7 @@ MonoBehaviour:
       persistence: 1
       threshold: 0.1
       falloff: 0.4
-    minDistance: 2.7431982
+    minDistance: 5.726308
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   - density: 10
@@ -980,7 +980,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 597
+      offsetY: 801
       offsetZ: 0
       frequency: 0.0013850415
       octaves: 1
@@ -1002,7 +1002,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 597
+      offsetY: 801
       offsetZ: 0
       frequency: 0.0013850415
       octaves: 1
@@ -1024,7 +1024,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 597
+      offsetY: 801
       offsetZ: 0
       frequency: 0.0013850415
       octaves: 1
@@ -1032,7 +1032,7 @@ MonoBehaviour:
       persistence: 1
       threshold: 0.5
       falloff: 0.226
-    minDistance: 8.524603
+    minDistance: 7.4298263
     preventMeshOverlap: 1
     applyToSplatTexture: 01010100
   - density: 10
@@ -1046,7 +1046,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 597
+      offsetY: 801
       offsetZ: 0
       frequency: 0.0013850415
       octaves: 1
@@ -1054,7 +1054,7 @@ MonoBehaviour:
       persistence: 1
       threshold: 0.5
       falloff: 0.226
-    minDistance: 8.524603
+    minDistance: 7.4298263
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   - density: 10
@@ -1068,7 +1068,7 @@ MonoBehaviour:
     noiseSettings:
       type: 3
       offsetX: 0
-      offsetY: 597
+      offsetY: 801
       offsetZ: 0
       frequency: 0.0013850415
       octaves: 1
@@ -1076,7 +1076,7 @@ MonoBehaviour:
       persistence: 1
       threshold: 0.5
       falloff: 0.226
-    minDistance: 8.524603
+    minDistance: 7.4298263
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
   player: {fileID: 330375188}
@@ -1093,10 +1093,10 @@ MonoBehaviour:
     positionCache: {x: 0, y: -100000, z: 0}
     treeColliderDistance: 50
     gameObjectColliderDistance: 200
-  inspMenuIndex: 4
+  inspMenuIndex: 5
   inspGrassSelectorIndex: 5
   inspTreeSelectorIndex: 0
-  inspGameObjectSelectorIndex: 5
+  inspGameObjectSelectorIndex: 7
   inspTileListEnabled: 0
   inspDebugMode: 0
 --- !u!4 &239580293
@@ -1110,7 +1110,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1592832676}
+  - {fileID: 959405603}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1321,7 +1321,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330375187}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 35.648407, z: 0}
+  m_LocalPosition: {x: 0, y: 162.26636, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2914,6 +2914,36 @@ Transform:
   m_LocalScale: {x: 1.0000007, y: 1.0000006, z: 0.9999999}
   m_Children: []
   m_Father: {fileID: 895339905}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &959405602
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 959405603}
+  m_Layer: 0
+  m_Name: _TreeColliders_
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &959405603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 959405602}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 239580293}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &973782652
@@ -4522,36 +4552,6 @@ Transform:
   m_Children:
   - {fileID: 1651595376}
   m_Father: {fileID: 1824422073}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1592832675
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1592832676}
-  m_Layer: 0
-  m_Name: _TreeColliders_
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!4 &1592832676
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592832675}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 239580293}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1613501107

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityStandardAssets.Characters.ThirdPerson;
 
 public class WorldMgr : MonoBehaviour {
+
     public DynamicCharacterAvatar Avatar;
     public UMARandomAvatar Randomizer;
     public MouseOrbitImproved mainRoleCamera;
@@ -17,6 +18,10 @@ public class WorldMgr : MonoBehaviour {
         g.game.world = this;
         string playerName = StaticTools.GetString(DataKey.onPlayerName);
         g.data.LoadGame(playerName);
+        Debug.Log(g.data);
+        Debug.Log(g.data.worldSeed);
+        Debug.Log(Random.state);
+        Random.InitState( g.data.worldSeed);
     }
 
     private IEnumerator Start() {
