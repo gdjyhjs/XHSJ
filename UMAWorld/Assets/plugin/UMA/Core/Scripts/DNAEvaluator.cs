@@ -116,34 +116,33 @@ namespace UMA
 			return (_evaluator.Evaluate(val)) * _multiplier;
 		}
 
-		/// <summary>
-		/// Finds the set dna name in the supplied dna list and applies the evaluator and multiplier to it. 
-		/// Tip: if you are already looping through the dna to find the name/value just use Evaluate(float dnaValue) instead for efficiency
-		/// </summary>
-		/// <param name="dna">The dna to search</param>
-		/// <returns>The evaluated value</returns>
-		public float Evaluate(UMADnaBase dna)
-		{
-			//using    lastIndex building dna takes apprx  00:00:00.0027695
-			//Using    lastIndex modifying dna takes apprx 00:00:00.0004993
-			//notusing lastIndex building dna takes apprx  00:00:00.0035695
-			//notusing lastIndex modifying dna takes apprx 00:00:00.0008447
-			//using lastIndex is about 1/3 faster at the cost of being less robust because the dnaNames could in theory be changed at runtime and lastIndex would then fail
-			//could make the difference between being able to use things like color dna for wrinkle maps etc?
-			if (_lastIndex != -1)
-			{
-				return Evaluate(dna.GetValue(_lastIndex));
-			}
-			else
-			{
-			_lastIndex = System.Array.IndexOf(dna.Names, _dnaName);
-				if (_lastIndex > -1)
-				{
-					return Evaluate(dna.GetValue(_lastIndex));
-				}
-			}
-			return defaultDNAValue;
-		}
+        /// <summary>
+        /// Finds the set dna name in the supplied dna list and applies the evaluator and multiplier to it. 
+        /// Tip: if you are already looping through the dna to find the name/value just use Evaluate(float dnaValue) instead for efficiency
+        /// </summary>
+        /// <param name="dna">The dna to search</param>
+        /// <returns>The evaluated value</returns>
+        public float Evaluate(UMADnaBase dna) {
+            //using    lastIndex building dna takes apprx  00:00:00.0027695
+            //Using    lastIndex modifying dna takes apprx 00:00:00.0004993
+            //notusing lastIndex building dna takes apprx  00:00:00.0035695
+            //notusing lastIndex modifying dna takes apprx 00:00:00.0008447
+            //using lastIndex is about 1/3 faster at the cost of being less robust because the dnaNames could in theory be changed at runtime and lastIndex would then fail
+            //could make the difference between being able to use things like color dna for wrinkle maps etc?
+            if (_lastIndex != -1) {
+                return Evaluate(dna.GetValue(_lastIndex));
+            } else {
+                if (dna.Names == null) {
+                    Debug.LogWarning("ArgumentNullException: Value cannot be null. Parameter name: array");
+                } else {
+                    _lastIndex = System.Array.IndexOf(dna.Names, _dnaName);
+                    if (_lastIndex > -1) {
+                        return Evaluate(dna.GetValue(_lastIndex));
+                    }
+                }
+            }
+            return defaultDNAValue;
+        }
 
 		#region ISerializationCallbackReceiver Members
 

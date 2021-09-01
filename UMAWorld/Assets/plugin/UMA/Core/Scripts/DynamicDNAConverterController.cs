@@ -231,9 +231,13 @@ namespace UMA
 				Prepare();
 
 			UMADnaBase umaDna = umaData.GetDna(DNATypeHash);
-			//Make the DNAAssets match if they dont already, can happen when some parts are in bundles and others arent
-			if (((DynamicUMADnaBase)umaDna).dnaAsset != DNAAsset && DNAAsset != null)
-				((DynamicUMADnaBase)umaDna).dnaAsset = DNAAsset;
+            if (umaDna is DynamicUMADnaBase) {
+                //Make the DNAAssets match if they dont already, can happen when some parts are in bundles and others arent
+                if (((DynamicUMADnaBase)umaDna).dnaAsset != DNAAsset && DNAAsset != null)
+                    ((DynamicUMADnaBase)umaDna).dnaAsset = DNAAsset;
+            } else {
+                Debug.LogWarning("InvalidCastException: Specified cast is not valid.");
+            }
 
 			if (_applyDNAPrepassPlugins.Count > 0)
 			{
@@ -265,9 +269,13 @@ namespace UMA
 			//if (!asReset)
 			//{
 				umaDna = umaData.GetDna(DNATypeHash);
-				//Make the DNAAssets match if they dont already, can happen when some parts are in bundles and others arent
-				if (((DynamicUMADnaBase)umaDna).dnaAsset != DNAAsset)
-					((DynamicUMADnaBase)umaDna).dnaAsset = DNAAsset;
+            if (umaDna is DynamicUMADnaBase) {
+                //Make the DNAAssets match if they dont already, can happen when some parts are in bundles and others arent
+                if (((DynamicUMADnaBase)umaDna).dnaAsset != DNAAsset)
+                    ((DynamicUMADnaBase)umaDna).dnaAsset = DNAAsset;
+            } else {
+                Debug.LogWarning("InvalidCastException: Specified cast is not valid.");
+            }
 			//}
 			for (int i = 0; i < _applyDNAPlugins.Count; i++)
 			{

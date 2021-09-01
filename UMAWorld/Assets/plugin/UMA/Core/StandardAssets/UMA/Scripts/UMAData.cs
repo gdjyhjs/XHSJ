@@ -1257,8 +1257,12 @@ namespace UMA
 						}
 						else if (converter is IDynamicDNAConverter)
 						{
-							var dna = umaDna[dnaTypeHash];
-							((DynamicUMADnaBase)dna).dnaAsset = ((IDynamicDNAConverter)converter).dnaAsset;
+                            UMADnaBase dna = umaDna[dnaTypeHash];
+                            if (dna is DynamicUMADnaBase) {
+                                ((DynamicUMADnaBase)dna).dnaAsset = ((IDynamicDNAConverter)converter).dnaAsset;
+                            } else {
+                                Debug.LogWarning("InvalidCastException: Specified cast is not valid.");
+                            }
 						}
 					}
 				}
