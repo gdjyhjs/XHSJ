@@ -25,14 +25,18 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
         private void Update()
         {
+            if (!agent.isOnNavMesh)
+                return;
+
             if (target != default) {
                 agent.SetDestination(target);
             } else {
                 return;
             }
 
-            if (agent.remainingDistance > agent.stoppingDistance)
+            if (agent.remainingDistance > agent.stoppingDistance) {
                 character.Move(agent.desiredVelocity, false, false);
+            }
         }
 
 

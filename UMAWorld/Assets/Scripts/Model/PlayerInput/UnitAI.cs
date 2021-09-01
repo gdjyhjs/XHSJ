@@ -11,8 +11,9 @@ public class UnitAI:MonoBehaviour {
     public ThirdPersonCharacter person;
     public AICharacterControl ai;
 
-    public UnitMono target;
-    
+    public UnitMono targetUnit;
+    public Vector3 targetPoint;
+
 
     private void Awake() {
         person = GetComponent<ThirdPersonCharacter>();
@@ -21,11 +22,11 @@ public class UnitAI:MonoBehaviour {
     }
 
     private void Update() {
-        target = null;
+        targetUnit = null;
         for (int i = unitMono.unitData.enemys.Count - 1; i >= 0; i--) {
             UnitBase enemy = g.units.GetUnit(unitMono.unitData.enemys[i]);
             if (enemy.mono) {
-                target = enemy.mono;
+                targetUnit = enemy.mono;
                 break;
             }
             if (enemy.isDie) {
@@ -33,15 +34,24 @@ public class UnitAI:MonoBehaviour {
             }
         }
 
-        if (target) {
-            float dis = Vector3.Distance(transform.position, target.transform.position);
+        if (targetUnit) {
+            float dis = Vector3.Distance(transform.position, targetUnit.transform.position);
             if (dis < 10) {
-                ai.SetTarget(Vector3.zero);
-                transform.LookAt(target.transform);
+                ai.SetTarget((Vector3)default);
+                transform.LookAt(targetUnit.transform);
                 if (StaticTools.Random(0, 2) == 0) { person.PlayTrigger("Attack1"); } else { person.PlayTrigger("Attack2"); }
             } else {
-                ai.SetTarget(transform.position + (target.transform.position - transform.position).normalized * (dis - 8));
+                ai.SetTarget(targetUnit.transform);
             }
+        } else {
+            IdleRun();
+        }
+    }
+
+    private void IdleRun() {
+        if (Vector3.Distance(transform.position, targetPoint) < 2 || ai.target != targetPoint || targetPoint == default) {
+            targetPoint = StaticTools.GetGroundPoint(new Vector3(StaticTools.Random(-100, 100), 0, StaticTools.Random(-100, 100)));
+            ai.SetTarget(targetPoint);
         }
     }
 }

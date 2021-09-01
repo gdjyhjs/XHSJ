@@ -79,7 +79,7 @@ public class WorldMgr : MonoBehaviour {
         {
             tiles.GetChild(i).gameObject.AddComponent<NavMeshSourceTag>();
         }
-        GameObject go = new GameObject();
+        GameObject go = new GameObject("navBuilder");
         go.AddComponent<LocalNavMeshBuilder>().m_Tracked = g.units.player.mono.transform;
     }
 
@@ -98,21 +98,20 @@ public class WorldMgr : MonoBehaviour {
 
     public int npcCount;
     List<UnitMono> npcs = new List<UnitMono>();
+    WaitForSeconds waitOneSecond = new WaitForSeconds(1);
     private IEnumerator Test()
     {
         int idx = 0;
         while (true)
         {
-
             for (int i = npcs.Count - 1; i >= 0; i--)
             {
-                if (npcs[i].unitData.isDie)
-                {
+                if (npcs[i].unitData.isDie) {
                     Destroy(npcs[i].unitData.mono.gameObject, 5f);
                     npcs.RemoveAt(i);
                 }
             }
-            if (npcs.Count < npcCount)
+            while (npcs.Count < npcCount)
             {
                 string id = "npc" + idx++;
                 UnitBase unit = g.units.NewUnit(id);
@@ -134,7 +133,7 @@ public class WorldMgr : MonoBehaviour {
                 unit.mono.unitData = unit;
                 unit.mono.avatar = avatar;
                 // 添加控制器
-                go.AddComponent<UnitAI>().target = g.units.player.mono;
+                go.AddComponent<UnitAI>().targetUnit = g.units.player.mono;
                 unit.mono.persion = go.GetComponent<ThirdPersonCharacter>();
                 go.transform.position = StaticTools.GetGroundPoint( new Vector3(StaticTools.Random(-10, 10), 0, StaticTools.Random(-10, 10)));
                 // 动画事件
@@ -142,9 +141,9 @@ public class WorldMgr : MonoBehaviour {
                 go.tag = GameConf.unitTag;
 
                 npcs.Add(unit.mono);
+                yield return 0;
             }
-
-            yield return new WaitForSeconds(1);
+            yield return waitOneSecond;
         }
     }
 
