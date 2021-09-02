@@ -8,6 +8,7 @@ public class game : MonoBehaviour {
     public ConfMgr conf;
     public DataMgr data;
     public UnitMgr units;
+    public BuildMgr builds;
     public DateMgr date;
 
 
@@ -15,6 +16,7 @@ public class game : MonoBehaviour {
         conf = new ConfMgr();
         data = new DataMgr();
         units = new UnitMgr();
+        builds = new BuildMgr();
         date = new DateMgr();
 
         timer = StaticTools.GetOrAddComponent<TimerMgr>(gameObject);

@@ -18,9 +18,7 @@ public class WorldMgr : MonoBehaviour {
         g.game.world = this;
         string playerName = StaticTools.GetString(DataKey.onPlayerName);
         g.data.LoadGame(playerName);
-        Debug.Log(g.data);
-        Debug.Log(g.data.worldSeed);
-        Debug.Log(Random.state);
+        Debug.Log("seed = " + g.data.worldSeed);
         Random.InitState( g.data.worldSeed);
     }
 
@@ -61,6 +59,23 @@ public class WorldMgr : MonoBehaviour {
 
 
         StartCoroutine(Test());
+
+#if UNITY_EDITOR
+        foreach (BuildBase item in g.builds.allBuild.Values) {
+            int vertexCount = item.points.Length;
+            Vector3[] testPoints = new Vector3[vertexCount + 1];
+            GameObject test = new GameObject();
+            test.name = item.id;
+            test.transform.position = new Vector3(item.position.x, 0, item.position.y);
+            LineRenderer testLine = test.AddComponent<LineRenderer>();
+            for (int i = 0; i < item.points.Length; i++) {
+                testPoints[i] = new Vector3(item.points[i].x, 0, item.points[i].y);
+            }
+            testPoints[vertexCount] = testPoints[0];
+            testLine.positionCount = vertexCount + 1;
+            testLine.SetPositions(testPoints);
+        }
+#endif
     }
     private IEnumerator InitWorld() {
         while (true) {
