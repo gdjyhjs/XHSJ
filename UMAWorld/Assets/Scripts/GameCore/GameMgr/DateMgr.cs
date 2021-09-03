@@ -53,8 +53,8 @@ public class DateMgr {
     public Weather weather;
 
     public DateMgr() {
-        weather = (Weather)StaticTools.Random((int)Weather.sunny, (int)Weather.end);
-        m_time = StaticTools.Random(130218841, 1630218841);
+        weather = (Weather)CommonTools.Random((int)Weather.sunny, (int)Weather.end);
+        m_time = CommonTools.Random(130218841, 1630218841);
     }
 
     public double time { get { return m_time; } }

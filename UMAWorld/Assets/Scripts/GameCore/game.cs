@@ -19,7 +19,7 @@ public class game : MonoBehaviour {
         builds = new BuildMgr();
         date = new DateMgr();
 
-        timer = StaticTools.GetOrAddComponent<TimerMgr>(gameObject);
+        timer = CommonTools.GetOrAddComponent<TimerMgr>(gameObject);
         conf.Init(() => Debug.Log("conf ok"));
     }
 }

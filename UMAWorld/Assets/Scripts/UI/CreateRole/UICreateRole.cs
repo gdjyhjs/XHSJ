@@ -109,7 +109,7 @@ public class UICreateRole : MonoBehaviour
     };
 
     private void Awake() {
-        StaticTools.Init();
+        CommonTools.Init();
     }
 
     private void Start() {
@@ -139,8 +139,8 @@ public class UICreateRole : MonoBehaviour
         g.units.playerUnitID = id;
         player.appearance.umaData = data;
         g.data.NewGame(id, 0);
-        StaticTools.SetString(DataKey.onPlayerName, id);
-        StaticTools.LoadScene("World");
+        CommonTools.SetString(DataKey.onPlayerName, id);
+        CommonTools.LoadScene("World");
     }
 
     public void RestUMA() {
@@ -149,19 +149,19 @@ public class UICreateRole : MonoBehaviour
 
     
     public void OnClickEnglish() {
-        StaticTools.ChangeLanguage("en");
+        CommonTools.ChangeLanguage("en");
     }
 
     public void OnClicSChinese() {
-        StaticTools.ChangeLanguage("ch");
+        CommonTools.ChangeLanguage("ch");
     }
 
 
 
     public void OnClickRace() {
         colorPanel.gameObject.SetActive(false);
-        StaticTools.DestoryChilds(list1);
-        StaticTools.DestoryChilds(list2);
+        CommonTools.DestoryChilds(list1);
+        CommonTools.DestoryChilds(list2);
         LookBody();
         for (int i = 0; i < races.Length; i++) {
             string face = races[i];
@@ -177,8 +177,8 @@ public class UICreateRole : MonoBehaviour
 
     public void OnClickWardrobes() {
         colorPanel.gameObject.SetActive(false);
-        StaticTools.DestoryChilds(list1);
-        StaticTools.DestoryChilds(list2);
+        CommonTools.DestoryChilds(list1);
+        CommonTools.DestoryChilds(list2);
         LookBody();
         Dictionary<string, List<UMATextRecipe>> wardrobes = UMATools.GetWardrobes(Avatar);
         foreach (string slotName in wardrobes.Keys) {
@@ -190,7 +190,7 @@ public class UICreateRole : MonoBehaviour
             go.SetActive(true);
             go.GetComponentInChildren<LanguageText>().text = slotName;
             go.GetComponent<Button>().onClick.AddListener(() => {
-                StaticTools.DestoryChilds(list2);
+                CommonTools.DestoryChilds(list2);
                 if (slotName == "Beard") {
                     GameObject go2 = Instantiate(btnPrefab, list2);
                     go2.SetActive(true);
@@ -230,16 +230,16 @@ public class UICreateRole : MonoBehaviour
 
     public void OnClickBody() {
         colorPanel.gameObject.SetActive(false);
-        StaticTools.DestoryChilds(list1);
-        StaticTools.DestoryChilds(list2);
+        CommonTools.DestoryChilds(list1);
+        CommonTools.DestoryChilds(list2);
         LookBody();
         SetDNA(bodys);
     }
 
     public void OnClickFace() {
         colorPanel.gameObject.SetActive(false);
-        StaticTools.DestoryChilds(list1);
-        StaticTools.DestoryChilds(list2);
+        CommonTools.DestoryChilds(list1);
+        CommonTools.DestoryChilds(list2);
         LookHead();
         SetDNA(faces);
     }
@@ -251,7 +251,7 @@ public class UICreateRole : MonoBehaviour
             go.SetActive(true);
             go.GetComponentInChildren<LanguageText>().text = item.Key;
             go.GetComponent<Button>().onClick.AddListener(() => {
-                StaticTools.DestoryChilds(list2);
+                CommonTools.DestoryChilds(list2);
                 foreach (string item2 in item.Value) {
                     if (Avatar.activeRace.name.Contains("Male") && item2 == "breastCleavage")
                         continue;
@@ -333,8 +333,8 @@ public class UICreateRole : MonoBehaviour
     }
     public void OnClickColors() {
         colorPanel.gameObject.SetActive(false);
-        StaticTools.DestoryChilds(list1);
-        StaticTools.DestoryChilds(list2);
+        CommonTools.DestoryChilds(list1);
+        CommonTools.DestoryChilds(list2);
         LookBody();
         OverlayColorData[] colors = UMATools.GetColors(Avatar);
         foreach (OverlayColorData item in colors) {
@@ -361,11 +361,11 @@ public class UICreateRole : MonoBehaviour
                 || slotName == "Eyebrows" || slotName == "Eyes")
                 continue;
 
-            if (slotName == "Beard" && StaticTools.Random(0, wardrobes[slotName].Count + 1) == 0) {
+            if (slotName == "Beard" && CommonTools.Random(0, wardrobes[slotName].Count + 1) == 0) {
                 UMATools.ClearRecipe(Avatar, slotName);
                 continue;
             }
-            UMATools.SetRecipe(Avatar, wardrobes[slotName][StaticTools.Random(0, wardrobes[slotName].Count)]);
+            UMATools.SetRecipe(Avatar, wardrobes[slotName][CommonTools.Random(0, wardrobes[slotName].Count)]);
         }
     }
 }

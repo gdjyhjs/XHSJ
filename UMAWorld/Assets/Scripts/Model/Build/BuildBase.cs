@@ -51,6 +51,26 @@ public class BuildBase {
     [JsonProperty(PropertyName = "py")]
     private float position_y;
     /// <summary>
+    /// 领地大门所在的位置
+    /// </summary>
+    [JsonIgnore]
+    public Vector2 doorPosition
+    {
+        get
+        {
+            return new Vector2(doorPosition_x, doorPosition_y);
+        }
+        set
+        {
+            doorPosition_x = value.x;
+            doorPosition_y = value.y;
+        }
+    }
+    [JsonProperty(PropertyName = "dpx")]
+    private float doorPosition_x;
+    [JsonProperty(PropertyName = "dpy")]
+    private float doorPosition_y;
+    /// <summary>
     /// 领地ID 名字
     /// </summary>
     public string id;
@@ -66,6 +86,6 @@ public class BuildBase {
     }
 
     public bool isOnArea(Vector2 point) {
-        return StaticTools.PointIsInArea(points, point);
+        return MathTools.PointIsInPolygon(points, point);
     }
 }

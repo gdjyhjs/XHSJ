@@ -67,7 +67,7 @@ public class UnitMono:MonoBehaviour
             targetPos = hand.position + transform.forward * 10;
         }
         ConfSkillItem conf = g.conf.skill.GetItem(skill.ID);
-        GameObject go = GameObject.Instantiate(StaticTools.LoadResources<GameObject>(conf.prefab));
+        GameObject go = GameObject.Instantiate(CommonTools.LoadResources<GameObject>(conf.prefab));
         go.transform.position = hand.position;
 
         SkillMono skillMono = (SkillMono)go.AddComponent(Type.GetType(conf.className));

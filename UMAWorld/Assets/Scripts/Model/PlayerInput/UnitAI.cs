@@ -39,7 +39,7 @@ public class UnitAI:MonoBehaviour {
             if (dis < 10) {
                 ai.SetTarget((Vector3)default);
                 transform.LookAt(targetUnit.transform);
-                if (StaticTools.Random(0, 2) == 0) { person.PlayTrigger("Attack1"); } else { person.PlayTrigger("Attack2"); }
+                if (CommonTools.Random(0, 2) == 0) { person.PlayTrigger("Attack1"); } else { person.PlayTrigger("Attack2"); }
             } else {
                 ai.SetTarget(targetUnit.transform);
             }
@@ -50,7 +50,7 @@ public class UnitAI:MonoBehaviour {
 
     private void IdleRun() {
         if (Vector3.Distance(transform.position, targetPoint) < 2 || ai.target != targetPoint || targetPoint == default) {
-            targetPoint = StaticTools.GetGroundPoint(new Vector3(StaticTools.Random(-100, 100), 0, StaticTools.Random(-100, 100)));
+            targetPoint = CommonTools.GetGroundPoint(new Vector3(CommonTools.Random(-100, 100), 0, CommonTools.Random(-100, 100)));
             ai.SetTarget(targetPoint);
         }
     }

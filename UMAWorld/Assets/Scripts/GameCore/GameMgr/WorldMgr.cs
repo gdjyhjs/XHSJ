@@ -16,7 +16,7 @@ public class WorldMgr : MonoBehaviour {
     private void Awake() {
         initOK = false;
         g.game.world = this;
-        string playerName = StaticTools.GetString(DataKey.onPlayerName);
+        string playerName = CommonTools.GetString(DataKey.onPlayerName);
         g.data.LoadGame(playerName);
         Debug.Log("seed = " + g.data.worldSeed);
         Random.InitState( g.data.worldSeed);
@@ -40,7 +40,7 @@ public class WorldMgr : MonoBehaviour {
         // 添加控制器
         go.AddComponent<UserInput>();
         player.mono.persion = go.GetComponent<ThirdPersonCharacter>();
-        go.transform.position = StaticTools.GetGroundPoint(Vector3.zero);
+        go.transform.position = CommonTools.GetGroundPoint(Vector3.zero);
         // 动画事件
         go.GetComponent<AnimEvent>().unitMono = player.mono;
         go.tag = GameConf.unitTag;
@@ -150,7 +150,7 @@ public class WorldMgr : MonoBehaviour {
                 // 添加控制器
                 go.AddComponent<UnitAI>().targetUnit = g.units.player.mono;
                 unit.mono.persion = go.GetComponent<ThirdPersonCharacter>();
-                go.transform.position = StaticTools.GetGroundPoint( new Vector3(StaticTools.Random(-10, 10), 0, StaticTools.Random(-10, 10)));
+                go.transform.position = CommonTools.GetGroundPoint( new Vector3(CommonTools.Random(-10, 10), 0, CommonTools.Random(-10, 10)));
                 // 动画事件
                 go.GetComponent<AnimEvent>().unitMono = unit.mono;
                 go.tag = GameConf.unitTag;

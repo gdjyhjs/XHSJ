@@ -14,7 +14,7 @@ public class g : MonoBehaviour {
                     go = new GameObject("g");
                 else
                     go = gg.gameObject;
-                StaticTools.GetOrAddComponent<g>(go).Init();
+                CommonTools.GetOrAddComponent<g>(go).Init();
             }
             return _game;
         }
@@ -41,7 +41,7 @@ public class g : MonoBehaviour {
 
     public void Init() {
         isInit = true;
-        _game = StaticTools.GetOrAddComponent<game>(gameObject);
+        _game = CommonTools.GetOrAddComponent<game>(gameObject);
         _game.Init();
     }
 }

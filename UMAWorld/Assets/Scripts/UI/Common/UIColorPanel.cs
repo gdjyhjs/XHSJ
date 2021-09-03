@@ -141,7 +141,7 @@ public class UIColorPanel : MonoBehaviour {
                     Vector2 dir = pos - center;
                     float angle = Vector2.Angle(start, dir);
                     angle = y < 180 ? 360 - angle : angle;
-                    Color c = StaticTools.ColorFromHSV(angle, 1, 1);
+                    Color c = CommonTools.ColorFromHSV(angle, 1, 1);
                     texH.SetPixel(x, y, c);
                 }
             }
@@ -174,14 +174,14 @@ public class UIColorPanel : MonoBehaviour {
         this.s = s;
         this.v = v;
 
-        rawColor = StaticTools.ColorFromHSV(h, s, v);
+        rawColor = CommonTools.ColorFromHSV(h, s, v);
         r = rawColor.r;
         g = rawColor.g;
         b = rawColor.b;
 
         for (int x = 0; x < 80; x++) {
             for (int y = 0; y < 80; y++) {
-                Color c = StaticTools.ColorFromHSV(h, Mathf.Lerp(0, 1, x / 79f), Mathf.Lerp(0, 1, y / 79f));
+                Color c = CommonTools.ColorFromHSV(h, Mathf.Lerp(0, 1, x / 79f), Mathf.Lerp(0, 1, y / 79f));
                 texSV.SetPixel(x, y, c);
             }
         }
@@ -221,7 +221,7 @@ public class UIColorPanel : MonoBehaviour {
             return;
 
         float h, s, v;
-        StaticTools.ColorToHSV(rawColor, out h, out s, out v);
+        CommonTools.ColorToHSV(rawColor, out h, out s, out v);
         OnColorChange(h, s, v);
     }
 }

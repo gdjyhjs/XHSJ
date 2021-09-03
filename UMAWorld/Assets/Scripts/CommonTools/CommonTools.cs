@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Reflection;
 
-public static class StaticTools
+public static class CommonTools
 {
     public static void Init() {
     }
@@ -238,26 +238,6 @@ public static class StaticTools
             return hit.point;
         }
         return point;
-    }
-
-    public static bool PointIsInArea(List<Vector2> vertexPoints, Vector2 point) {
-        bool c = false;
-        for (int i = 0, j = vertexPoints.Count - 1; i < vertexPoints.Count; j=i++) {
-            if (((vertexPoints[i].y > point.y) != (vertexPoints[j].y > point.y)) && (point.x < (vertexPoints[j].x - vertexPoints[i].x) * (point.y - vertexPoints[i].y) / (vertexPoints[j].y - vertexPoints[i].y) + vertexPoints[i].x)) {
-                c = !c;
-            }
-        }
-        return c;
-    }
-
-    public static bool PointIsInArea(Vector2[] vertexPoints, Vector2 point) {
-        bool c = false;
-        for (int i = 0, j = vertexPoints.Length - 1; i < vertexPoints.Length; j = i++) {
-            if (((vertexPoints[i].y > point.y) != (vertexPoints[j].y > point.y)) && (point.x < (vertexPoints[j].x - vertexPoints[i].x) * (point.y - vertexPoints[i].y) / (vertexPoints[j].y - vertexPoints[i].y) + vertexPoints[i].x)) {
-                c = !c;
-            }
-        }
-        return c;
     }
 
 

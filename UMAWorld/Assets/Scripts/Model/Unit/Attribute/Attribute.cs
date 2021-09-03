@@ -7,7 +7,7 @@ public class Attribute {
     public int seed;
 
     public Attribute() {
-        seed = StaticTools.Random(int.MinValue, int.MaxValue);
+        seed = CommonTools.Random(int.MinValue, int.MaxValue);
     }
 
     public int hp // 用于显示的 生命

@@ -24,7 +24,7 @@ public class LanguageText : MonoBehaviour
         }
 
         public override string ToString() {
-            return useLanguage ? StaticTools.LS(str) : str;
+            return useLanguage ? CommonTools.LS(str) : str;
         }
 
         public static implicit operator string(LanguageParam language) {
@@ -87,7 +87,7 @@ public class LanguageText : MonoBehaviour
 
     private Text uitext;
     private void Awake() {
-        uitext = StaticTools.GetOrAddComponent<Text>(gameObject);
+        uitext = CommonTools.GetOrAddComponent<Text>(gameObject);
     }
 
     public void OnEnable() {
@@ -103,7 +103,7 @@ public class LanguageText : MonoBehaviour
     private void SetText() {
         if (uitext == null)
             return;
-        string content = m_useLanguage ? StaticTools.LS(m_text) : m_text;
+        string content = m_useLanguage ? CommonTools.LS(m_text) : m_text;
         //Debug.Log(name+"   m_text= " + m_text + "   m_useLanguage=" + m_useLanguage + "   content=" + content);
         if (m_params != null) {
             int param_len = m_params.Length;
