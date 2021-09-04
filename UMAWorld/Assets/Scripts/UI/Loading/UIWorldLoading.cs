@@ -3,26 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIWorldLoading : UIBase {
-    public Slider slider;
-    public Text text;
+namespace UMAWorld {
+    public class UIWorldLoading : UIBase {
+        public Slider slider;
+        public Text text;
 
-    private void Awake() {
-        g.uiWorldLoading = this;
-        GetComponent<CanvasGroup>().alpha = 1;
-    }
+        private void Awake() {
+            g.uiWorldLoading = this;
+            GetComponent<CanvasGroup>().alpha = 1;
+        }
 
-    public void Open() {
-        gameObject.SetActive(true);
-    }
+        public void Open() {
+            gameObject.SetActive(true);
+        }
 
-    public void Close() {
-        gameObject.SetActive(false);
-    }
+        public void Close() {
+            gameObject.SetActive(false);
+        }
 
-    public void Update() {
-        float statusPercentage = MouseSoftware.EasyTerrain.GetUpdateStatusPercentage();
-        slider.value = statusPercentage;
-        text.text = System.String.Format("{0:F0}%)", statusPercentage);
+        public void Update() {
+            float statusPercentage = MouseSoftware.EasyTerrain.GetUpdateStatusPercentage();
+            slider.value = statusPercentage;
+            text.text = System.String.Format("{0:F0}%)", statusPercentage);
+        }
     }
 }

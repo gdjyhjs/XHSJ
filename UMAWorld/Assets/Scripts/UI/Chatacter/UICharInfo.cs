@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UICharInfo : UIBase {
-    public Transform m_attrRoot;
-    public UnitBase unit;
+namespace UMAWorld {
+    public class UICharInfo : UIBase {
+        public Transform m_attrRoot;
+        public UnitBase unit;
 
-    private void Awake() {
-        g.uiCharInfo = this;
-        GetComponent<CanvasGroup>().alpha = 1;
-        gameObject.SetActive(false);
-    }
+        private void Awake() {
+            g.uiCharInfo = this;
+            GetComponent<CanvasGroup>().alpha = 1;
+            gameObject.SetActive(false);
+        }
 
-    private void OnEnable() {
-        UpdateUI();
-    }
+        private void OnEnable() {
+            UpdateUI();
+        }
 
-    private void UpdateUI() {
-        unit = g.units.player;
-        if (unit == null)
-            return;
+        private void UpdateUI() {
+            unit = g.units.player;
+            if (unit == null)
+                return;
 
 
 
-        string[] attrname = new string[]{
+            string[] attrname = new string[]{
             "name",
             "race",
             "gender",
@@ -41,13 +42,13 @@ public class UICharInfo : UIBase {
             "resist_lighting",
             "resist_poison",
         };
-        for (int i = 0; i < attrname.Length; i++) {
-            m_attrRoot.GetChild(i * 2).GetComponent<LanguageText>().text = attrname[i];
-        }
+            for (int i = 0; i < attrname.Length; i++) {
+                m_attrRoot.GetChild(i * 2).GetComponent<LanguageText>().text = attrname[i];
+            }
 
 
 
-        int[] attr = new int[]{
+            int[] attr = new int[]{
             0,
            0,
            0,
@@ -65,26 +66,27 @@ public class UICharInfo : UIBase {
          unit.attribute.resist_poison
         };
 
-        for (int i = 0; i < attr.Length; i++) {
-            if (i == 0) { // 名字
-                m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text(unit.id, false);
-            } else if (i == 3) { // 等级
-                g.conf.charLevel.SetName(m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>(), unit.attribute.level);
-            } else if (i == 4) { // 生命
-                m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text("{0}/{1}",
-                    false, unit.attribute.hp, unit.attribute.maxHp);
-            } else if (i == 5) { // 法力
-                m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text("{0}/{1}",
-                    false, unit.attribute.mp, unit.attribute.maxMp);
-            } else if (i == 1) { // 种族
-                m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().text = unit.appearance.race.ToString();
-            } else if (i == 2) { // 性别
-                m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().text = unit.appearance.sex.ToString();
-            } else { // 纯数字
-                m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text(attr[i].ToString(), false);
+            for (int i = 0; i < attr.Length; i++) {
+                if (i == 0) { // 名字
+                    m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text(unit.id, false);
+                } else if (i == 3) { // 等级
+                    g.conf.charLevel.SetName(m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>(), unit.attribute.level);
+                } else if (i == 4) { // 生命
+                    m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text("{0}/{1}",
+                        false, unit.attribute.hp, unit.attribute.maxHp);
+                } else if (i == 5) { // 法力
+                    m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text("{0}/{1}",
+                        false, unit.attribute.mp, unit.attribute.maxMp);
+                } else if (i == 1) { // 种族
+                    m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().text = unit.appearance.race.ToString();
+                } else if (i == 2) { // 性别
+                    m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().text = unit.appearance.sex.ToString();
+                } else { // 纯数字
+                    m_attrRoot.GetChild(i * 2 + 1).GetComponent<LanguageText>().Text(attr[i].ToString(), false);
+                }
             }
         }
+
+
     }
-
-
 }

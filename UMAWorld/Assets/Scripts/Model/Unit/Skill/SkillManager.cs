@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class SkillManager
-{
-    public List<SkillBase> skills;
+namespace UMAWorld {
+    public class SkillManager {
+        public List<SkillBase> skills;
+    }
 }

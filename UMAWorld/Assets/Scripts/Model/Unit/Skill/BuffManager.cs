@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class BuffManager
-{
 
+namespace UMAWorld {
+    public class BuffManager {
+
+    }
 }
