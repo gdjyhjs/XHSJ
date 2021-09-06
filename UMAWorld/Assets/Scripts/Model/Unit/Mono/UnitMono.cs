@@ -71,8 +71,12 @@ namespace UMAWorld {
             GameObject go = GameObject.Instantiate(CommonTools.LoadResources<GameObject>(conf.prefab));
             go.transform.position = hand.position;
 
-            SkillMono skillMono = (SkillMono)go.AddComponent(Type.GetType(conf.className));
-            skillMono.Init(unitData, this, skill, targetPos);
+            SkillMono skillMono = (SkillMono)go.AddComponent(Type.GetType(GameConf.spacename +"."+conf.className));
+            if (skillMono == null) {
+                Debug.LogError("无法创建技能 "+ conf.className);
+            } else {
+                skillMono.Init(unitData, this, skill, targetPos);
+            }
         }
     }
 }

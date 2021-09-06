@@ -72,5 +72,6 @@ namespace UMAWorld {
         public static int version = 1;             //游戏版本
 
         public static string unitTag = "WorldUnit";
+        public static string spacename = "UMAWorld";
     }
 }

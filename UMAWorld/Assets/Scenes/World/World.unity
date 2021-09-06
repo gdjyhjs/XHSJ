@@ -605,9 +605,9 @@ MonoBehaviour:
     offsetY: -1091
     offsetZ: 4234
     frequency: 0.00066666666
-    octaves: 3
-    lacunarity: 2
-    persistence: 0.5
+    octaves: 5
+    lacunarity: 1.8
+    persistence: 0.4
     threshold: 0.5
     falloff: 0.5
   isIsland: 0
@@ -619,7 +619,7 @@ MonoBehaviour:
     _resolutionEnum: 2
     _resolutionInt: 129
   materialTemplate: {fileID: 2100000, guid: 3d433361336a14d03aae50114a5a24fd, type: 2}
-  castShadows: 0
+  castShadows: 1
   splatTexturesHeightness:
   - diffuseTexture: {fileID: 2800000, guid: 2a24e936ba9ce40c1a6f142f20027c35, type: 3}
     normalTexture: {fileID: 2800000, guid: 00fb0a56c3f964ebcacd175c4338252a, type: 3}
@@ -892,8 +892,8 @@ MonoBehaviour:
     billboard: 1
     color1: {r: 0.8039216, g: 0.7372549, b: 0.101960786, a: 1}
     color2: {r: 0.2627451, g: 0.9764706, b: 0.16470589, a: 1}
-    minScale: 0.8
-    maxScale: 1.2
+    minScale: 0.64496124
+    maxScale: 3.0604653
     bendFactor: 1
     applyToSplatTexture: 00010100
   treeDistance: 1125
@@ -1057,10 +1057,10 @@ MonoBehaviour:
     minDistance: 7.4298263
     preventMeshOverlap: 1
     applyToSplatTexture: 00010100
-  - density: 10
+  - density: 2000
     prototype: {fileID: 5449952459070023011, guid: ca0e0e00135da48428681c83743a5630, type: 3}
-    minScale: 0.5
-    maxScale: 5
+    minScale: 0.67347014
+    maxScale: 3.6734705
     minSteepness: 0
     maxSteepness: 90
     forceHorizontalPlacement: 0
@@ -1074,17 +1074,17 @@ MonoBehaviour:
       octaves: 1
       lacunarity: 1
       persistence: 1
-      threshold: 0.5
-      falloff: 0.226
+      threshold: 0.422
+      falloff: 0
     minDistance: 7.4298263
     preventMeshOverlap: 1
-    applyToSplatTexture: 00010100
+    applyToSplatTexture: 00010000
   player: {fileID: 330375188}
   playerStartupFreeRadius: 10
   playerStartupGroundDistance: 5
   generateAtStart: 1
   randomizeAtStart: 1
-  allowedPlayerStartSplatTextures: 00000001
+  allowedPlayerStartSplatTextures: 00010000
   allowedPlayerStartMaxSteepness: 5
   autoAdjustPlayerCameraMaxDistance: 0
   tileList: []
@@ -1107,7 +1107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239580291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 183.1102, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 959405603}
