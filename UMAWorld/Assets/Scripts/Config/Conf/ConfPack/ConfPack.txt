@@ -1,85 +1,4 @@
-using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
-
-public class ConfSkillItem : ConfBaseItem
-{
-	public string name;				//技能名称
-	public string className;				//技能类名称
-	public string spriteName;				//技能图标
-	public int skillQuale;				//魔法性质
-	public int skillType;				//魔法类型
-	public string instruction;				//说明
-	public string prefab;				//技能预制件
-	public float duration;				//持续时间
-	public float speed;				//移动速度
-	public int magic;				//消耗MP
-	public float might;				//技能威力
-	public int cool;				//冷却时间
-	public int through ;				//穿透次数
-
-	public ConfSkillItem()
-	{
-	}
-
-	public ConfSkillItem(int id, string name, string className, string spriteName, int skillQuale, int skillType, string instruction, string prefab, float duration, float speed, int magic, float might, int cool, int through )
-	{
-		this.id = id;
-		this.name = name;
-		this.className = className;
-		this.spriteName = spriteName;
-		this.skillQuale = skillQuale;
-		this.skillType = skillType;
-		this.instruction = instruction;
-		this.prefab = prefab;
-		this.duration = duration;
-		this.speed = speed;
-		this.magic = magic;
-		this.might = might;
-		this.cool = cool;
-		this.through  = through ;
-	}	
-
-	public ConfSkillItem Clone()
-	{
-	    return base.CloneBase() as ConfSkillItem;
-	}
-}
-public class ConfSkillBase : ConfBase
-{
-	private List<ConfSkillItem> _allConfList = new List<ConfSkillItem>();
-	public IReadOnlyList<ConfSkillItem> allConfList {
-		get { return _allConfList; }
-	}
-
-    public override void Init()
-    {
-		confName = "Skill";
- 		allConfBase = new List<ConfBaseItem>();
-		Init1();
-
-	}
-
-	private void Init1()
-	{
-		allConfBase.Add(new ConfSkillItem(1, "fireBall", "SkillLine", "xxx", 1, 100000, "xxx", "Prefab/Bullet/FireBall", 3f, 8f, 5, 1f, 1, 0));
-		allConfBase.Add(new ConfSkillItem(2, "soilBall", "SkillLine", "xxx", 0, 100000, "xxx", "Prefab/Bullet/SoilBall", 5f, 10f, 20, 1.2f, 3, 0));
-	}
-
-	public override void AddItem(int id, ConfBaseItem item)
-	{
-		base.AddItem(id, item);
-		_allConfList.Add(item as ConfSkillItem);
-	}
-
-	public ConfSkillItem GetItem(int id)
-	{
-		return GetItemObject<ConfSkillItem>(id);
-	}
-	
-}
-	
-
+namespace UMAWorld {
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -386,6 +305,298 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
+public class ConfSchoolBuildItem : ConfBaseItem
+{
+	public int[] minPos;				//最小位置
+	public int[] maxPos;				//最大位置
+	public int minDis;				//距离其他宗门最小距离
+	public int minRadius;				//最小半径
+	public int maxRadius;				//最大半径
+	public int minVertexCount;				//最少顶点数量
+	public int maxVertexCount;				//最多顶点数量
+	public int[] turnCount;				//上山转折数
+	public int[] height;				//外殿高度[最小，最大]
+
+	public ConfSchoolBuildItem()
+	{
+	}
+
+	public ConfSchoolBuildItem(int id, int[] minPos, int[] maxPos, int minDis, int minRadius, int maxRadius, int minVertexCount, int maxVertexCount, int[] turnCount, int[] height)
+	{
+		this.id = id;
+		this.minPos = minPos;
+		this.maxPos = maxPos;
+		this.minDis = minDis;
+		this.minRadius = minRadius;
+		this.maxRadius = maxRadius;
+		this.minVertexCount = minVertexCount;
+		this.maxVertexCount = maxVertexCount;
+		this.turnCount = turnCount;
+		this.height = height;
+	}	
+
+	public ConfSchoolBuildItem Clone()
+	{
+	    return base.CloneBase() as ConfSchoolBuildItem;
+	}
+}
+public class ConfSchoolBuildBase : ConfBase
+{
+	private List<ConfSchoolBuildItem> _allConfList = new List<ConfSchoolBuildItem>();
+	public IReadOnlyList<ConfSchoolBuildItem> allConfList {
+		get { return _allConfList; }
+	}
+
+    public override void Init()
+    {
+		confName = "SchoolBuild";
+ 		allConfBase = new List<ConfBaseItem>();
+		Init1();
+
+	}
+
+	private void Init1()
+	{
+		allConfBase.Add(new ConfSchoolBuildItem(0, new int[]{ -100, -100 }, new int[]{ 100, 100 }, 1000, 200, 300, 5, 9, new int[]{ 2, 4 }, new int[]{ 20, 40 }));
+	}
+
+	public override void AddItem(int id, ConfBaseItem item)
+	{
+		base.AddItem(id, item);
+		_allConfList.Add(item as ConfSchoolBuildItem);
+	}
+
+	public ConfSchoolBuildItem GetItem(int id)
+	{
+		return GetItemObject<ConfSchoolBuildItem>(id);
+	}
+	
+}
+	
+
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+
+public class ConfSchoolHouseItem : ConfBaseItem
+{
+	public int areaWidth;				//占地宽度
+	public int areaLong;				//占地长度
+	public int areaHeight;				//占地高度
+	public string prefab;				//预制件
+
+	public ConfSchoolHouseItem()
+	{
+	}
+
+	public ConfSchoolHouseItem(int id, int areaWidth, int areaLong, int areaHeight, string prefab)
+	{
+		this.id = id;
+		this.areaWidth = areaWidth;
+		this.areaLong = areaLong;
+		this.areaHeight = areaHeight;
+		this.prefab = prefab;
+	}	
+
+	public ConfSchoolHouseItem Clone()
+	{
+	    return base.CloneBase() as ConfSchoolHouseItem;
+	}
+}
+public class ConfSchoolHouseBase : ConfBase
+{
+	private List<ConfSchoolHouseItem> _allConfList = new List<ConfSchoolHouseItem>();
+	public IReadOnlyList<ConfSchoolHouseItem> allConfList {
+		get { return _allConfList; }
+	}
+
+    public override void Init()
+    {
+		confName = "SchoolHouse";
+ 		allConfBase = new List<ConfBaseItem>();
+		Init1();
+
+	}
+
+	private void Init1()
+	{
+		allConfBase.Add(new ConfSchoolHouseItem(0, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(1, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(2, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(3, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(4, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(5, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(6, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(7, 10, 10, 10, "xxx"));
+		allConfBase.Add(new ConfSchoolHouseItem(8, 10, 10, 10, "xxx"));
+	}
+
+	public override void AddItem(int id, ConfBaseItem item)
+	{
+		base.AddItem(id, item);
+		_allConfList.Add(item as ConfSchoolHouseItem);
+	}
+
+	public ConfSchoolHouseItem GetItem(int id)
+	{
+		return GetItemObject<ConfSchoolHouseItem>(id);
+	}
+	
+}
+	
+
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+
+public class ConfSchoolFloorItem : ConfBaseItem
+{
+	public int areaWidth;				//占地宽度(cm)
+	public int areaLong;				//占地长度cm)
+	public int areaHeight;				//占地高度cm)
+	public int type;				//类型
+	public string prefab;				//预制件
+
+	public ConfSchoolFloorItem()
+	{
+	}
+
+	public ConfSchoolFloorItem(int id, int areaWidth, int areaLong, int areaHeight, int type, string prefab)
+	{
+		this.id = id;
+		this.areaWidth = areaWidth;
+		this.areaLong = areaLong;
+		this.areaHeight = areaHeight;
+		this.type = type;
+		this.prefab = prefab;
+	}	
+
+	public ConfSchoolFloorItem Clone()
+	{
+	    return base.CloneBase() as ConfSchoolFloorItem;
+	}
+}
+public class ConfSchoolFloorBase : ConfBase
+{
+	private List<ConfSchoolFloorItem> _allConfList = new List<ConfSchoolFloorItem>();
+	public IReadOnlyList<ConfSchoolFloorItem> allConfList {
+		get { return _allConfList; }
+	}
+
+    public override void Init()
+    {
+		confName = "SchoolFloor";
+ 		allConfBase = new List<ConfBaseItem>();
+		Init1();
+
+	}
+
+	private void Init1()
+	{
+		allConfBase.Add(new ConfSchoolFloorItem(0, 400, 400, 6, 1, "Prefab/Build/Floor/Ground_Brick1"));
+		allConfBase.Add(new ConfSchoolFloorItem(1, 237, 162, 100, 2, "Prefab/Build/Floor/Stairs1"));
+	}
+
+	public override void AddItem(int id, ConfBaseItem item)
+	{
+		base.AddItem(id, item);
+		_allConfList.Add(item as ConfSchoolFloorItem);
+	}
+
+	public ConfSchoolFloorItem GetItem(int id)
+	{
+		return GetItemObject<ConfSchoolFloorItem>(id);
+	}
+	
+}
+	
+
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+
+public class ConfSkillItem : ConfBaseItem
+{
+	public string name;				//技能名称
+	public string className;				//技能类名称
+	public string spriteName;				//技能图标
+	public int skillQuale;				//魔法性质
+	public int skillType;				//魔法类型
+	public string instruction;				//说明
+	public string prefab;				//技能预制件
+	public float duration;				//持续时间
+	public float speed;				//移动速度
+	public int magic;				//消耗MP
+	public float might;				//技能威力
+	public int cool;				//冷却时间
+	public int through ;				//穿透次数
+
+	public ConfSkillItem()
+	{
+	}
+
+	public ConfSkillItem(int id, string name, string className, string spriteName, int skillQuale, int skillType, string instruction, string prefab, float duration, float speed, int magic, float might, int cool, int through )
+	{
+		this.id = id;
+		this.name = name;
+		this.className = className;
+		this.spriteName = spriteName;
+		this.skillQuale = skillQuale;
+		this.skillType = skillType;
+		this.instruction = instruction;
+		this.prefab = prefab;
+		this.duration = duration;
+		this.speed = speed;
+		this.magic = magic;
+		this.might = might;
+		this.cool = cool;
+		this.through  = through ;
+	}	
+
+	public ConfSkillItem Clone()
+	{
+	    return base.CloneBase() as ConfSkillItem;
+	}
+}
+public class ConfSkillBase : ConfBase
+{
+	private List<ConfSkillItem> _allConfList = new List<ConfSkillItem>();
+	public IReadOnlyList<ConfSkillItem> allConfList {
+		get { return _allConfList; }
+	}
+
+    public override void Init()
+    {
+		confName = "Skill";
+ 		allConfBase = new List<ConfBaseItem>();
+		Init1();
+
+	}
+
+	private void Init1()
+	{
+		allConfBase.Add(new ConfSkillItem(1, "fireBall", "SkillLine", "xxx", 1, 100000, "xxx", "Prefab/Bullet/FireBall", 3f, 8f, 5, 1f, 1, 0));
+		allConfBase.Add(new ConfSkillItem(2, "soilBall", "SkillLine", "xxx", 0, 100000, "xxx", "Prefab/Bullet/SoilBall", 5f, 10f, 20, 1.2f, 3, 0));
+	}
+
+	public override void AddItem(int id, ConfBaseItem item)
+	{
+		base.AddItem(id, item);
+		_allConfList.Add(item as ConfSkillItem);
+	}
+
+	public ConfSkillItem GetItem(int id)
+	{
+		return GetItemObject<ConfSkillItem>(id);
+	}
+	
+}
+	
+
+using UnityEngine;
+using UnityEditor;
+using System.Collections.Generic;
+
 public class ConfCreateRoleAttributeItem : ConfBaseItem
 {
 	public string key;				//文本索引
@@ -518,80 +729,5 @@ public class ConfCharLevelBase : ConfBase
 }
 	
 
-using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
 
-public class ConfSchoolBuildItem : ConfBaseItem
-{
-	public int[] minPos;				//最小位置
-	public int[] maxPos;				//最大位置
-	public int minDis;				//距离其他宗门最小距离
-	public int minRadius;				//最小半径
-	public int maxRadius;				//最大半径
-	public int minVertexCount;				//最少顶点数量
-	public int maxVertexCount;				//最多顶点数量
-
-	public ConfSchoolBuildItem()
-	{
-	}
-
-	public ConfSchoolBuildItem(int id, int[] minPos, int[] maxPos, int minDis, int minRadius, int maxRadius, int minVertexCount, int maxVertexCount)
-	{
-		this.id = id;
-		this.minPos = minPos;
-		this.maxPos = maxPos;
-		this.minDis = minDis;
-		this.minRadius = minRadius;
-		this.maxRadius = maxRadius;
-		this.minVertexCount = minVertexCount;
-		this.maxVertexCount = maxVertexCount;
-	}	
-
-	public ConfSchoolBuildItem Clone()
-	{
-	    return base.CloneBase() as ConfSchoolBuildItem;
-	}
 }
-public class ConfSchoolBuildBase : ConfBase
-{
-	private List<ConfSchoolBuildItem> _allConfList = new List<ConfSchoolBuildItem>();
-	public IReadOnlyList<ConfSchoolBuildItem> allConfList {
-		get { return _allConfList; }
-	}
-
-    public override void Init()
-    {
-		confName = "SchoolBuild";
- 		allConfBase = new List<ConfBaseItem>();
-		Init1();
-
-	}
-
-	private void Init1()
-	{
-		allConfBase.Add(new ConfSchoolBuildItem(0, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(1, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(2, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(3, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(4, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(5, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(6, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(7, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-		allConfBase.Add(new ConfSchoolBuildItem(8, new int[]{ -5000, -5000 }, new int[]{ 5000, 5000 }, 1000, 200, 300, 5, 9));
-	}
-
-	public override void AddItem(int id, ConfBaseItem item)
-	{
-		base.AddItem(id, item);
-		_allConfList.Add(item as ConfSchoolBuildItem);
-	}
-
-	public ConfSchoolBuildItem GetItem(int id)
-	{
-		return GetItemObject<ConfSchoolBuildItem>(id);
-	}
-	
-}
-	
-

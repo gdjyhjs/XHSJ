@@ -63,6 +63,7 @@ namespace UMAWorld {
             StartCoroutine(Test());
 
 #if UNITY_EDITOR
+            // 绘画宗门区域
             foreach (BuildBase item in g.builds.allBuild.Values) {
                 int vertexCount = item.points.Length;
                 Vector3[] testPoints = new Vector3[vertexCount + 1];
@@ -76,7 +77,11 @@ namespace UMAWorld {
                 testPoints[vertexCount] = testPoints[0];
                 testLine.positionCount = vertexCount + 1;
                 testLine.SetPositions(testPoints);
+
+                test.AddComponent<BuildMono>().Init(item);
             }
+
+
 #endif
         }
         private IEnumerator InitWorld() {

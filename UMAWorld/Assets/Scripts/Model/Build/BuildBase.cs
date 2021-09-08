@@ -8,25 +8,59 @@ namespace UMAWorld {
     /// 建筑基础
     /// </summary>
     public class BuildBase {
-        /// <summary>
-        /// 领土区域顶点坐标
+        /// 宗门所在的位置
         /// </summary>
         [JsonProperty(PropertyName = "a")]
-        public Point2[] points;
-        /// 领地所在的位置
+        public Point2 position;
+
+        /// <summary>
+        /// 宗门区域顶点坐标
         /// </summary>
         [JsonProperty(PropertyName = "b")]
-        public Point2 position;
+        public Point2[] points;
+
         /// <summary>
-        /// 领地大门所在的位置
+        /// 宗门创建随机种子
         /// </summary>
         [JsonProperty(PropertyName = "c")]
-        public Point2 doorPosition;
+        public int seed;
+
         /// <summary>
-        /// 领地ID 名字
+        /// 宗门ID 名字
         /// </summary>
         [JsonProperty(PropertyName = "d")]
         public string id;
+
+        /// <summary>
+        /// 宗门大门所在的位置
+        /// </summary>
+        [JsonProperty(PropertyName = "e")]
+        public Point2 doorPosition;
+
+        /// <summary>
+        /// 宗门禁地所在的位置
+        /// </summary>
+        [JsonProperty(PropertyName = "f")]
+        public Point2 forbiddenPosition;
+
+        /// <summary>
+        /// 宗门外殿所在的位置
+        /// </summary>
+        [JsonProperty(PropertyName = "g")]
+        public Point2 outHallPosition;
+
+        /// <summary>
+        /// 宗门内殿所在的位置
+        /// </summary>
+        [JsonProperty(PropertyName = "h")]
+        public Point2 innerHallPosition;
+
+        /// <summary>
+        /// 宗门配置ID
+        /// </summary>
+        [JsonProperty(PropertyName = "i")]
+        public int confId;
+
         /// <summary>
         /// mono对象
         /// </summary>

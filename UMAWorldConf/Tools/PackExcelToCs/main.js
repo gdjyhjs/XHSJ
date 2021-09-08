@@ -120,11 +120,11 @@ fs.readFile('./conf.json', 'utf8', function(err, data){
 				    		var csStr = newCacheFileData.tableFileCsStr[key].csStr;
 				    		csStrText += csStr + "\r\n";
 
-							fs.writeFileSync(conf.csPath + '\\ConfPack\\Conf' + key + "Base.cs", csStr);
+							fs.writeFileSync(conf.csPath + '\\ConfPack\\Conf' + key + "Base.cs", "namespace UMAWorld {\n" + csStr + "\n}");
 			    		}
 			    	}
 
-					fs.writeFileSync(conf.csPath + '\\ConfPack\\ConfPack.txt', csStrText);
+					fs.writeFileSync(conf.csPath + '\\ConfPack\\ConfPack.txt', "namespace UMAWorld {\n" + csStrText + "\n}");
     			});
 			}
     	}    	
@@ -384,7 +384,7 @@ public class ConfClassName : ConfClassNameBase
 			csConfStr = replaceAll(csConfStr, "ConfClassNameBase", "Conf" + name + "Base");
 			csConfStr = replaceAll(csConfStr, "ConfClassName", "Conf" + name);
 
-			fs.writeFileSync(conf.csPath + "\\" + "Conf" + name + ".cs", csConfStr);
+			fs.writeFileSync(conf.csPath + "\\" + "Conf" + name + ".cs", "namespace UMAWorld {\n" + csConfStr + "\n}");
 		}
 	})
 
@@ -474,7 +474,7 @@ public class ConfMgr
 	csStr = replaceAll(csStr, "\n", "\r\n");
 	csStr = replaceAll(csStr, "\r\r\n", "\r\n");
 
-	fs.writeFileSync(conf.csMgrPath, csStr);
+	fs.writeFileSync(conf.csMgrPath, "namespace UMAWorld {\n" + csStr + "\n}");
 }
 
 function ExcelTableToCsMgrVariantStr(files)
@@ -508,7 +508,7 @@ public class ConfMgrVariantBase
 
 	csStr = csStr.replace("//class", classStr);
 
-	fs.writeFileSync(conf.csMgrVariantPath, csStr);
+	fs.writeFileSync(conf.csMgrVariantPath, "namespace UMAWorld {\n" + csStr + "\n}");
 }
 
 //字符串转一维数组

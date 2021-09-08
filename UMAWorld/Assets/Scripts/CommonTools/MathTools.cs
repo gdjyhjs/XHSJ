@@ -136,5 +136,62 @@ namespace UMAWorld {
                     return false;
             }
         }
+
+        /// <summary>
+        /// 二次方公式贝塞尔曲线
+        /// </summary>
+        /// <param name="p0">起点</param>
+        /// <param name="p1">终点</param>
+        /// <param name="p2">锚点</param>
+        /// <param name="t">位置[0,1]</param>
+        /// <returns></returns>
+        public static Vector3 BezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, float t) {
+            return Mathf.Pow(1 - t, 2) * p0 + 2 * t * (1 - t) * p1 + t * t * p2;
+        }
+
+        /// <summary>
+        /// 三次方公式贝塞尔曲线
+        /// </summary>
+        /// <param name="p0">起点</param>
+        /// <param name="p1">终点</param>
+        /// <param name="p2">锚点1</param>
+        /// <param name="p3">锚点2</param>
+        /// <param name="t">位置[0,1]</param>
+        /// <returns></returns>
+        public static Vector3 BezierCurve(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, float t) {
+            return p0 * Mathf.Pow(1 - t, 3) + 3 * p1 * t * Mathf.Pow(1 - t, 2) + 3 * p2 * t * t * (1 - t) + p3 * Mathf.Pow(t, 3);
+        }
+
+        /// <summary>
+        /// 三次方公式贝塞尔曲线
+        /// </summary>
+        /// <param name="points">所有点</param>
+        /// <param name="t">位置[0,1]</param>
+        /// <returns></returns>
+        public static Vector3 BezierCurve(Vector3[] points, float t) {
+
+            ReturnAction<int, int, int> calc_combination_number = (int n, int k) => {
+                int[] result = new int[n + 1];
+                for (int i = 0; i <= n; i++) {
+                    result[i] = 1;
+                    for (int j = i - 1; j >= 1; j--) {
+                        result[j] += result[j - 1];
+                    }
+                    result[0] = 1;
+                }
+                return result[k];
+            };
+
+            int count = points.Length;
+            Vector3 point = new Vector3();
+            float[] part = new float[count];
+            for (int i = 0; i < count; i++) {
+                int n_order = count - 1; // 阶数
+                int tmp = calc_combination_number(n_order, i);
+                point += (tmp * points[i] * Mathf.Pow((1 - t), n_order - i) * Mathf.Pow(t, i));
+            }
+
+            return point;
+        }
     }
 }

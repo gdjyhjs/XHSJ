@@ -241,6 +241,20 @@ namespace UMAWorld {
             return point;
         }
 
+        public static Vector3 GetGroundPoint(Vector2 point) {
+            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000)) {
+                return hit.point;
+            }
+            return new Vector3(point.x, 0, point.y);
+        }
+
+        public static Vector3 GetGroundPoint(Point2 point) {
+            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000)) {
+                return hit.point;
+            }
+            return new Vector3(point.x, 0, point.y);
+        }
+
 
 
 
