@@ -235,21 +235,21 @@ namespace UMAWorld {
         }
 
         public static Vector3 GetGroundPoint(Vector3 point) {
-            if (Physics.Raycast(point + Vector3.up * 1000, Vector3.down, out RaycastHit hit, 2000)) {
+            if (Physics.Raycast(point + Vector3.up * 1000, Vector3.down, out RaycastHit hit, 2000, 1)) {
                 return hit.point;
             }
             return point;
         }
 
         public static Vector3 GetGroundPoint(Vector2 point) {
-            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000)) {
+            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000, 1)) {
                 return hit.point;
             }
             return new Vector3(point.x, 0, point.y);
         }
 
         public static Vector3 GetGroundPoint(Point2 point) {
-            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000)) {
+            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000, 1)) {
                 return hit.point;
             }
             return new Vector3(point.x, 0, point.y);
@@ -312,6 +312,8 @@ namespace UMAWorld {
 
         }
 
-
+        public static void Log(string str) {
+            Debug.Log(str);
+        }
     }
 }
