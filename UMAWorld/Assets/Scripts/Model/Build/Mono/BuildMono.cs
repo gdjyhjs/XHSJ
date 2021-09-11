@@ -35,7 +35,7 @@ namespace UMAWorld {
 
 
             // 从大门创建楼梯到外殿
-            Vector3 startPoint = CommonTools.GetGroundPoint(buildData.doorPosition);
+            Vector3 startPoint = CommonTools.GetGroundPoint(buildData.doorPosition + new Point2(0, 1) * mainGateConf.areaLong * 5);
 
             // 创建大门
             Vector3 mainGatePos = CommonTools.GetGroundPoint(new Vector3(startPoint.x, startPoint.y, startPoint.z - mainGateConf.areaLong));
@@ -49,7 +49,7 @@ namespace UMAWorld {
                 }
             }
             mainGatePos = new Vector3(mainGatePos.x, mainGateHeight, mainGatePos.z);
-            TextMesh[] names =GameObject.Instantiate<GameObject>(mainGatePrefab, mainGatePos, Quaternion.identity).transform.Find("Name").GetComponentsInChildren<TextMesh>();
+            TextMesh[] names = GameObject.Instantiate<GameObject>(mainGatePrefab, mainGatePos, Quaternion.identity, transform).transform.Find("Name").GetComponentsInChildren<TextMesh>();
             foreach (var item in names) {
                 item.text = buildData.id;
             }
@@ -72,33 +72,32 @@ namespace UMAWorld {
 
 
             Vector3 statirsStartPos = startPoint;
-            bool onTrun = false; // 正在转弯
+            int onTrun = 0; // 正在转弯
             while (true) {
                 if (statirsStartPos.y - startPoint.y > statirsHeight / (trunCount + 1) && startPoint.x - statirsStartPos.x < statirsOffset / (trunCount + 1)) {
-                    Debug.Log((statirsStartPos.y - startPoint.y)+" > "+(statirsHeight / (trunCount + 1))+"  >>>  "+(startPoint.x - statirsStartPos.x) + " < "+(statirsOffset / (trunCount + 1)));
-                    if (!onTrun) {
+                    Debug.Log((statirsStartPos.y - startPoint.y) + " > " + (statirsHeight / (trunCount + 1)) + "  >>>  " + (startPoint.x - statirsStartPos.x) + " < " + (statirsOffset / (trunCount + 1)));
+                    if (onTrun == 0) {
                         statirsStartPos += new Vector3(0, 0, tileConf.areaLong / 2);
                     }
-                    GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up));
+                    GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up), transform);
                     statirsStartPos += new Vector3(tileConf.areaWidth * (statirsOffset > 0 ? -1 : 1), 0, 0);
-                    onTrun = true;
-                }
-                else if (statirsStartPos.y < startPoint.y + statirsHeight) {
-                    if (onTrun) {
+                    onTrun ++;
+                } else if (statirsStartPos.y < startPoint.y + statirsHeight) {
+                    if (onTrun > 0) {
                         statirsStartPos += new Vector3(-tileConf.areaWidth * (statirsOffset > 0 ? -1 : 1), 0, tileConf.areaLong / 2);
                         trunCount--;
                     }
-                    GameObject.Instantiate<GameObject>(statirsPrefab, statirsStartPos, Quaternion.AngleAxis(180, Vector3.up));
+                    GameObject.Instantiate<GameObject>(statirsPrefab, statirsStartPos, Quaternion.AngleAxis(180, Vector3.up), transform);
                     statirsStartPos += new Vector3(0, statirsConf.areaHeight, statirsConf.areaLong);
-                    onTrun = false;
+                    onTrun = 0;
                 } else if (statirsStartPos.z < startPoint.z + statirsDis) {
-                    if (onTrun) {
+                    if (onTrun > 0) {
                         statirsStartPos += new Vector3(-tileConf.areaWidth * (statirsOffset > 0 ? -1 : 1), 0, tileConf.areaLong / 2);
                         trunCount--;
                     }
-                    GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up));
+                    GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up), transform);
                     statirsStartPos += new Vector3(0, 0, tileConf.areaLong);
-                    onTrun = false;
+                    onTrun = 0;
                 } else {
                     break;
                 }
@@ -106,26 +105,42 @@ namespace UMAWorld {
             }
             int intoCount = rand.Next(3, 6);
             for (int i = 0; i < intoCount; i++) {
-                if (onTrun) {
+                if (onTrun > 0) {
                     statirsStartPos += new Vector3(-tileConf.areaWidth * (statirsOffset > 0 ? -1 : 1), 0, tileConf.areaLong / 2);
                     trunCount--;
                 }
-                GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up));
+                GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up), transform);
                 statirsStartPos += new Vector3(0, 0, tileConf.areaLong);
-                onTrun = false;
+                onTrun = 0;
+                yield return 0;
             }
 
-            Vector3 outStartPoint = statirsStartPos;
+            Vector3 outStartPoint = statirsStartPos; // 外殿开始位置
             Vector3 centerPoint = CommonTools.GetGroundPoint(buildData.position); // 中心广场位置
-            Vector3 forbiddenPoint = CommonTools.GetGroundPoint(buildData.forbiddenPosition); // 禁地位置
-            // 计算外殿大小
-            Vector2 outSize = new Vector2((forbiddenPoint.z - startPoint.z) * rand.Next(80, 100) * 0.01f, (forbiddenPoint.z - startPoint.z) * rand.Next(60, 80) * 0.01f);
+            Vector3 outEndPoint = statirsStartPos + Vector3.forward * ((centerPoint.z - startPoint.z) * rand.Next(35, 45) * 0.01f); // 外殿结束位置
 
+            Vector2[] schoolArea = new Vector2[buildData.points.Length];
+            for (int i = 0; i < buildData.points.Length; i++) {
+                schoolArea[i] = new Vector2(buildData.points[i].x, buildData.points[i].y);
+            }
+            // 计算外殿区域
+            Vector2 outAreaLeftDown, outAreaLeftUp, outAreaRightDown, outAreaRightUp;
+            MathTools.LineSegmentCross(new Vector2(outStartPoint.x - 1000, outStartPoint.z), new Vector2(outStartPoint.x, outStartPoint.z), schoolArea, out outAreaLeftDown);
+            MathTools.LineSegmentCross(new Vector2(outStartPoint.x, outStartPoint.z), new Vector2(outStartPoint.x + 1000, outStartPoint.z), schoolArea, out outAreaRightDown);
+            MathTools.LineSegmentCross(new Vector2(outEndPoint.x - 1000, outEndPoint.z), new Vector2(outEndPoint.x, outEndPoint.z), schoolArea, out outAreaLeftUp);
+            MathTools.LineSegmentCross(new Vector2(outEndPoint.x, outEndPoint.z), new Vector2(outEndPoint.x + 1000, outEndPoint.z), schoolArea, out outAreaRightUp);
+            Debug.Log(outAreaLeftDown + " , " + outAreaLeftUp + " , " + outAreaRightDown + " , " + outAreaRightUp);
+            Vector2 ourAreaStart = new Vector2(Mathf.Max(outAreaLeftDown.x, outAreaLeftUp.x), outAreaLeftDown.y);
+            Vector2 ourAreaEnd = new Vector2(Mathf.Min(outAreaRightDown.x, outAreaRightUp.x), outAreaRightUp.y);
+            Debug.Log(ourAreaStart + " >> " + ourAreaEnd);
             // 创建外殿地板
-
-
-
-
+            for (float i = ourAreaStart.x + floorConf.areaWidth * 3; i < ourAreaEnd.x - floorConf.areaWidth * 3; i += floorConf.areaWidth) {
+                for (float j = ourAreaStart.y; j < ourAreaEnd.y; j += floorConf.areaLong) {
+                    Vector3 pos = new Vector3(i, outStartPoint.y, j);
+                    GameObject.Instantiate<GameObject>(floorPrefab, pos, Quaternion.AngleAxis(rand.Next(0, 3) * 90, Vector3.up), transform);
+                    yield return 0;
+                }
+            }
 
         }
     }

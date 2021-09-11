@@ -72,11 +72,12 @@ namespace UMAWorld {
                 test.transform.position = new Vector3(item.position.x, 0, item.position.y);
                 LineRenderer testLine = test.AddComponent<LineRenderer>();
                 for (int i = 0; i < item.points.Length; i++) {
-                    testPoints[i] = new Vector3(item.points[i].x, 0, item.points[i].y);
+                    testPoints[i] = new Vector3(item.points[i].x, 150, item.points[i].y);
                 }
                 testPoints[vertexCount] = testPoints[0];
                 testLine.positionCount = vertexCount + 1;
                 testLine.SetPositions(testPoints);
+                testLine.material = CommonTools.LoadResources<Material>("Material/StandardRed");
 
                 test.AddComponent<BuildMono>().Init(item);
             }
