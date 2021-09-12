@@ -17,41 +17,50 @@ namespace UMAWorld {
             StartCoroutine(Build(rand));
         }
 
+        private bool yieldWait = false;
         // 创建宗门建筑
         private IEnumerator Build(Random rand) {
             ConfSchoolBuildItem conf = g.conf.schoolBuild.GetItem(buildData.confId);
 
             ConfSchoolFloorItem tileConf = g.conf.schoolFloor.GetItem(conf.tile); // 地砖
             GameObject tilePrefab = CommonTools.LoadResources<GameObject>(tileConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
             ConfSchoolFloorItem statirsConf = g.conf.schoolFloor.GetItem(conf.stairs); // 楼梯
             GameObject statirsPrefab = CommonTools.LoadResources<GameObject>(statirsConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
             ConfSchoolFloorItem floorConf = g.conf.schoolFloor.GetItem(conf.floor); // 地板
             GameObject floorPrefab = CommonTools.LoadResources<GameObject>(floorConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
             ConfSchoolFloorItem mainGateConf = g.conf.schoolFloor.GetItem(conf.mainGate); // 山门
             GameObject mainGatePrefab = CommonTools.LoadResources<GameObject>(mainGateConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
             ConfSchoolFloorItem wallGateConf = g.conf.schoolFloor.GetItem(conf.wallGate); // 墙门
             GameObject wallGatePrefab = CommonTools.LoadResources<GameObject>(wallGateConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
             ConfSchoolFloorItem wallCornerConf = g.conf.schoolFloor.GetItem(conf.wallCorner); // 墙柱
             GameObject wallCornerPrefab = CommonTools.LoadResources<GameObject>(wallCornerConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
             ConfSchoolFloorItem wallConf = g.conf.schoolFloor.GetItem(conf.wall); // 墙壁
             GameObject wallPrefab = CommonTools.LoadResources<GameObject>(wallConf.prefab);
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return CheckWait();
 
 
 
             Vector3 tmpPos;
+            GameObject tmpGo;
 
 
             // 宗门区域 建筑应该都在区域内
@@ -83,7 +92,8 @@ namespace UMAWorld {
             foreach (var item in names) {
                 item.text = buildData.id;
             }
-            yield return StartCoroutine(CheckWait());
+            if (yieldWait)
+                yield return (CheckWait());
 
             // 大门楼梯
             // 转弯数
@@ -134,7 +144,8 @@ namespace UMAWorld {
                             Transform statirs = GameObject.Instantiate<GameObject>(statirsPrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), schoolStartFloor).transform;
                             statirs.localScale = new Vector3(rand.Next(0, 100) < 50 ? 1 : -1, 1, 1);
                             statirsStartPos += new Vector3(0, statirsConf.areaHeight, 0);
-                            yield return StartCoroutine(CheckWait());
+                            if (yieldWait)
+                                yield return (CheckWait());
                         }
                         statirsStartPos += Vector3.right * tileConf.areaWidth;
                     } else {
@@ -145,7 +156,8 @@ namespace UMAWorld {
                             Transform statirs = GameObject.Instantiate<GameObject>(statirsPrefab, tmpPos, Quaternion.AngleAxis(90, Vector3.up), schoolStartFloor).transform;
                             statirs.localScale = new Vector3(rand.Next(0, 100) < 50 ? 1 : -1, 1, 1);
                             statirsStartPos += new Vector3(0, statirsConf.areaHeight, 0);
-                            yield return StartCoroutine(CheckWait());
+                            if (yieldWait)
+                                yield return (CheckWait());
                         }
                         statirsStartPos += Vector3.left * tileConf.areaWidth;
                     }
@@ -160,13 +172,15 @@ namespace UMAWorld {
                 } else {
                     break;
                 }
-                yield return StartCoroutine(CheckWait());
+                if (yieldWait)
+                    yield return (CheckWait());
             }
             int intoCount = rand.Next(3, 6);
             for (int i = 0; i < intoCount; i++) {
                 GameObject.Instantiate<GameObject>(tilePrefab, statirsStartPos, Quaternion.identity, schoolStartFloor);
                 statirsStartPos += new Vector3(0, 0, tileConf.areaLong);
-                yield return StartCoroutine(CheckWait());
+                if (yieldWait)
+                    yield return (CheckWait());
             }
             #endregion
 
@@ -201,7 +215,8 @@ namespace UMAWorld {
                     GameObject.Instantiate<GameObject>(floorPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outFloor);
                     outEndPoint = new Vector3(outStartPoint.x, outStartPoint.y, tmpPos.z + floorConf.areaLong * 0.5f);
                     outFloorEnd = new Vector2(tmpPos.x + floorConf.areaWidth * 0.5f, tmpPos.z + floorConf.areaLong * 0.5f);
-                    yield return StartCoroutine(CheckWait());
+                    if (yieldWait)
+                        yield return (CheckWait());
                 }
             }
             #endregion
@@ -233,7 +248,8 @@ namespace UMAWorld {
                     tmpPos = new Vector3(outStatirsX + (i - (outStatirsCount + 2) * 0.5f) * statirsConf.areaWidth, outEndPoint.y + j * statirsConf.areaHeight, outEndPoint.z + j * statirsConf.areaLong);
                     Transform statirs = GameObject.Instantiate<GameObject>(statirsPrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), centerFloor).transform;
                     statirs.localScale = new Vector3(i % 2 == 0 ? 1 : -1, 1, 1);
-                    yield return 0;
+                    if (yieldWait)
+                        yield return CheckWait();
                 }
             }
 
@@ -243,7 +259,8 @@ namespace UMAWorld {
                     tmpPos = new Vector3(i, centerStartPoint.y, j);
                     GameObject.Instantiate<GameObject>(floorPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerFloor);
                     centerEndPoint = new Vector3(centerStartPoint.x, centerStartPoint.y, tmpPos.z + floorConf.areaLong * 0.5f);
-                    yield return 0;
+                    if (yieldWait)
+                        yield return CheckWait();
                 }
             }
             #endregion
@@ -278,7 +295,8 @@ namespace UMAWorld {
                     tmpPos = new Vector3(centerStatirsX + (i - (centerStatirsCount + 2) * 0.5f) * statirsConf.areaWidth, centerEndPoint.y + j * statirsConf.areaHeight, centerEndPoint.z + j * statirsConf.areaLong);
                     Transform statirs = GameObject.Instantiate<GameObject>(statirsPrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), innerFloor).transform;
                     statirs.localScale = new Vector3(i % 2 == 0 ? 1 : -1, 1, 1);
-                    yield return StartCoroutine(CheckWait());
+                    if (yieldWait)
+                        yield return (CheckWait());
                 }
             }
 
@@ -287,7 +305,8 @@ namespace UMAWorld {
                 for (float j = innerAreaStart.y + floorConf.areaLong * 0.5f; j < innerAreaEnd.y; j += floorConf.areaLong) {
                     tmpPos = new Vector3(i, innerStartPoint.y, j);
                     GameObject.Instantiate<GameObject>(floorPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), innerFloor);
-                    yield return StartCoroutine(CheckWait());
+                    if (yieldWait)
+                        yield return (CheckWait());
                 }
             }
             #endregion
@@ -340,8 +359,10 @@ namespace UMAWorld {
             #region 外殿左
             Vector2 outLeftStart = new Vector2(outFloorStart.x + wallCornerConf.areaWidth, outFloorStart.y + wallCornerConf.areaWidth);
             Vector2 outLeftEnd = new Vector2(outSpaceStart.x, outSpaceEnd.y - wallCornerConf.areaWidth);
-            int hCount = Mathf.CeilToInt(outLeftEnd.x - outLeftStart.x); // 水平数量
-            int vCount = Mathf.CeilToInt(outLeftEnd.y - outLeftStart.y); // 垂直数量
+            int hCount = Mathf.CeilToInt((outLeftEnd.x - outLeftStart.x) / wallConf.areaWidth); // 水平数量
+            int vCount = Mathf.CeilToInt((outLeftEnd.y - outLeftStart.y) / wallConf.areaWidth); // 垂直数量
+            if (vCount % 2 == 0)
+                vCount++;
 
             Transform outLeftWall = new GameObject("outLeftWall").transform;
             outLeftWall.SetParent(transform);
@@ -359,11 +380,63 @@ namespace UMAWorld {
                 new Vector3(outLeftStart.x, outStartPoint.y + 3, outLeftStart.y),
             });
 
-
+            float outLeftWallWidthDis = (outLeftEnd.x - outLeftStart.x) / (hCount - 1);
+            float outLeftWallWidthScale = outLeftWallWidthDis / wallConf.areaWidth;
             for (int i = 0; i < hCount; i++) {
-                tmpPos = new Vector3(outLeftStart.x + (outLeftEnd.x - outLeftStart.x)/ (hCount - 1) * i, outStartPoint.y, outLeftStart.y);
-                GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall).name = "h1";
+                tmpPos = new Vector3(outLeftStart.x + outLeftWallWidthDis * i, outStartPoint.y, outLeftStart.y);
+                GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall);
+                if (i > 0) {
+                    tmpPos.x -= outLeftWallWidthDis * 0.5f;
+                    tmpGo = GameObject.Instantiate<GameObject>(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outLeftWall);
+                    tmpGo.transform.localScale = new Vector3(outLeftWallWidthScale, 1, 1);
+                }
 
+                tmpPos = new Vector3(outLeftStart.x + outLeftWallWidthDis * i, outStartPoint.y, outLeftEnd.y);
+                GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall);
+                if (i > 0) {
+                    tmpPos.x -= outLeftWallWidthDis * 0.5f;
+                    tmpGo = GameObject.Instantiate<GameObject>(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outLeftWall);
+                    tmpGo.transform.localScale = new Vector3(outLeftWallWidthScale, 1, 1);
+                }
+            }
+
+            float outLeftWallHeightDis = (outLeftEnd.y - outLeftStart.y) / (vCount - 1);
+            float outLeftWallHeightScale = outLeftWallHeightDis / wallConf.areaWidth;
+            for (int i = 1; i < vCount - 1; i++) {
+                tmpPos = new Vector3(outLeftStart.x, outStartPoint.y, outLeftStart.y + outLeftWallHeightDis * i);
+                GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall);
+                if (i == 1) {
+                    tmpPos.z -= outLeftWallHeightDis * 0.5f;
+                    tmpGo = GameObject.Instantiate<GameObject>(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outLeftWall);
+                    tmpGo.transform.localScale = new Vector3(outLeftWallWidthScale, 1, 1);
+                    tmpPos.z += outLeftWallHeightDis * 0.5f;
+                }
+                tmpPos.z += outLeftWallHeightDis * 0.5f;
+                tmpGo = GameObject.Instantiate<GameObject>(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outLeftWall);
+                tmpGo.transform.localScale = new Vector3(outLeftWallWidthScale, 1, 1);
+
+
+                tmpPos = new Vector3(outLeftEnd.x, outStartPoint.y, outLeftStart.y + outLeftWallHeightDis * i);
+                if (i == vCount / 2 || (i + 1) == vCount / 2) {
+                    if (i == vCount / 2) {
+                        tmpGo = GameObject.Instantiate<GameObject>(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outLeftWall);
+                        float scale = outLeftWallHeightDis * 2 / wallGateConf.areaWidth;
+                        tmpGo.transform.localScale = new Vector3(scale, 1, 1);
+                    } else {
+                        GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall);
+                    }
+                } else {
+                    GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall);
+                    if (i == 1) {
+                        tmpPos.z -= outLeftWallHeightDis * 0.5f;
+                        tmpGo = GameObject.Instantiate<GameObject>(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outLeftWall);
+                        tmpGo.transform.localScale = new Vector3(outLeftWallWidthScale, 1, 1);
+                        tmpPos.z += outLeftWallHeightDis * 0.5f;
+                    }
+                    tmpPos.z += outLeftWallHeightDis * 0.5f;
+                    tmpGo = GameObject.Instantiate<GameObject>(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outLeftWall);
+                    tmpGo.transform.localScale = new Vector3(outLeftWallWidthScale, 1, 1);
+                }
             }
 
             //for (float i = outLeftStart.x; i < outLeftEnd.x; i += wallConf.areaWidth) {
@@ -417,26 +490,31 @@ namespace UMAWorld {
             //    for (int j = 0; j < innerStatirsCount; j++) {
             //        pos = new Vector3(forbiddenStatirsX + (i - (innerStatirsCount + 2) * 0.5f) * statirsConf.areaWidth, innerEndPoint.y + j * statirsConf.areaHeight, innerEndPoint.z + j * statirsConf.areaLong);
             //        Transform statirs = GameObject.Instantiate<GameObject>(statirsPrefab, pos, Quaternion.AngleAxis(180, Vector3.up), forbiddenHall).transform;
-            //        statirs.localScale = new Vector3(i % 2 == 0 ? 1 : -1, 1, 1);
-            //        yield return 0;
-            //    }
-            //}
+            //if (yieldWait)
+                //yield return CheckWait();
+                //    }
+                //}
 
-            //// 创建禁地地板
-            //for (float i = forbiddenAreaStart.x + floorConf.areaWidth * 3; i < forbiddenAreaEnd.x - floorConf.areaWidth * 3; i += floorConf.areaWidth) {
-            //    for (float j = forbiddenAreaStart.y + floorConf.areaLong * 0.5f; j < forbiddenAreaEnd.y; j += floorConf.areaLong) {
-            //        pos = new Vector3(i, forbiddenStartPoint.y, j);
-            //        GameObject.Instantiate<GameObject>(floorPrefab, pos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), forbiddenHall);
-            //        yield return 0;
-            //    }
-            //}
+                //// 创建禁地地板
+                //for (float i = forbiddenAreaStart.x + floorConf.areaWidth * 3; i < forbiddenAreaEnd.x - floorConf.areaWidth * 3; i += floorConf.areaWidth) {
+                //    for (float j = forbiddenAreaStart.y + floorConf.areaLong * 0.5f; j < forbiddenAreaEnd.y; j += floorConf.areaLong) {
+                //        pos = new Vector3(i, forbiddenStartPoint.y, j);
+                //        GameObject.Instantiate<GameObject>(floorPrefab, pos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), forbiddenHall);
+                //if (yieldWait)
+                //yield return CheckWait();
+                //    }
+                //}
 
 
-            //// 创建禁地
-            //Transform schoolEnd = new GameObject("schoolEnd").transform;
-            //schoolEnd.SetParent(transform);
-            //schoolEnd.position = forbiddenEndPoint;
-            #endregion
+                    //// 创建禁地
+                    //Transform schoolEnd = new GameObject("schoolEnd").transform;
+                    //schoolEnd.SetParent(transform);
+                    //schoolEnd.position = forbiddenEndPoint;
+                    #endregion
+        }
+
+        private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent) {
+            return GameObject.Instantiate<GameObject>(prefab, pos, q, parent);
         }
     }
 }

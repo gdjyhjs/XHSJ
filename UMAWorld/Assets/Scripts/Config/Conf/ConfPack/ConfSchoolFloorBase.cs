@@ -49,7 +49,7 @@ public class ConfSchoolFloorBase : ConfBase
 		allConfBase.Add(new ConfSchoolFloorItem(1, 4.1f, 2.9f, 1.85f, "Prefab/Build/Floor/SchoolStairs"));
 		allConfBase.Add(new ConfSchoolFloorItem(2, 10.48f, 16.08f, 11f, "Prefab/Build/Floor/SchoolFloor"));
 		allConfBase.Add(new ConfSchoolFloorItem(3, 30.85f, 6.5f, 17.8f, "Prefab/Build/House/SchoolMainGate"));
-		allConfBase.Add(new ConfSchoolFloorItem(4, 15f, 1f, 5f, "Prefab/Build/WallSchoolWallGate"));
+		allConfBase.Add(new ConfSchoolFloorItem(4, 15f, 1f, 5f, "Prefab/Build/Wall/SchoolWallGate"));
 		allConfBase.Add(new ConfSchoolFloorItem(5, 10f, 1f, 5f, "Prefab/Build/Wall/SchoolWall"));
 		allConfBase.Add(new ConfSchoolFloorItem(6, 2f, 2f, 5f, "Prefab/Build/Wall/SchoolWallCorner"));
 	}
