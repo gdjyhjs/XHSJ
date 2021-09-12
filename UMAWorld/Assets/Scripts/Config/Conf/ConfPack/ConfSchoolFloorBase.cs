@@ -45,10 +45,13 @@ public class ConfSchoolFloorBase : ConfBase
 
 	private void Init1()
 	{
-		allConfBase.Add(new ConfSchoolFloorItem(0, 4f, 4f, 0.06f, "Prefab/Build/Floor/Ground_Brick1"));
-		allConfBase.Add(new ConfSchoolFloorItem(1, 2.37f, 1.55f, 0.92f, "Prefab/Build/Floor/Stairs1"));
-		allConfBase.Add(new ConfSchoolFloorItem(2, 9.95f, 10.67f, 0.9f, "Prefab/Build/Floor/Floor"));
-		allConfBase.Add(new ConfSchoolFloorItem(3, 30.85f, 6.5f, 17.8f, "Prefab/Build/House/MainGate"));
+		allConfBase.Add(new ConfSchoolFloorItem(0, 8f, 8f, 0.06f, "Prefab/Build/Floor/SchoolTile"));
+		allConfBase.Add(new ConfSchoolFloorItem(1, 4.1f, 2.9f, 1.85f, "Prefab/Build/Floor/SchoolStairs"));
+		allConfBase.Add(new ConfSchoolFloorItem(2, 10.48f, 16.08f, 11f, "Prefab/Build/Floor/SchoolFloor"));
+		allConfBase.Add(new ConfSchoolFloorItem(3, 30.85f, 6.5f, 17.8f, "Prefab/Build/House/SchoolMainGate"));
+		allConfBase.Add(new ConfSchoolFloorItem(4, 15f, 1f, 5f, "Prefab/Build/WallSchoolWallGate"));
+		allConfBase.Add(new ConfSchoolFloorItem(5, 10f, 1f, 5f, "Prefab/Build/Wall/SchoolWall"));
+		allConfBase.Add(new ConfSchoolFloorItem(6, 2f, 2f, 5f, "Prefab/Build/Wall/SchoolWallCorner"));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)

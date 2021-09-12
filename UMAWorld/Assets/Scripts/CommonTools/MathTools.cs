@@ -36,9 +36,7 @@ namespace UMAWorld {
             }
             return c;
         }
-
-        static string[] testColors = new string[] { "Material/StandardRed", "Material/StandardYellow", "Material/StandardBlue", "Material/StandardGreen", "Material/StandardOrange" , "Material/StandardOrange" ,"Material/StandardOrange" ,"Material/StandardOrange" };
-        static int testCount = 0;
+        
         /// <summary>
         /// 判断线段是否与多边形
         /// </summary>
@@ -50,16 +48,6 @@ namespace UMAWorld {
         public static bool LineSegmentCross(Vector2 lineFirstStar, Vector2 lineFirstEnd, Vector2[] vertexPoints, out Vector2 result) {
             for (int i = 0, j = vertexPoints.Length - 1; i < vertexPoints.Length; j = i++) {
                 if (LineSegmentCross(lineFirstStar, lineFirstEnd, vertexPoints[i], vertexPoints[j], out result)) {
-                    //var a = new GameObject().AddComponent<LineRenderer>();
-                    //a.positionCount = 2;
-                    //a.SetPositions(new Vector3[] { new Vector3(vertexPoints[i].x, 150, vertexPoints[i].y), new Vector3(vertexPoints[j].x, 150, vertexPoints[j].y) });
-                    //a.material = CommonTools.LoadResources<Material>(testColors[testCount]);
-
-                    //var b = new GameObject().AddComponent<LineRenderer>();
-                    //b.positionCount = 2;
-                    //b.SetPositions(new Vector3[] { new Vector3(lineFirstStar.x, 150, lineFirstStar.y), new Vector3(lineFirstEnd.x, 150, lineFirstEnd.y) });
-                    //b.material = CommonTools.LoadResources<Material>(testColors[testCount]);
-                    //testCount++;
                     return true;
                 }
             }

@@ -17,12 +17,15 @@ public class ConfSchoolBuildItem : ConfBaseItem
 	public int stairs;				//楼梯
 	public int floor;				//地板
 	public int mainGate;				//正门
+	public int wallGate;				//墙门
+	public int wall;				//墙壁
+	public int wallCorner;				//墙柱
 
 	public ConfSchoolBuildItem()
 	{
 	}
 
-	public ConfSchoolBuildItem(int id, int[] minPos, int[] maxPos, int minDis, int minRadius, int maxRadius, int minVertexCount, int maxVertexCount, int[] turnCount, int tile, int stairs, int floor, int mainGate)
+	public ConfSchoolBuildItem(int id, int[] minPos, int[] maxPos, int minDis, int minRadius, int maxRadius, int minVertexCount, int maxVertexCount, int[] turnCount, int tile, int stairs, int floor, int mainGate, int wallGate, int wall, int wallCorner)
 	{
 		this.id = id;
 		this.minPos = minPos;
@@ -37,6 +40,9 @@ public class ConfSchoolBuildItem : ConfBaseItem
 		this.stairs = stairs;
 		this.floor = floor;
 		this.mainGate = mainGate;
+		this.wallGate = wallGate;
+		this.wall = wall;
+		this.wallCorner = wallCorner;
 	}	
 
 	public ConfSchoolBuildItem Clone()
@@ -61,7 +67,7 @@ public class ConfSchoolBuildBase : ConfBase
 
 	private void Init1()
 	{
-		allConfBase.Add(new ConfSchoolBuildItem(0, new int[]{ 0, 1 }, new int[]{ 0, 1 }, 1000, 200, 300, 5, 9, new int[]{ 2, 4 }, 0, 1, 2, 3));
+		allConfBase.Add(new ConfSchoolBuildItem(0, new int[]{ 0, 1 }, new int[]{ 200, 201 }, 1000, 200, 300, 5, 9, new int[]{ 2, 4 }, 0, 1, 2, 3, 4, 5, 6));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)
