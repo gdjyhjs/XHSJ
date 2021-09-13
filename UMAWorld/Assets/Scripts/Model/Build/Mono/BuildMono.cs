@@ -17,7 +17,7 @@ namespace UMAWorld {
             StartCoroutine(Build(rand));
         }
 
-        private bool yieldWait = false;
+        private bool yieldWait = true;
         // 创建宗门建筑
         private IEnumerator Build(Random rand) {
             ConfSchoolBuildItem conf = g.conf.schoolBuild.GetItem(buildData.confId);
@@ -479,16 +479,26 @@ namespace UMAWorld {
                 // 花盆1
                 tmpPos = new Vector3(x, outStartPoint.y, outTreeY1);
                 GameObject flowerbed1 = Instantiate<GameObject>(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
+                if (yieldWait)
+                    yield return (CheckWait());
+
                 // 树1
                 tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
                 GameObject tree1 = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftWall);
+                if (yieldWait)
+                    yield return (CheckWait());
+
                 // 花盆2
                 tmpPos = new Vector3(x, outStartPoint.y, outTreeY2);
                 GameObject flowerbed2 = Instantiate<GameObject>(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
+                if (yieldWait)
+                    yield return (CheckWait());
+
                 // 树2
                 tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
                 GameObject tree2 = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftWall);
-
+                if (yieldWait)
+                    yield return (CheckWait());
 
                 // 创建房屋
                 x += flowerbedConf.areaWidth * 1.5f + outHouseConf.areaWidth * 0.5f;
@@ -497,9 +507,9 @@ namespace UMAWorld {
                     break;
                 tmpPos = new Vector3(x, outStartPoint.y, outHouseY);
                 GameObject house = Instantiate<GameObject>(outHousePrefab, tmpPos, Quaternion.identity, outLeftHouse);
-                //GameObject treeTest = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.identity, outLeftHouse);
 
-                yield return 0;
+                if (yieldWait)
+                    yield return (CheckWait());
             }
             #endregion
 
