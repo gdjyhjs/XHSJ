@@ -29,30 +29,30 @@ namespace UMAWorld {
             yield return InitWorld();
             // 加载玩家
             UnitBase player = g.units.player;
-            GameObject go = GameObject.Instantiate(Avatar.gameObject);
-            go.SetActive(true);
-            mainRoleCamera.SwitchTarget(go.transform);
+            GameObject goPlayer = GameObject.Instantiate(Avatar.gameObject);
+            goPlayer.SetActive(true);
+            mainRoleCamera.SwitchTarget(goPlayer.transform);
             // 加载模型
-            DynamicCharacterAvatar avatar = go.GetComponent<DynamicCharacterAvatar>();
+            DynamicCharacterAvatar avatar = goPlayer.GetComponent<DynamicCharacterAvatar>();
             UMATools.LoadUMA(avatar, player.appearance.umaData);
             // 添加世界单位基类
-            player.mono = go.AddComponent<UnitMono>();
+            player.mono = goPlayer.AddComponent<UnitMono>();
             player.mono.unitData = player;
             player.mono.avatar = avatar;
             // 添加控制器
-            go.AddComponent<UserInput>();
-            player.mono.persion = go.GetComponent<ThirdPersonCharacter>();
-            go.transform.position = CommonTools.GetGroundPoint(Vector3.zero);
+            goPlayer.AddComponent<UserInput>();
+            player.mono.persion = goPlayer.GetComponent<ThirdPersonCharacter>();
+            goPlayer.transform.position = CommonTools.GetGroundPoint(Vector3.zero);
             // 动画事件
-            go.GetComponent<AnimEvent>().unitMono = player.mono;
-            go.tag = GameConf.unitTag;
+            goPlayer.GetComponent<AnimEvent>().unitMono = player.mono;
+            goPlayer.tag = GameConf.unitTag;
             // 更新主界面
             g.uiWorldMain.unit = g.units.player;
             g.uiWorldMain.UpdateUI();
             yield return new WaitForSeconds(0.75f);
             g.uiWorldLoading.Close();
             // 地形创造器
-            treeainPoint.SetParent(go.transform, false);
+            treeainPoint.SetParent(goPlayer.transform, false);
 
             initOK = true;
 
@@ -81,7 +81,7 @@ namespace UMAWorld {
 
                 test.AddComponent<BuildMono>().Init(item);
             }
-
+            goPlayer.transform.position = new Vector3(-40.46192f, 160.093f, -26.56032f);
 
 #endif
         }

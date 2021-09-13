@@ -57,8 +57,27 @@ namespace UMAWorld {
             if (yieldWait)
                 yield return CheckWait();
 
+            ConfSchoolFloorItem outHouseConf = g.conf.schoolFloor.GetItem(conf.outHouse); // 外门弟子方
+            GameObject outHousePrefab = CommonTools.LoadResources<GameObject>(outHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
 
+            
 
+            ConfSchoolFloorItem treeConf = g.conf.schoolFloor.GetItem(conf.outTree); // 树木
+            GameObject[] treePrefabs = new GameObject[10];
+            for (int i = 0; i < 10; i++) {
+                treePrefabs[i] = CommonTools.LoadResources<GameObject>(treeConf.prefab + i);
+                if (yieldWait)
+                    yield return CheckWait();
+            }
+
+            ConfSchoolFloorItem flowerbedConf = g.conf.schoolFloor.GetItem(conf.flowerbed); // 花盆
+            GameObject flowerbedPrefab = CommonTools.LoadResources<GameObject>(flowerbedConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            
             Vector3 tmpPos;
             GameObject tmpGo;
 
@@ -318,17 +337,17 @@ namespace UMAWorld {
 
             // 构建墙壁
 
-            // Debug Draw Line
-            var bbb = outFloor.gameObject.AddComponent<LineRenderer>();
-            bbb.material = CommonTools.LoadResources<Material>("Material/StandardBlue");
-            bbb.positionCount = 5;
-            bbb.SetPositions(new Vector3[]{
-                new Vector3(outFloorStart.x, outStartPoint.y + 1, outFloorStart.y),
-                new Vector3(outFloorStart.x, outStartPoint.y + 1, outFloorEnd.y),
-                new Vector3(outFloorEnd.x, outStartPoint.y + 1, outFloorEnd.y),
-                new Vector3(outFloorEnd.x, outStartPoint.y + 1, outFloorStart.y),
-                new Vector3(outFloorStart.x, outStartPoint.y + 1, outFloorStart.y),
-            });
+            //// Debug Draw Line 外殿区域
+            //var bbb = outFloor.gameObject.AddComponent<LineRenderer>();
+            //bbb.material = CommonTools.LoadResources<Material>("Material/StandardBlue");
+            //bbb.positionCount = 5;
+            //bbb.SetPositions(new Vector3[]{
+            //    new Vector3(outFloorStart.x, outStartPoint.y + 1, outFloorStart.y),
+            //    new Vector3(outFloorStart.x, outStartPoint.y + 1, outFloorEnd.y),
+            //    new Vector3(outFloorEnd.x, outStartPoint.y + 1, outFloorEnd.y),
+            //    new Vector3(outFloorEnd.x, outStartPoint.y + 1, outFloorStart.y),
+            //    new Vector3(outFloorStart.x, outStartPoint.y + 1, outFloorStart.y),
+            //});
 
             // 计算外殿空地
             Vector2 outSpaceStart = new Vector2(Mathf.Min(outStartPoint.x, outStatirsX - (outStatirsCount + 2) * 0.5f * statirsConf.areaWidth), outFloorStart.y);
@@ -342,21 +361,21 @@ namespace UMAWorld {
 
 
 
-            // Debug Draw Line
-            var test = new GameObject("test").transform;
-            test.SetParent(transform);
-            var ccc = test.gameObject.AddComponent<LineRenderer>();
-            ccc.positionCount = 5;
-            ccc.SetPositions(new Vector3[]{
-                new Vector3(outSpaceStart.x, outStartPoint.y + 2, outSpaceStart.y),
-                new Vector3(outSpaceStart.x, outStartPoint.y + 2, outSpaceEnd.y),
-                new Vector3(outSpaceEnd.x, outStartPoint.y + 2, outSpaceEnd.y),
-                new Vector3(outSpaceEnd.x, outStartPoint.y + 2, outSpaceStart.y),
-                new Vector3(outSpaceStart.x, outStartPoint.y + 2, outSpaceStart.y),
-            });
+            //// Debug Draw Line  外殿中央
+            //var test = new GameObject("test").transform;
+            //test.SetParent(transform);
+            //var ccc = test.gameObject.AddComponent<LineRenderer>();
+            //ccc.positionCount = 5;
+            //ccc.SetPositions(new Vector3[]{
+            //    new Vector3(outSpaceStart.x, outStartPoint.y + 2, outSpaceStart.y),
+            //    new Vector3(outSpaceStart.x, outStartPoint.y + 2, outSpaceEnd.y),
+            //    new Vector3(outSpaceEnd.x, outStartPoint.y + 2, outSpaceEnd.y),
+            //    new Vector3(outSpaceEnd.x, outStartPoint.y + 2, outSpaceStart.y),
+            //    new Vector3(outSpaceStart.x, outStartPoint.y + 2, outSpaceStart.y),
+            //});
 
 
-            #region 外殿左
+            #region 外殿左 围墙
             Vector2 outLeftStart = new Vector2(outFloorStart.x + wallCornerConf.areaWidth, outFloorStart.y + wallCornerConf.areaWidth);
             Vector2 outLeftEnd = new Vector2(outSpaceStart.x, outSpaceEnd.y - wallCornerConf.areaWidth);
             int hCount = Mathf.CeilToInt((outLeftEnd.x - outLeftStart.x) / wallConf.areaWidth); // 水平数量
@@ -368,17 +387,17 @@ namespace UMAWorld {
             outLeftWall.SetParent(transform);
             outLeftWall.position = new Vector3(outLeftStart.x, outFloorStart.y, outLeftStart.y);
 
-            // Debug Draw Line
-            var aaa = outLeftWall.gameObject.AddComponent<LineRenderer>();
-            aaa.material = CommonTools.LoadResources<Material>("Material/StandardYellow");
-            aaa.positionCount = 5;
-            aaa.SetPositions(new Vector3[]{
-                new Vector3(outLeftStart.x, outStartPoint.y + 3, outLeftStart.y),
-                new Vector3(outLeftStart.x, outStartPoint.y + 3, outLeftEnd.y),
-                new Vector3(outLeftEnd.x, outStartPoint.y + 3, outLeftEnd.y),
-                new Vector3(outLeftEnd.x, outStartPoint.y + 3, outLeftStart.y),
-                new Vector3(outLeftStart.x, outStartPoint.y + 3, outLeftStart.y),
-            });
+            //// Debug Draw Line 外殿左侧
+            //var aaa = outLeftWall.gameObject.AddComponent<LineRenderer>();
+            //aaa.material = CommonTools.LoadResources<Material>("Material/StandardYellow");
+            //aaa.positionCount = 5;
+            //aaa.SetPositions(new Vector3[]{
+            //    new Vector3(outLeftStart.x, outStartPoint.y + 10, outLeftStart.y),
+            //    new Vector3(outLeftStart.x, outStartPoint.y + 10, outLeftEnd.y),
+            //    new Vector3(outLeftEnd.x, outStartPoint.y + 10, outLeftEnd.y),
+            //    new Vector3(outLeftEnd.x, outStartPoint.y + 10, outLeftStart.y),
+            //    new Vector3(outLeftStart.x, outStartPoint.y + 10, outLeftStart.y),
+            //});
 
             float outLeftWallWidthDis = (outLeftEnd.x - outLeftStart.x) / (hCount - 1);
             float outLeftWallWidthScale = outLeftWallWidthDis / wallConf.areaWidth;
@@ -439,78 +458,53 @@ namespace UMAWorld {
                 }
             }
 
-            //for (float i = outLeftStart.x; i < outLeftEnd.x; i += wallConf.areaWidth) {
-            //    tmpPos = new Vector3(i, outStartPoint.y, outLeftStart.y);
-            //    GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall).name = "low";
 
-            //    tmpPos = new Vector3(i, outStartPoint.y, outLeftEnd.y);
-            //    GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall).name = "height";
-            //}
 
+            #endregion
+
+            #region 外殿左 房子，树木
+            Transform outLeftHouse = new GameObject("outLeftHouse").transform;
+            outLeftHouse.SetParent(transform);
+            outLeftHouse.position = new Vector3(outLeftStart.x, outFloorStart.y, outLeftStart.y);
+
+            float outTreeY1 = outLeftEnd.y - wallCornerConf.areaWidth - flowerbedConf.areaWidth * 1.5f;
+            float outTreeY2 = outLeftStart.y + wallCornerConf.areaWidth + flowerbedConf.areaWidth * 1.5f;
+            float outHouseY = outLeftEnd.y - wallCornerConf.areaWidth - outHouseConf.areaLong * 0.5f;
+            for (float i = outLeftStart.x; i < outLeftEnd.x;) {
+                // 创建树木
+                float x = i + wallCornerConf.areaWidth + flowerbedConf.areaWidth * 1.5f;
+                i = x + flowerbedConf.areaWidth * 0.5f;
+                if (i > outLeftEnd.x)
+                    break;
+                // 花盆1
+                tmpPos = new Vector3(x, outStartPoint.y, outTreeY1);
+                GameObject flowerbed1 = Instantiate<GameObject>(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
+                // 树1
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                GameObject tree1 = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftWall);
+                // 花盆2
+                tmpPos = new Vector3(x, outStartPoint.y, outTreeY2);
+                GameObject flowerbed2 = Instantiate<GameObject>(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
+                // 树2
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                GameObject tree2 = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftWall);
+
+
+                // 创建房屋
+                x += flowerbedConf.areaWidth * 1.5f + outHouseConf.areaWidth * 0.5f;
+                i = x + outHouseConf.areaWidth * 0.5f;
+                if (i > outLeftEnd.x)
+                    break;
+                tmpPos = new Vector3(x, outStartPoint.y, outHouseY);
+                GameObject house = Instantiate<GameObject>(outHousePrefab, tmpPos, Quaternion.identity, outLeftHouse);
+                //GameObject treeTest = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.identity, outLeftHouse);
+
+                yield return 0;
+            }
             #endregion
 
 
 
-
-            #region 禁地
-            //int innerStatirsCount = 7;
-            //// 创建禁地
-            //Vector3 forbiddenStartPoint = new Vector3(innerEndPoint.x, innerEndPoint.y + statirsConf.areaHeight * innerStatirsCount, innerEndPoint.z + statirsConf.areaLong * innerStatirsCount);
-            //Transform forbiddenHall = new GameObject("forbiddenHall").transform;
-            //forbiddenHall.SetParent(transform);
-            //forbiddenHall.position = forbiddenStartPoint;
-
-
-            //// 计算禁地区域
-            //Vector2 forbiddenAreaLeftDown, forbiddenAreaLeftUp, forbiddenAreaRightDown, forbiddenAreaRightUp;
-            //MathTools.LineSegmentCross(new Vector2(forbiddenStartPoint.x - 1000, forbiddenStartPoint.z), new Vector2(forbiddenStartPoint.x, forbiddenStartPoint.z), schoolArea, out forbiddenAreaLeftDown);
-            //MathTools.LineSegmentCross(new Vector2(forbiddenStartPoint.x, forbiddenStartPoint.z), new Vector2(forbiddenStartPoint.x + 1000, forbiddenStartPoint.z), schoolArea, out forbiddenAreaRightDown);
-            //MathTools.LineSegmentCross(new Vector2(forbiddenStartPoint.x, forbiddenStartPoint.z), new Vector2(forbiddenStartPoint.x + 1000, forbiddenStartPoint.z + 1000), schoolArea, out forbiddenAreaLeftUp);
-            //MathTools.LineSegmentCross(new Vector2(forbiddenStartPoint.x, forbiddenStartPoint.z), new Vector2(forbiddenStartPoint.x - 1000, forbiddenStartPoint.z + 1000), schoolArea, out forbiddenAreaRightUp);
-
-            //Vector2 forbiddenAreaStart = new Vector2(Mathf.Max(forbiddenAreaLeftDown.x, forbiddenAreaLeftUp.x), forbiddenAreaLeftDown.y);
-            //Vector2 forbiddenAreaEnd = new Vector2(Mathf.Min(forbiddenAreaRightDown.x, forbiddenAreaRightUp.x), Mathf.Min(forbiddenAreaLeftUp.y, forbiddenAreaRightUp.y));
-            //Vector3 forbiddenEndPoint = new Vector3(forbiddenStartPoint.x, forbiddenStartPoint.y, forbiddenAreaEnd.y); // 禁地结束位置
-
-            //var f = forbiddenHall.gameObject.AddComponent<LineRenderer>();
-            //f.positionCount = 5;
-            //f.SetPositions(new Vector3[]{
-            //    new Vector3(forbiddenAreaStart.x, 150, forbiddenAreaStart.y),
-            //    new Vector3(forbiddenAreaStart.x, 150, forbiddenAreaEnd.y),
-            //    new Vector3(forbiddenAreaEnd.x, 150, forbiddenAreaEnd.y),
-            //    new Vector3(forbiddenAreaEnd.x, 150, forbiddenAreaStart.y),
-            //    new Vector3(forbiddenAreaStart.x, 150, forbiddenAreaStart.y),
-            //});
-            //f.material = CommonTools.LoadResources<Material>("Material/StandardYellow");
-
-
-            //// 创建两层楼梯
-            //float forbiddenStatirsX = forbiddenAreaStart.x + (forbiddenAreaEnd.x - forbiddenAreaStart.x) * 0.5f;
-            //for (int i = 0; i < innerStatirsCount + 2; i++) {
-            //    for (int j = 0; j < innerStatirsCount; j++) {
-            //        pos = new Vector3(forbiddenStatirsX + (i - (innerStatirsCount + 2) * 0.5f) * statirsConf.areaWidth, innerEndPoint.y + j * statirsConf.areaHeight, innerEndPoint.z + j * statirsConf.areaLong);
-            //        Transform statirs = GameObject.Instantiate<GameObject>(statirsPrefab, pos, Quaternion.AngleAxis(180, Vector3.up), forbiddenHall).transform;
-            //if (yieldWait)
-                //yield return CheckWait();
-                //    }
-                //}
-
-                //// 创建禁地地板
-                //for (float i = forbiddenAreaStart.x + floorConf.areaWidth * 3; i < forbiddenAreaEnd.x - floorConf.areaWidth * 3; i += floorConf.areaWidth) {
-                //    for (float j = forbiddenAreaStart.y + floorConf.areaLong * 0.5f; j < forbiddenAreaEnd.y; j += floorConf.areaLong) {
-                //        pos = new Vector3(i, forbiddenStartPoint.y, j);
-                //        GameObject.Instantiate<GameObject>(floorPrefab, pos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), forbiddenHall);
-                //if (yieldWait)
-                //yield return CheckWait();
-                //    }
-                //}
-
-
-                    //// 创建禁地
-                    //Transform schoolEnd = new GameObject("schoolEnd").transform;
-                    //schoolEnd.SetParent(transform);
-                    //schoolEnd.position = forbiddenEndPoint;
-                    #endregion
         }
 
         private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent) {
