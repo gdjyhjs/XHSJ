@@ -17,7 +17,7 @@ namespace UMAWorld {
             StartCoroutine(Build(rand));
         }
 
-        private bool yieldWait = true;
+        private bool yieldWait = false;
         // 创建宗门建筑
         private IEnumerator Build(Random rand) {
             ConfSchoolBuildItem conf = g.conf.schoolBuild.GetItem(buildData.confId);
@@ -441,6 +441,7 @@ namespace UMAWorld {
                         tmpGo = GameObject.Instantiate<GameObject>(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outLeftWall);
                         float scale = outLeftWallHeightDis * 2 / wallGateConf.areaWidth;
                         tmpGo.transform.localScale = new Vector3(scale, 1, 1);
+                        g.units.player.mono.transform.position = tmpPos;
                     } else {
                         GameObject.Instantiate<GameObject>(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outLeftWall);
                     }
@@ -512,7 +513,6 @@ namespace UMAWorld {
                     yield return (CheckWait());
             }
             #endregion
-
 
 
         }

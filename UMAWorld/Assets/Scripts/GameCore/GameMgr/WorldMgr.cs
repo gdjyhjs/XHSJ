@@ -81,7 +81,7 @@ namespace UMAWorld {
 
                 test.AddComponent<BuildMono>().Init(item);
             }
-            goPlayer.transform.position = new Vector3(-40.46192f, 160.093f, -26.56032f);
+    
 
 #endif
         }
