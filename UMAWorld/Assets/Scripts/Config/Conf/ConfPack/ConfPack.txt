@@ -448,6 +448,9 @@ public class ConfSchoolFloorBase : ConfBase
 		allConfBase.Add(new ConfSchoolFloorItem(7, 12f, 8f, 16f, "Prefab/Build/House/SchoolOutHouse"));
 		allConfBase.Add(new ConfSchoolFloorItem(8, 15f, 15f, 15f, "Prefab/Build/Tree/SchoolOutTree"));
 		allConfBase.Add(new ConfSchoolFloorItem(9, 3.3f, 3.3f, 3.3f, "Prefab/Build/Decorate/Flowerbed"));
+		allConfBase.Add(new ConfSchoolFloorItem(10, 12f, 8f, 16f, "Prefab/Build/House/SchoolOutHouse"));
+		allConfBase.Add(new ConfSchoolFloorItem(11, 12f, 8f, 16f, "Prefab/Build/House/SchoolTransmit"));
+		allConfBase.Add(new ConfSchoolFloorItem(12, 12f, 8f, 16f, "Prefab/Build/House/SchoolTaskBar"));
 	}
 
 	public override void AddItem(int id, ConfBaseItem item)

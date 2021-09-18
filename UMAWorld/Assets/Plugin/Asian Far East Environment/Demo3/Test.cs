@@ -1,40 +1,32 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 namespace UMAWorld {
     public class Test : MonoBehaviour {
-
-        public GameObject prefab;
-        LineRenderer line;
-        public Transform[] list;
-        public int length = 50;
-        private void Awake() {
-            list = new Transform[length];
-            line = gameObject.AddComponent<LineRenderer>();
-            for (int i = 0; i < list.Length; i++) {
-                list[i] = Instantiate(prefab).transform;
-                list[i].position = new Vector3(100 * i, (i % 2 == 0 ? 1 : -1) * 100, 0);
+        public int stepCount = 10;
+        public Material gray;
+        void Start() {
+            List<Vector3> vertices = new List<Vector3>(); // 顶点
+            List<int> triangles = new List<int>(); // 面
+            List<Vector3> normals = new List<Vector3>(); // 法线
+            List<Vector2> uv = new List<Vector2>(); // uv
+            Vector3 pos = new Vector3(-1, 0, 0);
+            int p = 0;
+            for (int i = 0; i < stepCount; i++) // 循环绘制台阶
+            {
+                MeshTools.AddCube(pos, pos + ((stepCount - 1) == i ? new Vector3(2, 0.2f, 0.4f): new Vector3(2, 0.2f, 0.7f)), vertices,triangles,normals,uv);
+                pos += new Vector3(0, 0.2f, 0.4f);
             }
 
-            
-        }
+            Mesh mesh = new Mesh(); //new 一个mesh
+            mesh.vertices = vertices.ToArray(); //把顶点列表 放到mesh中
+            mesh.triangles = triangles.ToArray(); //把三角序列 放到mesh中
+            mesh.normals = normals.ToArray(); //把三角序列 放到mesh中
+            mesh.uv = uv.ToArray(); //新增 把UV列表 放到mesh中
 
-        void Update() {
-            Draw();
-        }
 
-        private void Draw() {
-            Vector3[] pos = new Vector3[length * 5];
-            Vector3[] data = new Vector3[list.Length];
-            for (int i = 0; i < list.Length; i++) {
-                data[i] = list[i].position;
-            }
-            for (float i = 0; i < pos.Length; i++) {
-                pos[(int)i] = MathTools.BezierCurve(data, i / pos.Length);
-            }
-
-            line.positionCount = pos.Length;
-            line.SetPositions(pos);
+            gameObject.AddComponent<MeshFilter>().mesh = mesh; //得到meshfilter组件
+            gameObject.AddComponent<MeshRenderer>().material = gray;
         }
     }
 }

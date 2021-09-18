@@ -248,17 +248,29 @@ namespace UMAWorld {
             return new Vector3(point.x, 0, point.y);
         }
 
-        public static Vector3 GetGroundPoint(Point2 point) {
-            if (Physics.Raycast(new Vector3(point.x, 1000, point.y), Vector3.down, out RaycastHit hit, 2000, 1)) {
-                return hit.point;
-            }
-            return new Vector3(point.x, 0, point.y);
+        public static void Vector3ToFloat(Vector3 a, out float[] b) {
+            b = new float[] { a.x, a.y,a.z};
         }
 
+        public static void Vector3ToFloat(Vector3[] a, out float[] b) {
+            b = new float[a.Length * 3];
+            for (int i = 0; i < a.Length; i++) {
+                b[i * 3] = a[i].x;
+                b[i * 3 + 1] = a[i].y;
+                b[i * 3 + 2] = a[i].z;
+            }
+        }
 
+        public static void FloatToVector3(float[] a, out Vector3 b) {
+            b = new Vector3(a[0], a[1], a[2]);
+        }
 
-
-
+        public static void FloatToVector3(float[] a, out Vector3[] b) {
+            b = new Vector3[a.Length / 3];
+            for (int i = 0; i < b.Length; i++) {
+                b[i] = new Vector3(a[i * 3], a[i * 3 + 1], a[i * 3 + 2]);
+            }
+        }
 
 
 

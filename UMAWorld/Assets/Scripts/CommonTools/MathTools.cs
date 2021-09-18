@@ -14,10 +14,23 @@ namespace UMAWorld {
         /// <summary>
         /// 判断点是否在多边形内
         /// </summary>
-        public static bool PointIsInPolygon(Point2[] vertexPoints, Vector2 point) {
+        public static bool PointIsInPolygon(Vector3[] vertexPoints, Vector3 point) {
             bool c = false;
             for (int i = 0, j = vertexPoints.Length - 1; i < vertexPoints.Length; j = i++) {
-                if (((vertexPoints[i].y > point.y) != (vertexPoints[j].y > point.y)) && (point.x < (vertexPoints[j].x - vertexPoints[i].x) * (point.y - vertexPoints[i].y) / (vertexPoints[j].y - vertexPoints[i].y) + vertexPoints[i].x)) {
+                if (((vertexPoints[i].z > point.z) != (vertexPoints[j].z > point.z)) && (point.x < (vertexPoints[j].x - vertexPoints[i].x) * (point.z - vertexPoints[i].z) / (vertexPoints[j].z - vertexPoints[i].z) + vertexPoints[i].x)) {
+                    c = !c;
+                }
+            }
+            return c;
+        }
+
+        /// <summary>
+        /// 判断点是否在多边形内
+        /// </summary>
+        public static bool PointIsInPolygon(Vector3Int[] vertexPoints, Vector3 point) {
+            bool c = false;
+            for (int i = 0, j = vertexPoints.Length - 1; i < vertexPoints.Length; j = i++) {
+                if (((vertexPoints[i].z > point.z) != (vertexPoints[j].z > point.z)) && (point.x < (vertexPoints[j].x - vertexPoints[i].x) * (point.z - vertexPoints[i].z) / (vertexPoints[j].z - vertexPoints[i].z) + vertexPoints[i].x)) {
                     c = !c;
                 }
             }

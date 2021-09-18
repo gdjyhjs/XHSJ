@@ -8,7 +8,6 @@ using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace UMAWorld {
     public class WorldMgr : MonoBehaviour {
-
         public DynamicCharacterAvatar Avatar;
         public UMARandomAvatar Randomizer;
         public MouseOrbitImproved mainRoleCamera;
@@ -20,6 +19,11 @@ namespace UMAWorld {
             g.game.world = this;
             string playerName = CommonTools.GetString(DataKey.onPlayerName);
             g.data.LoadGame(playerName);
+            Debug.Log("宗门数量："+ g.builds.allBuild.Values.Count);
+            foreach (BuildBase item in g.builds.allBuild.Values) {
+                Debug.Log("初始化宗门 = " + item.id);
+                item.InitData();
+            }
             Debug.Log("seed = " + g.data.worldSeed);
             Random.InitState(g.data.worldSeed);
         }
@@ -69,7 +73,7 @@ namespace UMAWorld {
                 Vector3[] testPoints = new Vector3[vertexCount + 1];
                 GameObject test = new GameObject();
                 test.name = item.id;
-                test.transform.position = new Vector3(item.position.x, 0, item.position.y);
+                test.transform.position = new Vector3(item.mainGatePos.x, 0, item.mainGatePos.y);
                 LineRenderer testLine = test.AddComponent<LineRenderer>();
                 for (int i = 0; i < item.points.Length; i++) {
                     testPoints[i] = new Vector3(item.points[i].x, 150, item.points[i].y);
