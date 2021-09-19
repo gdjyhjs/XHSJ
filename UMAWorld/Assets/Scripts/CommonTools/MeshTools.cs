@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,30 +6,50 @@ using UnityEngine;
 namespace UMAWorld {
     public static class MeshTools {
 
+        public static GameObject NewMeshObj(string name, Action<List<Vector3>, List<int>, List<Vector3>, List<Vector2>> action, Material material = null) {
+            GameObject go = new GameObject();
+            go.name = name;
+            List<Vector3> vertices = new List<Vector3>(); // 顶点
+            List<int> triangles = new List<int>(); // 面
+            List<Vector3> normals = new List<Vector3>(); // 法线
+            List<Vector2> uv = new List<Vector2>(); // uv
+            action(vertices, triangles, normals, uv);
+            Mesh mesh = new Mesh(); //new 一个mesh
+            mesh.vertices = vertices.ToArray(); //把顶点列表 放到mesh中
+            mesh.triangles = triangles.ToArray(); //把三角序列 放到mesh中
+            mesh.normals = normals.ToArray(); //把三角序列 放到mesh中
+            mesh.uv = uv.ToArray(); //新增 把UV列表 放到mesh中
+            go.AddComponent<MeshFilter>().mesh = mesh; //得到meshfilter组件
+            go.AddComponent<MeshRenderer>().material = material == null ? CommonTools.LoadResources<Material>("Material/testStone") : material;
+            go.AddComponent<MeshCollider>();
+            return go;
+        }
+
         // 添加楼梯 dir 0前 1左 2右 3后
-        public static void AddStatirs(Vector3 start, int step, List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uv, System.Random rand = null, int dir = 0) {
+        public static void AddStatirs(Vector3 start, int step, List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uv,
+            System.Random rand = null, int dir = 0, float width = 3, float height = 0.2f, float length = 0.4f) {
             Vector3 add1, add2, add3;
             switch (dir)
             {
                 case 1:
-                    add1 = new Vector3(-0.4f, 0.2f, 2);
-                    add2 = new Vector3(-0.7f, 0.2f, 2);
-                    add3 = new Vector3(-0.4f, 0.2f, 0);
+                    add1 = new Vector3(-length, height, width);
+                    add2 = new Vector3(-length * 1.7f, height, width);
+                    add3 = new Vector3(-length, height, 0);
                     break;
                 case 2:
-                    add1 = new Vector3(0.4f, 0.2f, -2);
-                    add2 = new Vector3(0.7f, 0.2f, -2);
-                    add3 = new Vector3(0.4f, 0.2f, 0);
+                    add1 = new Vector3(length, height, -width);
+                    add2 = new Vector3(length * 1.7f, height, -width);
+                    add3 = new Vector3(length, height, 0);
                     break;
                 case 3:
-                    add1 = new Vector3(-2, 0.2f, -0.4f);
-                    add2 = new Vector3(-2, 0.2f, -0.7f);
-                    add3 = new Vector3(0, 0.2f, -0.4f);
+                    add1 = new Vector3(-width, height, -length);
+                    add2 = new Vector3(-width, height, -length * 1.7f);
+                    add3 = new Vector3(0, height, -length);
                     break;
                 default:
-                    add1 = new Vector3(2, 0.2f, 0.4f);
-                    add2 = new Vector3(2, 0.2f, 0.7f);
-                    add3 = new Vector3(0, 0.2f, 0.4f);
+                    add1 = new Vector3(width, height, length);
+                    add2 = new Vector3(width, height, length * 1.7f);
+                    add3 = new Vector3(0, height, length);
                     break;
             }
             for (int i = 0; i < step; i++) {

@@ -24,6 +24,7 @@ namespace UMAWorld {
 
         public void SaveGame(string playerName, int version) {
             Debug.Log("保存存档:" + playerName);
+            CommonTools.SetString(DataKey.DateMgr + playerName, CommonTools.ToJson(g.date));
             CommonTools.SetString(DataKey.UnitMgr + playerName, CommonTools.ToJson(g.units));
             CommonTools.SetString(DataKey.Version + playerName, version);
             CommonTools.SetString(DataKey.DataMgr + playerName, CommonTools.ToJson(g.data));
@@ -32,6 +33,7 @@ namespace UMAWorld {
 
         public void LoadGame(string playerName) {
             Debug.Log("读取存档:" + playerName);
+            g.game.date = CommonTools.FromJson<DateMgr>(CommonTools.GetString(DataKey.DateMgr + playerName));
             g.game.units = CommonTools.FromJson<UnitMgr>(CommonTools.GetString(DataKey.UnitMgr + playerName));
             GameConf.version = CommonTools.GetInt(DataKey.Version + playerName);
             g.game.data = CommonTools.FromJson<DataMgr>(CommonTools.GetString(DataKey.DataMgr + playerName));
@@ -50,6 +52,7 @@ namespace UMAWorld {
         public static string UnitMgr = "UnitMgr"; // 单位管理存档
         public static string Version = "Version"; // 当前游戏版本
         public static string DataMgr = "DataMgr"; // 数据管理
+        public static string DateMgr = "DateMgr"; // 数据管理
     }
 
 

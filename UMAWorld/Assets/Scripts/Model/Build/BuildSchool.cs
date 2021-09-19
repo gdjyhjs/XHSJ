@@ -39,6 +39,12 @@ namespace UMAWorld
         public Vector3[] statirsSpaceArea3;
         public Vector3[] statirsSpaceArea4;
         public Vector3[] statirsSpaceArea5;
+        // 楼梯级数
+        public int statirsStep1;
+        public int statirsStep2;
+        public int statirsStep3;
+        public int statirsStep4;
+        public int statirsStep5;
 
         // 外殿区域
         public Vector3[] outsideArea;
@@ -76,17 +82,22 @@ namespace UMAWorld
         public Vector3[] insideArea;
 
 
+        public float statirsWidth = 3;
+        public float outsideLeftStatirsWidth = 4;
+        public float outsideRightStatirsWidth = 4;
+        public float statirsToCenterWidth = 6;
+        public float centerLeftStatirsWidth = 5;
+        public float centerRightStatirsWidth = 5;
+        public float statirsToInsideWidth = 8;
 
-        // 楼梯级数
-        public int statirsStep1;
-        public int statirsStep2;
-        public int statirsStep3;
-        public int statirsStep4;
-        public int statirsStep5;
+
+
+        public int statirsOutStep = 5;
+        public int statirsCenterStep = 5;
         // 通往中殿楼梯级数
-        public int statirsToCenterStep;
+        public int statirsToCenterStep = 7;
         // 通往内殿楼梯级数
-        public int statirsToInsideStep;
+        public int statirsToInsideStep = 9;
 
         /// <summary>
         /// 初始化宗门位置获得生成的坐标
@@ -159,7 +170,7 @@ namespace UMAWorld
             int oneStatirs = statirsStepCount / statirsCount;
 
             // 已知大门坐标 mainGatePos 大门往前5米开始楼梯, 楼梯宽度200
-            Vector3 curPoint = new Vector3(-1, 0, 1);
+            Vector3 curPoint = new Vector3(-statirsWidth * 0.5f, 0, 1.5f);
             Vector3 tmpPoint;
             {
                 #region 上山楼梯
@@ -171,14 +182,14 @@ namespace UMAWorld
                     statirsStepCount -= statirsStep1;
                     statirsSlopeArea1 = new Vector3[2];
                     statirsSlopeArea1[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + 2, curPoint.y + statirsStep1 * 0.2f, curPoint.z + statirsStep1 * 0.4f);
+                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep1 * 0.2f, curPoint.z + statirsStep1 * 0.4f);
                     statirsSlopeArea1[1] = curPoint; // 楼梯终点
 
                     int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
                     statirsSpaceArea1 = new Vector3[2];
                     statirsSpaceArea1[0] = curPoint; // 平面起点
                     if (statirsCount == 1)
-                        curPoint = new Vector3(curPoint.x - 2, curPoint.y, curPoint.z + spaceLong);
+                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
                     else
                         curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
                     statirsSpaceArea1[1] = curPoint; // 平面终点
@@ -196,14 +207,14 @@ namespace UMAWorld
                     statirsStepCount -= statirsStep2;
                     statirsSlopeArea2 = new Vector3[2];
                     statirsSlopeArea2[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + 2, curPoint.y + statirsStep2 * 0.2f, curPoint.z + statirsStep2 * 0.4f);
+                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep2 * 0.2f, curPoint.z + statirsStep2 * 0.4f);
                     statirsSlopeArea2[1] = curPoint; // 楼梯终点
 
                     int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
                     statirsSpaceArea2 = new Vector3[2];
                     statirsSpaceArea2[0] = curPoint; // 平面起点
                     if (statirsCount == 2)
-                        curPoint = new Vector3(curPoint.x - 2, curPoint.y, curPoint.z + spaceLong);
+                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
                     else
                         curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
                     statirsSpaceArea2[1] = curPoint; // 平面终点
@@ -221,14 +232,14 @@ namespace UMAWorld
                     statirsStepCount -= statirsStep3;
                     statirsSlopeArea3 = new Vector3[2];
                     statirsSlopeArea3[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + 2, curPoint.y + statirsStep3 * 0.2f, curPoint.z + statirsStep3 * 0.4f);
+                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep3 * 0.2f, curPoint.z + statirsStep3 * 0.4f);
                     statirsSlopeArea3[1] = curPoint; // 楼梯终点
 
                     int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
                     statirsSpaceArea3 = new Vector3[2];
                     statirsSpaceArea3[0] = curPoint; // 平面起点
                     if (statirsCount == 3)
-                        curPoint = new Vector3(curPoint.x - 2, curPoint.y, curPoint.z + spaceLong);
+                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
                     else
                         curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
                     statirsSpaceArea3[1] = curPoint; // 平面终点
@@ -246,14 +257,14 @@ namespace UMAWorld
                     statirsStepCount -= statirsStep4;
                     statirsSlopeArea4 = new Vector3[2];
                     statirsSlopeArea4[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + 2, curPoint.y + statirsStep4 * 0.2f, curPoint.z + statirsStep4 * 0.4f);
+                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep4 * 0.2f, curPoint.z + statirsStep4 * 0.4f);
                     statirsSlopeArea4[1] = curPoint; // 楼梯终点
 
                     int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
                     statirsSpaceArea4 = new Vector3[2];
                     statirsSpaceArea4[0] = curPoint; // 平面起点
                     if (statirsCount == 4)
-                        curPoint = new Vector3(curPoint.x - 2, curPoint.y, curPoint.z + spaceLong);
+                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
                     else
                         curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
                     statirsSpaceArea4[1] = curPoint; // 平面终点
@@ -271,16 +282,13 @@ namespace UMAWorld
                     statirsStepCount -= statirsStep5;
                     statirsSlopeArea5 = new Vector3[2];
                     statirsSlopeArea5[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + 2, curPoint.y + statirsStep5 * 0.2f, curPoint.z + statirsStep5 * 0.4f);
+                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep5 * 0.2f, curPoint.z + statirsStep5 * 0.4f);
                     statirsSlopeArea5[1] = curPoint; // 楼梯终点
 
                     int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
                     statirsSpaceArea5 = new Vector3[2];
                     statirsSpaceArea5[0] = curPoint; // 平面起点
-                    if (statirsCount == 5)
-                        curPoint = new Vector3(curPoint.x - 2, curPoint.y, curPoint.z + spaceLong);
-                    else
-                        curPoint = new Vector3(curPoint.x - 2, curPoint.y, curPoint.z + spaceLong);
+                    curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
                     statirsSpaceArea5[1] = curPoint; // 平面终点
                 }
                 else
@@ -310,11 +318,11 @@ namespace UMAWorld
 
                 // 短楼梯固定阶数 5;
                 // 临时左楼梯起点
-                tmpPoint = new Vector3(outsideCenterArea[0].x, curPoint.y, curPoint.z + (outsideCenterArea[1].z - outsideCenterArea[0].z) * 0.5f - 1);
+                tmpPoint = new Vector3(outsideCenterArea[0].x, curPoint.y, curPoint.z + (outsideCenterArea[1].z - outsideCenterArea[0].z) * 0.5f - outsideLeftStatirsWidth * 0.5f);
                 // 左楼梯
                 outsideLeftStatirsArea = new Vector3[]{
                     tmpPoint,
-                    new Vector3(tmpPoint.x - 5 * 0.4f, tmpPoint.y + 5 * 0.2f, tmpPoint.z + 2),
+                    new Vector3(tmpPoint.x - statirsOutStep * 0.4f, tmpPoint.y + statirsOutStep * 0.2f, tmpPoint.z + outsideLeftStatirsWidth),
                 };
                 tmpPoint = outsideLeftStatirsArea[1];
                 // 设置外殿左
@@ -324,11 +332,11 @@ namespace UMAWorld
                 };
 
                 // 临时右楼梯起点
-                tmpPoint = new Vector3(outsideCenterArea[1].x, curPoint.y, curPoint.z + (outsideCenterArea[1].z - outsideCenterArea[0].z) * 0.5f + 1);
+                tmpPoint = new Vector3(outsideCenterArea[1].x, curPoint.y, curPoint.z + (outsideCenterArea[1].z - outsideCenterArea[0].z) * 0.5f + outsideRightStatirsWidth * 0.5f);
                 // 右楼梯
                 outsideRightStatirsArea = new Vector3[]{
                     tmpPoint,
-                    new Vector3(tmpPoint.x + 5 * 0.4f, tmpPoint.y + 5 * 0.2f, tmpPoint.z - 2),
+                    new Vector3(tmpPoint.x + statirsOutStep * 0.4f, tmpPoint.y + statirsOutStep * 0.2f, tmpPoint.z - outsideRightStatirsWidth),
                 };
                 tmpPoint = outsideRightStatirsArea[1];
                 // 设置外殿右
@@ -340,10 +348,9 @@ namespace UMAWorld
                 curPoint.z += outLong;
 
                 // 通往中殿的楼梯 7个台阶
-                statirsToCenterStep = 7;
                 statirsToCenterSlopeArea = new Vector3[]{
-                    new Vector3(curPoint.x - 1.5f, curPoint.y, curPoint.z),
-                    new Vector3(curPoint.x + 1.5f, curPoint.y + statirsToCenterStep * 0.2f , curPoint.z + statirsToCenterStep * 0.4f),
+                    new Vector3(curPoint.x - statirsToCenterWidth * 0.5f, curPoint.y, curPoint.z),
+                    new Vector3(curPoint.x + statirsToCenterWidth * 0.5f, curPoint.y + statirsToCenterStep * 0.2f , curPoint.z + statirsToCenterStep * 0.4f),
                 };
                 curPoint = new Vector3(curPoint.x, curPoint.y + statirsToCenterStep * 0.2f, curPoint.z + statirsToCenterStep * 0.4f);
                 #endregion
@@ -368,11 +375,11 @@ namespace UMAWorld
 
                 // 短楼梯固定阶数 5;
                 // 临时左楼梯起点
-                tmpPoint = new Vector3(centerCenterArea[0].x, curPoint.y, curPoint.z + (centerCenterArea[1].z - centerCenterArea[0].z) * 0.5f - 1);
+                tmpPoint = new Vector3(centerCenterArea[0].x, curPoint.y, curPoint.z + (centerCenterArea[1].z - centerCenterArea[0].z) * 0.5f - centerLeftStatirsWidth * 0.5f);
                 // 左楼梯
                 centerLeftStatirsArea = new Vector3[]{
                     tmpPoint,
-                    new Vector3(tmpPoint.x - 5 * 0.4f, tmpPoint.y + 5 * 0.2f, tmpPoint.z + 2),
+                    new Vector3(tmpPoint.x - statirsOutStep * 0.4f, tmpPoint.y + statirsOutStep * 0.2f, tmpPoint.z + centerLeftStatirsWidth),
                 };
                 tmpPoint = centerLeftStatirsArea[1];
                 // 设置中殿左
@@ -382,11 +389,11 @@ namespace UMAWorld
                 };
 
                 // 临时右楼梯起点
-                tmpPoint = new Vector3(centerCenterArea[1].x, curPoint.y, curPoint.z + (centerCenterArea[1].z - centerCenterArea[0].z) * 0.5f + 1);
+                tmpPoint = new Vector3(centerCenterArea[1].x, curPoint.y, curPoint.z + (centerCenterArea[1].z - centerCenterArea[0].z) * 0.5f + centerRightStatirsWidth * 0.5f);
                 // 右楼梯
                 centerRightStatirsArea = new Vector3[]{
                     tmpPoint,
-                    new Vector3(tmpPoint.x + 5 * 0.4f, tmpPoint.y + 5 * 0.2f, tmpPoint.z - 2),
+                    new Vector3(tmpPoint.x + statirsOutStep * 0.4f, tmpPoint.y + statirsOutStep * 0.2f, tmpPoint.z - centerRightStatirsWidth),
                 };
                 tmpPoint = centerRightStatirsArea[1];
                 // 设置中殿右
@@ -398,10 +405,9 @@ namespace UMAWorld
                 curPoint.z += centerLong;
 
                 // 通往内殿的楼梯 9个台阶
-                statirsToInsideStep = 9;
                 statirsToInsideSlopeArea = new Vector3[]{
-                    new Vector3(curPoint.x - 2, curPoint.y, curPoint.z),
-                    new Vector3(curPoint.x + 2, curPoint.y + statirsToInsideStep * 0.2f , curPoint.z + statirsToInsideStep * 0.4f),
+                    new Vector3(curPoint.x - statirsToInsideWidth * 0.5f, curPoint.y, curPoint.z),
+                    new Vector3(curPoint.x + statirsToInsideWidth * 0.5f, curPoint.y + statirsToInsideStep * 0.2f , curPoint.z + statirsToInsideStep * 0.4f),
                 };
                 curPoint = new Vector3(curPoint.x, curPoint.y + statirsToInsideStep * 0.2f, curPoint.z + statirsToInsideStep * 0.4f);
                 #endregion
