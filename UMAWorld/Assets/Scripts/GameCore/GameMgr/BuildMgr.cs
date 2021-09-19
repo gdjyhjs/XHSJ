@@ -8,29 +8,41 @@ namespace UMAWorld {
     ///  建筑管理器
     /// </summary>
     public class BuildMgr {
-        public Dictionary<string, BuildBase> allBuild = new Dictionary<string, BuildBase>();
+        public Dictionary<string, BuildSchool> allSchool = new Dictionary<string, BuildSchool>();
 
         public void InitData() {
+            allSchool.Clear();
+            g.data.buildData.Clear();
             int count = g.conf.schoolBuild.allConfList.Count;
             for (int i = 0; i < count; i++) {
-                NewUnit<BuildSchool>("宗门" + i);
+                string schoolName = "宗门" + i;
+                g.data.buildData.Add(NewSchool(schoolName).InitBuild(schoolName));
             }
         }
 
-        public BuildBase GetUnit(string id) {
-            if (allBuild.ContainsKey(id)) {
-                return allBuild[id];
+        public void LoadData()
+        {
+            allSchool.Clear();
+            List<SchoolBuildData> data = g.game.data.buildData;
+            for (int i = 0; i < data.Count; i++)
+            {
+                NewSchool(data[i].id).InitData(data[i]);
+            }
+        }
+
+        public BuildSchool GetBuild(string id) {
+            if (allSchool.ContainsKey(id)) {
+                return allSchool[id];
             }
             return null;
         }
 
-        public T NewUnit<T>(string buildName) where T : BuildBase, new() {
-            if (allBuild.ContainsKey(buildName)) {
+        private BuildSchool NewSchool(string schoolName) {
+            if (allSchool.ContainsKey(schoolName)) {
                 return null;
             }
-            T unit = new T();
-            unit.id = buildName;
-            allBuild.Add(buildName, unit);
+            BuildSchool unit = new BuildSchool();
+            allSchool.Add(schoolName, unit);
             return unit;
         }
     }

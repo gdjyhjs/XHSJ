@@ -3,26 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-namespace UMAWorld {
+namespace UMAWorld
+{
     /// <summary>
     /// 建筑基础
     /// </summary>
-    public class BuildMono : BuildMonoBase {
-        BuildBase buildData;
+    public class BuildMono : BuildMonoBase
+    {
+        BuildSchool buildData;
 
-        public void Init(BuildBase data) {
+        public void Init(BuildSchool data)
+        {
             buildData = data;
-
-            Random rand = new Random(buildData.seed);
+            gameObject.name = buildData.data.id;
+            Random rand = new Random(buildData.data.seed);
             StartCoroutine(Build(rand));
         }
 
         private bool yieldWait = false;
         // 创建宗门建筑
-        private IEnumerator Build(Random rand) {
+        private IEnumerator Build(Random rand)
+        {
             BuildSchool schoolData = (BuildSchool)buildData;
 
-            ConfSchoolBuildItem conf = g.conf.schoolBuild.GetItem(buildData.confId);
+            ConfSchoolBuildItem conf = g.conf.schoolBuild.GetItem(buildData.data.confId);
 
             ConfSchoolFloorItem tileConf = g.conf.schoolFloor.GetItem(conf.tile); // 地砖
             GameObject tilePrefab = CommonTools.LoadResources<GameObject>(tileConf.prefab);
@@ -68,7 +72,8 @@ namespace UMAWorld {
 
             ConfSchoolFloorItem treeConf = g.conf.schoolFloor.GetItem(conf.outTree); // 树木
             GameObject[] treePrefabs = new GameObject[10];
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 treePrefabs[i] = CommonTools.LoadResources<GameObject>(treeConf.prefab + i);
                 if (yieldWait)
                     yield return CheckWait();
@@ -83,17 +88,19 @@ namespace UMAWorld {
             Vector3 tmpPos;
             GameObject tmpGo;
 
-            
+
             // 从大门创建楼梯到外殿
-            Vector3 startPoint = CommonTools.GetGroundPoint(buildData.mainGatePos);
+            Vector3 startPoint = CommonTools.GetGroundPoint(new Vector3(buildData.data.mainGatePosX, 0, buildData.data.mainGatePosZ));
             Transform schoolStartFloor = new GameObject("schoolStartFloor").transform;
             schoolStartFloor.SetParent(transform);
             schoolStartFloor.position = startPoint;
             // 创建大门
             Vector3 mainGatePos = CommonTools.GetGroundPoint(new Vector3(startPoint.x, startPoint.y, startPoint.z - mainGateConf.areaLong));
             float mainGateHeight = float.PositiveInfinity;
-            for (int x = 0; x <= 5; x++) {
-                for (int z = 0; z <= 3; z++) {
+            for (int x = 0; x <= 5; x++)
+            {
+                for (int z = 0; z <= 3; z++)
+                {
                     Vector3 point = CommonTools.GetGroundPoint(new Vector3(mainGatePos.x - mainGateConf.areaWidth * 0.5f + mainGateConf.areaWidth * x / 5,
                         0, mainGatePos.z - mainGateConf.areaLong * 0.5f + mainGateConf.areaLong * z / 3));
                     if (point.y < mainGateHeight)
@@ -101,9 +108,11 @@ namespace UMAWorld {
                 }
             }
             mainGatePos = new Vector3(mainGatePos.x, mainGateHeight, mainGatePos.z);
+            transform.position = mainGatePos; // 设置宗门位置
             TextMesh[] names = GameObject.Instantiate<GameObject>(mainGatePrefab, mainGatePos, Quaternion.identity, schoolStartFloor).transform.Find("Name").GetComponentsInChildren<TextMesh>();
-            foreach (var item in names) {
-                item.text = buildData.id;
+            foreach (var item in names)
+            {
+                item.text = buildData.data.id;
             }
             if (yieldWait)
                 yield return (CheckWait());
@@ -116,36 +125,63 @@ namespace UMAWorld {
                 List<Vector3> normals = new List<Vector3>(); // 法线
                 List<Vector2> uv = new List<Vector2>(); // uv
 
-                if (schoolData.statirsSlopeArea1.Length > 0) {
+                if (schoolData.statirsSlopeArea1.Length > 0)
+                {
                     MeshTools.AddStatirs(schoolData.statirsSlopeArea1[0], schoolData.statirsStep1, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSpaceArea1.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea1[0], schoolData.statirsSpaceArea1[1], vertices, triangles, normals, uv, rand);
+                if (schoolData.statirsSpaceArea1.Length > 0)
+                {
+                    MeshTools.AddCube(schoolData.statirsSpaceArea1[0], schoolData.statirsSpaceArea1[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSlopeArea2.Length > 0) {
+                if (schoolData.statirsSlopeArea2.Length > 0)
+                {
                     MeshTools.AddStatirs(schoolData.statirsSlopeArea2[0], schoolData.statirsStep2, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSpaceArea2.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea2[0], schoolData.statirsSpaceArea2[1], vertices, triangles, normals, uv, rand);
+                if (schoolData.statirsSpaceArea2.Length > 0)
+                {
+                    MeshTools.AddCube(schoolData.statirsSpaceArea2[0], schoolData.statirsSpaceArea2[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSlopeArea3.Length > 0) {
+                if (schoolData.statirsSlopeArea3.Length > 0)
+                {
                     MeshTools.AddStatirs(schoolData.statirsSlopeArea3[0], schoolData.statirsStep3, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSpaceArea3.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea3[0], schoolData.statirsSpaceArea3[1], vertices, triangles, normals, uv, rand);
+                if (schoolData.statirsSpaceArea3.Length > 0)
+                {
+                    MeshTools.AddCube(schoolData.statirsSpaceArea3[0], schoolData.statirsSpaceArea3[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSlopeArea4.Length > 0) {
+                if (schoolData.statirsSlopeArea4.Length > 0)
+                {
                     MeshTools.AddStatirs(schoolData.statirsSlopeArea4[0], schoolData.statirsStep4, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSpaceArea4.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea4[0], schoolData.statirsSpaceArea4[1], vertices, triangles, normals, uv, rand);
+                if (schoolData.statirsSpaceArea4.Length > 0)
+                {
+                    MeshTools.AddCube(schoolData.statirsSpaceArea4[0], schoolData.statirsSpaceArea4[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSlopeArea5.Length > 0) {
+                if (schoolData.statirsSlopeArea5.Length > 0)
+                {
                     MeshTools.AddStatirs(schoolData.statirsSlopeArea5[0], schoolData.statirsStep5, vertices, triangles, normals, uv, rand);
                 }
-                if (schoolData.statirsSpaceArea5.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea5[0], schoolData.statirsSpaceArea5[1], vertices, triangles, normals, uv, rand);
+                if (schoolData.statirsSpaceArea5.Length > 0)
+                {
+                    MeshTools.AddCube(schoolData.statirsSpaceArea5[0], schoolData.statirsSpaceArea5[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 }
+                //MeshTools.AddCube(schoolData.outsideArea[0], schoolData.outsideArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.outsideCenterArea[0], schoolData.outsideCenterArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.outsideLeftArea[0], schoolData.outsideLeftArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.outsideRightArea[0], schoolData.outsideRightArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                //MeshTools.AddCube(schoolData.centerArea[0], schoolData.centerArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.centerCenterArea[0], schoolData.centerCenterArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.centerLeftArea[0], schoolData.centerLeftArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.centerRightArea[0], schoolData.centerRightArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.insideArea[0], schoolData.insideArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
+                
+                MeshTools.AddStatirs(schoolData.outsideLeftStatirsArea[0], 5, vertices, triangles, normals, uv, rand, 1);
+                MeshTools.AddStatirs(schoolData.outsideRightStatirsArea[0], 5, vertices, triangles, normals, uv, rand, 2);
+                MeshTools.AddStatirs(schoolData.statirsToCenterSlopeArea[0], schoolData.statirsToCenterStep, vertices, triangles, normals, uv, rand);
+                MeshTools.AddStatirs(schoolData.centerLeftStatirsArea[0], 7, vertices, triangles, normals, uv, rand, 1);
+                MeshTools.AddStatirs(schoolData.centerRightStatirsArea[0], 7, vertices, triangles, normals, uv, rand, 2);
+                MeshTools.AddStatirs(schoolData.statirsToInsideSlopeArea[0], schoolData.statirsToInsideStep, vertices, triangles, normals, uv, rand);
+
 
                 Mesh mesh = new Mesh(); //new 一个mesh
                 mesh.vertices = vertices.ToArray(); //把顶点列表 放到mesh中
@@ -154,12 +190,19 @@ namespace UMAWorld {
                 mesh.uv = uv.ToArray(); //新增 把UV列表 放到mesh中
 
 
+                Debug.Log(schoolData.statirsSpaceArea1[0]); Debug.Log(schoolData.statirsSpaceArea1[1] + Vector3.down * 0.2f);
                 gameObject.AddComponent<MeshFilter>().mesh = mesh; //得到meshfilter组件
-                gameObject.AddComponent<MeshRenderer>().material = CommonTools.LoadResources<Material>("Material/StandardRed");
+                gameObject.AddComponent<MeshRenderer>().material = CommonTools.LoadResources<Material>("Material/testStone");
+
+
+
+
+
             }
         }
 
-        private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent) {
+        private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent)
+        {
             return GameObject.Instantiate<GameObject>(prefab, pos, q, parent);
         }
     }

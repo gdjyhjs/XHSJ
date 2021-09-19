@@ -62,13 +62,18 @@ namespace UMAWorld {
             return t;
         }
 
-        public static int Random(int min, int max) {
-            return UnityEngine.Random.Range(min, max);
+        public static System.Random rand = new System.Random();
+        public static void RandomSeed(int seed)
+        {
+            rand = new System.Random(seed);
         }
 
+        public static int Random(int min, int max) {
+            return rand.Next(min, max);
+        }
 
         public static float Random(float min, float max) {
-            return UnityEngine.Random.Range(min, max);
+            return Mathf.Lerp(min, max, rand.Next(10000) * 0.0001f);
         }
 
         //HSV->RGB

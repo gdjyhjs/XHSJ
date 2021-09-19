@@ -19,13 +19,9 @@ namespace UMAWorld {
             g.game.world = this;
             string playerName = CommonTools.GetString(DataKey.onPlayerName);
             g.data.LoadGame(playerName);
-            Debug.Log("宗门数量："+ g.builds.allBuild.Values.Count);
-            foreach (BuildBase item in g.builds.allBuild.Values) {
-                Debug.Log("初始化宗门 = " + item.id);
-                item.InitData();
-            }
+            Debug.Log("宗门数量："+ g.builds.allSchool.Values.Count);
             Debug.Log("seed = " + g.data.worldSeed);
-            Random.InitState(g.data.worldSeed);
+            CommonTools.RandomSeed(g.data.worldSeed);
         }
 
         private IEnumerator Start() {
@@ -68,25 +64,13 @@ namespace UMAWorld {
 
 #if UNITY_EDITOR
             // 绘画宗门区域
-            foreach (BuildBase item in g.builds.allBuild.Values) {
+            foreach (var item in g.builds.allSchool.Values)
+            {
                 int vertexCount = item.points.Length;
                 Vector3[] testPoints = new Vector3[vertexCount + 1];
                 GameObject test = new GameObject();
-                test.name = item.id;
-                test.transform.position = new Vector3(item.mainGatePos.x, 0, item.mainGatePos.y);
-                LineRenderer testLine = test.AddComponent<LineRenderer>();
-                for (int i = 0; i < item.points.Length; i++) {
-                    testPoints[i] = new Vector3(item.points[i].x, 150, item.points[i].y);
-                }
-                testPoints[vertexCount] = testPoints[0];
-                testLine.positionCount = vertexCount + 1;
-                testLine.SetPositions(testPoints);
-                testLine.material = CommonTools.LoadResources<Material>("Material/StandardRed");
-
                 test.AddComponent<BuildMono>().Init(item);
             }
-    
-
 #endif
         }
         private IEnumerator InitWorld() {

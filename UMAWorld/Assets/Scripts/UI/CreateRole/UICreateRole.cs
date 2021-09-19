@@ -126,19 +126,46 @@ namespace UMAWorld {
             Avatar.BuildCharacter(true);
         }
 
+        bool onCreate = false;
         public void StartGame() {
             if (string.IsNullOrWhiteSpace(inputPlayerName.text)) {
+                Debug.Log("名字不能为空");
+                return;
+            }
+            if (onCreate)
+            {
+                Debug.Log("正在创建游戏");
                 return;
             }
 
+            onCreate = true;
+            StartCoroutine(NewGame());
+        }
+
+        private IEnumerator NewGame()
+        {
+
             string data = UMATools.SaveUMA(Avatar);
             string id = inputPlayerName.text;
-            UnitBase player = g.units.NewUnit(id);
-            g.units.playerUnitID = id;
-            player.appearance.umaData = data;
-            g.data.NewGame(id, 0);
-            CommonTools.SetString(DataKey.onPlayerName, id);
+            bool isOk = false;
+
+                UnitBase player = g.units.NewUnit(id);
+                g.units.playerUnitID = id;
+                player.appearance.umaData = data;
+                g.data.NewGame(id, 0);
+                CommonTools.SetString(DataKey.onPlayerName, id);
+                isOk = true;
+
+
+            while (true)
+            {
+                if (isOk)
+                    break;
+                yield return 0;
+            }
+
             CommonTools.LoadScene("World");
+
         }
 
         public void RestUMA() {

@@ -5,16 +5,40 @@ using UnityEngine;
 namespace UMAWorld {
     public static class MeshTools {
 
-        // 添加楼梯
-        public static void AddStatirs(Vector3 start, int step, List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uv, System.Random rand = null) {
+        // 添加楼梯 dir 0前 1左 2右 3后
+        public static void AddStatirs(Vector3 start, int step, List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uv, System.Random rand = null, int dir = 0) {
+            Vector3 add1, add2, add3;
+            switch (dir)
+            {
+                case 1:
+                    add1 = new Vector3(-0.4f, 0.2f, 2);
+                    add2 = new Vector3(-0.7f, 0.2f, 2);
+                    add3 = new Vector3(-0.4f, 0.2f, 0);
+                    break;
+                case 2:
+                    add1 = new Vector3(0.4f, 0.2f, -2);
+                    add2 = new Vector3(0.7f, 0.2f, -2);
+                    add3 = new Vector3(0.4f, 0.2f, 0);
+                    break;
+                case 3:
+                    add1 = new Vector3(-2, 0.2f, -0.4f);
+                    add2 = new Vector3(-2, 0.2f, -0.7f);
+                    add3 = new Vector3(0, 0.2f, -0.4f);
+                    break;
+                default:
+                    add1 = new Vector3(2, 0.2f, 0.4f);
+                    add2 = new Vector3(2, 0.2f, 0.7f);
+                    add3 = new Vector3(0, 0.2f, 0.4f);
+                    break;
+            }
             for (int i = 0; i < step; i++) {
-                MeshTools.AddCube(start, start + ((step - 1) == i ? new Vector3(2, 0.2f, 0.4f) : new Vector3(2, 0.2f, 0.7f)), vertices, triangles, normals, uv);
-                start += new Vector3(0, 0.2f, 0.4f);
+                MeshTools.AddCube(start, start + ((step - 1) == i ? add1 : add2), vertices, triangles, normals, uv);
+                start += add3;
             }
         }
 
         //添加方块
-        public static void AddCube(Vector3 start, Vector3 end, List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uv, System.Random rand = null) {
+        public static void AddCube(Vector3 originalStart, Vector3 originalEnd, List<Vector3> vertices, List<int> triangles, List<Vector3> normals, List<Vector2> uv, System.Random rand = null) {
             Vector2 uvRandomStart;
             if (rand != null) {
                 uvRandomStart = new Vector2(rand.Next(0, 10000), rand.Next(0, 10000)) * 0.0001f;
@@ -22,6 +46,14 @@ namespace UMAWorld {
                 uvRandomStart = new Vector2(CommonTools.Random(0.0f, 1f), CommonTools.Random(0.0f, 1f));
             }
             int p = vertices.Count;
+
+            Vector3 start = new Vector3(), end = new Vector3();
+            start.x = Mathf.Min(originalStart.x, originalEnd.x);
+            start.y = Mathf.Min(originalStart.y, originalEnd.y);
+            start.z = Mathf.Min(originalStart.z, originalEnd.z);
+            end.x = Mathf.Max(originalStart.x, originalEnd.x);
+            end.y = Mathf.Max(originalStart.y, originalEnd.y);
+            end.z = Mathf.Max(originalStart.z, originalEnd.z);
 
             float width = end.x - start.x;
             float height = end.y - start.y;
@@ -78,10 +110,10 @@ namespace UMAWorld {
             uv.Add(new Vector2(width, height + length) + uvRandomStart);
             uv.Add(new Vector2(0, height + length + height) + uvRandomStart); // uv
             uv.Add(new Vector2(width, height + length + height) + uvRandomStart);
-            normals.Add(new Vector3(0, 0, -1)); // 法线
-            normals.Add(new Vector3(0, 0, -1)); // 法线
-            normals.Add(new Vector3(0, 0, -1)); // 法线
-            normals.Add(new Vector3(0, 0, -1)); // 法线
+            normals.Add(new Vector3(0, 0, 1)); // 法线
+            normals.Add(new Vector3(0, 0, 1)); // 法线
+            normals.Add(new Vector3(0, 0, 1)); // 法线
+            normals.Add(new Vector3(0, 0, 1)); // 法线
             triangles.Add(p); // 三角面
             triangles.Add(p + 2);
             triangles.Add(p + 3);
@@ -141,10 +173,10 @@ namespace UMAWorld {
             uv.Add(new Vector2(uvRandomStart.x * 2, uvRandomStart.y + length * 2) + uvRandomStart);
             uv.Add(new Vector2(uvRandomStart.x * 2 + height * 2, uvRandomStart.y) + uvRandomStart); // uv
             uv.Add(new Vector2(uvRandomStart.x * 2 + height * 2, uvRandomStart.y + length * 2) + uvRandomStart);
-            normals.Add(new Vector3(-1, 0, 0)); // 法线
-            normals.Add(new Vector3(-1, 0, 0)); // 法线
-            normals.Add(new Vector3(-1, 0, 0)); // 法线
-            normals.Add(new Vector3(-1, 0, 0)); // 法线
+            normals.Add(new Vector3(1, 0, 0)); // 法线
+            normals.Add(new Vector3(1, 0, 0)); // 法线
+            normals.Add(new Vector3(1, 0, 0)); // 法线
+            normals.Add(new Vector3(1, 0, 0)); // 法线
             triangles.Add(p); // 三角面
             triangles.Add(p + 2);
             triangles.Add(p + 3);
