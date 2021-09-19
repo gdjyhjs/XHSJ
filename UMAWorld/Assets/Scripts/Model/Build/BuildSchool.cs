@@ -333,7 +333,7 @@ namespace UMAWorld
                 tmpPoint = outsideRightStatirsArea[1];
                 // 设置外殿右
                 outsideRightArea = new Vector3[]{
-                    new Vector3(tmpPoint.x, tmpPoint.y, outsideCenterArea[1].z),
+                    new Vector3(tmpPoint.x, tmpPoint.y, outsideArea[0].z),
                     new Vector3(outsideArea[1].x, tmpPoint.y, outsideArea[1].z),
                 };
 
@@ -345,7 +345,7 @@ namespace UMAWorld
                     new Vector3(curPoint.x - 1.5f, curPoint.y, curPoint.z),
                     new Vector3(curPoint.x + 1.5f, curPoint.y + statirsToCenterStep * 0.2f , curPoint.z + statirsToCenterStep * 0.4f),
                 };
-                curPoint += new Vector3(curPoint.x, curPoint.y + statirsToCenterStep * 0.2f, curPoint.z + statirsToCenterStep * 0.4f);
+                curPoint = new Vector3(curPoint.x, curPoint.y + statirsToCenterStep * 0.2f, curPoint.z + statirsToCenterStep * 0.4f);
                 #endregion
             }
 
@@ -391,7 +391,7 @@ namespace UMAWorld
                 tmpPoint = centerRightStatirsArea[1];
                 // 设置中殿右
                 centerRightArea = new Vector3[]{
-                    new Vector3(tmpPoint.x, tmpPoint.y, centerCenterArea[1].z),
+                    new Vector3(tmpPoint.x, tmpPoint.y, centerArea[0].z),
                     new Vector3(centerArea[1].x, tmpPoint.y, centerArea[1].z),
                 };
 
@@ -403,7 +403,7 @@ namespace UMAWorld
                     new Vector3(curPoint.x - 2, curPoint.y, curPoint.z),
                     new Vector3(curPoint.x + 2, curPoint.y + statirsToInsideStep * 0.2f , curPoint.z + statirsToInsideStep * 0.4f),
                 };
-                curPoint += new Vector3(curPoint.x, curPoint.y + statirsToInsideStep * 0.2f, curPoint.z + statirsToInsideStep * 0.4f);
+                curPoint = new Vector3(curPoint.x, curPoint.y + statirsToInsideStep * 0.2f, curPoint.z + statirsToInsideStep * 0.4f);
                 #endregion
             }
 
