@@ -3,17 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 
-namespace UMAWorld
-{
+namespace UMAWorld {
     /// <summary>
     /// 建筑基础
     /// </summary>
-    public class BuildMono : BuildMonoBase
-    {
+    public class BuildMono : BuildMonoBase {
         BuildSchool buildData;
 
-        public void Init(BuildSchool data)
-        {
+        public void Init(BuildSchool data) {
             buildData = data;
             gameObject.name = buildData.data.id;
             Random rand = new Random(buildData.data.seed);
@@ -22,26 +19,10 @@ namespace UMAWorld
 
         private bool yieldWait = false;
         // 创建宗门建筑
-        private IEnumerator Build(Random rand)
-        {
+        private IEnumerator Build(Random rand) {
             BuildSchool schoolData = (BuildSchool)buildData;
 
             ConfSchoolBuildItem conf = g.conf.schoolBuild.GetItem(buildData.data.confId);
-
-            ConfSchoolFloorItem tileConf = g.conf.schoolFloor.GetItem(conf.tile); // 地砖
-            GameObject tilePrefab = CommonTools.LoadResources<GameObject>(tileConf.prefab);
-            if (yieldWait)
-                yield return CheckWait();
-
-            ConfSchoolFloorItem statirsConf = g.conf.schoolFloor.GetItem(conf.stairs); // 楼梯
-            GameObject statirsPrefab = CommonTools.LoadResources<GameObject>(statirsConf.prefab);
-            if (yieldWait)
-                yield return CheckWait();
-
-            ConfSchoolFloorItem floorConf = g.conf.schoolFloor.GetItem(conf.floor); // 地板
-            GameObject floorPrefab = CommonTools.LoadResources<GameObject>(floorConf.prefab);
-            if (yieldWait)
-                yield return CheckWait();
 
             ConfSchoolFloorItem mainGateConf = g.conf.schoolFloor.GetItem(conf.mainGate); // 山门
             GameObject mainGatePrefab = CommonTools.LoadResources<GameObject>(mainGateConf.prefab);
@@ -63,17 +44,50 @@ namespace UMAWorld
             if (yieldWait)
                 yield return CheckWait();
 
+            ConfSchoolFloorItem fenceCornerConf = g.conf.schoolFloor.GetItem(conf.fenceCorner); // 墙柱
+            GameObject fenceCornerPrefab = CommonTools.LoadResources<GameObject>(fenceCornerConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            ConfSchoolFloorItem fenceConf = g.conf.schoolFloor.GetItem(conf.fence); // 墙壁
+            GameObject fencePrefab = CommonTools.LoadResources<GameObject>(fenceConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
             ConfSchoolFloorItem outHouseConf = g.conf.schoolFloor.GetItem(conf.outHouse); // 外门弟子方
             GameObject outHousePrefab = CommonTools.LoadResources<GameObject>(outHouseConf.prefab);
             if (yieldWait)
                 yield return CheckWait();
 
+            ConfSchoolFloorItem inHouseConf = g.conf.schoolFloor.GetItem(conf.inHouse); // 内门弟子方
+            GameObject oinHousePrefab = CommonTools.LoadResources<GameObject>(inHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            ConfSchoolFloorItem inTrueHouseConf = g.conf.schoolFloor.GetItem(conf.inTrueHouse); // 真传弟子方
+            GameObject inTrueHousePrefab = CommonTools.LoadResources<GameObject>(inTrueHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            ConfSchoolFloorItem elderHouseConf = g.conf.schoolFloor.GetItem(conf.elderHouse); // 长老房子
+            GameObject elderHousePrefab = CommonTools.LoadResources<GameObject>(elderHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            ConfSchoolFloorItem bigElderHouseConf = g.conf.schoolFloor.GetItem(conf.bigElderHouse); // 大长老房子
+            GameObject bigElderHousePrefab = CommonTools.LoadResources<GameObject>(bigElderHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            ConfSchoolFloorItem mainHouseConf = g.conf.schoolFloor.GetItem(conf.mainHouse); // 宗主房子
+            GameObject mainHousePrefab = CommonTools.LoadResources<GameObject>(mainHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
 
 
             ConfSchoolFloorItem treeConf = g.conf.schoolFloor.GetItem(conf.outTree); // 树木
             GameObject[] treePrefabs = new GameObject[10];
-            for (int i = 0; i < 10; i++)
-            {
+            for (int i = 0; i < 10; i++) {
                 treePrefabs[i] = CommonTools.LoadResources<GameObject>(treeConf.prefab + i);
                 if (yieldWait)
                     yield return CheckWait();
@@ -85,6 +99,98 @@ namespace UMAWorld
                 yield return CheckWait();
 
 
+            ConfSchoolFloorItem storeHouseConf = g.conf.schoolFloor.GetItem(conf.storeHouse); // 聚宝仙阁
+            GameObject storeHousePrefab = CommonTools.LoadResources<GameObject>(storeHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem upLevelHouseConf = g.conf.schoolFloor.GetItem(conf.upLevelHouse); // 聚灵阵
+            GameObject upLevelHousePrefab = CommonTools.LoadResources<GameObject>(upLevelHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem taskHouseConf = g.conf.schoolFloor.GetItem(conf.taskHouse); // 任务大厅
+            GameObject taskHousePrefab = CommonTools.LoadResources<GameObject>(taskHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem hospiltalHouseConf = g.conf.schoolFloor.GetItem(conf.hospiltalHouse); // 疗伤院
+            GameObject hospiltalHousePrefab = CommonTools.LoadResources<GameObject>(hospiltalHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem meetingHouseConf = g.conf.schoolFloor.GetItem(conf.meetingHouse); // 议事大厅
+            GameObject meetingHousePrefab = CommonTools.LoadResources<GameObject>(meetingHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem depotHouseConf = g.conf.schoolFloor.GetItem(conf.depotHouse); // 建木
+            GameObject depotHousePrefab = CommonTools.LoadResources<GameObject>(depotHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem bookShopHouseConf = g.conf.schoolFloor.GetItem(conf.bookShopHouse); // 藏经阁
+            GameObject bookShopHousePrefab = CommonTools.LoadResources<GameObject>(bookShopHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolFloorItem transmitHouseConf = g.conf.schoolFloor.GetItem(conf.transmitHouse); // 传送阵
+            GameObject transmitHousePrefab = CommonTools.LoadResources<GameObject>(transmitHouseConf.prefab);
+            if (yieldWait)
+                yield return CheckWait();
+
+            ConfSchoolFloorItem[] bambooConf = new ConfSchoolFloorItem[conf.bamboo.Length];
+            GameObject[] bambooPrefab = new GameObject[conf.bamboo.Length];
+            for (int i = 0; i < conf.bamboo.Length; i++) {
+                bambooConf[i] = g.conf.schoolFloor.GetItem(conf.bamboo[i]); // 竹林
+                bambooPrefab[i] = CommonTools.LoadResources<GameObject>(bambooConf[i].prefab);
+            }
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolColorItem floorMatConf = g.conf.schoolColor.GetItem(conf.floorColor); // 地板材质
+            Material floorMat = Instantiate(CommonTools.LoadResources<Material>(floorMatConf.material));
+            //floorMat.SetTextureScale("Normalmap", new Vector2(floorMatConf.tilingX, floorMatConf.tilingY));
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolColorItem statirsMatConf = g.conf.schoolColor.GetItem(conf.stairwayColor); // 楼梯材质
+            Material statirsMat = Instantiate(CommonTools.LoadResources<Material>(statirsMatConf.material));
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolColorItem grassMatConf = g.conf.schoolColor.GetItem(conf.grassColor); // 楼梯材质
+            Material grassMat = Instantiate(CommonTools.LoadResources<Material>(grassMatConf.material));
+            if (yieldWait)
+                yield return CheckWait();
+
+
+            ConfSchoolColorItem stoneMatConf = g.conf.schoolColor.GetItem(conf.stoneColor); // 石头材质
+            Material stoneMat = Instantiate(CommonTools.LoadResources<Material>(stoneMatConf.material));
+            if (yieldWait)
+                yield return CheckWait();
+
+
+
+
+            int tmpH;
+            int tmpV;
+            float tmpW;
+            float tmpL;
+            float tmpS;
+            float tmpStart;
+            float tmpEnd;
+            float tmpF;
             Vector3 tmpPos;
             Vector3 tmpPosStart;
             Vector3 tmpPosEnd;
@@ -101,10 +207,8 @@ namespace UMAWorld
 
 
             float mainGateHeight = float.PositiveInfinity;
-            for (int x = 0; x <= 5; x++)
-            {
-                for (int z = 0; z <= 3; z++)
-                {
+            for (int x = 0; x <= 5; x++) {
+                for (int z = 0; z <= 3; z++) {
                     Vector3 point = CommonTools.GetGroundPoint(new Vector3(mainGatePos.x - mainGateConf.areaWidth * 0.5f + mainGateConf.areaWidth * x / 5,
                         0, mainGatePos.z - mainGateConf.areaLong * 0.5f + mainGateConf.areaLong * z / 3));
                     if (point.y < mainGateHeight)
@@ -123,8 +227,7 @@ namespace UMAWorld
             Material textMaterial = names[0].GetComponent<MeshRenderer>().material;
             Material forwardMaterial = Instantiate(textMaterial);
             Material backwardMaterial = Instantiate(textMaterial);
-            foreach (var item in names)
-            {
+            foreach (var item in names) {
                 item.text = buildData.data.id;
                 if (item.name == "Name") {
                     forwardMaterial.color = item.color;
@@ -140,60 +243,40 @@ namespace UMAWorld
 
             float floorHeight = 200;
             MeshTools.NewMeshObj("上山楼梯", (vertices, triangles, normals, uv) => {
-                if (schoolData.statirsSlopeArea1.Length > 0) {
-                    MeshTools.AddStatirs(schoolData.statirsSlopeArea1[0], schoolData.statirsStep1, vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth);
+                for (int i = 0; i < schoolData.statirsSlopeArea.Length; i++) {
+                    MeshTools.AddStatirs(schoolData.statirsSlopeArea[i][0], schoolData.statirsStep[i], vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth);
                 }
-                if (schoolData.statirsSlopeArea2.Length > 0) {
-                    MeshTools.AddStatirs(schoolData.statirsSlopeArea2[0], schoolData.statirsStep2, vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth);
-                }
-                if (schoolData.statirsSlopeArea3.Length > 0) {
-                    MeshTools.AddStatirs(schoolData.statirsSlopeArea3[0], schoolData.statirsStep3, vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth);
-                }
-                if (schoolData.statirsSlopeArea4.Length > 0) {
-                    MeshTools.AddStatirs(schoolData.statirsSlopeArea4[0], schoolData.statirsStep4, vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth);
-                }
-                if (schoolData.statirsSlopeArea5.Length > 0) {
-                    MeshTools.AddStatirs(schoolData.statirsSlopeArea5[0], schoolData.statirsStep5, vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth);
-                }
-            }).transform.SetParent(transform, false);
+                MeshTools.AddStatirs(schoolData.transmitStatirs[0], schoolData.transmitStatirsStep, vertices, triangles, normals, uv, rand, width: schoolData.statirsWidth, dir: 1);
+
+            }, statirsMat).transform.SetParent(transform, false);
             MeshTools.NewMeshObj("上山平路", (vertices, triangles, normals, uv) => {
-                if (schoolData.statirsSpaceArea1.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea1[0], schoolData.statirsSpaceArea1[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
+                for (int i = 0; i < schoolData.statirsSpaceArea.Length; i++) {
+                    MeshTools.AddCube(schoolData.statirsSpaceArea[i][0], schoolData.statirsSpaceArea[i][1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand, dir: 1);
                 }
-                if (schoolData.statirsSpaceArea2.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea2[0], schoolData.statirsSpaceArea2[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                }
-                if (schoolData.statirsSpaceArea3.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea3[0], schoolData.statirsSpaceArea3[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                }
-                if (schoolData.statirsSpaceArea4.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea4[0], schoolData.statirsSpaceArea4[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                }
-                if (schoolData.statirsSpaceArea5.Length > 0) {
-                    MeshTools.AddCube(schoolData.statirsSpaceArea5[0], schoolData.statirsSpaceArea5[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                }
-            }).transform.SetParent(transform, false);
+                MeshTools.AddCube(schoolData.transmitArea[0], schoolData.transmitArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
+            }, floorMat).transform.SetParent(transform, false);
             MeshTools.NewMeshObj("外殿_中殿_内殿_地皮", (vertices, triangles, normals, uv) => {
                 //MeshTools.AddCube(schoolData.outsideArea[0], schoolData.outsideArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 //MeshTools.AddCube(schoolData.centerArea[0], schoolData.centerArea[1] + Vector3.down * 0.2f, vertices, triangles, normals, uv, rand);
                 MeshTools.AddCube(schoolData.outsideCenterArea[0], schoolData.outsideCenterArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(schoolData.outsideLeftArea[0], schoolData.outsideLeftArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(schoolData.outsideRightArea[0], schoolData.outsideRightArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.outsideLeftArea[0], schoolData.outsideLeftArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand, dir: 1);
+                MeshTools.AddCube(schoolData.outsideRightArea[0], schoolData.outsideRightArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand, dir: 1);
                 MeshTools.AddCube(schoolData.centerCenterArea[0], schoolData.centerCenterArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(schoolData.centerLeftArea[0], schoolData.centerLeftArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(schoolData.centerRightArea[0], schoolData.centerRightArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(schoolData.centerLeftArea[0], schoolData.centerLeftArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand, dir: 1);
+                MeshTools.AddCube(schoolData.centerRightArea[0], schoolData.centerRightArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand, dir: 1);
                 MeshTools.AddCube(schoolData.insideArea[0], schoolData.insideArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
                 MeshTools.AddCube(schoolData.insideArea[0], schoolData.insideArea[1] + Vector3.down * floorHeight, vertices, triangles, normals, uv, rand);
-            }).transform.SetParent(transform, false);
+            }, floorMat).transform.SetParent(transform, false);
             MeshTools.NewMeshObj("楼梯", (vertices, triangles, normals, uv) => {
-                MeshTools.AddStatirs(schoolData.outsideLeftStatirsArea[0], 5, vertices, triangles, normals, uv, rand, 1, width: schoolData.outsideLeftStatirsWidth);
-                MeshTools.AddStatirs(schoolData.outsideRightStatirsArea[0], 5, vertices, triangles, normals, uv, rand, 2, width: schoolData.outsideRightStatirsWidth);
+                MeshTools.AddStatirs(schoolData.outsideLeftStatirsArea[0], schoolData.statirsOutStep, vertices, triangles, normals, uv, rand, 1, width: schoolData.outsideLeftStatirsWidth);
+                MeshTools.AddStatirs(schoolData.outsideRightStatirsArea[0], schoolData.statirsOutStep, vertices, triangles, normals, uv, rand, 2, width: schoolData.outsideRightStatirsWidth);
                 MeshTools.AddStatirs(schoolData.statirsToCenterSlopeArea[0], schoolData.statirsToCenterStep, vertices, triangles, normals, uv, rand, width: schoolData.statirsToCenterWidth);
-                MeshTools.AddStatirs(schoolData.centerLeftStatirsArea[0], 7, vertices, triangles, normals, uv, rand, 1, width: schoolData.centerLeftStatirsWidth);
-                MeshTools.AddStatirs(schoolData.centerRightStatirsArea[0], 7, vertices, triangles, normals, uv, rand, 2, width: schoolData.centerRightStatirsWidth);
+                MeshTools.AddStatirs(schoolData.centerLeftStatirsArea[0], schoolData.statirsCenterStep, vertices, triangles, normals, uv, rand, 1, width: schoolData.centerLeftStatirsWidth);
+                MeshTools.AddStatirs(schoolData.centerRightStatirsArea[0], schoolData.statirsCenterStep, vertices, triangles, normals, uv, rand, 2, width: schoolData.centerRightStatirsWidth);
                 MeshTools.AddStatirs(schoolData.statirsToInsideSlopeArea[0], schoolData.statirsToInsideStep, vertices, triangles, normals, uv, rand, width: schoolData.statirsToInsideWidth);
-            }).transform.SetParent(transform, false);
+            }, statirsMat).transform.SetParent(transform, false);
 
+            // 测试玩家位置
             g.units.player.mono.transform.position = startPoint + schoolData.statirsToCenterSlopeArea[0] + Vector3.right + Vector3.up;
 
 
@@ -215,89 +298,6 @@ namespace UMAWorld
 
 
 
-            #region 外殿 围墙
-            {
-                tmpPosStart = startPoint + new Vector3(schoolData.outsideCenterArea[0].x + wallCornerConf.areaWidth, schoolData.outsideCenterArea[0].y, schoolData.outsideCenterArea[0].z + wallCornerConf.areaWidth);
-                tmpPosEnd = startPoint + new Vector3(schoolData.outsideCenterArea[1].x - wallCornerConf.areaWidth, schoolData.outsideCenterArea[1].y, schoolData.outsideCenterArea[1].z - wallCornerConf.areaWidth);
-
-                Transform outsideWall = new GameObject("outsideWall").transform;
-                outsideWall.SetParent(transform);
-                outsideWall.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
-
-                int hCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
-                int vCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
-                if (hCount % 2 == 1)
-                    hCount++;
-                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / hCount;
-                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / vCount;
-                float hScale = hWidth / wallConf.areaWidth;
-                float vScale = vWidth / wallConf.areaWidth;
-                for (float i = 0; i <= hCount; i++) {
-                    if ((hCount / 2) == i) {
-
-                    } else {
-                        tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosStart.z);
-                        Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideWall); // 柱
-                        tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosEnd.z);
-                        Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideWall); // 柱
-                    }
-                }
-                for (int i = 1; i < vCount; i++) {
-                    if ((vCount / 2) == i) {
-
-                    } else {
-                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
-                        Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideWall); // 柱
-                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
-                        Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideWall); // 柱
-                    }
-                }
-                for (int i = 1; i <= hCount; i++) {
-                    if ((hCount / 2) == i) {
-                        float gScale = hWidth * 2 / wallGateConf.areaWidth;
-                        tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosStart.z);
-                        Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(gScale, 1, 1);// 门
-
-                        tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosEnd.z);
-                        Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(gScale, 1, 1);// 门
-                    } else if ((hCount / 2 + 1) == i) {
-                    } else {
-                        tmpPos = new Vector3(tmpPosEnd.x - hWidth * (i - 0.5f), tmpPosStart.y, tmpPosStart.z);
-                        Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(hScale, 1, 1);// 墙
-
-                        tmpPos = new Vector3(tmpPosEnd.x - hWidth * (i - 0.5f), tmpPosStart.y, tmpPosEnd.z);
-                        Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(hScale, 1, 1);// 墙
-                    }
-                }
-
-                for (int i = 1; i <= vCount; i++) {
-
-                    if ((hCount / 2) == i) {
-                        float gScale = vWidth * 2 / wallGateConf.areaWidth;
-                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
-                        Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(gScale, 1, 1);// 门
-
-                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
-                        Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(gScale, 1, 1);// 门
-                    } else if ((hCount / 2 + 1) == i) {
-                    } else {
-                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
-                        Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(vScale, 1, 1);// 墙
-                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
-                        Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideWall)
-                            .transform.localScale = new Vector3(vScale, 1, 1);// 墙
-                    }
-                }
-            }
-            #endregion
-
 
             #region 外殿左 围墙
             {
@@ -308,31 +308,31 @@ namespace UMAWorld
                 outsideLeftWall.SetParent(transform);
                 outsideLeftWall.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
 
-                int hCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
-                int vCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
-                if (vCount % 2 == 1)
-                    vCount++;
-                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / hCount;
-                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / vCount;
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
+                tmpV = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
+                if (tmpV % 2 == 1)
+                    tmpV++;
+                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / tmpH;
+                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / tmpV;
                 float hScale = hWidth / wallConf.areaWidth;
                 float vScale = vWidth / wallConf.areaWidth;
-                for (float i = 0; i <= hCount; i++) {
+                for (float i = 0; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosStart.x + hWidth * i, tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideLeftWall); // 柱
                     tmpPos = new Vector3(tmpPosStart.x + hWidth * i, tmpPosStart.y, tmpPosEnd.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideLeftWall); // 柱
                 }
-                for (int i = 1; i < vCount; i++) {
+                for (int i = 1; i < tmpV; i++) {
                     tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideLeftWall); // 柱
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
 
                     } else {
                         tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideLeftWall); // 柱
                     }
                 }
-                for (int i = 1; i <= hCount; i++) {
+                for (int i = 1; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosStart.x + hWidth * (i - 0.5f), tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideLeftWall)
                         .transform.localScale = new Vector3(hScale, 1, 1); // 墙
@@ -340,17 +340,17 @@ namespace UMAWorld
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideLeftWall)
                         .transform.localScale = new Vector3(hScale, 1, 1); // 墙
                 }
-                
-                for (int i = 1; i <= vCount; i++) {
-                    tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth  * (i - 0.5f));
+
+                for (int i = 1; i <= tmpV; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideLeftWall)
                         .transform.localScale = new Vector3(vScale, 1, 1); // 墙
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
                         float gScale = vWidth * 2 / wallGateConf.areaWidth;
                         tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideLeftWall)
                         .transform.localScale = new Vector3(gScale, 1, 1); // 门
-                    } else if ((vCount / 2 + 1) == i) {
+                    } else if ((tmpV / 2 + 1) == i) {
                     } else {
                         tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                         Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideLeftWall)
@@ -370,31 +370,31 @@ namespace UMAWorld
                 outsideRightWall.SetParent(transform);
                 outsideRightWall.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
 
-                int hCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
-                int vCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
-                if (vCount % 2 == 1)
-                    vCount++;
-                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / hCount;
-                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / vCount;
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
+                tmpV = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
+                if (tmpV % 2 == 1)
+                    tmpV++;
+                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / tmpH;
+                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / tmpV;
                 float hScale = hWidth / wallConf.areaWidth;
                 float vScale = vWidth / wallConf.areaWidth;
-                for (float i = 0; i <= hCount; i++) {
+                for (float i = 0; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideRightWall); // 柱
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosEnd.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideRightWall); // 柱
                 }
-                for (int i = 1; i < vCount; i++) {
+                for (int i = 1; i < tmpV; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideRightWall); // 柱
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
 
                     } else {
                         tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideRightWall); // 柱
                     }
                 }
-                for (int i = 1; i <= hCount; i++) {
+                for (int i = 1; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * (i - 0.5f), tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideRightWall)
                         .transform.localScale = new Vector3(hScale, 1, 1); // 墙
@@ -402,17 +402,17 @@ namespace UMAWorld
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideRightWall)
                         .transform.localScale = new Vector3(hScale, 1, 1); // 墙
                 }
-                
-                for (int i = 1; i <= vCount; i++) {
+
+                for (int i = 1; i <= tmpV; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideRightWall)
                         .transform.localScale = new Vector3(vScale, 1, 1); // 墙
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
                         float gScale = vWidth * 2 / wallGateConf.areaWidth;
                         tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideRightWall)
                             .transform.localScale = new Vector3(gScale, 1, 1);// 门
-                    } else if ((vCount / 2 + 1) == i) {
+                    } else if ((tmpV / 2 + 1) == i) {
                     } else {
                         tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                         Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideRightWall)
@@ -434,31 +434,31 @@ namespace UMAWorld
                 centerLeftWall.SetParent(transform);
                 centerLeftWall.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
 
-                int hCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
-                int vCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
-                if (vCount % 2 == 1)
-                    vCount++;
-                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / hCount;
-                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / vCount;
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
+                tmpV = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
+                if (tmpV % 2 == 1)
+                    tmpV++;
+                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / tmpH;
+                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / tmpV;
                 float hScale = hWidth / wallConf.areaWidth;
                 float vScale = vWidth / wallConf.areaWidth;
-                for (float i = 0; i <= hCount; i++) {
+                for (float i = 0; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosStart.x + hWidth * i, tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerLeftWall); // 柱
                     tmpPos = new Vector3(tmpPosStart.x + hWidth * i, tmpPosStart.y, tmpPosEnd.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerLeftWall); // 柱
                 }
-                for (int i = 1; i < vCount; i++) {
+                for (int i = 1; i < tmpV; i++) {
                     tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerLeftWall); // 柱
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
 
                     } else {
                         tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerLeftWall); // 柱
                     }
                 }
-                for (int i = 1; i <= hCount; i++) {
+                for (int i = 1; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosStart.x + hWidth * (i - 0.5f), tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerLeftWall)
                         .transform.localScale = new Vector3(hScale, 1, 1);// 墙
@@ -467,16 +467,16 @@ namespace UMAWorld
                         .transform.localScale = new Vector3(hScale, 1, 1);// 墙
                 }
 
-                for (int i = 1; i <= vCount; i++) {
+                for (int i = 1; i <= tmpV; i++) {
                     tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerLeftWall)
                         .transform.localScale = new Vector3(vScale, 1, 1); // 墙
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
                         float gScale = vWidth * 2 / wallGateConf.areaWidth;
                         tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerLeftWall)
                         .transform.localScale = new Vector3(gScale, 1, 1); // 门
-                    } else if ((vCount / 2 + 1) == i) {
+                    } else if ((tmpV / 2 + 1) == i) {
                     } else {
                         tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                         Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerLeftWall)
@@ -496,31 +496,31 @@ namespace UMAWorld
                 centerRightWall.SetParent(transform);
                 centerRightWall.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
 
-                int hCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
-                int vCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
-                if (vCount % 2 == 1)
-                    vCount++;
-                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / hCount;
-                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / vCount;
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
+                tmpV = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
+                if (tmpV % 2 == 1)
+                    tmpV++;
+                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / tmpH;
+                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / tmpV;
                 float hScale = hWidth / wallConf.areaWidth;
                 float vScale = vWidth / wallConf.areaWidth;
-                for (float i = 0; i <= hCount; i++) {
+                for (float i = 0; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerRightWall); // 柱
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosEnd.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerRightWall); // 柱
                 }
-                for (int i = 1; i < vCount; i++) {
+                for (int i = 1; i < tmpV; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerRightWall); // 柱
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
 
                     } else {
                         tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerRightWall); // 柱
                     }
                 }
-                for (int i = 1; i <= hCount; i++) {
+                for (int i = 1; i <= tmpH; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * (i - 0.5f), tmpPosStart.y, tmpPosStart.z);
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerRightWall)
                         .transform.localScale = new Vector3(hScale, 1, 1); // 墙
@@ -529,16 +529,16 @@ namespace UMAWorld
                         .transform.localScale = new Vector3(hScale, 1, 1); // 墙
                 }
 
-                for (int i = 1; i <= vCount; i++) {
+                for (int i = 1; i <= tmpV; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerRightWall)
                         .transform.localScale = new Vector3(vScale, 1, 1);// 墙
-                    if ((vCount / 2) == i) {
+                    if ((tmpV / 2) == i) {
                         float gScale = vWidth * 2 / wallGateConf.areaWidth;
                         tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                         Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerRightWall)
                         .transform.localScale = new Vector3(gScale, 1, 1);// 门
-                    } else if ((vCount / 2 + 1) == i) {
+                    } else if ((tmpV / 2 + 1) == i) {
                     } else {
                         tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                         Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerRightWall)
@@ -558,16 +558,16 @@ namespace UMAWorld
                 insideWall.SetParent(transform);
                 insideWall.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
 
-                int hCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
-                int vCount = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
-                if (hCount % 2 == 1)
-                    hCount++;
-                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / hCount;
-                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / vCount;
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / wallConf.areaWidth);
+                tmpV = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / wallConf.areaWidth);
+                if (tmpH % 2 == 1)
+                    tmpH++;
+                float hWidth = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / tmpH;
+                float vWidth = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / tmpV;
                 float hScale = hWidth / wallConf.areaWidth;
                 float vScale = vWidth / wallConf.areaWidth;
-                for (float i = 0; i <= hCount; i++) {
-                    if ((hCount / 2) == i) {
+                for (float i = 0; i <= tmpH; i++) {
+                    if ((tmpH / 2) == i) {
 
                     } else {
                         tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosStart.z);
@@ -576,19 +576,19 @@ namespace UMAWorld
                     tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosEnd.z);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), insideWall); // 柱
                 }
-                for (int i = 1; i < vCount; i++) {
+                for (int i = 1; i < tmpV; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), insideWall); // 柱
                     tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + vWidth * i);
                     Instantiate(wallCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), insideWall); // 柱
                 }
-                for (int i = 1; i <= hCount; i++) {
-                    if ((hCount / 2) == i) {
+                for (int i = 1; i <= tmpH; i++) {
+                    if ((tmpH / 2) == i) {
                         float gScale = hWidth * 2 / wallGateConf.areaWidth;
                         tmpPos = new Vector3(tmpPosEnd.x - hWidth * i, tmpPosStart.y, tmpPosStart.z);
                         Instantiate(wallGatePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), insideWall)
                             .transform.localScale = new Vector3(gScale, 1, 1);// 门
-                    } else if ((hCount / 2 + 1) == i) {
+                    } else if ((tmpH / 2 + 1) == i) {
                     } else {
                         tmpPos = new Vector3(tmpPosEnd.x - hWidth * (i - 0.5f), tmpPosStart.y, tmpPosStart.z);
                         Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), insideWall)
@@ -599,7 +599,7 @@ namespace UMAWorld
                         .transform.localScale = new Vector3(hScale, 1, 1);// 墙
                 }
 
-                for (int i = 1; i <= vCount; i++) {
+                for (int i = 1; i <= tmpV; i++) {
                     tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + vWidth * (i - 0.5f));
                     Instantiate(wallPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), insideWall)
                         .transform.localScale = new Vector3(vScale, 1, 1);// 墙
@@ -612,56 +612,828 @@ namespace UMAWorld
 
 
 
-
-
-            #region 外殿左 房子，树木
+            #region 外殿 围墙
             {
-                tmpPosStart = startPoint + schoolData.outsideLeftArea[1];
-                tmpPosEnd = startPoint + schoolData.outsideLeftArea[0];
+                // 外殿区域
+                tmpPosStart = startPoint + new Vector3(schoolData.outsideCenterArea[0].x + fenceCornerConf.areaWidth, schoolData.outsideCenterArea[0].y, schoolData.outsideCenterArea[0].z + fenceCornerConf.areaWidth);
+                tmpPosEnd = startPoint + new Vector3(schoolData.outsideCenterArea[1].x - fenceCornerConf.areaWidth, schoolData.outsideCenterArea[1].y, schoolData.outsideCenterArea[1].z - fenceCornerConf.areaWidth);
+
+                Transform outsideFence = new GameObject("outsideFence").transform;
+                outsideFence.SetParent(transform);
+                outsideFence.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
+
+                // 前面那面墙
+                {
+                    Vector3[] intoSpace = schoolData.statirsSpaceArea[schoolData.statirsSpaceArea.Length - 1];
+                    // 左边
+                    tmpStart = tmpPosStart.x;
+                    tmpEnd = startPoint.x + Mathf.Min(intoSpace[0].x, intoSpace[1].x) + fenceCornerConf.areaWidth;
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    tmpF = tmpEnd;
+
+
+                    // 入宗道路左边
+                    tmpStart = tmpPosStart.z;
+                    tmpEnd = startPoint.z + Mathf.Min(intoSpace[0].z, intoSpace[1].z) + fenceCornerConf.areaWidth;
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 1; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpF, tmpPosStart.y, tmpPosStart.z - tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpF, tmpPosStart.y, tmpPosStart.z - tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+
+                    float doorWidth = schoolData.statirsWidth - fenceCornerConf.areaWidth - fenceCornerConf.areaWidth;
+
+                    //// 入宗前面道路那一节
+                    //tmpS = doorWidth / fenceConf.areaWidth;
+                    //tmpPos = new Vector3(tmpF + doorWidth, tmpPosStart.y, tmpPosStart.z - tmpW * tmpH);
+                    //Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    //tmpPos = new Vector3(tmpF + doorWidth * 0.5f, tmpPosStart.y, tmpPosStart.z - tmpW * tmpH);
+                    //Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideFence)
+                    //.transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+
+
+                    //// 入宗前面道路那一节
+                    //tmpPos = new Vector3(tmpF + doorWidth, tmpPosStart.y, tmpPosStart.z - tmpW * tmpH);
+                    //Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    //tmpPos = new Vector3(tmpF - doorWidth * 0.5f, tmpPosStart.y, tmpPosStart.z - tmpW * tmpH);
+                    //Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideFence)
+                    //.transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+
+
+
+                    // 右边
+                    tmpStart = startPoint.x + Mathf.Max(intoSpace[0].x, intoSpace[1].x) - fenceCornerConf.areaWidth;
+                    tmpEnd = tmpPosEnd.x;
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    tmpF = tmpStart;
+
+
+
+                    // 入宗道路右边 传送上
+                    tmpStart = tmpPosStart.z;
+                    tmpEnd = startPoint.z + schoolData.transmitStatirs[1].z;
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 1; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpF, tmpPosStart.y, tmpPosStart.z - tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpF, tmpPosStart.y, tmpPosStart.z - tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+
+
+                    // 入宗道路右边 传送下
+                    tmpStart = startPoint.z + schoolData.transmitStatirs[0].z;
+                    tmpEnd = startPoint.z + Mathf.Min(intoSpace[0].z, intoSpace[1].z) + fenceCornerConf.areaWidth;
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpF, tmpPosStart.y, tmpStart - tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpF, tmpPosStart.y, tmpStart - tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                }
+                // 后面那面墙
+                {
+                    // 左边
+                    tmpStart = tmpPosStart.x;
+                    tmpEnd = startPoint.x + Mathf.Min(schoolData.statirsToCenterSlopeArea[0].x, schoolData.statirsToCenterSlopeArea[1].x);
+
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+
+                    // 楼梯斜墙
+                    tmpStart = startPoint.z + schoolData.statirsToCenterSlopeArea[0].z - fenceCornerConf.areaWidth;
+                    tmpEnd = startPoint.z + schoolData.statirsToCenterSlopeArea[1].z + fenceCornerConf.areaWidth;
+                    tmpF = tmpPosStart.y + (schoolData.statirsToCenterSlopeArea[1].y - schoolData.statirsToCenterSlopeArea[0].y) * 0.5f; // 斜墙高度
+                    // 创建楼梯围墙 坐斜墙
+                    tmpPos = new Vector3(startPoint.x + schoolData.statirsToCenterSlopeArea[0].x, tmpF, tmpStart + (tmpEnd - tmpStart) * 0.5f);
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), outsideFence);// 墙
+                    tmpGo.transform.localScale = new Vector3(tmpS, 1, 1);
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, schoolData.statirsToCenterSlopeArea[1].y - schoolData.statirsToCenterSlopeArea[0].y, tmpEnd - tmpStart);
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+                    // 创建楼梯围墙 左上斜墙
+                    tmpPos.x += schoolData.statirsToCenterWidth;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), outsideFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, schoolData.statirsToCenterSlopeArea[1].y - schoolData.statirsToCenterSlopeArea[0].y, tmpEnd - tmpStart);
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
 
 
 
 
-                //Transform outLeftHouse = new GameObject("outLeftHouse").transform;
-                //outLeftHouse.SetParent(transform);
-                //outLeftHouse.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
-                //float outTreeY1 = tmpPosEnd.z - wallCornerConf.areaWidth - flowerbedConf.areaWidth * 1.5f;
-                //float outTreeY2 = tmpPosStart.z + wallCornerConf.areaWidth + flowerbedConf.areaWidth * 1.5f;
-                //float outHouseY = tmpPosEnd.z - wallCornerConf.areaWidth - outHouseConf.areaLong * 0.5f;
-                //for (float i = tmpPosStart.x; i < tmpPosEnd.x;) {
-                //    // 创建树木
-                //    float x = i + wallCornerConf.areaWidth + flowerbedConf.areaWidth * 1.5f;
-                //    i = x + flowerbedConf.areaWidth * 0.5f;
-                //    if (i > tmpPosEnd.x)
-                //        break;
-                //    // 花盆1
-                //    tmpPosStart = new Vector3(x, tmpPosStart.y, outTreeY1);
-                //    GameObject flowerbed1 = Object.Instantiate(flowerbedPrefab, (Vector3)tmpPosStart, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
-                //    // 树1
-                //    tmpPosStart = tmpPosStart + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
-                //    GameObject tree1 = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPosStart, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
-                //    // 花盆2
-                //    tmpPosStart = new Vector3(x, tmpPosStart.y, outTreeY2);
-                //    GameObject flowerbed2 = Object.Instantiate(flowerbedPrefab, (Vector3)tmpPosStart, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
-                //    // 树2
-                //    tmpPosStart = tmpPosStart + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
-                //    GameObject tree2 = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPosStart, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), outLeftHouse);
-                //    // 创建房屋
-                //    x += flowerbedConf.areaWidth * 1.5f + outHouseConf.areaWidth * 0.5f;
-                //    i = x + outHouseConf.areaWidth * 0.5f;
-                //    if (i > tmpPosEnd.x)
-                //        break;
-                //    tmpPosStart = new Vector3(x, tmpPosStart.y, outHouseY);
-                //    GameObject house = Object.Instantiate(outHousePrefab, (Vector3)tmpPosStart, Quaternion.identity, outLeftHouse);
-                //    //GameObject treeTest = Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.identity, outLeftHouse);
-                //    yield return 0;
-                //}
+
+
+
+
+                    // 右边
+                    tmpStart = startPoint.x + Mathf.Max(schoolData.statirsToCenterSlopeArea[0].x, schoolData.statirsToCenterSlopeArea[1].x);
+                    tmpEnd = tmpPosEnd.x;
+
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                }
+
+
+                // 左右围墙
+                {
+                    // 上边
+                    tmpStart = tmpPosStart.z;
+                    tmpEnd = startPoint.z + Mathf.Min(schoolData.outsideLeftStatirsArea[0].z, schoolData.outsideLeftStatirsArea[1].z);
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+
+
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 1; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 1; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+
+
+
+
+
+                    Vector3 start = tmpPos;
+                    Vector3 end = startPoint + new Vector3(schoolData.outsideLeftStatirsArea[1].x, schoolData.outsideLeftStatirsArea[1].y, schoolData.outsideLeftStatirsArea[0].z);
+                    end.x -= fenceCornerConf.areaWidth;
+                    tmpF = start.y + (end.y - start.y) * 0.5f; // 斜墙高度
+                    // 创建楼梯围墙 左下斜墙
+                    tmpPos = new Vector3(start.x + (end.x - start.x) * 0.5f, tmpF, start.z);
+                    tmpPos.x -= fenceCornerConf.areaWidth * 0.25f;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), outsideFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+                    // 创建楼梯围墙 左上斜墙
+                    tmpPos.z += schoolData.outsideLeftStatirsWidth;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), outsideFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+
+                    // 创建楼梯围墙 右下斜墙
+                    tmpPos = new Vector3(tmpPosEnd.x - (end.x - start.x) * 0.5f, tmpF, start.z);
+                    tmpPos.x += fenceCornerConf.areaWidth * 0.25f;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), outsideFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+                    // 创建楼梯围墙 右上斜墙
+                    tmpPos.z += schoolData.outsideLeftStatirsWidth;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), outsideFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+
+                    tmpPos = new Vector3(end.x, end.y, start.z);
+                    tmpPos.x -= fenceCornerConf.areaWidth * 0.5f;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    tmpPos.z += schoolData.outsideLeftStatirsWidth;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+
+                    tmpPos = startPoint + schoolData.outsideRightStatirsArea[1];
+                    tmpPos.x += fenceCornerConf.areaWidth * 0.5f;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    tmpPos.z += schoolData.outsideLeftStatirsWidth;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+
+
+                    // 下边
+                    tmpStart = startPoint.z + Mathf.Max(schoolData.outsideLeftStatirsArea[0].z, schoolData.outsideLeftStatirsArea[1].z);
+                    tmpEnd = tmpPosEnd.z;
+
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), outsideFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), outsideFence); // 柱
+                    }
+                }
+
             }
             #endregion
+
+            #region 内殿 围墙
+            {
+                // 内殿区域
+                tmpPosStart = startPoint + new Vector3(schoolData.centerCenterArea[0].x + fenceCornerConf.areaWidth, schoolData.centerCenterArea[0].y, schoolData.centerCenterArea[0].z + fenceCornerConf.areaWidth);
+                tmpPosEnd = startPoint + new Vector3(schoolData.centerCenterArea[1].x - fenceCornerConf.areaWidth, schoolData.centerCenterArea[1].y, schoolData.centerCenterArea[1].z - fenceCornerConf.areaWidth);
+
+                Transform centerFence = new GameObject("centerFence").transform;
+                centerFence.SetParent(transform);
+                centerFence.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
+
+                // 前面那面墙
+                {
+                    Vector3[] intoSpace = schoolData.statirsToCenterSlopeArea;
+                    // 左边
+                    tmpStart = tmpPosStart.x;
+                    tmpEnd = startPoint.x + Mathf.Min(intoSpace[0].x, intoSpace[1].x);
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+
+                    // 右边
+                    tmpStart = startPoint.x + Mathf.Max(intoSpace[0].x, intoSpace[1].x);
+                    tmpEnd = tmpPosEnd.x;
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosStart.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                }
+                // 后面那面墙
+                {
+                    // 左边
+                    tmpStart = tmpPosStart.x;
+                    tmpEnd = startPoint.x + Mathf.Min(schoolData.statirsToInsideSlopeArea[0].x, schoolData.statirsToInsideSlopeArea[1].x);
+
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+
+                    // 楼梯斜墙
+                    tmpStart = startPoint.z + schoolData.statirsToInsideSlopeArea[0].z - fenceCornerConf.areaWidth;
+                    tmpEnd = startPoint.z + schoolData.statirsToInsideSlopeArea[1].z + fenceCornerConf.areaWidth;
+                    tmpF = tmpPosStart.y + (schoolData.statirsToInsideSlopeArea[1].y - schoolData.statirsToInsideSlopeArea[0].y) * 0.5f; // 斜墙高度
+                    // 创建楼梯围墙 左上斜墙
+                    tmpPos = new Vector3(startPoint.x + schoolData.statirsToInsideSlopeArea[0].x, tmpF, tmpStart + (tmpEnd - tmpStart) * 0.5f);
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), centerFence);// 墙
+                    tmpGo.transform.localScale = new Vector3(tmpS, 1, 1);
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, schoolData.statirsToInsideSlopeArea[1].y - schoolData.statirsToInsideSlopeArea[0].y, tmpEnd - tmpStart);
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+
+
+
+                    // 创建楼梯围墙 右上斜墙
+                    tmpPos.x += schoolData.statirsToInsideWidth;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), centerFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, schoolData.statirsToInsideSlopeArea[1].y - schoolData.statirsToInsideSlopeArea[0].y, tmpEnd - tmpStart);
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+
+
+                    tmpPos.y += +(schoolData.statirsToInsideSlopeArea[1].y - schoolData.statirsToInsideSlopeArea[0].y) * 0.5f;
+                    tmpPos.z += (tmpEnd - tmpStart) * 0.5f;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    tmpPos.x -= schoolData.statirsToInsideWidth;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+
+
+
+
+
+
+
+
+                    // 右边
+                    tmpStart = startPoint.x + Mathf.Max(schoolData.statirsToInsideSlopeArea[0].x, schoolData.statirsToInsideSlopeArea[1].x);
+                    tmpEnd = tmpPosEnd.x;
+
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (float i = 0; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * i, tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpStart + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosEnd.z);
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                }
+
+
+                // 左右围墙
+                {
+                    // 上边
+                    tmpStart = tmpPosStart.z;
+                    tmpEnd = startPoint.z + Mathf.Min(schoolData.centerLeftStatirsArea[0].z, schoolData.centerLeftStatirsArea[1].z);
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+
+
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 1; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 1; i <= tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+
+
+
+
+
+                    Vector3 start = tmpPos;
+                    Vector3 end = startPoint + new Vector3(schoolData.centerLeftStatirsArea[1].x, schoolData.centerLeftStatirsArea[1].y, schoolData.centerLeftStatirsArea[0].z);
+                    end.x -= fenceCornerConf.areaWidth;
+                    tmpF = start.y + (end.y - start.y) * 0.5f; // 斜墙高度
+                    // 创建楼梯围墙 左下斜墙
+                    tmpPos = new Vector3(start.x + (end.x - start.x) * 0.5f, tmpF, start.z);
+                    tmpPos.x -= fenceCornerConf.areaWidth * 0.25f;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), centerFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+                    // 创建楼梯围墙 左上斜墙
+                    tmpPos.z += schoolData.centerLeftStatirsWidth;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), centerFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+
+                    // 创建楼梯围墙 右下斜墙
+                    tmpPos = new Vector3(tmpPosEnd.x - (end.x - start.x) * 0.5f, tmpF, start.z);
+                    tmpPos.x += fenceCornerConf.areaWidth * 0.25f;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), centerFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+                    // 创建楼梯围墙 右上斜墙
+                    tmpPos.z += schoolData.centerLeftStatirsWidth;
+                    tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), centerFence);// 墙
+                    {
+                        MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                        for (int i = 0; i < list.Length; i++) {
+                            list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                            Destroy(list[i].GetComponent<BoxCollider>());
+                            list[i].gameObject.AddComponent<MeshCollider>();
+                        }
+                    }
+
+                    tmpPos = new Vector3(end.x, end.y, start.z);
+                    tmpPos.x -= fenceCornerConf.areaWidth * 0.5f;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    tmpPos.z += schoolData.centerLeftStatirsWidth;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+
+                    tmpPos = startPoint + schoolData.centerRightStatirsArea[1];
+                    tmpPos.x += fenceCornerConf.areaWidth * 0.5f;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    tmpPos.z += schoolData.centerLeftStatirsWidth;
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+
+
+                    // 下边
+                    tmpStart = startPoint.z + Mathf.Max(schoolData.centerLeftStatirsArea[0].z, schoolData.centerLeftStatirsArea[1].z);
+                    tmpEnd = tmpPosEnd.z;
+
+                    tmpH = Mathf.CeilToInt(Mathf.Abs(tmpEnd - tmpStart) / fenceConf.areaWidth); // 数量
+                    tmpW = Mathf.Abs(tmpEnd - tmpStart) / tmpH; // 单位宽度
+                    tmpS = tmpW / fenceConf.areaWidth;
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                    for (int i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * (i + 0.5f));
+                        Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), centerFence)
+                        .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    }
+                    for (float i = 0; i < tmpH; i++) {
+                        tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpStart + tmpW * i);
+                        Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), centerFence); // 柱
+                    }
+                }
+
+            }
+            #endregion
+
+            #region 传送阵 围墙
+            {
+                Transform transmitArea = new GameObject("transmitArea").transform;
+                transmitArea.SetParent(transform);
+                transmitArea.position = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z);
+
+                tmpPosStart = startPoint + new Vector3(schoolData.transmitArea[1].x + fenceCornerConf.areaWidth, schoolData.transmitArea[0].y, schoolData.transmitArea[0].z + fenceCornerConf.areaWidth);
+                tmpPosEnd = startPoint + new Vector3(schoolData.transmitArea[0].x - fenceCornerConf.areaWidth, schoolData.transmitArea[1].y, schoolData.transmitArea[1].z - fenceCornerConf.areaWidth);
+
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / fenceConf.areaWidth); // 数量
+                tmpW = Mathf.Abs(tmpPosEnd.x - tmpPosStart.x) / tmpH; // 单位宽度
+                tmpS = tmpW / fenceConf.areaWidth;
+                // 上下墙柱
+                for (int i = 0; i < tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosStart.z);
+                    Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), transmitArea)
+                    .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                    tmpPos = new Vector3(tmpPosStart.x + tmpW * (i + 0.5f), tmpPosStart.y, tmpPosEnd.z);
+                    Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180, Vector3.up), transmitArea)
+                    .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                }
+                for (float i = 0; i <= tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x + tmpW * i, tmpPosStart.y, tmpPosStart.z);
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), transmitArea); // 柱
+                    tmpPos = new Vector3(tmpPosStart.x + tmpW * i, tmpPosStart.y, tmpPosEnd.z);
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), transmitArea); // 柱
+                }
+
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / fenceConf.areaWidth); // 数量
+                tmpW = Mathf.Abs(tmpPosEnd.z - tmpPosStart.z) / tmpH; // 单位宽度
+                tmpS = tmpW / fenceConf.areaWidth;
+                // 右墙柱
+                for (int i = 0; i < tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + tmpW * (i + 0.5f));
+                    Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), transmitArea)
+                    .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                }
+                for (float i = 1; i < tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z + tmpW * i);
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), transmitArea); // 柱
+                }
+
+                //  startPoint + new Vector3(schoolData.transmitArea[1].x
+
+                tmpH = Mathf.CeilToInt(Mathf.Abs(tmpPosEnd.z - (startPoint.z + schoolData.transmitStatirs[1].z)) / fenceConf.areaWidth); // 数量
+                tmpW = Mathf.Abs(tmpPosEnd.z - (startPoint.z + schoolData.transmitStatirs[1].z)) / tmpH; // 单位宽度
+                tmpS = tmpW / fenceConf.areaWidth;
+                // 右墙柱
+                for (int i = 0; i < tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + tmpW * (i + 0.5f));
+                    Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), transmitArea)
+                    .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                }
+                for (float i = 1; i <= tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + tmpW * i);
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), transmitArea); // 柱
+                }
+
+
+                tmpH = Mathf.CeilToInt(Mathf.Abs((startPoint.z + schoolData.transmitStatirs[0].z) - tmpPosStart.z) / fenceConf.areaWidth); // 数量
+                tmpW = Mathf.Abs((startPoint.z + schoolData.transmitStatirs[0].z) - tmpPosStart.z) / tmpH; // 单位宽度
+                tmpS = tmpW / fenceConf.areaWidth;
+                // 右墙柱
+                for (int i = 0; i < tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosEnd.z - tmpW * (i + 0.5f));
+                    Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 2) * 180 + 90, Vector3.up), transmitArea)
+                    .transform.localScale = new Vector3(tmpS, 1, 1); // 墙
+                }
+                for (float i = 1; i <= tmpH; i++) {
+                    tmpPos = new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosEnd.z - tmpW * i);
+                    Instantiate(fenceCornerPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 4) * 90, Vector3.up), transmitArea); // 柱
+                }
+
+
+
+
+                Vector3 start = startPoint + schoolData.transmitStatirs[0];
+                start.x += fenceCornerConf.areaWidth;
+                Vector3 end = startPoint + schoolData.transmitStatirs[1];
+                end.x -= fenceCornerConf.areaWidth;
+                tmpPos = new Vector3(start.x + (end.x - start.x) * 0.5f, start.y + (end.y - start.y) * 0.5f, start.z); // 斜墙位置
+                tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), transmitArea);// 墙
+                {
+                    MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                    for (int i = 0; i < list.Length; i++) {
+                        list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                        Destroy(list[i].GetComponent<BoxCollider>());
+                        list[i].gameObject.AddComponent<MeshCollider>();
+                    }
+                }
+
+                tmpPos.z += end.z - start.z;
+                tmpGo = Instantiate(fencePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), transmitArea);// 墙
+                {
+                    MeshFilter[] list = tmpGo.GetComponentsInChildren<MeshFilter>();
+                    for (int i = 0; i < list.Length; i++) {
+                        list[i].mesh = MeshTools.ModifyMeshToStairway(list[i].mesh, Mathf.Abs(end.y - start.y), Mathf.Abs(end.x - start.x));
+                        Destroy(list[i].GetComponent<BoxCollider>());
+                        list[i].gameObject.AddComponent<MeshCollider>();
+                    }
+                }
+
+            }
+            #endregion
+
+
+            //#region 中殿宗主模型
+            //{
+            //    Mesh playerMesh = Instantiate(g.units.player.mono.gameObject.transform.Find("UMARenderer").GetComponent<SkinnedMeshRenderer>().sharedMesh);
+            //    //Mesh playerMesh = Instantiate(g.units.player.mono.gameObject.transform.Find("UMARenderer").GetComponent<SkinnedMeshRenderer>().BakeMesh);
+            //    GameObject go = new GameObject();
+            //    go.name = "playerMesh";
+            //    go.transform.SetParent(transform);
+            //    //playerMesh.RecalculateBounds();
+            //    go.AddComponent<MeshFilter>().mesh = playerMesh; //得到meshfilter组件
+            //    go.AddComponent<MeshRenderer>().material = CommonTools.LoadResources<Material>("Material/StandardGray");
+            //    go.AddComponent<MeshCollider>();
+            //    go.transform.position = startPoint + (schoolData.outsideCenterArea[0] + (schoolData.outsideCenterArea[1] - schoolData.outsideCenterArea[0]) * 0.5f);
+            //}
+            //#endregion
+
+
+
+            Transform schoolHouse = new GameObject("schoolHouse").transform;
+            schoolHouse.SetParent(transform);
+            Transform schoolTree = new GameObject("schoolTree").transform;
+            schoolTree.SetParent(transform);
+            #region 传送阵建筑
+            // 外门建筑区域
+            tmpPosStart = startPoint + schoolData.transmitArea[0];
+            tmpPosEnd = startPoint + schoolData.transmitArea[1];
+            tmpPos = tmpPosStart + (tmpPosEnd - tmpPosStart) * 0.5f;
+            tmpGo = Instantiate(transmitHousePrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), schoolHouse);// 传送阵
+
+            #endregion
+            #region 外门弟子建筑
+            tmpPosStart = startPoint + new Vector3(schoolData.outsideLeftArea[0].x - wallCornerConf.areaWidth * 1.5f, schoolData.outsideLeftArea[0].y, schoolData.outsideLeftArea[0].z + wallCornerConf.areaWidth * 1.5f);
+            tmpPosEnd = startPoint + new Vector3(schoolData.outsideLeftArea[1].x + wallCornerConf.areaWidth * 1.5f, schoolData.outsideLeftArea[0].y, schoolData.outsideLeftArea[1].z - wallCornerConf.areaWidth * 1.5f);
+
+            tmpF = tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * 0.65f;
+            for (float x = tmpPosStart.x; ;) {
+                if (x == tmpPosStart.x) {
+                    // 第一盆树
+                    x -= flowerbedConf.areaWidth;
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + flowerbedConf.areaWidth * 1.5f);
+                    // 花盆下
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树下
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - flowerbedConf.areaWidth * 1.5f);
+                    // 花盆上
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树上
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    x -= flowerbedConf.areaWidth;
+                }
+                x -= outHouseConf.areaWidth * 0.5f;
+                // 房子下
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + outHouseConf.areaLong * 0.5f);
+                Object.Instantiate(outHousePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), schoolHouse);
+
+                // 房子上
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - outHouseConf.areaLong * 0.5f);
+                Object.Instantiate(outHousePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), schoolHouse);
+                x -= outHouseConf.areaWidth * 0.5f;
+
+                x -= flowerbedConf.areaWidth;
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + flowerbedConf.areaWidth * 1.5f);
+                // 花盆下
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树下
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - flowerbedConf.areaWidth * 1.5f);
+                // 花盆上
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树上
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                x -= flowerbedConf.areaWidth;
+
+                yield return CheckWait();
+                if (x < tmpF) {
+                    tmpF = x;
+                    break;
+                }
+
+            }
+
+            // 外门小树林
+            tmpL = 0.2f;
+            tmpGo =  MeshTools.NewMeshObj("外门小树林围栏", (vertices, triangles, normals, uv) => {
+                MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL), new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y + tmpL, tmpPosStart.z + tmpL + tmpL), vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosEnd.z - tmpL), new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL + tmpL), new Vector3(tmpF - tmpL - tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
+                MeshTools.AddCube(new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL + tmpL), new Vector3(tmpPosEnd.x + tmpL + tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
+            }, stoneMat);
+            tmpGo.transform.SetParent(transform, false);
+            tmpGo.transform.position = default;
+
+            tmpW = 0.15f;
+            tmpGo = MeshTools.NewMeshObj("外门小树林草地", (vertices, triangles, normals, uv) => {
+                MeshTools.AddCube(new Vector3(tmpF - tmpL - tmpW, tmpPosStart.y - tmpW, tmpPosStart.z + tmpL + tmpW), new Vector3(tmpPosEnd.x + tmpL + tmpW, tmpPosStart.y + tmpW, tmpPosEnd.z - tmpL - tmpW), vertices, triangles, normals, uv, rand);
+            }, grassMat);
+            tmpGo.transform.SetParent(transform, false);
+            tmpGo.transform.position = default;
+
+            tmpPos = new Vector3(tmpF - tmpL - tmpW, tmpPosStart.y, tmpPosStart.z + tmpL + tmpW);
+            tmpPosEnd = new Vector3(tmpPosEnd.x + tmpL + tmpW, tmpPosStart.y + tmpW, tmpPosEnd.z - tmpL - tmpW);
+            tmpPosStart = tmpPos;
+            List<Vector3> ways = new List<Vector3>();
+            ways.Add(new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(30, 70) * 0.01f));
+            ways.Add(ways[0] + new Vector3(0, 0, 6));
+            ways.Add(new Vector3(tmpPosEnd.x, tmpPosEnd.y, tmpPosEnd.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(30, 70) * 0.01f));
+            ways.Add(ways[2] - new Vector3(0, 0, 6));
+            Vector3[] way = ways.ToArray();
+            // 创建竹林
+            tmpW = 0;
+            tmpL = 0;
+            while (tmpW < 10 || tmpL < 100) {
+                tmpPos = new Vector3(tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * rand.Next(10, 90) * 0.01f, tmpPosStart.y, tmpPosStart.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(10, 90) * 0.01f);
+                if (!MathTools.PointIsInPolygon(way, tmpPos)) {
+                    Instantiate<GameObject>(bambooPrefab[rand.Next(0, bambooPrefab.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), tmpGo.transform);
+                    tmpW++;
+                }
+                tmpL++;
+            }
+
+
+            #endregion
+
+
+
+
+
+
         }
 
-        private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent)
-        {
+
+        private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent) {
             return GameObject.Instantiate<GameObject>(prefab, pos, q, parent);
         }
     }

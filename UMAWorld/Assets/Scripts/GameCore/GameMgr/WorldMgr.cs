@@ -34,7 +34,11 @@ namespace UMAWorld {
             mainRoleCamera.SwitchTarget(goPlayer.transform);
             // 加载模型
             DynamicCharacterAvatar avatar = goPlayer.GetComponent<DynamicCharacterAvatar>();
-            UMATools.LoadUMA(avatar, player.appearance.umaData);
+            try {
+                UMATools.LoadUMA(avatar, player.appearance.umaData);
+            } catch (System.Exception e) {
+                Debug.LogError(e.Message+"\n"+e.StackTrace);
+            }
             // 添加世界单位基类
             player.mono = goPlayer.AddComponent<UnitMono>();
             player.mono.unitData = player;

@@ -28,23 +28,11 @@ namespace UMAWorld
         public Vector3[] points;
         // 区域用两个坐标表示，起点的左边和终点的右边
         // 楼梯斜面区域
-        public Vector3[] statirsSlopeArea1;
-        public Vector3[] statirsSlopeArea2;
-        public Vector3[] statirsSlopeArea3;
-        public Vector3[] statirsSlopeArea4;
-        public Vector3[] statirsSlopeArea5;
+        public Vector3[][] statirsSlopeArea;
         // 楼梯平台区域
-        public Vector3[] statirsSpaceArea1;
-        public Vector3[] statirsSpaceArea2;
-        public Vector3[] statirsSpaceArea3;
-        public Vector3[] statirsSpaceArea4;
-        public Vector3[] statirsSpaceArea5;
+        public Vector3[][] statirsSpaceArea;
         // 楼梯级数
-        public int statirsStep1;
-        public int statirsStep2;
-        public int statirsStep3;
-        public int statirsStep4;
-        public int statirsStep5;
+        public int[] statirsStep;
 
         // 外殿区域
         public Vector3[] outsideArea;
@@ -81,23 +69,29 @@ namespace UMAWorld
         // 内殿区域
         public Vector3[] insideArea;
 
-
-        public float statirsWidth = 3;
-        public float outsideLeftStatirsWidth = 4;
-        public float outsideRightStatirsWidth = 4;
-        public float statirsToCenterWidth = 6;
-        public float centerLeftStatirsWidth = 5;
-        public float centerRightStatirsWidth = 5;
-        public float statirsToInsideWidth = 8;
+        // 从传送阵走出来的楼梯
+        public Vector3[] transmitStatirs;
+        // 传送阵区域
+        public Vector3[] transmitArea;
 
 
+        // 楼梯宽度
+        public float statirsWidth = 4;
+        public float outsideLeftStatirsWidth = 6;
+        public float outsideRightStatirsWidth = 6;
+        public float statirsToCenterWidth = 9;
+        public float centerLeftStatirsWidth = 6;
+        public float centerRightStatirsWidth = 6;
+        public float statirsToInsideWidth = 6;
+        public float transmitStatirsWidth = 4;
 
+
+        // 楼梯级数
         public int statirsOutStep = 5;
         public int statirsCenterStep = 5;
-        // 通往中殿楼梯级数
-        public int statirsToCenterStep = 7;
-        // 通往内殿楼梯级数
-        public int statirsToInsideStep = 9;
+        public int statirsToCenterStep = 9;
+        public int statirsToInsideStep = 15;
+        public int transmitStatirsStep = 9;
 
         /// <summary>
         /// 初始化宗门位置获得生成的坐标
@@ -157,154 +151,74 @@ namespace UMAWorld
             }
         }
 
-        public void InitData(SchoolBuildData data)
-        {
+        public void InitData(SchoolBuildData data) {
             this.data = data;
             rand = new System.Random(data.seed);
             // 楼梯一阶20CM高，长度40CM，一共99阶，随机楼梯段数3-5
             // 随机段数
             int statirsCount = Random(3, 6);
             // 楼梯总长度 = 40 * 99
-            int statirsStepCount = 99;
+            int statirsStepCount = 199;
             // 预估每段台阶的级数
             int oneStatirs = statirsStepCount / statirsCount;
-
+            statirsSlopeArea = new Vector3[statirsCount][];
+            statirsStep = new int[statirsCount];
+            statirsSpaceArea = new Vector3[statirsCount][];
             // 已知大门坐标 mainGatePos 大门往前5米开始楼梯, 楼梯宽度200
             Vector3 curPoint = new Vector3(-statirsWidth * 0.5f, 0, 1.5f);
-            Vector3 tmpPoint;
+            Vector3 tmpPoint = default;
+            #region 上山楼梯
             {
-                #region 上山楼梯
-                if (0 < statirsCount)
-                {
-                    statirsStep1 = (int)(oneStatirs * Random(0.5f, 1.5f));
-                    if (statirsStep1 > statirsStepCount || statirsCount == 1)
-                        statirsStep1 = statirsStepCount;
-                    statirsStepCount -= statirsStep1;
-                    statirsSlopeArea1 = new Vector3[2];
-                    statirsSlopeArea1[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep1 * 0.2f, curPoint.z + statirsStep1 * 0.4f);
-                    statirsSlopeArea1[1] = curPoint; // 楼梯终点
+                for (int i = 0; i < statirsCount; i++) {
+                    statirsStep[i] = (int)(oneStatirs * Random(0.5f, 1.5f));
+                    if (statirsStep[i] > statirsStepCount || statirsCount == (i + 1))
+                        statirsStep[i] = statirsStepCount;
+                    statirsStepCount -= statirsStep[i];
+                    statirsSlopeArea[i] = new Vector3[2];
+                    statirsSlopeArea[i][0] = curPoint; // 楼梯起点
+                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep[i] * 0.2f, curPoint.z + statirsStep[i] * 0.4f);
+                    statirsSlopeArea[i][1] = curPoint; // 楼梯终点
 
-                    int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
-                    statirsSpaceArea1 = new Vector3[2];
-                    statirsSpaceArea1[0] = curPoint; // 平面起点
-                    if (statirsCount == 1)
-                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
-                    else
-                        curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
-                    statirsSpaceArea1[1] = curPoint; // 平面终点
-                }
-                else
-                {
-                    statirsSlopeArea1 = new Vector3[0];
-                    statirsSpaceArea1 = new Vector3[0];
-                }
-                if (1 < statirsCount)
-                {
-                    statirsStep2 = (int)(oneStatirs * Random(0.5f, 1.5f));
-                    if (statirsStep2 > statirsStepCount || statirsCount == 2)
-                        statirsStep2 = statirsStepCount;
-                    statirsStepCount -= statirsStep2;
-                    statirsSlopeArea2 = new Vector3[2];
-                    statirsSlopeArea2[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep2 * 0.2f, curPoint.z + statirsStep2 * 0.4f);
-                    statirsSlopeArea2[1] = curPoint; // 楼梯终点
+                    int spaceLong = (int)(oneStatirs * Random(1.25f, 1.75f));
+                    statirsSpaceArea[i] = new Vector3[2];
+                    if (statirsCount == (i + 1)) {
+                        spaceLong /= 2;
+                        statirsSpaceArea[i][0] = new Vector3(curPoint.x + statirsWidth, curPoint.y, curPoint.z); // 通往宗门
+                        curPoint = new Vector3(curPoint.x - statirsWidth * 2, curPoint.y, curPoint.z + spaceLong);
 
-                    int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
-                    statirsSpaceArea2 = new Vector3[2];
-                    statirsSpaceArea2[0] = curPoint; // 平面起点
-                    if (statirsCount == 2)
-                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
-                    else
-                        curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
-                    statirsSpaceArea2[1] = curPoint; // 平面终点
+                        tmpPoint = statirsSpaceArea[i][0];
+                        tmpPoint.z += spaceLong * 0.5f;
+                    } else {
+                        statirsSpaceArea[i][0] = curPoint; // 平面起点
+                        curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + statirsWidth);
+                    }
+                    statirsSpaceArea[i][1] = curPoint; // 平面终点
                 }
-                else
-                {
-                    statirsSlopeArea2 = new Vector3[0];
-                    statirsSpaceArea2 = new Vector3[0];
-                }
-                if (2 < statirsCount)
-                {
-                    statirsStep3 = (int)(oneStatirs * Random(0.5f, 1.5f));
-                    if (statirsStep3 > statirsStepCount || statirsCount == 3)
-                        statirsStep3 = statirsStepCount;
-                    statirsStepCount -= statirsStep3;
-                    statirsSlopeArea3 = new Vector3[2];
-                    statirsSlopeArea3[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep3 * 0.2f, curPoint.z + statirsStep3 * 0.4f);
-                    statirsSlopeArea3[1] = curPoint; // 楼梯终点
-
-                    int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
-                    statirsSpaceArea3 = new Vector3[2];
-                    statirsSpaceArea3[0] = curPoint; // 平面起点
-                    if (statirsCount == 3)
-                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
-                    else
-                        curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
-                    statirsSpaceArea3[1] = curPoint; // 平面终点
-                }
-                else
-                {
-                    statirsSlopeArea3 = new Vector3[0];
-                    statirsSpaceArea3 = new Vector3[0];
-                }
-                if (3 < statirsCount)
-                {
-                    statirsStep4 = (int)(oneStatirs * Random(0.5f, 1.5f));
-                    if (statirsStep4 > statirsStepCount || statirsCount == 4)
-                        statirsStep4 = statirsStepCount;
-                    statirsStepCount -= statirsStep4;
-                    statirsSlopeArea4 = new Vector3[2];
-                    statirsSlopeArea4[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep4 * 0.2f, curPoint.z + statirsStep4 * 0.4f);
-                    statirsSlopeArea4[1] = curPoint; // 楼梯终点
-
-                    int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
-                    statirsSpaceArea4 = new Vector3[2];
-                    statirsSpaceArea4[0] = curPoint; // 平面起点
-                    if (statirsCount == 4)
-                        curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
-                    else
-                        curPoint = new Vector3(curPoint.x - spaceLong, curPoint.y, curPoint.z + 2);
-                    statirsSpaceArea4[1] = curPoint; // 平面终点
-                }
-                else
-                {
-                    statirsSlopeArea4 = new Vector3[0];
-                    statirsSpaceArea4 = new Vector3[0];
-                }
-                if (4 < statirsCount)
-                {
-                    statirsStep5 = (int)(oneStatirs * Random(0.5f, 1.5f));
-                    if (statirsStep5 > statirsStepCount || statirsCount == 5)
-                        statirsStep5 = statirsStepCount;
-                    statirsStepCount -= statirsStep5;
-                    statirsSlopeArea5 = new Vector3[2];
-                    statirsSlopeArea5[0] = curPoint; // 楼梯起点
-                    curPoint = new Vector3(curPoint.x + statirsWidth, curPoint.y + statirsStep5 * 0.2f, curPoint.z + statirsStep5 * 0.4f);
-                    statirsSlopeArea5[1] = curPoint; // 楼梯终点
-
-                    int spaceLong = (int)(oneStatirs * 0.4f * Random(0.5f, 1.5f));
-                    statirsSpaceArea5 = new Vector3[2];
-                    statirsSpaceArea5[0] = curPoint; // 平面起点
-                    curPoint = new Vector3(curPoint.x - statirsWidth, curPoint.y, curPoint.z + spaceLong);
-                    statirsSpaceArea5[1] = curPoint; // 平面终点
-                }
-                else
-                {
-                    statirsSlopeArea5 = new Vector3[0];
-                    statirsSpaceArea5 = new Vector3[0];
-                }
-                #endregion
             }
-            curPoint.x += statirsWidth * 0.5f;
+            #endregion
+
+            #region 传送阵
+            tmpPoint.z -= transmitStatirsWidth * 0.5f;
+            transmitStatirs = new Vector3[2]{
+                new Vector3(tmpPoint.x + transmitStatirsStep * 0.4f, tmpPoint.y - transmitStatirsStep * 0.2f, tmpPoint.z),
+                new Vector3(tmpPoint.x, tmpPoint.y, tmpPoint.z + transmitStatirsWidth),
+            };
+
+            float transmitSize = transmitStatirsWidth * 4;
+            transmitArea = new Vector3[2]{
+                new Vector3(transmitStatirs[0].x + transmitSize, transmitStatirs[0].y, transmitStatirs[0].z + transmitStatirsWidth * 0.5f - transmitSize * 0.5f),
+                new Vector3(transmitStatirs[0].x,transmitStatirs[0].y, transmitStatirs[0].z + transmitStatirsWidth * 0.5f + transmitSize * 0.5f),
+            };
+
+            #endregion
+
+            curPoint.x += statirsWidth * 1.5f;
 
             {
                 #region 外殿
                 // 设置外殿区域 // 占地面积 长度 130m + 50m + 130m = 310,  宽度50
-                int outLong = Random(45, 60); // 有随机
-                int outWidth = (int)(outLong * 4 * Random(0.85f, 1.15f));
+                int outLong = Random(65, 80); // 有随机
+                int outWidth = (int)(outLong * 8 * Random(0.85f, 1.15f));
 
 
                 outsideArea = new Vector3[]{
@@ -428,16 +342,12 @@ namespace UMAWorld
             Vector3 gatePos = new Vector3(data.mainGatePosX, 0, data.mainGatePosZ);
             List<Vector3> list = new List<Vector3>();
             list.Add(new Vector3());
-            list.AddRange(statirsSlopeArea1);
-            list.AddRange(statirsSlopeArea2);
-            list.AddRange(statirsSlopeArea3);
-            list.AddRange(statirsSlopeArea4);
-            list.AddRange(statirsSlopeArea5);
-            list.AddRange(statirsSpaceArea1);
-            list.AddRange(statirsSpaceArea2);
-            list.AddRange(statirsSpaceArea3);
-            list.AddRange(statirsSpaceArea4);
-            list.AddRange(statirsSpaceArea5);
+            for (int i = 0; i < statirsSlopeArea.Length; i++) {
+                list.AddRange(statirsSlopeArea[i]);
+            }
+            for (int i = 0; i < statirsSpaceArea.Length; i++) {
+                list.AddRange(statirsSpaceArea[i]);
+            }
             list.AddRange(outsideArea);
             list.AddRange(outsideCenterArea);
             list.AddRange(outsideLeftStatirsArea);
