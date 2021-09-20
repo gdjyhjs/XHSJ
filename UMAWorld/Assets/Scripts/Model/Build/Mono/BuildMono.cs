@@ -276,8 +276,6 @@ namespace UMAWorld {
                 MeshTools.AddStatirs(schoolData.statirsToInsideSlopeArea[0], schoolData.statirsToInsideStep, vertices, triangles, normals, uv, rand, width: schoolData.statirsToInsideWidth);
             }, statirsMat).transform.SetParent(transform, false);
 
-            // 测试玩家位置
-            g.units.player.mono.transform.position = startPoint + schoolData.statirsToCenterSlopeArea[0] + Vector3.right + Vector3.up;
 
 
 
@@ -1428,6 +1426,8 @@ namespace UMAWorld {
 
 
 
+            // 测试玩家位置
+            g.units.player.mono.transform.position = tmpPosStart + (tmpPosEnd - tmpPosStart) * 0.5f;
 
 
         }

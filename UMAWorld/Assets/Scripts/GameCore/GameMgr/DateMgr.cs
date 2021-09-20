@@ -57,7 +57,7 @@ namespace UMAWorld {
         public DateMgr() {
             weather = (Weather)CommonTools.Random((int)Weather.sunny, (int)Weather.end);
             m_time = CommonTools.Random(130218841, 1630218841);
-            m_time -= 3600 * (9 - Time.Hour % 24);
+            m_time = 3600 * 9;
         }
 
         public double time { get { return m_time; } }
