@@ -298,7 +298,7 @@ namespace UMAWorld
                 }
                 #endregion
             }
-            curPoint.x += 1;
+            curPoint.x += statirsWidth * 0.5f;
 
             {
                 #region 外殿
@@ -306,14 +306,15 @@ namespace UMAWorld
                 int outLong = Random(45, 60); // 有随机
                 int outWidth = (int)(outLong * 4 * Random(0.85f, 1.15f));
 
+
                 outsideArea = new Vector3[]{
                     new Vector3((int)(curPoint.x - outWidth * Random(0.45f, 0.55f)), curPoint.y, curPoint.z),
                     new Vector3((int)(curPoint.x + outWidth * Random(0.45f, 0.55f)), curPoint.y, curPoint.z + outLong),
                 };
                 // 设置外殿中
                 outsideCenterArea = new Vector3[]{
-                    new Vector3((int)(curPoint.x - outLong * Random(0.45f, 0.55f)), curPoint.y, curPoint.z),
-                    new Vector3((int)(curPoint.x + outLong * Random(0.45f, 0.55f)), curPoint.y, curPoint.z + outLong),
+                    new Vector3((int)(curPoint.x - outLong * 0.5f), curPoint.y, curPoint.z),
+                    new Vector3((int)(curPoint.x + outLong * 0.5f), curPoint.y, curPoint.z + outLong),
                 };
 
                 // 短楼梯固定阶数 5;
@@ -369,8 +370,8 @@ namespace UMAWorld
                 };
                 // 设置中殿中
                 centerCenterArea = new Vector3[]{
-                    new Vector3((int)(curPoint.x - centerLong * Random(0.45f, 0.55f)), curPoint.y, curPoint.z),
-                    new Vector3((int)(curPoint.x + centerLong * Random(0.45f, 0.55f)), curPoint.y, curPoint.z + centerLong),
+                    new Vector3((int)(curPoint.x - centerLong * 0.5f), curPoint.y, curPoint.z),
+                    new Vector3((int)(curPoint.x + centerLong * 0.5f), curPoint.y, curPoint.z + centerLong),
                 };
 
                 // 短楼梯固定阶数 5;
@@ -419,8 +420,8 @@ namespace UMAWorld
                 int insideWidth = (int)(insideLong * Random(0.85f, 1.15f));
 
                 insideArea = new Vector3[]{
-                    new Vector3((int)(curPoint.x - insideWidth * Random(0.45f, 0.55f)), curPoint.y, curPoint.z),
-                    new Vector3((int)(curPoint.x + insideWidth * Random(0.45f, 0.55f)), curPoint.y, curPoint.z + insideLong),
+                    new Vector3((int)(curPoint.x - insideWidth * 0.5f), curPoint.y, curPoint.z),
+                    new Vector3((int)(curPoint.x + insideWidth * 0.5f), curPoint.y, curPoint.z + insideLong),
                 };
             }
 
