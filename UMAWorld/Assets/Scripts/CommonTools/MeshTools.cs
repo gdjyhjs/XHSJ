@@ -241,7 +241,7 @@ namespace UMAWorld {
             for (int i = 0; i < vertices.Count; i++) {
                 Vector3 p = vertices[i];
                 //根据x 决定y的高度
-                float pos = p.x / max_x;
+                float pos = max_x == 0 ? 0 : (p.x / max_x);
                 p.x = length * pos;
                 p.y += pos * height;
                 vertices[i] = p;

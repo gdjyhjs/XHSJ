@@ -1313,6 +1313,7 @@ namespace UMAWorld {
             schoolHouse.SetParent(transform);
             Transform schoolTree = new GameObject("schoolTree").transform;
             schoolTree.SetParent(transform);
+
             #region 传送阵建筑
             // 外门建筑区域
             tmpPosStart = startPoint + schoolData.transmitArea[0];
@@ -1321,6 +1322,7 @@ namespace UMAWorld {
             tmpGo = Instantiate(transmitHousePrefab, tmpPos, Quaternion.AngleAxis(-90, Vector3.up), schoolHouse);// 传送阵
 
             #endregion
+
             #region 外门弟子建筑
             tmpPosStart = startPoint + new Vector3(schoolData.outsideLeftArea[0].x - wallCornerConf.areaWidth * 1.5f, schoolData.outsideLeftArea[0].y, schoolData.outsideLeftArea[0].z + wallCornerConf.areaWidth * 1.5f);
             tmpPosEnd = startPoint + new Vector3(schoolData.outsideLeftArea[1].x + wallCornerConf.areaWidth * 1.5f, schoolData.outsideLeftArea[0].y, schoolData.outsideLeftArea[1].z - wallCornerConf.areaWidth * 1.5f);
@@ -1380,54 +1382,158 @@ namespace UMAWorld {
                 }
 
             }
+            #endregion
 
-            // 外门小树林
-            tmpL = 0.2f;
-            tmpGo =  MeshTools.NewMeshObj("外门小树林围栏", (vertices, triangles, normals, uv) => {
-                MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL), new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y + tmpL, tmpPosStart.z + tmpL + tmpL), vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosEnd.z - tmpL), new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL + tmpL), new Vector3(tmpF - tmpL - tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
-                MeshTools.AddCube(new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL + tmpL), new Vector3(tmpPosEnd.x + tmpL + tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
-            }, stoneMat);
-            tmpGo.transform.SetParent(transform, false);
-            tmpGo.transform.position = default;
+            #region 外门小树林
+            {
+                tmpL = 0.2f;
+                tmpGo = MeshTools.NewMeshObj("外门小树林围栏", (vertices, triangles, normals, uv) => {
+                    MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL), new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y + tmpL, tmpPosStart.z + tmpL + tmpL), vertices, triangles, normals, uv, rand);
+                    MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosEnd.z - tmpL), new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
+                    MeshTools.AddCube(new Vector3(tmpF - tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL + tmpL), new Vector3(tmpF - tmpL - tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
+                    MeshTools.AddCube(new Vector3(tmpPosEnd.x + tmpL, tmpPosStart.y - tmpL, tmpPosStart.z + tmpL + tmpL), new Vector3(tmpPosEnd.x + tmpL + tmpL, tmpPosStart.y + tmpL, tmpPosEnd.z - tmpL - tmpL), vertices, triangles, normals, uv, rand);
+                }, stoneMat);
+                tmpGo.transform.SetParent(transform, false);
+                tmpGo.transform.position = default;
 
-            tmpW = 0.15f;
-            tmpGo = MeshTools.NewMeshObj("外门小树林草地", (vertices, triangles, normals, uv) => {
-                MeshTools.AddCube(new Vector3(tmpF - tmpL - tmpW, tmpPosStart.y - tmpW, tmpPosStart.z + tmpL + tmpW), new Vector3(tmpPosEnd.x + tmpL + tmpW, tmpPosStart.y + tmpW, tmpPosEnd.z - tmpL - tmpW), vertices, triangles, normals, uv, rand);
-            }, grassMat);
-            tmpGo.transform.SetParent(transform, false);
-            tmpGo.transform.position = default;
+                tmpW = 0.15f;
+                tmpGo = MeshTools.NewMeshObj("外门小树林草地", (vertices, triangles, normals, uv) => {
+                    MeshTools.AddCube(new Vector3(tmpF - tmpL - tmpW, tmpPosStart.y - tmpW, tmpPosStart.z + tmpL + tmpW), new Vector3(tmpPosEnd.x + tmpL + tmpW, tmpPosStart.y + tmpW, tmpPosEnd.z - tmpL - tmpW), vertices, triangles, normals, uv, rand);
+                }, grassMat);
+                tmpGo.transform.SetParent(transform, false);
+                tmpGo.transform.position = default;
 
-            tmpPos = new Vector3(tmpF - tmpL - tmpW, tmpPosStart.y, tmpPosStart.z + tmpL + tmpW);
-            tmpPosEnd = new Vector3(tmpPosEnd.x + tmpL + tmpW, tmpPosStart.y + tmpW, tmpPosEnd.z - tmpL - tmpW);
-            tmpPosStart = tmpPos;
-            List<Vector3> ways = new List<Vector3>();
-            ways.Add(new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(30, 70) * 0.01f));
-            ways.Add(ways[0] + new Vector3(0, 0, 6));
-            ways.Add(new Vector3(tmpPosEnd.x, tmpPosEnd.y, tmpPosEnd.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(30, 70) * 0.01f));
-            ways.Add(ways[2] - new Vector3(0, 0, 6));
-            Vector3[] way = ways.ToArray();
-            // 创建竹林
-            tmpW = 0;
-            tmpL = 0;
-            while (tmpW < 10 || tmpL < 100) {
-                tmpPos = new Vector3(tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * rand.Next(10, 90) * 0.01f, tmpPosStart.y, tmpPosStart.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(10, 90) * 0.01f);
-                if (!MathTools.PointIsInPolygon(way, tmpPos)) {
-                    Instantiate<GameObject>(bambooPrefab[rand.Next(0, bambooPrefab.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), tmpGo.transform);
-                    tmpW++;
+                // 计算竹林区域
+                tmpPos = new Vector3(tmpF - tmpL - tmpW, tmpPosStart.y, tmpPosStart.z + tmpL + tmpW);
+                tmpPosEnd = new Vector3(tmpPosEnd.x + tmpL + tmpW, tmpPosStart.y + tmpW, tmpPosEnd.z - tmpL - tmpW);
+                tmpPosStart = tmpPos;
+
+
+
+                List<Vector3[]> ways = new List<Vector3[]>();
+                // 计算竹林道路
+                /*
+                                                 * * * * * * * * *
+                                                   * * * * * * * *
+                                                     * * * * * * *
+                                               *       * * * * * *
+                                               * *       * * * * *
+                                               * * *       * * * *
+                                               * * * *       * * *
+                 * * * * * * * * * * * * * * * * * * * *       * *
+                 * * * * * * * * * * * * * * * * * * * * *       *
+                 * * * * * * * * * * * * * * * * * * * * * *   
+                 * * * * * * * * * * * * * * * * * * * * * * * 
+                 * * * * * * * * * * * * * * * * * * * * * *       
+                 * * * * * * * * * * * * * * * * * * * * *       * 
+                 * * * * * * * * * * * * * * * * * * * *       * * 
+                 * * * * * * * * * * * * * * * * * * *       * * * 
+                 * * * * * * * * * * * * * * * * * *       * * * *
+                 * * * * * * * * * * * * * * * * *       * * * * * 
+                 * * * * * * * * * * * * * * * *       * * * * * * 
+                 * * * * * * * * * * * * * * *       * * * * * * *
+                 * * * * * * * * * * * * * *       * * * * * * * *
+                 * * * * * * * * * * * * *       * * * * * * * * *
+                 */
+                int treeWitdh = 10;
+                int treeSize = 10;
+                int placeSize = 20;
+                List<Vector3> way = new List<Vector3>();
+                way.Add(new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z + (tmpPosEnd.z - tmpPosStart.z) * rand.Next(40, 60) * 0.01f)); // 起点
+                way.Add(way[0] + new Vector3(0, 0, treeWitdh));
+                way.Add(new Vector3(tmpPosEnd.x - (tmpPosEnd.x - tmpPosStart.x) * rand.Next(40, 60) * 0.01f, tmpPosEnd.y, tmpPosEnd.z) + new Vector3(0, 0, -treeSize)); // 转点
+                way.Add(way[2] + new Vector3(-treeWitdh, 0, 0));
+                ways.Add(way.ToArray());
+
+                way[0] = new Vector3(tmpPosEnd.x, tmpPosEnd.y, tmpPosEnd.z - (tmpPosEnd.z - tmpPosStart.z) * rand.Next(45, 55) * 0.01f) + new Vector3(treeSize, 0, 0); // 终点
+                way[1] = way[0] + new Vector3(0, 0, -treeWitdh);
+                ways.Add(way.ToArray());
+
+                float wayZ = tmpPosStart.z + treeSize + placeSize;
+                float wayX = tmpPosEnd.x + treeSize + placeSize;
+                ways.Add(new Vector3[]{
+                    new Vector3(tmpPosEnd.x + treeSize,tmpPosStart.y,  tmpPosStart.z + treeSize),
+                    new Vector3(tmpPosEnd.x + treeSize,tmpPosStart.y,  wayZ),
+                    new Vector3(wayX, tmpPosStart.y,  wayZ),
+                    new Vector3(wayX, tmpPosStart.y,  tmpPosStart.z + treeSize),
+                });
+
+                way.Clear();
+                way.Add(new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosStart.z));
+                way.Add(new Vector3(tmpPosStart.x, tmpPosStart.y, tmpPosEnd.z));
+                way.Add(new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosEnd.z));
+                way.Add(new Vector3(tmpPosEnd.x, tmpPosStart.y, tmpPosStart.z));
+                Vector3[] treeArea = way.ToArray(); // 竹林范围
+                Vector2 treeAreaSize = new Vector2(Mathf.Abs(tmpPosStart.x - tmpPosEnd.x), Mathf.Abs(tmpPosStart.z - tmpPosEnd.z));
+                // 创建竹林
+                tmpW = treeAreaSize.x * treeAreaSize.y * 4; // 大概要创建多大面积的竹林
+                tmpGo = new GameObject();
+                while (tmpW > 0) {
+                    float x = rand.Next(0, int.MaxValue) % 10000 * 0.0001f;
+                    float z = rand.Next(0, int.MaxValue) % 10000 * 0.0001f;
+                    Debug.Log(x + " , " + z);
+                    tmpPos = new Vector3(tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * x, tmpPosStart.y, tmpPosStart.z + (tmpPosEnd.z - tmpPosStart.z) * z);
+                    tmpGo.transform.position = tmpPos;
+                    tmpGo.transform.eulerAngles = new Vector3(0, rand.Next(0, 360), 0);
+                    int randIdx = rand.Next(0, bambooPrefab.Length);
+                    ConfSchoolFloorItem randConf = bambooConf[randIdx];
+                    if ((MathTools.PointIsInPolygon(treeArea, tmpPos + tmpGo.transform.forward * randConf.areaLong * 0.5f))
+                        && (MathTools.PointIsInPolygon(treeArea, tmpPos + tmpGo.transform.forward * randConf.areaLong * -0.5f))
+                        && (MathTools.PointIsInPolygon(treeArea, tmpPos + tmpGo.transform.right * randConf.areaWidth * 0.5f))
+                        && (MathTools.PointIsInPolygon(treeArea, tmpPos + tmpGo.transform.right * randConf.areaWidth * -0.5f))) {
+                        // 在竹林内
+
+                        bool onWay = false;
+
+                        for (int i = 0; i < ways.Count; i++) {
+                            if (MathTools.PointIsInPolygon(ways[i], tmpPos)) {
+                                onWay = true;
+                                break;
+                            }
+                        }
+
+                        if (onWay) {
+                            // 创建卵石
+
+                        } else {
+                            for (int i = 0; i < ways.Count; i++) {
+                                if (MathTools.PointIsInPolygon(ways[i], tmpPos + tmpGo.transform.forward * randConf.areaLong * 0.5f)) {
+                                    onWay = true;
+                                    break;
+                                }
+                                if (MathTools.PointIsInPolygon(ways[i], tmpPos + tmpGo.transform.forward * randConf.areaLong * -0.5f)) {
+                                    onWay = true;
+                                    break;
+                                }
+                                if (MathTools.PointIsInPolygon(ways[i], tmpPos + tmpGo.transform.right * randConf.areaWidth * 0.5f)) {
+                                    onWay = true;
+                                    break;
+                                }
+                                if (MathTools.PointIsInPolygon(ways[i], tmpPos + tmpGo.transform.right * randConf.areaWidth * -0.5f)) {
+                                    onWay = true;
+                                    break;
+                                }
+                            }
+                            if (!onWay) {
+                                float y = rand.Next(0, int.MaxValue) % 10000 * 0.0001f;
+                                tmpPos.y -= randConf.areaHeight * Mathf.Lerp(0, 0.3f, y);
+                                Instantiate<GameObject>(bambooPrefab[randIdx], tmpPos, tmpGo.transform.rotation, schoolTree);
+                                tmpW -= randConf.areaLong * randConf.areaWidth; // 减去创建的面积的竹林
+                            }
+                        }
+                    }
                 }
-                tmpL++;
-            }
+                Destroy(tmpGo);
 
+
+                // 测试玩家位置
+                tmpPos = ways[ways.Count - 1][0];
+                g.units.player.mono.transform.position = tmpPos;
+            }
 
             #endregion
 
 
-
-
-            // 测试玩家位置
-            g.units.player.mono.transform.position = tmpPosStart + (tmpPosEnd - tmpPosStart) * 0.5f;
 
 
         }
@@ -1435,6 +1541,15 @@ namespace UMAWorld {
 
         private GameObject Instantiate(GameObject prefab, Vector3 pos, Quaternion q, Transform parent) {
             return GameObject.Instantiate<GameObject>(prefab, pos, q, parent);
+        }
+
+        private void DrawLine(Vector3[] pos) {
+            List<Vector3> v = new List<Vector3>(pos);
+            v.Add(v[0]);
+            var r = new GameObject().AddComponent<LineRenderer>();
+            r.positionCount = v.Count;
+            r.SetPositions(v.ToArray());
+
         }
     }
 }

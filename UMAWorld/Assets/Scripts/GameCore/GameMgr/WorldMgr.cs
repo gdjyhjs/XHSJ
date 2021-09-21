@@ -37,7 +37,7 @@ namespace UMAWorld {
             try {
                 UMATools.LoadUMA(avatar, player.appearance.umaData);
             } catch (System.Exception e) {
-                Debug.LogError(e.Message+"\n"+e.StackTrace);
+                Debug.LogWarning(e.Message+"\n"+e.StackTrace);
             }
             // 添加世界单位基类
             player.mono = goPlayer.AddComponent<UnitMono>();
