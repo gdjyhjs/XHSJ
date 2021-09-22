@@ -13,6 +13,7 @@ namespace UMAWorld {
         public Vector3 targetPos;
         public float duration; // 持续时间
         public float through; // 穿透次数
+        public int meCount = 1;
 
 
         public void Init(UnitBase ownerUnit, UnitMono ownerMono, SkillBase skillData, Vector3 targetPos) {
@@ -41,8 +42,9 @@ namespace UMAWorld {
         }
 
         protected virtual void OnTriggerEnter(Collider other) {
-            if (ownerMono.gameObject == other.gameObject) {
-                //撞到自己不算数
+            if (ownerMono.gameObject == other.gameObject && meCount > 0) {
+                //首次撞到自己不算数
+                meCount--;
                 return;
             }
             if (other.tag == GameConf.unitTag) {
@@ -50,6 +52,11 @@ namespace UMAWorld {
                 if (enemy && !enemy.unitData.isDie) {
                     OnHit(enemy);
                 }
+            }
+
+            if (--through < 0)
+            {
+                Destroy();
             }
         }
 
@@ -69,10 +76,6 @@ namespace UMAWorld {
             float value = conf.might * ownerUnit.attribute.attack;
             value *= CommonTools.Random(0.8f, 1.2f);
             target.unitData.SkillEffect(value, ownerUnit, skillQuale, skillType);
-
-            if (--through < 0) {
-                Destroy();
-            }
         }
     }
 }
