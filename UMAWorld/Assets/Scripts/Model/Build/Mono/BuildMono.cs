@@ -60,7 +60,7 @@ namespace UMAWorld {
                 yield return CheckWait();
 
             ConfSchoolFloorItem inHouseConf = g.conf.schoolFloor.GetItem(conf.inHouse); // 内门弟子方
-            GameObject oinHousePrefab = CommonTools.LoadResources<GameObject>(inHouseConf.prefab);
+            GameObject inHousePrefab = CommonTools.LoadResources<GameObject>(inHouseConf.prefab);
             if (yieldWait)
                 yield return CheckWait();
 
@@ -1535,6 +1535,253 @@ namespace UMAWorld {
 
 
 
+
+            #region 杂役弟子建筑
+            tmpPosStart = startPoint + new Vector3(schoolData.outsideRightArea[0].x - wallCornerConf.areaWidth * 1.5f, schoolData.outsideRightArea[0].y, schoolData.outsideRightArea[0].z + wallCornerConf.areaWidth * 1.5f);
+            tmpPosEnd = startPoint + new Vector3(schoolData.outsideRightArea[1].x + wallCornerConf.areaWidth * 1.5f, schoolData.outsideRightArea[0].y, schoolData.outsideRightArea[1].z - wallCornerConf.areaWidth * 1.5f);
+
+            tmpF = tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * 0.65f;
+            for (float x = tmpPosStart.x; ;) {
+                if (x == tmpPosStart.x) {
+                    // 第一盆树
+                    x += flowerbedConf.areaWidth;
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inHouseConf.areaHeight * 0.5f);
+                    // 花盆下
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树下
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inHouseConf.areaHeight * 0.5f);
+                    // 花盆上
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树上
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    x += flowerbedConf.areaWidth;
+                }
+                x += inHouseConf.areaWidth * 0.5f;
+                // 房子下
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inHouseConf.areaLong * 0.5f);
+                Object.Instantiate(inHousePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), schoolHouse);
+
+                // 房子上
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inHouseConf.areaLong * 0.5f);
+                Object.Instantiate(inHousePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), schoolHouse);
+                x += inHouseConf.areaWidth * 0.5f;
+
+                x += flowerbedConf.areaWidth;
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inHouseConf.areaHeight * 0.5f);
+                // 花盆下
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树下
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inHouseConf.areaHeight * 0.5f);
+                // 花盆上
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树上
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                x += flowerbedConf.areaWidth;
+
+                yield return CheckWait();
+                if (x > tmpF) {
+                    tmpF = x;
+                    break;
+                }
+
+            }
+            #endregion
+
+
+
+
+            #region 内门弟子建筑
+            tmpPosStart = startPoint + new Vector3(schoolData.centerRightArea[0].x - wallCornerConf.areaWidth * 1.5f, schoolData.centerRightArea[0].y, schoolData.centerRightArea[0].z + wallCornerConf.areaWidth * 1.5f);
+            tmpPosEnd = startPoint + new Vector3(schoolData.centerRightArea[1].x + wallCornerConf.areaWidth * 1.5f, schoolData.centerRightArea[0].y, schoolData.centerRightArea[1].z - wallCornerConf.areaWidth * 1.5f);
+
+            tmpF = tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * 0.65f;
+            for (float x = tmpPosStart.x; ;) {
+                if (x == tmpPosStart.x) {
+                    // 第一盆树
+                    x += flowerbedConf.areaWidth;
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inHouseConf.areaHeight * 0.5f);
+                    // 花盆下
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树下
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inHouseConf.areaHeight * 0.5f);
+                    // 花盆上
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树上
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    x += flowerbedConf.areaWidth;
+                }
+                x += inHouseConf.areaWidth * 0.5f;
+                //// 房子下
+                //tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inHouseConf.areaLong * 0.5f);
+                //Object.Instantiate(inHousePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), schoolHouse);
+
+                // 房子上
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inHouseConf.areaLong * 0.5f);
+                Object.Instantiate(inHousePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), schoolHouse);
+                x += inHouseConf.areaWidth * 0.5f;
+
+                x += flowerbedConf.areaWidth;
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inHouseConf.areaHeight * 0.5f);
+                // 花盆下
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树下
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inHouseConf.areaHeight * 0.5f);
+                // 花盆上
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树上
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                x += flowerbedConf.areaWidth;
+
+                yield return CheckWait();
+                if (x > tmpF) {
+                    tmpF = x;
+                    break;
+                }
+
+            }
+            #endregion
+
+            #region 真传弟子建筑
+            tmpPosStart = startPoint + new Vector3(schoolData.centerLeftArea[0].x - wallCornerConf.areaWidth * 1.5f, schoolData.centerLeftArea[0].y, schoolData.centerLeftArea[0].z + wallCornerConf.areaWidth * 1.5f);
+            tmpPosEnd = startPoint + new Vector3(schoolData.centerLeftArea[1].x + wallCornerConf.areaWidth * 1.5f, schoolData.centerLeftArea[0].y, schoolData.centerLeftArea[1].z - wallCornerConf.areaWidth * 1.5f);
+
+            tmpF = tmpPosStart.x + (tmpPosEnd.x - tmpPosStart.x) * 0.65f;
+            for (float x = tmpPosStart.x; ;) {
+                if (x == tmpPosStart.x) {
+                    // 第一盆树
+                    x -= flowerbedConf.areaWidth;
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inTrueHouseConf.areaHeight * 0.5f);
+                    // 花盆下
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树下
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - flowerbedConf.areaWidth * 1.5f);
+                    // 花盆上
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树上
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    x -= flowerbedConf.areaWidth;
+                }
+                //x -= inTrueHouseConf.areaWidth * 0.5f;
+                //// 房子下
+                //tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inTrueHouseConf.areaLong * 0.5f);
+                //Object.Instantiate(inTrueHousePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), schoolHouse);
+
+                // 房子上
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inTrueHouseConf.areaLong * 0.5f);
+                Object.Instantiate(inTrueHousePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), schoolHouse);
+                x -= inTrueHouseConf.areaWidth * 0.5f;
+
+                x -= flowerbedConf.areaWidth;
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inTrueHouseConf.areaHeight * 0.5f);
+                // 花盆下
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树下
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - flowerbedConf.areaWidth * 1.5f);
+                // 花盆上
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树上
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                x -= flowerbedConf.areaWidth;
+
+                yield return CheckWait();
+                if (x < tmpF) {
+                    tmpF = x;
+                    break;
+                }
+
+            }
+            #endregion
+
+            #region 宗主长老等建筑
+            tmpPosStart = startPoint + new Vector3(schoolData.insideArea[0].x - wallCornerConf.areaWidth * 1.5f, schoolData.insideArea[0].y, schoolData.insideArea[0].z + wallCornerConf.areaWidth * 1.5f);
+            tmpPosEnd = startPoint + new Vector3(schoolData.insideArea[1].x + wallCornerConf.areaWidth * 1.5f, schoolData.insideArea[0].y, schoolData.insideArea[1].z - wallCornerConf.areaWidth * 1.5f);
+            
+            // 一个宗主，两个太上长老 四个长老
+            for (float x = tmpPosStart.x; ;) {
+                if (x == tmpPosStart.x) {
+                    // 第一盆树
+                    x -= flowerbedConf.areaWidth;
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inTrueHouseConf.areaHeight * 0.5f);
+                    // 花盆下
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树下
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                    tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - flowerbedConf.areaWidth * 1.5f);
+                    // 花盆上
+                    Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    // 树上
+                    tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                    Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                    x -= flowerbedConf.areaWidth;
+                }
+                //x -= inTrueHouseConf.areaWidth * 0.5f;
+                //// 房子下
+                //tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inTrueHouseConf.areaLong * 0.5f);
+                //Object.Instantiate(inTrueHousePrefab, tmpPos, Quaternion.AngleAxis(180, Vector3.up), schoolHouse);
+
+                // 房子上
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - inTrueHouseConf.areaLong * 0.5f);
+                Object.Instantiate(inTrueHousePrefab, tmpPos, Quaternion.AngleAxis(0, Vector3.up), schoolHouse);
+                x -= inTrueHouseConf.areaWidth * 0.5f;
+
+                x -= flowerbedConf.areaWidth;
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosStart.z + inTrueHouseConf.areaHeight * 0.5f);
+                // 花盆下
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树下
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+
+
+                tmpPos = new Vector3(x, tmpPosStart.y, tmpPosEnd.z - flowerbedConf.areaWidth * 1.5f);
+                // 花盆上
+                Object.Instantiate(flowerbedPrefab, tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                // 树上
+                tmpPos = tmpPos + new Vector3(rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth, 0, rand.Next(-100, 100) * 0.002f * flowerbedConf.areaWidth);
+                Instantiate<GameObject>(treePrefabs[rand.Next(0, treePrefabs.Length)], tmpPos, Quaternion.AngleAxis(rand.Next(0, 360), Vector3.up), schoolTree);
+                x -= flowerbedConf.areaWidth;
+
+                yield return CheckWait();
+                if (x < tmpF) {
+                    tmpF = x;
+                    break;
+                }
+
+            }
+            #endregion
 
         }
 

@@ -275,8 +275,8 @@ namespace UMAWorld
             {
                 #region 中殿
                 // 设置中殿区域 // 
-                int centerLong = Random(65, 80); // 有随机
-                int centerWidth = (int)(centerLong * 3.2 * Random(0.85f, 1.15f));
+                int centerLong = Random(80, 100); // 有随机
+                int centerWidth = (int)(centerLong * 6 * Random(0.85f, 1.15f));
 
                 centerArea = new Vector3[]{
                     new Vector3((int)(curPoint.x - centerWidth * Random(0.45f, 0.55f)), curPoint.y, curPoint.z),
@@ -331,7 +331,7 @@ namespace UMAWorld
             // 内殿
             {
                 int insideLong = Random(80, 100); // 有随机
-                int insideWidth = (int)(insideLong * Random(0.85f, 1.15f));
+                int insideWidth = (int)(insideLong * Random(3.85f, 3.15f));
 
                 insideArea = new Vector3[]{
                     new Vector3((int)(curPoint.x - insideWidth * 0.5f), curPoint.y, curPoint.z),
